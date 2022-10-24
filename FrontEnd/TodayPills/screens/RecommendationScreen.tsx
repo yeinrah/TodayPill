@@ -1,22 +1,25 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 // import EditScreenInfo from "../components/EditScreenInfo";
-import { Text, View } from "../components/Themed";
+// import { Text, View } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
+import BackgroundScreen from "./BackgroundScreen";
 
 export default function RecommendationScreen({
   navigation,
 }: RootTabScreenProps<"Recommendation">) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>영양제 추천</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-      {/* <EditScreenInfo path="/screens/RecommendationScreen.tsx" /> */}
-    </View>
+    <BackgroundScreen>
+      <View style={styles.container}>
+        <Text style={styles.title}>영양제 추천</Text>
+        {/* <View
+          style={styles.separator}
+          lightColor="#eee"
+          darkColor="rgba(255,255,255,0.1)"
+        /> */}
+        {/* <EditScreenInfo path="/screens/HomeScreen.tsx" /> */}
+      </View>
+    </BackgroundScreen>
   );
 }
 
