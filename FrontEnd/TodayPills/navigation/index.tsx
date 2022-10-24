@@ -3,8 +3,12 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import { FontAwesome } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "react-native-vector-icons";
+import {
+  FontAwesome,
+  FontAwesome5,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
+// import { MaterialCommunityIcons } from "react-native-vector-icons";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 // import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
@@ -18,8 +22,12 @@ import { ColorSchemeName, Pressable } from "react-native";
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
+import CalendarScreen from "../screens/CalendarScreen";
+import HomeScreen from "../screens/HomeScreen";
 import ModalScreen from "../screens/ModalScreen";
+import MyPageScreen from "../screens/MyPageScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
+import RecommendationScreen from "../screens/RecommendationScreen";
 import TabOneScreen from "../screens/TabOneScreen";
 import TabTwoScreen from "../screens/TabTwoScreen";
 import {
@@ -90,9 +98,9 @@ function MaterialBottomTabNavigator() {
     >
       <BottomTab.Screen
         name="Home"
-        component={TabOneScreen}
+        component={HomeScreen}
         options={{
-          tabBarLabel: "Home",
+          tabBarLabel: "홈",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="home" color={color} size={26} />
           ),
@@ -121,33 +129,31 @@ function MaterialBottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Recommendation"
-        component={TabTwoScreen}
-        // options={{
-        //   title: "Recommendation",
-        //   tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        // }}
+        component={RecommendationScreen}
         options={{
           tabBarLabel: "추천",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="bell" color={color} size={26} />
+            // <FontAwesome5 name="pills" size={22} color={color} />
+            <MaterialCommunityIcons name="pill" size={26} color={color} />
           ),
         }}
       />
       <BottomTab.Screen
         name="Calendar"
-        component={TabTwoScreen}
+        component={CalendarScreen}
         options={{
           tabBarLabel: "캘린더",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="account" color={color} size={26} />
+            <FontAwesome5 name="calendar-alt" size={26} color={color} />
+            // <MaterialCommunityIcons name="account" color={color} size={26} />
           ),
         }}
       />
       <BottomTab.Screen
         name="MyPage"
-        component={TabTwoScreen}
+        component={MyPageScreen}
         options={{
-          tabBarLabel: "마이 페이지",
+          tabBarLabel: "마이페이지",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="account" color={color} size={26} />
           ),
