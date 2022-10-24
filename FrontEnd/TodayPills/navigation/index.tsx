@@ -20,7 +20,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
 import { ColorSchemeName, Pressable } from "react-native";
 
-import Colors from "../constants/Colors";
+// import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import CalendarScreen from "../screens/CalendarScreen";
 import HomeScreen from "../screens/HomeScreen";
@@ -28,8 +28,7 @@ import ModalScreen from "../screens/ModalScreen";
 import MyPageScreen from "../screens/MyPageScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import RecommendationScreen from "../screens/RecommendationScreen";
-import TabOneScreen from "../screens/TabOneScreen";
-import TabTwoScreen from "../screens/TabTwoScreen";
+
 import {
   RootStackParamList,
   RootTabParamList,
