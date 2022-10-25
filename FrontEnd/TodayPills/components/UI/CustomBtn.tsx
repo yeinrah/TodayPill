@@ -50,13 +50,13 @@ const styles = StyleSheet.create({
     margin: 4,
     overflow: "hidden",
     marginVertical: 10,
+    elevation: 5,
   },
   buttonInnerContainer: {
     paddingVertical: 10,
     // paddingHorizontal: 30,
     // alignItems: "center",
     // justifyContent: "center",
-    elevation: 5,
   },
   title: {
     fontSize: 20,
