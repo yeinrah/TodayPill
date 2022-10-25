@@ -22,7 +22,7 @@ export default function RecomNutritions() {
       <View>
         <View style={styles.cardscontainer}>
           {dummyNutritions.map((nut, idx) => (
-            <RecomItem nutName={nut} idx={idx} />
+            <RecomItem nutName={nut} key={idx} />
 
             // <View style={styles.outerContainer}>
             //   <View key={idx} style={styles.nutContainer}>
