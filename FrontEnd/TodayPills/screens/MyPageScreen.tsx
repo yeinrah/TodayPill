@@ -7,8 +7,10 @@ import {
   Button,
   ScrollView,
 } from "react-native";
+import MyPickPills from "../components/MyPage/MyPickPills";
 import Card from "../components/UI/Card";
-import { primary } from "../constants/Colors";
+import CustomBtn from "../components/UI/CustomBtn";
+import { primary, secondary } from "../constants/Colors";
 
 // import EditScreenInfo from "../components/EditScreenInfo";
 // import { Text, View } from "../components/Themed";
@@ -21,29 +23,43 @@ export default function MyPageScreen({
   return (
     <BackgroundScreen>
       <Card>
-        <View style={styles.myInfoContainer}>
-          <View style={styles.nameContainer}>
-            <Text style={styles.name}>정서님</Text>
-            <Button title="수정" />
+        <ScrollView style={styles.scrollView}>
+          <View style={styles.myInfoContainer}>
+            <View style={styles.nameContainer}>
+              <Text style={styles.name}>정서님</Text>
+              <Button title="수정" />
+            </View>
+            <View style={styles.ageContainer}>
+              <Text style={styles.age}>만 26세 남성</Text>
+            </View>
           </View>
-          <View style={styles.ageContainer}>
-            <Text style={styles.age}>만 26세 남성</Text>
+          <View style={styles.nutrBtnContainer}>
+            <View style={styles.nutrBtn}>
+              <CustomBtn
+                buttonColor={"#8EE8DE"}
+                title={"내가 섭취중인 영양제"}
+                titleColor={"#fff"}
+                buttonWidth={"70%"}
+                onPress={() => console.log("btn 클릭")}
+              />
+              {/* <Text style={styles.name}>내가 섭취 중인 영양제</Text> */}
+            </View>
           </View>
-        </View>
 
-        <View style={styles.myLikeContainer}>
-          <Text style={styles.name}>나의 Pick</Text>
-        </View>
-        <View style={styles.nutrisContainer}>
-          <Text style={styles.name}>추천 영양성분</Text>
-        </View>
-        <View style={styles.btnContainer}>
-          <Text style={styles.name}>영양성분 추천 다시 받기!</Text>
-        </View>
+          <View style={styles.myLikeContainer}>
+            <MyPickPills />
+          </View>
+          <View style={styles.nutrisContainer}>
+            <Text style={styles.name}>추천 영양성분</Text>
+          </View>
+          <View style={styles.btnContainer}>
+            <Text style={styles.name}>영양성분 추천 다시 받기!</Text>
+          </View>
+        </ScrollView>
         {/* <View
             style={styles.separator}
-            lightColor="#eee"
             darkColor="rgba(255,255,255,0.1)"
+            lightColor="#eee"
           /> */}
         {/* <EditScreenInfo path="/screens/HomeScreen.tsx" /> */}
       </Card>
@@ -52,9 +68,21 @@ export default function MyPageScreen({
 }
 
 const styles = StyleSheet.create({
-  myInfoContainer: {
+  scrollView: {
     flex: 1,
-    width: "80%",
+    // backgroundColor: "red",
+    // alignItems: "center",
+    // justifyContent: "center",
+    // marginTop: 10,
+    // padding: 20,
+  },
+
+  myInfoContainer: {
+    // flex: 1,
+    width: "100%",
+    height: 90,
+    // backgroundColor: "yellow",
+    // height: 600,
     // borderTopWidth: 2,
     alignItems: "center",
     justifyContent: "center",
@@ -71,27 +99,39 @@ const styles = StyleSheet.create({
     width: "100%",
     // padding: 10,
   },
-  myLikeContainer: {
-    flex: 2,
+  nutrBtnContainer: {
     width: "100%",
-    borderTopWidth: 2,
-    borderTopColor: primary,
     alignItems: "center",
     justifyContent: "center",
   },
-  nutrisContainer: {
-    flex: 5,
-    width: "100%",
+  nutrBtn: {
+    width: "90%",
+    paddingTop: 10,
     borderTopWidth: 2,
-    borderTopColor: primary,
+    borderTopColor: "#B7B7B7",
+    // alignItems: "center",
+    // justifyContent: "center",
+  },
+  myLikeContainer: {
+    // flex: 2,
+    width: "100%",
+    // height: "30%",
+    height: 150,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    // alignItems: "center",
+    // justifyContent: "center",
+  },
+  nutrisContainer: {
+    // flex: 5,
+    width: "100%",
+    height: 400,
     alignItems: "center",
     justifyContent: "center",
   },
   btnContainer: {
-    flex: 1,
+    // flex: 1,
     width: "100%",
-    borderTopWidth: 2,
-    borderTopColor: primary,
     alignItems: "center",
     justifyContent: "center",
   },
