@@ -15,6 +15,7 @@ import {
   NavigationContainer,
   DefaultTheme,
   DarkTheme,
+  useFocusEffect,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
@@ -28,25 +29,44 @@ import ModalScreen from "../screens/ModalScreen";
 import MyPageScreen from "../screens/MyPageScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import RecommendationScreen from "../screens/RecommendationScreen";
-
+import KakaoScreen from "../screens/StartScreen/KaKaoScreen";
+import StartScreen from "../screens/StartScreen/StartScreen";
 import {
   RootStackParamList,
   RootTabParamList,
   RootTabScreenProps,
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
-
-export default function Navigation({
-  colorScheme,
-}: {
+interface Inavigation {
   colorScheme: ColorSchemeName;
-}) {
+  LoginCheck: () => {};
+}
+let loginCheck: () => {};
+export default function Navigation({ colorScheme, LoginCheck }: Inavigation) {
+  loginCheck = LoginCheck;
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
       theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
     >
       <RootNavigator />
+      <Stack.Navigator>
+        <Stack.Screen
+          name="LoginScreen"
+          component={MaterialBottomTabNavigator}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Start"
+          component={StartScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="KakaoScreen"
+          component={KakaoScreen}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
@@ -61,18 +81,23 @@ const BottomTab = createMaterialBottomTabNavigator<RootTabParamList>();
 
 function RootNavigator() {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerStyle: { backgroundColor: "#351401" },
-        headerTintColor: "white",
-        contentStyle: { backgroundColor: "#c15c1d" },
-      }}
-    >
+    <>
       <Stack.Screen
         name="Root"
+        component={StartScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Main"
         component={MaterialBottomTabNavigator}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="Start"
+        component={StartScreen}
+        options={{ headerShown: false }}
+      />
+
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
@@ -81,7 +106,7 @@ function RootNavigator() {
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>
-    </Stack.Navigator>
+    </>
   );
 }
 
@@ -92,7 +117,11 @@ function RootNavigator() {
 
 function MaterialBottomTabNavigator() {
   const colorScheme = useColorScheme();
-
+  useFocusEffect(
+    React.useCallback(() => {
+      loginCheck();
+    }, [])
+  );
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
@@ -133,6 +162,17 @@ function MaterialBottomTabNavigator() {
         //     </Pressable>
         //   ),
         // })}
+      />
+      <BottomTab.Screen
+        name="Start"
+        component={StartScreen}
+        options={{
+          tabBarLabel: "시작화면",
+          tabBarIcon: ({ color }) => (
+            // <FontAwesome5 name="pills" size={22} color={color} />
+            <MaterialCommunityIcons name="pill" size={26} color={color} />
+          ),
+        }}
       />
       <BottomTab.Screen
         name="Recommendation"
