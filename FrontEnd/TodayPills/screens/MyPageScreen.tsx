@@ -1,6 +1,7 @@
 import { LinearGradient } from "expo-linear-gradient";
 import {
   StyleSheet,
+  Pressable,
   ImageBackground,
   View,
   Text,
@@ -8,6 +9,7 @@ import {
   ScrollView,
 } from "react-native";
 import MyPickPills from "../components/MyPage/MyPickPills";
+import RecomNutritions from "../components/MyPage/Recommendations/RecomNutritions";
 import Card from "../components/UI/Card";
 import CustomBtn from "../components/UI/CustomBtn";
 import { primary, secondary } from "../constants/Colors";
@@ -27,7 +29,27 @@ export default function MyPageScreen({
           <View style={styles.myInfoContainer}>
             <View style={styles.nameContainer}>
               <Text style={styles.name}>정서님</Text>
-              <Button title="수정" />
+              <Pressable
+                onPress={() => {
+                  console.log("이름 수정하기!");
+                  // setTimesPressed((current) => current + 1);
+                }}
+                style={styles.modifyContainer}
+              >
+                {({ pressed }) => (
+                  <Text
+                    style={[
+                      styles.modify,
+                      { color: pressed ? "black" : "#B7B7B7" },
+                    ]}
+                  >
+                    수정
+                    {/* {pressed ? 'Pressed!' : 'Press Me'} */}
+                  </Text>
+                )}
+              </Pressable>
+
+              {/* <Button title="수정" /> */}
             </View>
             <View style={styles.ageContainer}>
               <Text style={styles.age}>만 26세 남성</Text>
@@ -40,9 +62,8 @@ export default function MyPageScreen({
                 title={"내가 섭취중인 영양제"}
                 titleColor={"#fff"}
                 buttonWidth={"70%"}
-                onPress={() => console.log("btn 클릭")}
+                onPress={() => console.log("섭취 중 영양제 btn 클릭")}
               />
-              {/* <Text style={styles.name}>내가 섭취 중인 영양제</Text> */}
             </View>
           </View>
 
@@ -50,10 +71,16 @@ export default function MyPageScreen({
             <MyPickPills />
           </View>
           <View style={styles.nutrisContainer}>
-            <Text style={styles.name}>추천 영양성분</Text>
+            <RecomNutritions />
           </View>
           <View style={styles.btnContainer}>
-            <Text style={styles.name}>영양성분 추천 다시 받기!</Text>
+            <CustomBtn
+              buttonColor={"#8EE8DE"}
+              title={"영양성분 추천 다시 받기!"}
+              titleColor={"#fff"}
+              buttonWidth={"90%"}
+              onPress={() => console.log("추천 다시 받기 btn 클릭")}
+            />
           </View>
         </ScrollView>
         {/* <View
@@ -116,7 +143,8 @@ const styles = StyleSheet.create({
     // flex: 2,
     width: "100%",
     // height: "30%",
-    height: 150,
+    minHeight: 200,
+
     paddingVertical: 10,
     paddingHorizontal: 20,
     // alignItems: "center",
@@ -124,10 +152,11 @@ const styles = StyleSheet.create({
   },
   nutrisContainer: {
     // flex: 5,
+    // flexDirection: "column",
     width: "100%",
-    height: 400,
-    alignItems: "center",
-    justifyContent: "center",
+    minHeight: 120,
+    // alignItems: "center",
+    // justifyContent: "center",
   },
   btnContainer: {
     // flex: 1,
@@ -135,8 +164,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  modifyContainer: {
+    marginTop: 10,
+  },
   name: {
     fontSize: 24,
+    fontWeight: "900",
+  },
+  modify: {
+    fontSize: 15,
     fontWeight: "900",
   },
   age: {
