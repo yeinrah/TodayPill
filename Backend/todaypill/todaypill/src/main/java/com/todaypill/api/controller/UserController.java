@@ -9,6 +9,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,12 +18,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.todaypill.codef.Codef;
 
 import io.swagger.annotations.ApiOperation;
 @CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
+	
+	Codef codef;
+
+	@Autowired
+	public UserController(Codef codef) {
+		super();
+		this.codef = codef;
+	}
+	
+	
+	
 	@GetMapping("/login/{access_token}")
 	@ApiOperation(value = "Access토큰을 받아서 카카오 로그인을 진행한다.", notes = "카카오 로그인 진행")
 	public ResponseEntity<?> login(@PathVariable String access_token) throws Exception {
@@ -50,4 +63,13 @@ public class UserController {
 		System.out.println(jsonOb);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
+	
+	@GetMapping("/getHealthCheckData")
+	@ApiOperation(value = "건강검진 내역을 가져오는지 확인한다", notes = "확인하자")
+	public ResponseEntity<?> getHealthCheckData() throws Exception {
+		codef.getHealthCheckData();
+		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+	
+	
 }
