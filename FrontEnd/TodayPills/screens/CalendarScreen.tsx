@@ -1,13 +1,22 @@
 // import EditScreenInfo from "../components/EditScreenInfo";
 import { StyleSheet, View, Text, ScrollView } from "react-native";
 import CalendarView from "../components/Calendar/CalendarView";
+import DayPillSchedule from "../components/Calendar/DayPillSchedule";
 import Card from "../components/UI/Card";
 import { RootTabScreenProps } from "../types";
+import { useState } from "react";
 import BackgroundScreen from "./BackgroundScreen";
 
 export default function CalendarScreen({
   navigation,
 }: RootTabScreenProps<"Calendar">) {
+  const today = new Date();
+  const todayString = today.toISOString().split("T")[0];
+  const [selectedDate, setSelectedDate] = useState(todayString);
+  const dateChangeHandler = (date: string) => {
+    console.log(date, "date 받음");
+    setSelectedDate(date);
+  };
   return (
     <BackgroundScreen>
       <Card>
@@ -25,8 +34,14 @@ export default function CalendarScreen({
           </View>
           <View style={styles.calendarOuterContainer}>
             <View style={styles.calendarContainer}>
-              <CalendarView />
+              <CalendarView
+                onChangeDate={dateChangeHandler}
+                todayString={todayString}
+              />
             </View>
+          </View>
+          <View>
+            <DayPillSchedule selectedDate={selectedDate} />
           </View>
         </ScrollView>
       </Card>
@@ -54,7 +69,7 @@ const styles = StyleSheet.create({
   },
   calendarOuterContainer: {
     height: 400,
-
+    // backgroundColor: "red",
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
@@ -62,7 +77,7 @@ const styles = StyleSheet.create({
   calendarContainer: {
     height: "100%",
     // backgroundColor: "red",
-    width: "80%",
+    width: "90%",
   },
   title: {
     fontSize: 15,
