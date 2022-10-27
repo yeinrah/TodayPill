@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useState } from "react";
 import { accent, primary, secondary } from "../../constants/Colors";
@@ -21,6 +21,12 @@ export default function RoutineItem({
 }: RoutineProps) {
   const [isChecked, setIsChecked] = useState(false);
   // const [pillRoutine, setPillRoutine] = useState(dummyRoutine);
+  const deleteCheckHandler = () => {
+    setIsChecked(false);
+  };
+  const checkHandler = () => {
+    setIsChecked(true);
+  };
   return (
     <View style={styles.outerContainer}>
       <View>
@@ -38,9 +44,13 @@ export default function RoutineItem({
           </View>
           <View style={styles.check}>
             {isChecked ? (
-              <AntDesign name="checkcircle" size={30} color={primary} />
+              <Pressable onPress={deleteCheckHandler}>
+                <AntDesign name="checkcircle" size={30} color={primary} />
+              </Pressable>
             ) : (
-              <AntDesign name="checkcircleo" size={30} color="#B7B7B7" />
+              <Pressable onPress={checkHandler}>
+                <AntDesign name="checkcircleo" size={30} color="#B7B7B7" />
+              </Pressable>
             )}
           </View>
         </View>

@@ -22,6 +22,7 @@ export type RootStackParamList = {
   Modal: undefined;
   NotFound: undefined;
   Start: undefined;
+  MyPills: undefined;
   KakaoScreen: undefined;
   LoginScreen: undefined;
 };

@@ -27,6 +27,7 @@ import CalendarScreen from "../screens/CalendarScreen";
 import HomeScreen from "../screens/HomeScreen";
 import ModalScreen from "../screens/ModalScreen";
 import MyPageScreen from "../screens/MyPageScreen";
+import MyPillsScreen from "../screens/MyPillsScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import RecommendationScreen from "../screens/RecommendationScreen";
 import KakaoScreen from "../screens/StartScreen/KaKaoScreen";
@@ -90,6 +91,11 @@ function RootNavigator() {
       <Stack.Screen
         name="Main"
         component={MaterialBottomTabNavigator}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="MyPills"
+        component={MyPillsScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen

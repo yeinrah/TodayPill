@@ -4,7 +4,7 @@ import { deleteZero } from "../functions/deleteZero";
 import { getDayOfWeek } from "../functions/getDayOfWeek";
 import { useState } from "react";
 import RoutineItem from "./RoutineItem";
-import { primary } from "../../constants/Colors";
+import { accent, primary, secondary } from "../../constants/Colors";
 
 export interface PillScheduleProps {
   selectedDate: string;
@@ -49,11 +49,13 @@ export default function DayPillSchedule({ selectedDate }: PillScheduleProps) {
   return (
     <View style={styles.container}>
       <View style={styles.eachDateContainer}>
-        <Text style={styles.takenDate}>{dayString}</Text>
+        <View style={styles.takenDateContainer}>
+          <Text style={styles.takenDate}>{dayString}</Text>
+        </View>
         <Pressable onPress={addRoutineHandler}>
           <MaterialCommunityIcons
             name="pencil-circle"
-            size={34}
+            size={35}
             color={primary}
           />
         </Pressable>
@@ -86,13 +88,25 @@ const styles = StyleSheet.create({
   },
   eachDateContainer: {
     flexDirection: "row",
+    marginTop: 20,
     justifyContent: "space-between",
+    alignItems: "center",
     width: "90%",
   },
+  takenDateContainer: {
+    marginHorizontal: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 7,
+    borderRadius: 30,
+    // backgroundColor: "#FFEFFC",
+    backgroundColor: accent,
+  },
   takenDate: {
-    fontSize: 26,
+    fontSize: 24,
     fontWeight: "900",
-    paddingHorizontal: 25,
+    color: "white",
+    // color: accent,
+    // paddingHorizontal: 25,
   },
   pillRoutineContainer: {
     minHeight: 200,
