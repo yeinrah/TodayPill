@@ -22,7 +22,7 @@ import io.codef.api.EasyCodefServiceType;
 
 @Component
 public class Codef {
-	public void getHealthCheckData() throws InterruptedException, IOException, ParseException {
+	public void getHealthCheckData(String userName, String phoneNumber, String birthday) throws InterruptedException, IOException, ParseException {
 		EasyCodef codef = new EasyCodef();
 		String PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2AIbpmBsoFttEpq9vQZxi5VvSR6zidBfN3cqnG+88qRzYoql7iJ8nUVtQnrcvcUpSSKUKcnvbast1R9iCR03I5IdVcJCfgczdGi6ltGFB7HGLKpIuhf+r+AbNy2f/DSbjNW3TzoyCqcaJR6Uk+QTTjQxx3J4va+L4UCttmgDfc1KbzUkvnSz+XRSJ8Xvh91fTuxjhQ14T7zPuPrwtZjsW6HNHCSNsQKYUb8bW+y1umMWk6wg0lmq0rVfrqum1113cLZZFKurNY1XmT9MRofDLzurJoSJ2QRH+98tNV7/hFIcMRQ+u+r3/QjgjKTrxiEpJx8XL7Wm7zKPQo5h6WofHQIDAQAB";
 		String CLIENT_ID = "2a505173-8184-42a8-955c-2ca23734baf2";
@@ -37,15 +37,15 @@ public class Codef {
 		
 		List<HashMap<String, Object>>  accountList = new ArrayList<HashMap<String, Object>> ();
 		HashMap<String, Object> accountMap = new HashMap<String, Object>();
-		String id = "khss4008@gmail.com";
+//		String id = "khss4008@gmail.com";
 		
 		accountMap.put("organization",	"0002"); // 기관코드는 각 상품 페이지에서 확인 가능
 		accountMap.put("loginType",  	"5");	//로그인 타입(간편인증)
 		accountMap.put("loginTypeLevel", "1");	// 1= 카카오톡
-		accountMap.put("userName", "나예인");	// 1= 카카오톡
-		accountMap.put("phoneNo",	"01030991601");
+		accountMap.put("userName", userName);	// 1= 카카오톡
+		accountMap.put("phoneNo",	phoneNumber);
 //		accountMap.put("id", id); //요청 식별 아이디 ex) ID + UUID 뭔지 잘 모르겠다
-		accountMap.put("identity",	"19960309");
+		accountMap.put("identity",	birthday);
 		accountMap.put("inquiryType",	"0");	//조회 타입 0 = 건강검진 일반조회
 		accountMap.put("searchStartYear",	"2019");	//조회 시작년도
 		accountMap.put("searchEndYear",	"2022");	//조회 종료년도

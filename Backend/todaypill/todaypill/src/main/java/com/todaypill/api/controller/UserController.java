@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todaypill.codef.Codef;
+import com.todaypill.request.GetHealthReq;
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 @CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RestController
 @RequestMapping("/api/user")
@@ -66,8 +68,8 @@ public class UserController {
 	
 	@GetMapping("/getHealthCheckData")
 	@ApiOperation(value = "건강검진 내역을 가져오는지 확인한다", notes = "확인하자")
-	public ResponseEntity<?> getHealthCheckData() throws Exception {
-		codef.getHealthCheckData();
+	public ResponseEntity<?> getHealthCheckData(@RequestBody GetHealthReq getHealthReq) throws Exception {
+		codef.getHealthCheckData(getHealthReq.getUserName(), getHealthReq.getPhoneNumber(), getHealthReq.getBirthday());
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 	
