@@ -69,7 +69,7 @@ CREATE TABLE `calendar` (
  `date` varchar(30) NULL COMMENT '년월일',
  `time` varchar(20) NULL COMMENT '시간-분',
  `tablets` int NULL COMMENT '약 개수',
- `day` varchar(10) NULL COMMENT '요일'
+ `day` int NULL COMMENT '요일'
 );
 
 ALTER TABLE `user` ADD CONSTRAINT `PK_USER` PRIMARY KEY (
