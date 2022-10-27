@@ -12,7 +12,7 @@ import MyPickPills from "../components/MyPage/MyPickPills";
 import RecomNutritions from "../components/MyPage/Recommendations/RecomNutritions";
 import Card from "../components/UI/Card";
 import CustomBtn from "../components/UI/CustomBtn";
-import { primary, secondary } from "../constants/Colors";
+import { accent, primary, secondary } from "../constants/Colors";
 
 // import EditScreenInfo from "../components/EditScreenInfo";
 // import { Text, View } from "../components/Themed";
@@ -58,7 +58,7 @@ export default function MyPageScreen({
           <View style={styles.nutrBtnContainer}>
             <View style={styles.nutrBtn}>
               <CustomBtn
-                buttonColor={"#8EE8DE"}
+                buttonColor={accent}
                 title={"내가 섭취중인 영양제"}
                 titleColor={"#fff"}
                 buttonWidth={"70%"}
@@ -75,7 +75,7 @@ export default function MyPageScreen({
           </View>
           <View style={styles.btnContainer}>
             <CustomBtn
-              buttonColor={"#8EE8DE"}
+              buttonColor={accent}
               title={"영양성분 추천 다시 받기!"}
               titleColor={"#fff"}
               buttonWidth={"90%"}
@@ -163,6 +163,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
+    elevation: 5,
   },
   modifyContainer: {
     marginTop: 10,
