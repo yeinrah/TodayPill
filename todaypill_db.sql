@@ -4,7 +4,7 @@ CREATE DATABASE IF NOT EXISTS `todaypill` collate utf8mb4_general_ci;
 USE `todaypill`;
 
 CREATE TABLE `user` (
- `user_id` int NOT NULL,
+ `user_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
  `email` varchar(40) NULL,
  `name` varchar(20) NULL,
  `age` tinyint NULL,
@@ -35,7 +35,7 @@ CREATE TABLE `commonQuestion` (
 );
 
 CREATE TABLE `supplement` (
- `supplement_id` int NOT NULL,
+ `supplement_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
  `name` varchar(100) NULL,
  `price` double NULL,
  `image` text NULL,
@@ -45,7 +45,7 @@ CREATE TABLE `supplement` (
 );
 
 CREATE TABLE `like` (
- `like_id` int NOT NULL,
+ `like_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
  `user_id` int NOT NULL,
  `supplement_id` int NOT NULL
 );
@@ -63,7 +63,7 @@ CREATE TABLE `nutrients_type` (
 );
 
 CREATE TABLE `calendar` (
- `calendar_id` int NOT NULL,
+ `calendar_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
  `user_id` int NOT NULL,
  `supplement_id` int NOT NULL,
  `date` varchar(30) NULL COMMENT '년월일',
@@ -72,23 +72,13 @@ CREATE TABLE `calendar` (
  `day` varchar(10) NULL COMMENT '요일'
 );
 
-ALTER TABLE `user` ADD CONSTRAINT `PK_USER` PRIMARY KEY (
- `user_id`
-);
 
 ALTER TABLE `commonQuestion` ADD CONSTRAINT `PK_COMMONQUESTION` PRIMARY KEY (
  `user_id`
 );
 
-ALTER TABLE `supplement` ADD CONSTRAINT `PK_SUPPLEMENT` PRIMARY KEY (
- `supplement_id`
-);
 
-ALTER TABLE `like` ADD CONSTRAINT `PK_LIKE` PRIMARY KEY (
- `like_id`,
- `user_id`,
- `supplement_id`
-);
+
 
 ALTER TABLE `nutrient_common_code` ADD CONSTRAINT `PK_NUTRIENT_COMMON_CODE` PRIMARY KEY (
  `supplement_id`
@@ -98,11 +88,7 @@ ALTER TABLE `nutrients_type` ADD CONSTRAINT `PK_NUTRIENTS_TYPE` PRIMARY KEY (
  `supplement_id`
 );
 
-ALTER TABLE `calendar` ADD CONSTRAINT `PK_CALENDAR` PRIMARY KEY (
- `calendar_id`,
- `user_id`,
- `supplement_id`
-);
+
 
 ALTER TABLE `commonQuestion` ADD CONSTRAINT `FK_user_TO_commonQuestion_1` FOREIGN KEY (
  `user_id`

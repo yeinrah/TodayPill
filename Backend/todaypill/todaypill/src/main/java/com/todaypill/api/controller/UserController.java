@@ -66,6 +66,7 @@ public class UserController {
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 	
+	//3. 건강검진 내역 확인하기
 	@GetMapping("/getHealthCheckData")
 	@ApiOperation(value = "건강검진 내역을 가져오는지 확인한다", notes = "확인하자")
 	public ResponseEntity<?> getHealthCheckData(@RequestBody GetHealthReq getHealthReq) throws Exception {
@@ -73,5 +74,12 @@ public class UserController {
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 	
+	//4. 영양소 추천으로 인한 추천성분 업데이트
+	@GetMapping("/updateRecommend")
+	@ApiOperation(value = "추천성분 업데이트", notes = "추천성분 업데이트")
+	public ResponseEntity<?> updateRecommend(@RequestBody GetHealthReq getHealthReq) throws Exception {
+		codef.getHealthCheckData(getHealthReq.getUserName(), getHealthReq.getPhoneNumber(), getHealthReq.getBirthday());
+		return new ResponseEntity<String>(HttpStatus.OK);
+	}
 	
 }
