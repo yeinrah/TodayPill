@@ -6,19 +6,22 @@ import { StyleSheet, ImageBackground, View, Text } from "react-native";
 
 import { RootTabScreenProps } from "../types";
 import BackgroundScreen from "./BackgroundScreen";
+import Card from "../components/UI/Card";
+import SearchBar from "../components/TopBar/SearchBar";
+import MainPill from "../components/MainPage/MainPill";
+import MainNutrient from "../components/MainPage/MainNutrient";
+import DetailedPillCard from "../components/Cards/DetailedPillCard";
 
-export default function HomeScreen({ navigation }: RootTabScreenProps<"Home">) {
+export default function HomeScreen({ navigation }: any) {
   return (
     <BackgroundScreen>
-      <View style={styles.container}>
-        <Text style={styles.title}>Home</Text>
-        {/* <View
-            style={styles.separator}
-            lightColor="#eee"
-            darkColor="rgba(255,255,255,0.1)"
-          /> */}
-        {/* <EditScreenInfo path="/screens/HomeScreen.tsx" /> */}
-      </View>
+      <Card>
+        <View style={styles.container}>
+          <SearchBar />
+          <MainPill />
+          <MainNutrient />
+        </View>
+      </Card>
     </BackgroundScreen>
   );
 }
@@ -26,17 +29,6 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<"Home">) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
   },
 });
 
