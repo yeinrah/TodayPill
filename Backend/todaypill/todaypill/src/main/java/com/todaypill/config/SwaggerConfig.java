@@ -27,13 +27,13 @@ public class SwaggerConfig implements WebMvcConfigurer {
 	@Bean
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2).select()
-				.apis(RequestHandlerSelectors.basePackage("com.example.api.controller")).paths(regex("/.*"))
+				.apis(RequestHandlerSelectors.basePackage("com.todaypill.api.controller")).paths(regex("/.*"))
 				.paths(PathSelectors.any()).build().useDefaultResponseMessages(false).apiInfo(apiInfo())
 				.securityContexts(Arrays.asList(securityContext())).securitySchemes(Arrays.asList(apiKey()));
 	}
 
 	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder().title("farmding API").version("1.0.0").description("test중	 입니다.").build();
+		return new ApiInfoBuilder().title("todaypill API").version("1.0.0").description("todaypill API 입니다.").build();
 	}
 
 	private ApiKey apiKey() {
