@@ -38,10 +38,10 @@ public class UserController {
 	
 	
 	
-	@GetMapping("/login/{access_token}")
+	@GetMapping("/login")
 	@ApiOperation(value = "Access토큰을 받아서 카카오 로그인을 진행한다.", notes = "카카오 로그인 진행")
-	public ResponseEntity<?> login(@PathVariable String access_token) throws Exception {
-
+	public ResponseEntity<?> login(@RequestBody String access_token) throws Exception {
+		System.out.println("코드=>" +access_token);
 		HashMap<String, Object> userInfo = new HashMap<String, Object>();
 		String reqUrl = "https://kapi.kakao.com/v2/user/me";
 		URL url = new URL(reqUrl);
