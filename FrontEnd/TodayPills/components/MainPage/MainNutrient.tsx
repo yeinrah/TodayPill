@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import SimpleNutrientCard from "../Cards/SimpleNutrientCard";
 
-const MainNutrient = () => {
+const MainNutrient = ({ navigation }: any) => {
     const [mainNutrients, setMainNutrients] = useState([
        {image: require("../../assets/images/nutrients/sample1.png"), nutrient: "비타민 C"}, 
        {image: require("../../assets/images/nutrients/sample2.png"), nutrient: "오메가-3"}, 
@@ -19,7 +19,14 @@ const MainNutrient = () => {
             </Text>
             <View style={styles.cardscontainer}>
                 {mainNutrients.map((mainNutrient, idx) =>
-                    <SimpleNutrientCard key={idx} image={mainNutrient.image} nutrient={mainNutrient.nutrient} />
+                    <Pressable
+                        key={idx}
+                        onPress={() => navigation.navigate("NutrientScreen")}>
+                        <SimpleNutrientCard
+                            image={mainNutrient.image}
+                            nutrient={mainNutrient.nutrient}
+                        />
+                    </Pressable>
                 )}
             </View>
         </View>
