@@ -15,15 +15,19 @@ import { RootStackScreenProps } from "../types";
 import BackgroundScreen from "./BackgroundScreen";
 import Card from "../components/UI/Card";
 import GoBackBtn from "../components/UI/GoBackBtn";
+import { useState } from "react";
 import { accent, primary } from "../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import RoutineDetailList from "../components/Calendar/Routine/RoutineDetailList";
+import ModifyRoutineItem from "../components/Calendar/Routine/ModifyRoutineItem";
 
-export default function MyPillsScreen({ navigation }: any) {
+export default function ModifyRoutineScreen({ navigation, route }: any) {
   // RootStackScreenProps<"MyPills">
-  const addRoutinePillHandler = () => {
-    navigation.navigate("Search", { userId: 1 });
-  };
+  const [pillId, setPillId] = useState(route.pillId);
+
+  // const addRoutinePillHandler = () => {
+  //   navigation.navigate("Search", { userId: 1 });
+  // };
 
   return (
     <BackgroundScreen>
@@ -32,18 +36,15 @@ export default function MyPillsScreen({ navigation }: any) {
           <View style={styles.backBtn}>
             <GoBackBtn onPress={() => navigation.pop()} size={33} />
           </View>
-          <ScrollView style={styles.myPillsContainer}>
+          <View style={styles.myPillsContainer}>
             <View style={styles.titleContainer}>
-              <View style={styles.title}>
-                <Text style={styles.text}>내가 섭취중인 영양제</Text>
+              <View>
+                <Text style={styles.text}>영양제 섭취 수정</Text>
+                {/* <Text style={styles.text}>{pillId}</Text> */}
               </View>
-
-              <Pressable onPress={addRoutinePillHandler}>
-                <Ionicons name="add-circle-sharp" size={35} color={primary} />
-              </Pressable>
             </View>
-            <RoutineDetailList />
-          </ScrollView>
+            <ModifyRoutineItem />
+          </View>
         </View>
       </Card>
     </BackgroundScreen>
@@ -64,20 +65,9 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   titleContainer: {
-    flexDirection: "row",
-    // marginTop: 20,
-    justifyContent: "space-between",
-    alignItems: "center",
-    width: "95%",
+    margin: 10,
   },
-  title: {
-    marginStart: 10,
-    // paddingHorizontal: 10,
-    paddingVertical: 7,
-    borderRadius: 30,
-    // backgroundColor: "#FFEFFC",
-    // backgroundColor: accent,
-  },
+
   text: {
     fontSize: 25,
     fontWeight: "bold",

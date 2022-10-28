@@ -1,7 +1,7 @@
 // import EditScreenInfo from "../components/EditScreenInfo";
 import { StyleSheet, View, Text, ScrollView } from "react-native";
 import CalendarView from "../components/Calendar/CalendarView";
-import DayPillSchedule from "../components/Calendar/DayPillSchedule";
+import DayPillSchedule from "../components/Calendar/Routine/DayPillSchedule";
 import Card from "../components/UI/Card";
 import { RootTabScreenProps } from "../types";
 import { useState } from "react";

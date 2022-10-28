@@ -23,6 +23,10 @@ export type RootStackParamList = {
   NotFound: undefined;
   Start: undefined;
   MyPills: undefined;
+  Search: undefined;
+  MyPage: undefined;
+  ModifyRoutine: undefined;
+  Calendar: undefined;
   KakaoScreen: undefined;
   LoginScreen: undefined;
 };
@@ -46,4 +50,7 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
 
 export type IBackground = {
   children?: JSX.Element;
+  height?: number | string;
+  width?: number | string;
+  bgColor?: string;
 };

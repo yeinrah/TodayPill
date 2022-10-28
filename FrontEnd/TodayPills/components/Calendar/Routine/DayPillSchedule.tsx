@@ -1,10 +1,11 @@
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { deleteZero } from "../functions/deleteZero";
-import { getDayOfWeek } from "../functions/getDayOfWeek";
+import { deleteZero } from "../../functions/deleteZero";
+import { getDayOfWeek } from "../../functions/getDayOfWeek";
 import { useState } from "react";
 import RoutineItem from "./RoutineItem";
-import { accent, primary, secondary } from "../../constants/Colors";
+import { accent, primary, secondary } from "../../../constants/Colors";
+import { useNavigation } from "@react-navigation/native";
 
 export interface PillScheduleProps {
   selectedDate: string;
@@ -37,6 +38,7 @@ const dummyRoutine = [
 ];
 
 export default function DayPillSchedule({ selectedDate }: PillScheduleProps) {
+  const navigation = useNavigation<any>();
   const [pillRoutine, setPillRoutine] = useState(dummyRoutine);
   const dayOfWeek = getDayOfWeek(selectedDate);
   const dayString = `${deleteZero(selectedDate.slice(5, 7))}월 ${deleteZero(
@@ -44,8 +46,9 @@ export default function DayPillSchedule({ selectedDate }: PillScheduleProps) {
   )}일 ${dayOfWeek}요일`;
 
   const addRoutineHandler = () => {
-    console.log("수정 버튼 누름!!!!");
+    navigation.navigate("MyPills", { userId: 1 });
   };
+
   return (
     <View style={styles.container}>
       <View style={styles.eachDateContainer}>

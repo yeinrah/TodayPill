@@ -26,10 +26,12 @@ import useColorScheme from "../hooks/useColorScheme";
 import CalendarScreen from "../screens/CalendarScreen";
 import HomeScreen from "../screens/HomeScreen";
 import ModalScreen from "../screens/ModalScreen";
+import ModifyRoutineScreen from "../screens/ModifyRoutineScreen";
 import MyPageScreen from "../screens/MyPageScreen";
 import MyPillsScreen from "../screens/MyPillsScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import RecommendationScreen from "../screens/RecommendationScreen";
+import SearchScreen from "../screens/SearchScreen";
 import KakaoScreen from "../screens/StartScreen/KaKaoScreen";
 import StartScreen from "../screens/StartScreen/StartScreen";
 import {
@@ -93,11 +95,11 @@ function RootNavigator() {
         component={MaterialBottomTabNavigator}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="MyPills"
         component={MyPillsScreen}
         options={{ headerShown: false }}
-      />
+      /> */}
       <Stack.Screen
         name="Start"
         component={StartScreen}
@@ -121,6 +123,64 @@ function RootNavigator() {
  * https://reactnavigation.org/docs/bottom-tab-navigator
  */
 
+function MyPageNav() {
+  return (
+    <Stack.Navigator
+      initialRouteName="MyPage"
+      screenOptions={{
+        headerTitleAlign: "center",
+      }}
+    >
+      <Stack.Screen
+        name="MyPills"
+        component={MyPillsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="MyPage"
+        component={MyPageScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Search"
+        component={SearchScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ModifyRoutine"
+        component={ModifyRoutineScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+}
+function CalendarNav() {
+  return (
+    <Stack.Navigator
+      initialRouteName="Calendar"
+      screenOptions={{
+        headerTitleAlign: "center",
+      }}
+    >
+      <Stack.Screen
+        name="MyPills"
+        component={MyPillsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Calendar"
+        component={CalendarScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ModifyRoutine"
+        component={ModifyRoutineScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+}
+
 function MaterialBottomTabNavigator() {
   const colorScheme = useColorScheme();
   useFocusEffect(
@@ -128,6 +188,7 @@ function MaterialBottomTabNavigator() {
       loginCheck();
     }, [])
   );
+
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
@@ -193,7 +254,7 @@ function MaterialBottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Calendar"
-        component={CalendarScreen}
+        component={CalendarNav}
         options={{
           tabBarLabel: "캘린더",
           tabBarIcon: ({ color }) => (
@@ -204,7 +265,7 @@ function MaterialBottomTabNavigator() {
       />
       <BottomTab.Screen
         name="MyPage"
-        component={MyPageScreen}
+        component={MyPageNav}
         options={{
           tabBarLabel: "마이페이지",
           tabBarIcon: ({ color }) => (
@@ -320,20 +381,6 @@ function MaterialBottomTabNavigator() {
 //       <Stack.Screen name="Info" component={Info} options={{ title: '약 정보' }} />
 //     </Stack.Navigator>
 //   );
-// }
-
-// function MyPageNav() {
-//   return (
-//     <Stack.Navigator
-//     screenOptions={{
-//       headerTitleAlign: 'center',
-//       initialRouteName:'mypageScreen'
-//     }}>
-//       <Stack.Screen name='mypageScreen' component={Mypage} options={{ title: '내 정보' }}/>
-//       <Stack.Screen name='modifyInfo' component={ModifyInfo} options={{ title: '정보수정' }}/>
-//       <Stack.Screen name='mypill' component={MyPillScreen} options={{ title: '마이필' }}/>
-//     </Stack.Navigator>
-//   )
 // }
 
 // function MyPillTop() {
