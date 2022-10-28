@@ -24,6 +24,10 @@ export type RootStackParamList = {
   Start: undefined;
   KakaoScreen: undefined;
   LoginScreen: undefined;
+  HomeScreen: undefined;
+  SearchScreen: undefined;
+  NutrientScreen: undefined;
+  LoginSuccessScreen: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
