@@ -25,10 +25,10 @@ public class Like {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "like_id")
-	private int like_id;
+	private int likeId;
 	
 	@Column(name = "user_id")
-	private int user_id;
+	private int userId;
 	
 	@Column(name = "supplement_id")
 	private int supplement_id;

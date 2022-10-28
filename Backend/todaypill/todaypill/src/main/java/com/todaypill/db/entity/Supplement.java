@@ -25,7 +25,7 @@ public class Supplement {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "supplement_id")
-	private int supplement_id;
+	private int supplementId;
 	
 	@Column(name = "name")
 	private String name;

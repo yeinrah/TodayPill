@@ -25,13 +25,13 @@ public class Nutrients_type {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "supplement_id")
-	private int supplement_id;
+	private int supplementId;
 	
 	@Column(name = "name")
 	private String name;
 	
 	@Column(name = "best_time")
-	private String best_time;
+	private String bestTime;
 	
 }
 

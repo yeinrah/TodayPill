@@ -40,13 +40,13 @@ public class User {
 	private String gender;
 	
 	@Column(name = "recommend_one")
-	private String recommend_one;
+	private String recommendOne;
 		
 	@Column(name = "recommend_two")
-	private String recommend_two;
+	private String recommendTwo;
 	
 	@Column(name = "recommend_three")
-	private String recommend_three;
+	private String recommendThree;
 	
 	
 }

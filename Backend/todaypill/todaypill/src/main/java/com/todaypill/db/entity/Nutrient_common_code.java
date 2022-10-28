@@ -25,13 +25,13 @@ public class Nutrient_common_code {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "supplement_id")
-	private int supplement_id;
+	private int supplementId;
 	
 	@Column(name = "brand")
 	private String brand;
 	
 	@Column(name = "formula")
-	private double formula;
+	private String formula;
 	
 }
 
