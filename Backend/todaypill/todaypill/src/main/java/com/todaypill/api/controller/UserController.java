@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,33 +39,39 @@ public class UserController {
 	
 	
 	
-	@GetMapping("/login")
-	@ApiOperation(value = "Access토큰을 받아서 카카오 로그인을 진행한다.", notes = "카카오 로그인 진행")
-	public ResponseEntity<?> login(@RequestBody String access_token) throws Exception {
-		System.out.println("코드=>" +access_token);
-		HashMap<String, Object> userInfo = new HashMap<String, Object>();
-		String reqUrl = "https://kapi.kakao.com/v2/user/me";
-		URL url = new URL(reqUrl);
-		HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-		conn.setRequestMethod("POST");
-		conn.setRequestProperty("Authorization", "Bearer　"+access_token);
-		int responseCode = conn.getResponseCode();
-		System.out.println("responseCode=>" + responseCode);
-		
-		BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-		
-		String line = "";
-		String result = "";
-		while((line = br.readLine()) != null) {
-			result += line;
-		}
-		System.out.println("responseBody => "+result);
-		
-		JSONParser parser = new JSONParser();
-		JSONObject jsonOb = (JSONObject)parser.parse(result);
-		System.out.println(jsonOb);
-		return new ResponseEntity<String>(HttpStatus.OK);
-	}
+	@PostMapping("/login")
+    @ApiOperation(value = "Access토큰을 받아서 카카오 로그인을 진행한다.", notes = "카카오 로그인 진행")
+    public ResponseEntity<?> login(@RequestBody String code) throws Exception {
+        System.out.println("코드 =>" + code);
+        code = code.substring(16);
+        code = code.replace("\"", "");
+        code = code.replace("}", "");
+        System.out.println(code);
+        HashMap<String, Object> userInfo = new HashMap<String, Object>();
+
+        String reqUrl = "https://kapi.kakao.com/v2/user/me";
+        URL url = new URL(reqUrl);
+
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("Authorization", "Bearer "+ code);
+        int responseCode = conn.getResponseCode();
+        System.out.println("responseCode=>" + responseCode);
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+        String line = "";
+        String result = "";
+        while((line = br.readLine()) != null) {
+            result += line;
+        }
+        System.out.println("responseBody => "+result);
+
+        JSONParser parser = new JSONParser();
+        JSONObject jsonOb = (JSONObject)parser.parse(result);
+        System.out.println(jsonOb);
+        return new ResponseEntity<String>(HttpStatus.OK);
+    }
 	
 	//3. 건강검진 내역 확인하기
 	@GetMapping("/getHealthCheckData")
