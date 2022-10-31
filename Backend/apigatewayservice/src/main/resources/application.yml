@@ -1,0 +1,36 @@
+server:
+  port: 8000
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+spring:
+  application:
+    name: apigateway-service
+  cloud:
+    gateway:
+      default-filters:
+        - name: GlobalFilter
+          args: # 우리가 정의한 변수
+            baseMessage: 게이트웨이 글로벌 필터입니다.
+            preLogger: true #prefilter의 유무
+            postLogger: true
+      routes: #FilterConfig의 라우팅 정보를 yml 파일로도 설정할 수 있음
+        - id: nutrients-service
+          uri: lb://NUTRIENTS-SERVICE
+          # lb(로드밸런싱)://유레카 서버에 등록된 서비스명
+          # http://localhost:8081/ 와 같은 의미
+          predicates:
+            - Path=/nutrients-service/**
+          filters:
+#            - AddRequestHeader=nutrients-request, nutrients-request-heaer-value
+#            - AddResponseHeader=nutrients-response, nutrients-response-header-value
+            - name: CustomFilter
+            - name: LoggingFilter
+              args:
+                baseMessage: 커스텀 로깅 필터입니다.
+                preLogger: true
+                postLogger: true
+
