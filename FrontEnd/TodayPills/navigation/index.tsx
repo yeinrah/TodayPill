@@ -42,6 +42,7 @@ import {
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import SurveyScreen from "../screens/SurveyScreen/SurveyScreen";
 interface Inavigation {
   colorScheme: ColorSchemeName;
   LoginCheck: () => {};
@@ -128,7 +129,7 @@ function RootNavigator() {
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
  * https://reactnavigation.org/docs/bottom-tab-navigator
  */
- function MyPageNav() {
+function MyPageNav() {
   return (
     <Stack.Navigator
       initialRouteName="MyPage"
