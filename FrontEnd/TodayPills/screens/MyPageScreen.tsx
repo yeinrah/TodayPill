@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LinearGradient } from "expo-linear-gradient";
 import {
   StyleSheet,
@@ -80,6 +81,16 @@ export default function MyPageScreen({
               titleColor={"#fff"}
               buttonWidth={"90%"}
               onPress={() => console.log("추천 다시 받기 btn 클릭")}
+            />
+            <CustomBtn
+              buttonColor={accent}
+              title={"로그아웃"}
+              titleColor={"#fff"}
+              buttonWidth={"90%"}
+              onPress={async () => {
+                await AsyncStorage.removeItem("@storage_User");
+                navigation.replace("Start");
+              }}
             />
           </View>
         </ScrollView>
