@@ -41,7 +41,7 @@ CREATE TABLE `supplement` (
  `image` text NULL,
  `ingredients` text NULL,
  `note` text NULL,
- `views` int NULL
+ `like` int NULL
 );
 
 CREATE TABLE `like` (
