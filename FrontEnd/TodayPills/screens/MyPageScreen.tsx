@@ -19,9 +19,11 @@ import { accent, primary, secondary } from "../constants/Colors";
 import { RootTabScreenProps } from "../types";
 import BackgroundScreen from "./BackgroundScreen";
 
-export default function MyPageScreen({
-  navigation,
-}: RootTabScreenProps<"MyPage">) {
+export default function MyPageScreen({ navigation }: any) {
+  // RootTabScreenProps<"MyPage">
+  const goMyPillsHandler = () => {
+    navigation.navigate("MyPills", { userId: 1 });
+  };
   return (
     <BackgroundScreen>
       <Card>
@@ -62,7 +64,7 @@ export default function MyPageScreen({
                 title={"내가 섭취중인 영양제"}
                 titleColor={"#fff"}
                 buttonWidth={"70%"}
-                onPress={() => console.log("섭취 중 영양제 btn 클릭")}
+                onPress={goMyPillsHandler}
               />
             </View>
           </View>

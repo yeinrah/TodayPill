@@ -1,7 +1,7 @@
 // import EditScreenInfo from "../components/EditScreenInfo";
 import { StyleSheet, View, Text, ScrollView } from "react-native";
 import CalendarView from "../components/Calendar/CalendarView";
-import DayPillSchedule from "../components/Calendar/DayPillSchedule";
+import DayPillSchedule from "../components/Calendar/Routine/DayPillSchedule";
 import Card from "../components/UI/Card";
 import { RootTabScreenProps } from "../types";
 import { useState } from "react";
@@ -53,6 +53,7 @@ export default function CalendarScreen({
 const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
+    marginTop: 20,
     // alignItems: "center",
     // justifyContent: "center",
   },
@@ -62,8 +63,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   titleContainer: {
-    height: 80,
-    paddingTop: 30,
+    // height: 0,
+    paddingTop: 10,
+    paddingBottom: 20,
     // alignItems: "center",
     // justifyContent: "center",
   },
