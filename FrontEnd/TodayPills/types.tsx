@@ -53,4 +53,6 @@ export type IBackground = {
   height?: number | string;
   width?: number | string;
   bgColor?: string;
+  modalVisible?: boolean;
+  modalCloseHandler?: () => void;
 };
