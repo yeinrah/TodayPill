@@ -7,13 +7,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "routine")
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Routine {
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)

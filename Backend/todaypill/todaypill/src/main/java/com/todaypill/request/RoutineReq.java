@@ -11,9 +11,6 @@ import lombok.Setter;
 @Setter
 @ApiModel("RoutineReq")
 public class RoutineReq {
-	@ApiModelProperty(name = "유저 id", example = "1")
-	@NotNull(message = "유저 id를 입력하세요.")
-	private int userId;
 
 	@ApiModelProperty(name = "영양제 id", example = "1")
 	@NotNull(message = "영양제 id를 입력하세요.")

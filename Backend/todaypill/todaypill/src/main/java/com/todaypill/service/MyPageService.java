@@ -106,7 +106,9 @@ public class MyPageService {
 	@Transactional
 	public void updateRoutine(int routineId, Routine routine) throws Exception {
 		Routine originalRoutine = routineRepository.findOneByRoutineId(routineId);
-		routineRepository.delete(originalRoutine);
-		routineRepository.save(routine);
+		originalRoutine.setTime(routine.getTime());
+		originalRoutine.setDay(routine.getDay());
+		originalRoutine.setTablets(routine.getTablets());
+		routineRepository.save(originalRoutine);
 	}
 }

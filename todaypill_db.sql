@@ -11,7 +11,7 @@ CREATE TABLE `user` (
  `gender` varchar(2) NULL,
  `recommend_one` varchar(20) NULL,
  `recommend_two` varchar(20) NULL,
- `recommend_thr` varchar(20) NULL
+ `recommend_three` varchar(20) NULL
 );
 
 CREATE TABLE `commonQuestion` (
@@ -66,7 +66,7 @@ CREATE TABLE `routine` (
 	`routine_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `user_id` int NOT NULL,
     `supplement_id` int NOT NULL,
-    `time` datetime NULL COMMENT '(hh-mm)',
+    `time` varchar(10) NULL COMMENT '(hh:mm)',
     `day` int NULL COMMENT '요일',
     `tablets` int NULL
     );
@@ -149,3 +149,21 @@ REFERENCES `routine` (
 show tables;
 
 select * from routine;
+
+insert into user values (
+	0, 'test@gmail.com', '김싸피', 26, 'F', '비타민 B', '유산균', '아연'
+);
+
+select * from `user`;
+
+insert into `supplement` values (
+	0, '10억 보장 유산균', 35000, '', '재료1, 재료2', 'Lactobacillus rhamnosus', 1
+);
+
+insert into `like` values (
+	0, 1, 1
+);
+
+select * from `like`;
+
+select * from `routine`;
