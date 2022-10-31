@@ -41,6 +41,7 @@ import {
   RootTabScreenProps,
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 interface Inavigation {
   colorScheme: ColorSchemeName;
   LoginCheck: () => {};
@@ -58,6 +59,11 @@ export default function Navigation({ colorScheme, LoginCheck }: Inavigation) {
         <Stack.Screen
           name="MainScreen"
           component={MaterialBottomTabNavigator}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="LoginSuccessScreen"
+          component={SurveyScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
@@ -200,11 +206,17 @@ function Home() {
     </Stack.Navigator>
   );
 }
-function MaterialBottomTabNavigator() {
+function MaterialBottomTabNavigator({ navigation }: any) {
   const colorScheme = useColorScheme();
+  const checkLogin = async () => {
+    if ((await AsyncStorage.getItem("@storage_User")) === null) {
+      navigation.replace("Start");
+    }
+  };
   useFocusEffect(
     React.useCallback(() => {
-      loginCheck();
+      // loginCheck();
+      checkLogin();
     }, [])
   );
   return (
@@ -248,7 +260,7 @@ function MaterialBottomTabNavigator() {
         //   ),
         // })}
       />
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name="Start"
         component={StartScreen}
         options={{
@@ -258,7 +270,7 @@ function MaterialBottomTabNavigator() {
             <MaterialCommunityIcons name="pill" size={26} color={color} />
           ),
         }}
-      />
+      /> */}
       <BottomTab.Screen
         name="Recommendation"
         component={RecommendationScreen}
