@@ -2,6 +2,7 @@ import { Button, StyleSheet, Text, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import BackgroundScreen from "../BackgroundScreen";
 import { useState } from "react";
+import CustomBtn from "../../components/UI/CustomBtn";
 
 const StartScreen = ({ navigation }: any) => {
   const [clikedStart, setClickedStart] = useState(false);
@@ -15,23 +16,31 @@ const StartScreen = ({ navigation }: any) => {
         </View>
         {!clikedStart && (
           <View style={styles.btnGroup}>
-            <Button
-              title="시작하기"
+            <CustomBtn
+              buttonColor={"#000000"}
+              title={"카카오 시작하기"}
+              titleColor={"#fff"}
+              buttonWidth={"200%"}
               onPress={async () => {
                 let temp = await AsyncStorage.setItem("@storage_User", "정서");
                 console.log(temp);
                 //   console.log(navigation, "a");
                 setClickedStart(true);
+                // navigation.replace("KakaoScreen");
                 //   navigation.goBack();
               }}
             />
-            <Button
-              title="돌아가기"
+            <CustomBtn
+              buttonColor={"#000000"}
+              title={"돌아가기"}
+              titleColor={"#fff"}
+              buttonWidth={"200%"}
               onPress={async () => {
-                let temp = await AsyncStorage.setItem("@storage_User", "정서");
+                let temp = await AsyncStorage.setItem("@storage_User", "");
                 console.log(temp);
                 //   console.log(navigation, "a");
-                navigation.replace("LoginScreen");
+                setClickedStart(false);
+                // navigation.replace("LoginScreen");
                 //   navigation.goBack();
               }}
             />
@@ -39,13 +48,16 @@ const StartScreen = ({ navigation }: any) => {
         )}
         {clikedStart && (
           <View style={styles.btnGroup}>
-            <Button
-              title="카카오 시작"
+            <CustomBtn
+              buttonColor={"#000000"}
+              title={"카카오 로그인"}
+              titleColor={"#fff"}
+              buttonWidth={"200%"}
               onPress={async () => {
                 let temp = await AsyncStorage.setItem("@storage_User", "정서");
                 console.log(temp);
                 //   console.log(navigation, "a");
-                navigation.replace("LoginScreen");
+                navigation.replace("KakaoScreen");
                 //   navigation.goBack();
               }}
             />
@@ -70,6 +82,6 @@ const styles = StyleSheet.create({
   },
   text1: { fontSize: 50, fontWeight: "bold", color: "#E2C3DC" },
   text2: { fontSize: 50, fontWeight: "bold", color: "#C4F1EA" },
-  btnGroup: { position: "absolute", bottom: 30 },
+  btnGroup: { position: "absolute", bottom: 30, alignItems: "center" },
 });
 export default StartScreen;

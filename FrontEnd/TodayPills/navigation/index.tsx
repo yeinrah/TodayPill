@@ -24,16 +24,17 @@ import { ColorSchemeName, Pressable } from "react-native";
 // import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import CalendarScreen from "../screens/CalendarScreen";
-import HomeScreen from "../screens/HomeScreen";
+import HomeScreen from "../screens/HomeScreen/HomeScreen";
 import ModalScreen from "../screens/ModalScreen";
 import ModifyRoutineScreen from "../screens/ModifyRoutineScreen";
 import MyPageScreen from "../screens/MyPageScreen";
 import MyPillsScreen from "../screens/MyPillsScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import RecommendationScreen from "../screens/RecommendationScreen";
-import SearchScreen from "../screens/SearchScreen";
+import SearchScreen from "../screens/HomeScreen/SearchScreen";
 import KakaoScreen from "../screens/StartScreen/KaKaoScreen";
 import StartScreen from "../screens/StartScreen/StartScreen";
+import NutrientScreen from "../screens/HomeScreen/NutrientScreen";
 import {
   RootStackParamList,
   RootTabParamList,
@@ -55,7 +56,7 @@ export default function Navigation({ colorScheme, LoginCheck }: Inavigation) {
       <RootNavigator />
       <Stack.Navigator>
         <Stack.Screen
-          name="LoginScreen"
+          name="MainScreen"
           component={MaterialBottomTabNavigator}
           options={{ headerShown: false }}
         />
@@ -95,17 +96,16 @@ function RootNavigator() {
         component={MaterialBottomTabNavigator}
         options={{ headerShown: false }}
       />
-      {/* <Stack.Screen
+      <Stack.Screen
         name="MyPills"
         component={MyPillsScreen}
         options={{ headerShown: false }}
-      /> */}
+      />
       <Stack.Screen
         name="Start"
         component={StartScreen}
         options={{ headerShown: false }}
       />
-
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
@@ -122,8 +122,7 @@ function RootNavigator() {
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
  * https://reactnavigation.org/docs/bottom-tab-navigator
  */
-
-function MyPageNav() {
+ function MyPageNav() {
   return (
     <Stack.Navigator
       initialRouteName="MyPage"
@@ -180,7 +179,27 @@ function CalendarNav() {
     </Stack.Navigator>
   );
 }
-
+function Home() {
+  return (
+    <Stack.Navigator initialRouteName="HomeScreen">
+      <Stack.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SearchScreen"
+        component={SearchScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="NutrientScreen"
+        component={NutrientScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+}
 function MaterialBottomTabNavigator() {
   const colorScheme = useColorScheme();
   useFocusEffect(
@@ -188,7 +207,6 @@ function MaterialBottomTabNavigator() {
       loginCheck();
     }, [])
   );
-
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
@@ -201,7 +219,7 @@ function MaterialBottomTabNavigator() {
     >
       <BottomTab.Screen
         name="Home"
-        component={HomeScreen}
+        component={Home}
         options={{
           tabBarLabel: "홈",
           tabBarIcon: ({ color }) => (
@@ -381,6 +399,20 @@ function MaterialBottomTabNavigator() {
 //       <Stack.Screen name="Info" component={Info} options={{ title: '약 정보' }} />
 //     </Stack.Navigator>
 //   );
+// }
+
+// function MyPageNav() {
+//   return (
+//     <Stack.Navigator
+//     screenOptions={{
+//       headerTitleAlign: 'center',
+//       initialRouteName:'mypageScreen'
+//     }}>
+//       <Stack.Screen name='mypageScreen' component={Mypage} options={{ title: '내 정보' }}/>
+//       <Stack.Screen name='modifyInfo' component={ModifyInfo} options={{ title: '정보수정' }}/>
+//       <Stack.Screen name='mypill' component={MyPillScreen} options={{ title: '마이필' }}/>
+//     </Stack.Navigator>
+//   )
 // }
 
 // function MyPillTop() {
