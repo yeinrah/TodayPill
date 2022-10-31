@@ -26,14 +26,15 @@ import useColorScheme from "../hooks/useColorScheme";
 import CalendarScreen from "../screens/CalendarScreen";
 import HomeScreen from "../screens/HomeScreen/HomeScreen";
 import ModalScreen from "../screens/ModalScreen";
+import ModifyRoutineScreen from "../screens/ModifyRoutineScreen";
 import MyPageScreen from "../screens/MyPageScreen";
+import MyPillsScreen from "../screens/MyPillsScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import RecommendationScreen from "../screens/RecommendationScreen";
+import SearchScreen from "../screens/HomeScreen/SearchScreen";
 import KakaoScreen from "../screens/StartScreen/KaKaoScreen";
 import StartScreen from "../screens/StartScreen/StartScreen";
-import SearchScreen from "../screens/HomeScreen/SearchScreen";
 import NutrientScreen from "../screens/HomeScreen/NutrientScreen";
-import SurveyScreen from "../screens/SurveyScreen/SurveyScreen";
 import {
   RootStackParamList,
   RootTabParamList,
@@ -54,17 +55,9 @@ export default function Navigation({ colorScheme, LoginCheck }: Inavigation) {
     >
       <RootNavigator />
       <Stack.Navigator>
-        {/* <Stack.Screen
-          name="LoginScreen"
-=======
         <Stack.Screen
           name="MainScreen"
           component={MaterialBottomTabNavigator}
-          options={{ headerShown: false }}
-        /> */}
-        <Stack.Screen
-          name="LoginSuccessScreen"
-          component={SurveyScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
@@ -104,6 +97,11 @@ function RootNavigator() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
+        name="MyPills"
+        component={MyPillsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name="Start"
         component={StartScreen}
         options={{ headerShown: false }}
@@ -124,6 +122,63 @@ function RootNavigator() {
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
  * https://reactnavigation.org/docs/bottom-tab-navigator
  */
+ function MyPageNav() {
+  return (
+    <Stack.Navigator
+      initialRouteName="MyPage"
+      screenOptions={{
+        headerTitleAlign: "center",
+      }}
+    >
+      <Stack.Screen
+        name="MyPills"
+        component={MyPillsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="MyPage"
+        component={MyPageScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Search"
+        component={SearchScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ModifyRoutine"
+        component={ModifyRoutineScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+}
+function CalendarNav() {
+  return (
+    <Stack.Navigator
+      initialRouteName="Calendar"
+      screenOptions={{
+        headerTitleAlign: "center",
+      }}
+    >
+      <Stack.Screen
+        name="MyPills"
+        component={MyPillsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Calendar"
+        component={CalendarScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ModifyRoutine"
+        component={ModifyRoutineScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+}
 function Home() {
   return (
     <Stack.Navigator initialRouteName="HomeScreen">
@@ -217,7 +272,7 @@ function MaterialBottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Calendar"
-        component={CalendarScreen}
+        component={CalendarNav}
         options={{
           tabBarLabel: "캘린더",
           tabBarIcon: ({ color }) => (
@@ -228,7 +283,7 @@ function MaterialBottomTabNavigator() {
       />
       <BottomTab.Screen
         name="MyPage"
-        component={MyPageScreen}
+        component={MyPageNav}
         options={{
           tabBarLabel: "마이페이지",
           tabBarIcon: ({ color }) => (
