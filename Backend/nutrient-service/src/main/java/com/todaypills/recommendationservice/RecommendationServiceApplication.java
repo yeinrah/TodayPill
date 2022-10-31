@@ -1,13 +1,13 @@
-package com.todaypills.nutrientservice;
+package com.todaypills.recommendationservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class NutrientServiceApplication {
+public class RecommendationServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(NutrientServiceApplication.class, args);
+        SpringApplication.run(RecommendationServiceApplication.class, args);
     }
 
 }

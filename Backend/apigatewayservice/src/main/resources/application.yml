@@ -18,19 +18,42 @@ spring:
             preLogger: true #prefilter의 유무
             postLogger: true
       routes: #FilterConfig의 라우팅 정보를 yml 파일로도 설정할 수 있음
-        - id: nutrients-service
-          uri: lb://NUTRIENTS-SERVICE
-          # lb(로드밸런싱)://유레카 서버에 등록된 서비스명
-          # http://localhost:8081/ 와 같은 의미
+#        - id: nutrients-service
+#          uri: lb://NUTRIENTS-SERVICE
+#          # lb(로드밸런싱)://유레카 서버에 등록된 서비스명
+#          # http://localhost:8081/ 와 같은 의미
+#          predicates:
+#            - Path=/nutrients-service/**
+#          filters:
+##            - AddRequestHeader=nutrients-request, nutrients-request-heaer-value
+##            - AddResponseHeader=nutrients-response, nutrients-response-header-value
+#            - name: CustomFilter
+#            - name: LoggingFilter
+#              args:
+#                baseMessage: 커스텀 로깅 필터입니다.
+#                preLogger: true
+#                postLogger: true
+        - id: user-service
+          uri: lb://USER-SERVICE
           predicates:
-            - Path=/nutrients-service/**
+            - Path=/user-service/login #로그인
+            - Method=POST
           filters:
-#            - AddRequestHeader=nutrients-request, nutrients-request-heaer-value
-#            - AddResponseHeader=nutrients-response, nutrients-response-header-value
-            - name: CustomFilter
-            - name: LoggingFilter
-              args:
-                baseMessage: 커스텀 로깅 필터입니다.
-                preLogger: true
-                postLogger: true
-
+            - RemoveRequestHeader=Cookie # POST로 전달되는 값을 매번 새로운 값처럼 인식하기 위해서 (실습을 위해 )헤더를 지움
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment} # user-service/... 의 형태로 데이터가 전달되면 user-service는 빼버리고 /...의 형태로 path를 rewrite
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user-service/users #회원가입
+            - Method=POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user-service/**
+            - Method=POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}

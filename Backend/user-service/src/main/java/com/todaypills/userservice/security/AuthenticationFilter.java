@@ -40,6 +40,11 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     public Authentication attemptAuthentication(HttpServletRequest request,
                                                 HttpServletResponse response) throws AuthenticationException {
         try {
+            /**
+             * 1. credentials : POST 형태로 전달되는 데이터를 getInputStream()으로 받아 RequestLogin 클래스 형태로 변환
+             * 2. 이 creds를 spring security에서 사용가능한 형태인 UsernamePasswordAuthenticationToken 형태로 다시 변환
+             * 3. spring security의 getAuthenticationManager().authenticate() 에게 이것을 넘겨 아이디와 비밀번호를 확인
+             * */
             RequestLogin creds = new ObjectMapper().readValue(request.getInputStream(), RequestLogin.class);
 
             return getAuthenticationManager().authenticate(
@@ -54,6 +59,9 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         }
     }
 
+    /**
+     * 로그인 인증이 성공했을 때
+     * */
     @Override
     protected void successfulAuthentication(HttpServletRequest request,
                                             HttpServletResponse response,

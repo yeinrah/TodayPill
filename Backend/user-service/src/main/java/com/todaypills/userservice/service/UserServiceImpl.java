@@ -40,11 +40,11 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = userRepository.findByEmail(username);
 
         if (userEntity == null)
-            throw new UsernameNotFoundException(username + ": not found");
+            throw new UsernameNotFoundException(username + ": not found : 해당 유저가 존재하지 않습니다.");
 
-        return new User(userEntity.getEmail(), userEntity.getEncryptedPwd(),
+        return new User(userEntity.getEmail(), userEntity.getEncryptedPwd(), //마찬가지로 spring security에서 제공하는 User 객체 사용
                 true, true, true, true,
-                new ArrayList<>());
+                new ArrayList<>()); //로그인 성공한 유저에게 할 수 있는 작업에 대한 권한을 부여하는 부분, 일단은 빈 어레이 리스트를 넣어줌
     }
 
     @Autowired
