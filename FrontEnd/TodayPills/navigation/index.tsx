@@ -56,14 +56,17 @@ export default function Navigation({ colorScheme, LoginCheck }: Inavigation) {
       <Stack.Navigator>
         {/* <Stack.Screen
           name="LoginScreen"
+=======
+        <Stack.Screen
+          name="MainScreen"
           component={MaterialBottomTabNavigator}
           options={{ headerShown: false }}
         /> */}
-          <Stack.Screen
-            name="LoginSuccessScreen"
-            component={SurveyScreen}
-            options={{ headerShown: false }}
-          />
+        <Stack.Screen
+          name="LoginSuccessScreen"
+          component={SurveyScreen}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="Start"
           component={StartScreen}
@@ -121,28 +124,26 @@ function RootNavigator() {
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
  * https://reactnavigation.org/docs/bottom-tab-navigator
  */
-function Home(){
+function Home() {
   return (
-        <Stack.Navigator
-          initialRouteName="HomeScreen"
-        >
-          <Stack.Screen
-            name="HomeScreen"
-            component={HomeScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="SearchScreen"
-            component={SearchScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="NutrientScreen"
-            component={NutrientScreen}
-            options={{ headerShown: false }}
-          />
-        </Stack.Navigator>
-      )
+    <Stack.Navigator initialRouteName="HomeScreen">
+      <Stack.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SearchScreen"
+        component={SearchScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="NutrientScreen"
+        component={NutrientScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
 }
 function MaterialBottomTabNavigator() {
   const colorScheme = useColorScheme();

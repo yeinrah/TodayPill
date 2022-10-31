@@ -28,6 +28,7 @@ export type RootStackParamList = {
   SearchScreen: undefined;
   NutrientScreen: undefined;
   LoginSuccessScreen: undefined;
+  MainScreen: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
