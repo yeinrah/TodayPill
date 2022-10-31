@@ -52,7 +52,7 @@ export default function Navigation({ colorScheme, LoginCheck }: Inavigation) {
       <RootNavigator />
       <Stack.Navigator>
         <Stack.Screen
-          name="LoginScreen"
+          name="MainScreen"
           component={MaterialBottomTabNavigator}
           options={{ headerShown: false }}
         />
