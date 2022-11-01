@@ -42,9 +42,7 @@ public class Supplement {
 	@Column(name = "note")
 	private String note;
 		
-	@Column(name = "views")
-	private int views;
-	
-	
+	@Column(name = "like")
+	private int like;
 }
 
