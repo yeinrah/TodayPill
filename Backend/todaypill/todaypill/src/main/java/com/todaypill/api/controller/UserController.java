@@ -127,10 +127,12 @@ public class UserController {
 	@PostMapping("/healthcheckdata")
 	@ApiOperation(value = "건강검진 내역을 가져와서 영양소를 추천한다", notes = "추천하자")
 	public ResponseEntity<?> getHealthCheckData(@RequestBody GetHealthReq getHealthReq) throws Exception {
-		List<String> list = codef.getHealthCheckData(getHealthReq.getUserName(), getHealthReq.getPhoneNumber(), getHealthReq.getBirthday());
-		userService.updateRecommend(getHealthReq.getEmail(),list.get(1), list.get(2), list.get(3));
+		HashMap<String,Object> map = codef.getHealthCheckData(getHealthReq.getUserName(), getHealthReq.getPhoneNumber(), getHealthReq.getBirthday());
+		List<String> list = (List<String>)map.get("list");
+		boolean check = (boolean)map.get("check");
+		userService.updateRecommend(getHealthReq.getEmail(),list.get(0), list.get(1), list.get(2));
 		
-		return new ResponseEntity<String>(HttpStatus.OK);
+		return new ResponseEntity<Boolean>(check, HttpStatus.OK);
 	}
 	
 	//4. 영양소 추천으로 인한 추천성분 업데이트
@@ -157,11 +159,18 @@ public class UserController {
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 	
-	//영양제별 좋아요 개수 배열 리턴
+	//7. 영양제별 좋아요 개수 배열 리턴
 	@GetMapping("/supplementlike/{supplementId}")
 	@ApiOperation(value = "영양제별 좋아요 누른 사람  userId 리턴", notes = "리턴")
 	public ResponseEntity<?> deleteLike(@PathVariable int supplementId) throws Exception {
 		List<Integer> list = userService.likeListOfSupplement(supplementId);
 		return new ResponseEntity<List<Integer>>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping("/user/{email}")
+	@ApiOperation(value = "email로 유저 정보 얻기", notes = "유저 정보 얻기")
+	public ResponseEntity<?> deleteLike(@PathVariable String email) throws Exception {
+		User user = userService.findOneByEmail(email);
+		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 } 
