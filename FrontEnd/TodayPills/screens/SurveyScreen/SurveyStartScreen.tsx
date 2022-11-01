@@ -1,13 +1,23 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import BackgroundScreen from "../BackgroundScreen";
 
 const SurveyStartScreen = ({ navigation }: any) => {
+  const [name, setName] = useState("");
+  const getMyName = async () => {
+    const nowName = await AsyncStorage.getItem("@storage_User");
+    setName(nowName);
+  };
+  useEffect(() => {
+    getMyName();
+  }, []);
   return (
     <BackgroundScreen>
       <View style={styles.container}>
         <View style={styles.textcontainer}>
           <View style={styles.flexrow}>
-            <Text style={[styles.text, styles.whitetext]}>고은민&nbsp;</Text>
+            <Text style={[styles.text, styles.whitetext]}>{name}&nbsp;</Text>
             <Text style={[styles.text, styles.blacktext]}>님의</Text>
           </View>
           <Text style={[styles.text, styles.blacktext]}>

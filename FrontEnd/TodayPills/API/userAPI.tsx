@@ -15,4 +15,8 @@ const HealthScreeningCheck = async (
     userName,
   });
 };
-export { HealthScreeningCheck };
+const getUserInfoByEmail = async (email: string) => {
+  const result = await api.get(`/user/user/${email}`);
+  return result.data;
+};
+export { HealthScreeningCheck, getUserInfoByEmail };
