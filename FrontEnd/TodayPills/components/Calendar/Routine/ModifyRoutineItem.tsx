@@ -5,13 +5,17 @@ import {
   Image,
   Pressable,
   ScrollView,
+  Switch,
+  Modal,
 } from "react-native";
 
 import { useState } from "react";
 import { accent, primary, secondary } from "../../../constants/Colors";
 import PillCard from "../../UI/PillCard";
 import { Ionicons } from "@expo/vector-icons";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Entypo, AntDesign } from "@expo/vector-icons";
+import CustomModal from "../../UI/CustomModal";
 
 const dummyRoutine = {
   time: "17:30",
@@ -26,6 +30,42 @@ const dummyRoutine = {
 export default function ModifyRoutineItem() {
   const [routineItem, setRoutineItem] = useState(dummyRoutine);
   const [pillCnt, setPillCnt] = useState(routineItem.cnt);
+  const [isEnabled, setIsEnabled] = useState(false);
+  const [isAM, setIsAM] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [takenTime, setTakenTime] = useState("08:00");
+
+  const [isDatePickerVisible, setDatePickerVisible] = useState(false);
+
+  const showDatePicker = () => {
+    setDatePickerVisible(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisible(false);
+  };
+
+  const handleConfirm = (date: Date) => {
+    console.warn("A date has been picked: ", date);
+    let hour = date.getHours();
+    let minute = date.getMinutes().toString();
+    if (hour > 12) {
+      hour -= 12;
+      setIsAM(false);
+    } else if (hour == 12) {
+      setIsAM(false);
+    }
+
+    if (minute.length === 1) {
+      minute = "0" + minute;
+    }
+
+    setTakenTime(`${hour}: ${minute}`);
+    hideDatePicker();
+  };
+
+  const alarmToggleSwitch = () =>
+    setIsEnabled((previousState) => !previousState);
 
   const decreaseHandler = () => {
     setPillCnt((pillCnt) => (pillCnt > 1 ? pillCnt - 1 : 1));
@@ -67,25 +107,55 @@ export default function ModifyRoutineItem() {
         </View>
       </PillCard>
 
-      <View style={styles.takenTimeContainer}>
+      <View>
         <PillCard height={150} width={"90%"} bgColor={"#edfbf9"}>
           <View style={styles.takenTimeInnerContainer}>
             <View style={styles.dayAlarmContainer}>
               <Text style={styles.name}>섭취 요일</Text>
 
-              <Pressable onPress={increaseHandler} style={styles.modifyDay}>
-                <Text style={styles.dayName}>매일</Text>
+              <Pressable
+                onPress={() => setModalVisible(true)}
+                style={styles.directionRow}
+              >
+                <Text style={styles.dayAndTimeName}>매일</Text>
                 <AntDesign name="right" size={24} color="black" />
+                <View>
+                  <CustomModal
+                    modalVisible={modalVisible}
+                    modalCloseHandler={() => setModalVisible(false)}
+                  >
+                    <View style={styles.modalContainer}>
+                      <Text>모달!!!!!!!!!!!!!!!</Text>
+                    </View>
+                  </CustomModal>
+                </View>
               </Pressable>
             </View>
+
             <View style={{ alignItems: "center" }}>
               <View style={[styles.separator, { width: "90%" }]} />
             </View>
             <View style={styles.dayAlarmContainer}>
               <Text style={styles.name}>섭취 시간</Text>
 
-              <Pressable onPress={increaseHandler} style={styles.modifyDay}>
-                <Text style={styles.cnt}>800</Text>
+              <Pressable onPress={showDatePicker} style={styles.directionRow}>
+                <Text style={styles.dayAndTimeName}>
+                  {takenTime} {isAM ? "AM" : "PM"}
+                  {/* dayTimePicker 쓰기 */}
+                </Text>
+                <DateTimePickerModal
+                  // is24Hour={true}
+                  positiveButtonLabel="확인"
+                  negativeButtonLabel="취소"
+                  // positiveButtonLabel="Negative"
+                  isVisible={isDatePickerVisible}
+                  mode="time"
+                  // display="clock"
+                  onConfirm={handleConfirm}
+                  onCancel={hideDatePicker}
+
+                  // isDarkModeEnabled={true}
+                />
                 <AntDesign name="right" size={24} color="black" />
               </Pressable>
             </View>
@@ -93,8 +163,29 @@ export default function ModifyRoutineItem() {
         </PillCard>
       </View>
 
-      <View style={styles.takenTimeContainer}>
-        <PillCard height={150} width={"90%"} bgColor={"#edfbf9"}></PillCard>
+      <View>
+        <PillCard height={130} width={"90%"} bgColor={"#edfbf9"}>
+          <View style={styles.takenTimeInnerContainer}>
+            <View style={styles.switchAlarmContainer}>
+              <Text style={styles.pushAlarmName}>푸시 알람</Text>
+              <Switch
+                // style={{ height: "50%" }}
+                style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] }}
+                trackColor={{ false: "#767577", true: accent }}
+                thumbColor={isEnabled ? "white" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={alarmToggleSwitch}
+                value={isEnabled}
+              />
+            </View>
+            <View style={styles.alarmExplanation}>
+              <Text style={styles.alarmExplText}>
+                푸시 알람을 켜두시면 등록하신 시간에 맞춰 알림을 받을 수 있어요
+                !
+              </Text>
+            </View>
+          </View>
+        </PillCard>
       </View>
       {/* <Text style={styles.takenDate}></Text>
       <View style={styles.pillRoutineContainer}>
@@ -177,25 +268,58 @@ const styles = StyleSheet.create({
     color: "rgba(0, 0, 0, 0.5)",
     paddingHorizontal: 25,
   },
-  takenTimeContainer: {
-    marginVertical: 10,
-  },
+
   takenTimeInnerContainer: {
     flex: 1,
+    // backgroundColor: "red",
   },
+  switchAlarmContainer: {
+    flex: 1,
+    flexDirection: "row",
 
+    paddingHorizontal: 20,
+    // backgroundColor: "red",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  pushAlarmName: {
+    // marginVertical: 7,
+    fontSize: 21,
+    fontWeight: "bold",
+  },
+  alarmExplanation: {
+    flex: 1,
+    paddingHorizontal: 20,
+    // paddingBottom: 30,
+    alignItems: "center",
+  },
+  alarmExplText: {
+    fontSize: 13,
+    color: "#FF78A3",
+  },
+  dayAlarmOuterContainer: {
+    flex: 1,
+  },
   dayAlarmContainer: {
     paddingHorizontal: 13,
     flex: 1,
+    height: "100%",
+    // backgroundColor: "yellow",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
-  modifyDay: {
+  directionRow: {
+    // backgroundColor: "red",
     flexDirection: "row",
   },
-  dayName: {
+  dayAndTimeName: {
     fontWeight: "900",
-    fontSize: 15,
+    fontSize: 18,
+  },
+
+  modalContainer: {
+    height: 150,
+    width: 250,
   },
 });
