@@ -40,7 +40,7 @@ const KakaoScreen = ({ navigation }: any) => {
 
       // console.log(response);
       // console.log(value, "this is value");
-      navigation.replace("MainScreen");
+      navigation.replace("LoginSuccessScreen");
       // const result = await storeUser(value);
       // if (result === "stored") {
       //   const user = await getData("user");
