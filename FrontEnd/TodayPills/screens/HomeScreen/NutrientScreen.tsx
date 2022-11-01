@@ -27,6 +27,7 @@ const NutrientScreen = ({ navigation }: any) => {
                         <DetailedPillCard />
                         <DetailedPillCard />
                         <DetailedPillCard />
+                        <View style={styles.height} />
                     </ScrollView>
                 </View>
             </Card>
@@ -58,6 +59,9 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         textAlign: "center",
         color: "white",
+    },
+    height: {
+        height: 25,
     },
 });
 

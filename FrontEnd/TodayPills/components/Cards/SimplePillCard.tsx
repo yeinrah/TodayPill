@@ -1,5 +1,4 @@
-import { StyleSheet, View, Image, Text, ImageSourcePropType } from "react-native";
-import { AntDesign } from '@expo/vector-icons';
+import { StyleSheet, View, Image, Text, ImageSourcePropType, Pressable } from "react-native";
 import { useState } from "react";
 
 interface PillProps {
@@ -20,13 +19,17 @@ const SimplePillCard = (props: PillProps) => {
                         style={styles.pillimage}
                     />
                 </View>
-                <AntDesign
-                    name="hearto"
-                    size={12}
-                    color={like ? "#E2C3DC" : "#CCCCCC"}
-                    style={styles.likeicon}
+                <Pressable
                     onPress={() => setLike(!like)}
-                />
+                    style={styles.heartcontainer}
+                >
+                    <Image
+                        source={like ?
+                        require("../../assets/images/hearton.png") :
+                        require("../../assets/images/heartoff.png")}
+                        style={styles.heart}
+                    />
+                </Pressable>
             </View>
             <View style={styles.textcontainer}>
                 <Text style={styles.brandname}>
@@ -66,10 +69,17 @@ const styles = StyleSheet.create({
         height: "100%",
         resizeMode: "contain",
     },
-    likeicon: {
+    heartcontainer: {
+        width: 30,
+        height: 30,
         position: "absolute",
-        bottom: 2,
-        right: 2,
+        bottom: 0,
+        right: -5,
+    },
+    heart: {
+        width: "100%",
+        height: "100%",
+        resizeMode: "contain",
     },
     textcontainer: {
         width: "100%",
