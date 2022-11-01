@@ -24,7 +24,7 @@ import io.codef.api.EasyCodefServiceType;
 
 @Component
 public class Codef {
-	public List<String> getHealthCheckData(String userName, String phoneNumber, String birthday) throws InterruptedException, IOException, ParseException {
+	public HashMap<String, Object> getHealthCheckData(String userName, String phoneNumber, String birthday) throws InterruptedException, IOException, ParseException {
 		EasyCodef codef = new EasyCodef();
 		String PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2AIbpmBsoFttEpq9vQZxi5VvSR6zidBfN3cqnG+88qRzYoql7iJ8nUVtQnrcvcUpSSKUKcnvbast1R9iCR03I5IdVcJCfgczdGi6ltGFB7HGLKpIuhf+r+AbNy2f/DSbjNW3TzoyCqcaJR6Uk+QTTjQxx3J4va+L4UCttmgDfc1KbzUkvnSz+XRSJ8Xvh91fTuxjhQ14T7zPuPrwtZjsW6HNHCSNsQKYUb8bW+y1umMWk6wg0lmq0rVfrqum1113cLZZFKurNY1XmT9MRofDLzurJoSJ2QRH+98tNV7/hFIcMRQ+u+r3/QjgjKTrxiEpJx8XL7Wm7zKPQo5h6WofHQIDAQAB";
 		String CLIENT_ID = "2a505173-8184-42a8-955c-2ca23734baf2";
@@ -130,6 +130,15 @@ public class Codef {
 			responseMap = new ObjectMapper().readValue(result, HashMap.class);
 			resultMap = (HashMap<String, Object>)responseMap.get("data");
 			ArrayList<Object> list = (ArrayList)resultMap.get("resReferenceList");
+			System.out.println("레퍼런스데이터 사이즈=>"+list.size());
+			ArrayList<Object> prevList = (ArrayList)resultMap.get("resPreviewList");
+			System.out.println("진짜데이터 사이즈=>"+prevList.size());
+			HashMap<String, Object> returnMap = new HashMap<>();
+			
+			boolean checkHealthScreening = true;
+			if(prevList.size()==0) checkHealthScreening = false;
+			returnMap.put("check", checkHealthScreening);
+			
 			System.out.println(list);
 			System.out.println(list.get(3).getClass().getName());
 			LinkedHashMap<String, Object> linkedHashMap = (LinkedHashMap)list.get(3);
@@ -180,8 +189,8 @@ public class Codef {
 			if(resBMI>=23) {
 				insufficientNutrient.add("비타민 B");
 			}
-			
-			return insufficientNutrient;
+			returnMap.put("list", insufficientNutrient);
+			return returnMap;
 			
 	} 
 }
