@@ -20,7 +20,7 @@ const SurveyLoadingScreen = ({ navigation }: any) => {
           <Pressable
             android_ripple={{ color: "#4E736F" }}
             style={styles.buttonInnerContainer}
-            onPress={() => navigation.navigate("MainScreen")}
+            onPress={() => navigation.navigate("PersonalRecommendationScreen")}
           >
             <Text style={styles.title}>다음</Text>
           </Pressable>

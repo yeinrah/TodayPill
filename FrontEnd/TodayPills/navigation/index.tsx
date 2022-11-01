@@ -49,6 +49,7 @@ import LoginSuccessScreen from "../screens/StartScreen/LoginSuccessScreen";
 import HealthScreeningDetail from "../screens/SurveyScreen/HealthScreeningDetailScreen";
 import HealthScreeningDetailScreen from "../screens/SurveyScreen/HealthScreeningDetailScreen";
 import SurveyLoadingScreen from "../screens/SurveyScreen/SurveyLoadingScreen";
+import PersonalRecommendationScreen from "../screens/SurveyScreen/PersonalRecommendationScreen";
 interface Inavigation {
   colorScheme: ColorSchemeName;
   LoginCheck: () => {};
@@ -106,6 +107,11 @@ export default function Navigation({ colorScheme, LoginCheck }: Inavigation) {
         <Stack.Screen
           name="SurveyLoadingScreen"
           component={SurveyLoadingScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="PersonalRecommendationScreen"
+          component={PersonalRecommendationScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
