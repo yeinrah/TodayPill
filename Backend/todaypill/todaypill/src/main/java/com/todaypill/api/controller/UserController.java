@@ -14,16 +14,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todaypill.codef.Codef;
+import com.todaypill.db.entity.Like;
 import com.todaypill.db.entity.User;
 import com.todaypill.request.GetHealthReq;
+import com.todaypill.request.InsertLikeReq;
 import com.todaypill.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -120,7 +124,7 @@ public class UserController {
 
 
 	//3. 건강검진 내역 확인하기
-	@PostMapping("/getHealthCheckData")
+	@PostMapping("/healthcheckdata")
 	@ApiOperation(value = "건강검진 내역을 가져와서 영양소를 추천한다", notes = "추천하자")
 	public ResponseEntity<?> getHealthCheckData(@RequestBody GetHealthReq getHealthReq) throws Exception {
 		List<String> list = codef.getHealthCheckData(getHealthReq.getUserName(), getHealthReq.getPhoneNumber(), getHealthReq.getBirthday());
@@ -130,11 +134,34 @@ public class UserController {
 	}
 	
 	//4. 영양소 추천으로 인한 추천성분 업데이트
-	@GetMapping("/updateRecommend")
+	@PutMapping("/recommend")
 	@ApiOperation(value = "추천성분 업데이트", notes = "추천성분 업데이트")
 	public ResponseEntity<?> updateRecommend(@RequestBody GetHealthReq getHealthReq) throws Exception {
 		codef.getHealthCheckData(getHealthReq.getUserName(), getHealthReq.getPhoneNumber(), getHealthReq.getBirthday());
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 	
-}
+	//5. 좋아요 누르면 insert
+	@PostMapping("/insertlike")
+	@ApiOperation(value = "좋아요 누르기", notes = "좋아요 테이블 데이터 넣기")
+	public ResponseEntity<?> insertLike(@RequestBody InsertLikeReq insertLikeReq) throws Exception {
+		userService.insertLike(insertLikeReq.getUserId(), insertLikeReq.getSupplementId());
+		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+	
+	//6. 좋아요 눌러진거 삭제하기
+	@DeleteMapping("/deletelike")
+	@ApiOperation(value = "좋아요 삭제하기", notes = "좋아요 테이블 데이터 삭제하기")
+	public ResponseEntity<?> deleteLike(@RequestBody InsertLikeReq insertLikeReq) throws Exception {
+		userService.deleteLike(insertLikeReq.getUserId(), insertLikeReq.getSupplementId());
+		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+	
+	//영양제별 좋아요 개수 배열 리턴
+	@GetMapping("/supplementlike/{supplementId}")
+	@ApiOperation(value = "영양제별 좋아요 누른 사람  userId 리턴", notes = "리턴")
+	public ResponseEntity<?> deleteLike(@PathVariable int supplementId) throws Exception {
+		List<Integer> list = userService.likeListOfSupplement(supplementId);
+		return new ResponseEntity<List<Integer>>(list, HttpStatus.OK);
+	}
+} 

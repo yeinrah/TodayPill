@@ -59,40 +59,6 @@ public class MyPageService {
 	}
 
 	@Transactional
-	public Like insertLike(int userId, int supplementId) throws Exception {
-		Like like = Like.builder().userId(userId).supplementId(supplementId).build();
-		// 기존 영양제의 찜 값 가져오기
-		Supplement supplement = supplementRepository.findOneBySupplementId(supplementId);
-		int likeNum = supplement.getLike();
-		// 영양제에 찜 1 추가하기
-		supplementRepository.updateLike(supplementId, likeNum + 1);
-		return likeRepository.save(like);
-	}
-
-	@Transactional
-	public void deleteLike(int userId, int supplementId) throws Exception {
-		// 기존 영양제의 찜 값 가져오기
-		Supplement supplement = supplementRepository.findOneBySupplementId(supplementId);
-		int likeNum = supplement.getLike();
-		// 영양제의 찜 1 감소
-		List<Like> list = likeRepository.likeClickOrNot(userId, supplementId);
-		if (list.size() != 0) {
-			likeRepository.delete(list.get(0));
-			supplementRepository.updateLike(supplementId, likeNum - 1);
-		}
-	}
-
-	@Transactional
-	public List<Integer> likeListOfSupplement(int supplementId) throws Exception {
-		List<Like> list = likeRepository.findAllBySupplementId(supplementId);
-		List<Integer> UserIdList = new ArrayList<>();
-		for (int i = 0; i < list.size(); i++) {
-			UserIdList.add(list.get(i).getUserId());
-		}
-		return UserIdList;
-	}
-
-	@Transactional
 	public Routine insertRoutine(Routine routine) throws Exception {
 		return routineRepository.save(routine);
 	}
