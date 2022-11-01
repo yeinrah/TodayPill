@@ -36,8 +36,9 @@ const KakaoScreen = ({ navigation }: any) => {
       };
       const response = await axios.post(REDIRECT_URI, body);
       const value = response.data;
+      console.log(value);
       await AsyncStorage.setItem("@storage_User", "정서");
-
+      await AsyncStorage.setItem("@storage_userEmail", value.email);
       // console.log(response);
       // console.log(value, "this is value");
       navigation.replace("LoginSuccessScreen");
