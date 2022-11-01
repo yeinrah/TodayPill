@@ -85,7 +85,7 @@ export default function MyPageScreen({ navigation }: any) {
               onPress={() => console.log("추천 다시 받기 btn 클릭")}
             />
             <CustomBtn
-              buttonColor={accent}
+              buttonColor={primary}
               title={"로그아웃"}
               titleColor={"#fff"}
               buttonWidth={"90%"}

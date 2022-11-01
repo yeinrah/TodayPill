@@ -7,15 +7,20 @@ import {
   ScrollView,
   Switch,
   Modal,
+  Button,
 } from "react-native";
 
-import { useState } from "react";
+import { useState, useRef, useMemo, useCallback } from "react";
 import { accent, primary, secondary } from "../../../constants/Colors";
 import PillCard from "../../UI/PillCard";
 import { Ionicons } from "@expo/vector-icons";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Entypo, AntDesign } from "@expo/vector-icons";
-import CustomModal from "../../UI/CustomModal";
+import Animated from "react-native-reanimated";
+// import BottomSheet from "reanimated-bottom-sheet";
+import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
+import CustomBtn from "../../UI/CustomBtn";
+import WeekDayList from "./WeekDayList";
 
 const dummyRoutine = {
   time: "17:30",
@@ -73,6 +78,39 @@ export default function ModifyRoutineItem() {
   const increaseHandler = () => {
     setPillCnt((pillCnt) => (pillCnt < 20 ? pillCnt + 1 : 20));
   };
+
+  // const renderContent = () => (
+  //   <View
+  //     style={{
+  //       backgroundColor: "white",
+  //       padding: 16,
+  //       height: 450,
+  //     }}
+  //   >
+  //     <Text>Swipe down to close</Text>
+  //   </View>
+  // );
+  // ref
+  const sheetRef = useRef<BottomSheet>(null);
+
+  // variables
+  const snapPoints = useMemo(() => ["20%", "50%", "100%"], []);
+
+  // callbacks
+  const handleSheetChange = useCallback((index) => {
+    // console.warn("handleSheetChange", index);
+  }, []);
+  const handleSnapPress = useCallback((index) => {
+    sheetRef.current?.snapToIndex(index);
+  }, []);
+  const handleClosePress = useCallback(() => {
+    sheetRef.current?.close();
+  }, []);
+
+  const chooseDayHandler = () => {
+    // 선택한 요일들 인덱스로 array 만들어서 보내기
+    handleClosePress();
+  };
   return (
     <ScrollView style={styles.outerContainer}>
       <PillCard height={400} width={"90%"} bgColor={"#edfbf9"}>
@@ -108,34 +146,62 @@ export default function ModifyRoutineItem() {
       </PillCard>
 
       <View>
-        <PillCard height={150} width={"90%"} bgColor={"#edfbf9"}>
+        <PillCard height={160} width={"90%"} bgColor={"#edfbf9"}>
           <View style={styles.takenTimeInnerContainer}>
-            <View style={styles.dayAlarmContainer}>
-              <Text style={styles.name}>섭취 요일</Text>
+            <View style={styles.dayAlarmOuterContainer}>
+              <View style={styles.dayAlarmContainer}>
+                <Text style={styles.name}>섭취 요일</Text>
 
-              <Pressable
-                onPress={() => setModalVisible(true)}
-                style={styles.directionRow}
-              >
-                <Text style={styles.dayAndTimeName}>매일</Text>
-                <AntDesign name="right" size={24} color="black" />
-                <View>
-                  <CustomModal
+                <Pressable
+                  onPress={() => handleSnapPress(2)}
+                  // onPress={() => setModalVisible(true)}
+                  style={styles.directionRow}
+                >
+                  <Text style={styles.dayAndTimeName}>매일</Text>
+                  {/* <AntDesign name="right" size={24} color="black" /> */}
+                  <View>
+                    {/* <BottomSheet
+                    ref={sheetRef}
+                    snapPoints={[450, 300, 0]}
+                    borderRadius={10}
+                    renderContent={renderContent}
+                  /> */}
+                    <View>
+                      {/* <Button
+                      title="Snap To 90%"
+                      onPress={() => handleSnapPress(2)}
+                    />
+                    <Button
+                      title="Snap To 50%"
+                      onPress={() => handleSnapPress(1)}
+                    />
+                    <Button
+                      title="Snap To 25%"
+                      onPress={() => handleSnapPress(0)}
+                    /> */}
+                    </View>
+
+                    {/* <CustomModal
                     modalVisible={modalVisible}
                     modalCloseHandler={() => setModalVisible(false)}
                   >
                     <View style={styles.modalContainer}>
                       <Text>모달!!!!!!!!!!!!!!!</Text>
                     </View>
-                  </CustomModal>
-                </View>
-              </Pressable>
+                  </CustomModal> */}
+                  </View>
+                </Pressable>
+              </View>
+
+              <View style={styles.dayListContainer}>
+                <WeekDayList />
+              </View>
             </View>
 
             <View style={{ alignItems: "center" }}>
               <View style={[styles.separator, { width: "90%" }]} />
             </View>
-            <View style={styles.dayAlarmContainer}>
+            <View style={styles.dayAlarmSecondContainer}>
               <Text style={styles.name}>섭취 시간</Text>
 
               <Pressable onPress={showDatePicker} style={styles.directionRow}>
@@ -186,7 +252,28 @@ export default function ModifyRoutineItem() {
             </View>
           </View>
         </PillCard>
+        {/* <BottomSheet
+          ref={sheetRef}
+          snapPoints={snapPoints}
+          onChange={handleSheetChange}
+        >
+          <View style={styles.chooseDays}>
+            <WeekDayList />
+          </View>
+          <BottomSheetView style={styles.bottomContainer}>
+            <View style={styles.chooseBtn}>
+              <CustomBtn
+                buttonColor={accent}
+                title={"수정 완료"}
+                titleColor={"#fff"}
+                buttonWidth={"90%"}
+                onPress={chooseDayHandler}
+              />
+            </View>
+          </BottomSheetView>
+        </BottomSheet> */}
       </View>
+
       {/* <Text style={styles.takenDate}></Text>
       <View style={styles.pillRoutineContainer}>
      
@@ -298,16 +385,26 @@ const styles = StyleSheet.create({
     color: "#FF78A3",
   },
   dayAlarmOuterContainer: {
-    flex: 1,
+    flex: 5,
   },
   dayAlarmContainer: {
-    paddingHorizontal: 13,
+    paddingHorizontal: 17,
     flex: 1,
     height: "100%",
     // backgroundColor: "yellow",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  dayAlarmSecondContainer: {
+    paddingHorizontal: 13,
+    flex: 2,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  dayListContainer: {
+    flex: 1,
   },
   directionRow: {
     // backgroundColor: "red",
@@ -321,5 +418,26 @@ const styles = StyleSheet.create({
   modalContainer: {
     height: 150,
     width: 250,
+  },
+  // bottomOuterContainer: {
+  //   height: 150,
+  // },
+  bottomContainer: {
+    flex: 1,
+
+    // margin: 14,
+  },
+  contentContainer: {
+    flex: 1,
+    // alignItems: "center",
+  },
+
+  chooseDays: {
+    backgroundColor: "red",
+    flex: 1,
+  },
+  chooseBtn: {
+    flex: 1,
+    alignItems: "center",
   },
 });
