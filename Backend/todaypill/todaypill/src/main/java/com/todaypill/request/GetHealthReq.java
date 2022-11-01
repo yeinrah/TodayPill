@@ -22,5 +22,9 @@ public class GetHealthReq {
 	@ApiModelProperty(name = "생년원일", example = "19961122")
 	@NotNull(message = "생일을 입력하세요.")
 	private String birthday;
+	
+	@ApiModelProperty(name = "이메일", example = "khss5558@naver.com")
+	@NotNull(message = "이메일을 입력하세요.")
+	private String email;
 
 }
