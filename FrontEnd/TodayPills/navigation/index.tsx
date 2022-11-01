@@ -43,6 +43,12 @@ import {
 import LinkingConfiguration from "./LinkingConfiguration";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SurveyScreen from "../screens/SurveyScreen/SurveyScreen";
+import HealthScreeningCheckScreen from "../screens/StartScreen/HealthScreeningCheckScreen";
+import SurveyStartScreen from "../screens/SurveyScreen/SurveyStartScreen";
+import LoginSuccessScreen from "../screens/StartScreen/LoginSuccessScreen";
+import HealthScreeningDetail from "../screens/SurveyScreen/HealthScreeningDetailScreen";
+import HealthScreeningDetailScreen from "../screens/SurveyScreen/HealthScreeningDetailScreen";
+import SurveyLoadingScreen from "../screens/SurveyScreen/SurveyLoadingScreen";
 interface Inavigation {
   colorScheme: ColorSchemeName;
   LoginCheck: () => {};
@@ -64,7 +70,7 @@ export default function Navigation({ colorScheme, LoginCheck }: Inavigation) {
         />
         <Stack.Screen
           name="LoginSuccessScreen"
-          component={SurveyScreen}
+          component={LoginSuccessScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
@@ -75,6 +81,31 @@ export default function Navigation({ colorScheme, LoginCheck }: Inavigation) {
         <Stack.Screen
           name="KakaoScreen"
           component={KakaoScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="HealthScreeningCheckScreen"
+          component={HealthScreeningCheckScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SurveyStartScreen"
+          component={SurveyStartScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SurveyScreen"
+          component={SurveyScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="HealthScreeningDetailScreen"
+          component={HealthScreeningDetailScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SurveyLoadingScreen"
+          component={SurveyLoadingScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

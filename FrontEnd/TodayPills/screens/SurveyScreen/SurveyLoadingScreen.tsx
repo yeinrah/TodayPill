@@ -1,34 +1,26 @@
-import { Image, StyleSheet, Text, View, Pressable } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import BackgroundScreen from "../BackgroundScreen";
 
-const LoginSuccessScreen = ({ navigation }: any) => {
+const SurveyLoadingScreen = ({ navigation }: any) => {
   return (
     <BackgroundScreen>
       <View style={styles.container}>
+        <View style={styles.textcontainer}>
+          <Text style={[styles.text, styles.greetingtext, styles.blacktext]}>
+            맞춤 추천 완료 !!
+          </Text>
+        </View>
         <View style={styles.imagecontainer}>
           <Image
             style={styles.image}
             source={require("../../assets/images/youngyang/normal.png")}
           />
         </View>
-        <View style={styles.textcontainer}>
-          <Text style={[styles.text, styles.greetingtext, styles.blacktext]}>
-            반가워요!
-          </Text>
-          <View style={styles.flexrow}>
-            <Text style={[styles.text, styles.nametext, styles.whitetext]}>
-              고은민&nbsp;
-            </Text>
-            <Text style={[styles.text, styles.nametext, styles.blacktext]}>
-              님
-            </Text>
-          </View>
-        </View>
         <View style={styles.buttonOuterContainer}>
           <Pressable
             android_ripple={{ color: "#4E736F" }}
             style={styles.buttonInnerContainer}
-            onPress={() => navigation.navigate("HealthScreeningCheckScreen")}
+            onPress={() => navigation.navigate("MainScreen")}
           >
             <Text style={styles.title}>다음</Text>
           </Pressable>
@@ -52,7 +44,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     resizeMode: "contain",
-    marginTop: 20,
   },
   textcontainer: {
     alignItems: "center",
@@ -98,5 +89,4 @@ const styles = StyleSheet.create({
     color: "white",
   },
 });
-
-export default LoginSuccessScreen;
+export default SurveyLoadingScreen;

@@ -34,6 +34,11 @@ export type RootStackParamList = {
   NutrientScreen: undefined;
   LoginSuccessScreen: undefined;
   MainScreen: undefined;
+  HealthScreeningCheckScreen: undefined;
+  SurveyStartScreen: undefined;
+  SurveyScreen: undefined;
+  HealthScreeningDetailScreen: undefined;
+  SurveyLoadingScreen: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
