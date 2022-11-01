@@ -86,4 +86,10 @@ public class UserService {
 		return UserIdList;
 	}
 	
+	@Transactional
+	public User findOneByEmail(String email) throws Exception {
+		User user = userRepository.findOneByEmail(email);
+		return user;
+	}
+	
 }

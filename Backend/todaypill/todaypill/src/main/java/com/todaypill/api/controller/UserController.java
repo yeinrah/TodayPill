@@ -159,11 +159,18 @@ public class UserController {
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 	
-	//영양제별 좋아요 개수 배열 리턴
+	//7. 영양제별 좋아요 개수 배열 리턴
 	@GetMapping("/supplementlike/{supplementId}")
 	@ApiOperation(value = "영양제별 좋아요 누른 사람  userId 리턴", notes = "리턴")
 	public ResponseEntity<?> deleteLike(@PathVariable int supplementId) throws Exception {
 		List<Integer> list = userService.likeListOfSupplement(supplementId);
 		return new ResponseEntity<List<Integer>>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping("/user/{email}")
+	@ApiOperation(value = "email로 유저 정보 얻기", notes = "유저 정보 얻기")
+	public ResponseEntity<?> deleteLike(@PathVariable String email) throws Exception {
+		User user = userService.findOneByEmail(email);
+		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 } 
