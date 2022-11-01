@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LinearGradient } from "expo-linear-gradient";
 import {
   StyleSheet,
@@ -19,9 +20,11 @@ import { accent, primary, secondary } from "../constants/Colors";
 import { RootTabScreenProps } from "../types";
 import BackgroundScreen from "./BackgroundScreen";
 
-export default function MyPageScreen({
-  navigation,
-}: RootTabScreenProps<"MyPage">) {
+export default function MyPageScreen({ navigation }: any) {
+  // RootTabScreenProps<"MyPage">
+  const goMyPillsHandler = () => {
+    navigation.navigate("MyPills", { userId: 1 });
+  };
   return (
     <BackgroundScreen>
       <Card>
@@ -62,7 +65,7 @@ export default function MyPageScreen({
                 title={"내가 섭취중인 영양제"}
                 titleColor={"#fff"}
                 buttonWidth={"70%"}
-                onPress={() => console.log("섭취 중 영양제 btn 클릭")}
+                onPress={goMyPillsHandler}
               />
             </View>
           </View>
@@ -80,6 +83,16 @@ export default function MyPageScreen({
               titleColor={"#fff"}
               buttonWidth={"90%"}
               onPress={() => console.log("추천 다시 받기 btn 클릭")}
+            />
+            <CustomBtn
+              buttonColor={accent}
+              title={"로그아웃"}
+              titleColor={"#fff"}
+              buttonWidth={"90%"}
+              onPress={async () => {
+                await AsyncStorage.removeItem("@storage_User");
+                navigation.replace("Start");
+              }}
             />
           </View>
         </ScrollView>

@@ -24,19 +24,31 @@ import { ColorSchemeName, Pressable } from "react-native";
 // import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import CalendarScreen from "../screens/CalendarScreen";
-import HomeScreen from "../screens/HomeScreen";
+import HomeScreen from "../screens/HomeScreen/HomeScreen";
 import ModalScreen from "../screens/ModalScreen";
+import ModifyRoutineScreen from "../screens/ModifyRoutineScreen";
 import MyPageScreen from "../screens/MyPageScreen";
+import MyPillsScreen from "../screens/MyPillsScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import RecommendationScreen from "../screens/RecommendationScreen";
+import SearchScreen from "../screens/HomeScreen/SearchScreen";
 import KakaoScreen from "../screens/StartScreen/KaKaoScreen";
 import StartScreen from "../screens/StartScreen/StartScreen";
+import NutrientScreen from "../screens/HomeScreen/NutrientScreen";
 import {
   RootStackParamList,
   RootTabParamList,
   RootTabScreenProps,
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import SurveyScreen from "../screens/SurveyScreen/SurveyScreen";
+import HealthScreeningCheckScreen from "../screens/StartScreen/HealthScreeningCheckScreen";
+import SurveyStartScreen from "../screens/SurveyScreen/SurveyStartScreen";
+import LoginSuccessScreen from "../screens/StartScreen/LoginSuccessScreen";
+import HealthScreeningDetail from "../screens/SurveyScreen/HealthScreeningDetailScreen";
+import HealthScreeningDetailScreen from "../screens/SurveyScreen/HealthScreeningDetailScreen";
+import SurveyLoadingScreen from "../screens/SurveyScreen/SurveyLoadingScreen";
 interface Inavigation {
   colorScheme: ColorSchemeName;
   LoginCheck: () => {};
@@ -52,8 +64,13 @@ export default function Navigation({ colorScheme, LoginCheck }: Inavigation) {
       <RootNavigator />
       <Stack.Navigator>
         <Stack.Screen
-          name="LoginScreen"
+          name="MainScreen"
           component={MaterialBottomTabNavigator}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="LoginSuccessScreen"
+          component={LoginSuccessScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
@@ -64,6 +81,31 @@ export default function Navigation({ colorScheme, LoginCheck }: Inavigation) {
         <Stack.Screen
           name="KakaoScreen"
           component={KakaoScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="HealthScreeningCheckScreen"
+          component={HealthScreeningCheckScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SurveyStartScreen"
+          component={SurveyStartScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SurveyScreen"
+          component={SurveyScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="HealthScreeningDetailScreen"
+          component={HealthScreeningDetailScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SurveyLoadingScreen"
+          component={SurveyLoadingScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
@@ -93,11 +135,15 @@ function RootNavigator() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
+        name="MyPills"
+        component={MyPillsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name="Start"
         component={StartScreen}
         options={{ headerShown: false }}
       />
-
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
@@ -114,12 +160,95 @@ function RootNavigator() {
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
  * https://reactnavigation.org/docs/bottom-tab-navigator
  */
-
-function MaterialBottomTabNavigator() {
+function MyPageNav() {
+  return (
+    <Stack.Navigator
+      initialRouteName="MyPage"
+      screenOptions={{
+        headerTitleAlign: "center",
+      }}
+    >
+      <Stack.Screen
+        name="MyPills"
+        component={MyPillsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="MyPage"
+        component={MyPageScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Search"
+        component={SearchScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ModifyRoutine"
+        component={ModifyRoutineScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+}
+function CalendarNav() {
+  return (
+    <Stack.Navigator
+      initialRouteName="Calendar"
+      screenOptions={{
+        headerTitleAlign: "center",
+      }}
+    >
+      <Stack.Screen
+        name="MyPills"
+        component={MyPillsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Calendar"
+        component={CalendarScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ModifyRoutine"
+        component={ModifyRoutineScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+}
+function Home() {
+  return (
+    <Stack.Navigator initialRouteName="HomeScreen">
+      <Stack.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SearchScreen"
+        component={SearchScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="NutrientScreen"
+        component={NutrientScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+}
+function MaterialBottomTabNavigator({ navigation }: any) {
   const colorScheme = useColorScheme();
+  const checkLogin = async () => {
+    if ((await AsyncStorage.getItem("@storage_User")) === null) {
+      navigation.replace("Start");
+    }
+  };
   useFocusEffect(
     React.useCallback(() => {
-      loginCheck();
+      // loginCheck();
+      checkLogin();
     }, [])
   );
   return (
@@ -134,7 +263,7 @@ function MaterialBottomTabNavigator() {
     >
       <BottomTab.Screen
         name="Home"
-        component={HomeScreen}
+        component={Home}
         options={{
           tabBarLabel: "홈",
           tabBarIcon: ({ color }) => (
@@ -163,7 +292,7 @@ function MaterialBottomTabNavigator() {
         //   ),
         // })}
       />
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name="Start"
         component={StartScreen}
         options={{
@@ -173,7 +302,7 @@ function MaterialBottomTabNavigator() {
             <MaterialCommunityIcons name="pill" size={26} color={color} />
           ),
         }}
-      />
+      /> */}
       <BottomTab.Screen
         name="Recommendation"
         component={RecommendationScreen}
@@ -187,7 +316,7 @@ function MaterialBottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Calendar"
-        component={CalendarScreen}
+        component={CalendarNav}
         options={{
           tabBarLabel: "캘린더",
           tabBarIcon: ({ color }) => (
@@ -198,7 +327,7 @@ function MaterialBottomTabNavigator() {
       />
       <BottomTab.Screen
         name="MyPage"
-        component={MyPageScreen}
+        component={MyPageNav}
         options={{
           tabBarLabel: "마이페이지",
           tabBarIcon: ({ color }) => (

@@ -1,7 +1,7 @@
 import { View, TextInput, StyleSheet } from "react-native"
 import { Ionicons } from '@expo/vector-icons';
 
-const SearchBar = () => {
+const SearchBar = ({ navigation }: any) => {
     return (
         <View style={styles.container}>
             <TextInput
@@ -11,8 +11,8 @@ const SearchBar = () => {
             <Ionicons
                 name="search"
                 size={30}
-                color="black"
                 style={styles.searchicon}
+                onPress={() => navigation.navigate("SearchScreen")}
             />
         </View>
     )

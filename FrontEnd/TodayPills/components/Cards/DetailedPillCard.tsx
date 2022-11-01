@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
         position: "relative",
+        marginTop: 10,
         marginHorizontal: 10,
         height: 90,
         backgroundColor: "#F4FAF9",

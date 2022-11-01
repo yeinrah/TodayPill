@@ -1,7 +1,8 @@
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useState } from "react";
-import { accent, primary, secondary } from "../../constants/Colors";
+import { accent, primary, secondary } from "../../../constants/Colors";
+import PillCard from "../../UI/PillCard";
 
 export interface RoutineProps {
   key: number;
@@ -21,12 +22,19 @@ export default function RoutineItem({
 }: RoutineProps) {
   const [isChecked, setIsChecked] = useState(false);
   // const [pillRoutine, setPillRoutine] = useState(dummyRoutine);
+  const deleteCheckHandler = () => {
+    setIsChecked(false);
+  };
+  const checkHandler = () => {
+    setIsChecked(true);
+  };
   return (
     <View style={styles.outerContainer}>
       <View>
         <Text style={styles.time}>{time}</Text>
       </View>
-      <View style={styles.container}>
+
+      <PillCard height={75} width={"90%"} bgColor={"#edfbf9"}>
         <View style={styles.routineContainer}>
           <View style={styles.imageContainer}>
             <Image source={{ uri: image }} style={styles.pillImage} />
@@ -38,13 +46,18 @@ export default function RoutineItem({
           </View>
           <View style={styles.check}>
             {isChecked ? (
-              <AntDesign name="checkcircle" size={30} color={primary} />
+              <Pressable onPress={deleteCheckHandler}>
+                <AntDesign name="checkcircle" size={30} color={primary} />
+              </Pressable>
             ) : (
-              <AntDesign name="checkcircleo" size={30} color="#B7B7B7" />
+              <Pressable onPress={checkHandler}>
+                <AntDesign name="checkcircleo" size={30} color="#B7B7B7" />
+              </Pressable>
             )}
           </View>
         </View>
-      </View>
+      </PillCard>
+
       {/* <Text style={styles.takenDate}></Text>
       <View style={styles.pillRoutineContainer}>
      
@@ -57,19 +70,19 @@ const styles = StyleSheet.create({
   outerContainer: {
     marginTop: 15,
   },
-  container: {
-    flex: 1,
-    backgroundColor: "#edfbf9",
-    // backgroundColor: "white",
-    // alignItems: "center",
-    // justifyContent: "center",
-    // borderWidth: 2,
-    elevation: 4,
-    height: 75,
-    marginHorizontal: 30,
-    marginVertical: 10,
-    borderRadius: 10,
-  },
+  // container: {
+  //   flex: 1,
+  //   backgroundColor: "#edfbf9",
+  //   // backgroundColor: "white",
+  //   // alignItems: "center",
+  //   // justifyContent: "center",
+  //   // borderWidth: 2,
+  //   elevation: 4,
+  //   height: 75,
+  //   marginHorizontal: 30,
+  //   marginVertical: 10,
+  //   borderRadius: 10,
+  // },
   routineContainer: {
     flex: 1,
     flexDirection: "row",
