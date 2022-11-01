@@ -31,7 +31,7 @@ public class Like {
 	private int userId;
 	
 	@Column(name = "supplement_id")
-	private int supplement_id;
+	private int supplementId;
 	
 }
 
