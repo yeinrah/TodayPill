@@ -11,7 +11,7 @@ CREATE TABLE `user` (
  `gender` varchar(2) NULL,
  `recommend_one` varchar(20) NULL,
  `recommend_two` varchar(20) NULL,
- `recommend_thr` varchar(20) NULL
+ `recommend_three` varchar(20) NULL
 );
 
 CREATE TABLE `commonQuestion` (
@@ -41,7 +41,7 @@ CREATE TABLE `supplement` (
  `image` text NULL,
  `ingredients` text NULL,
  `note` text NULL,
- `views` int NULL
+ `like` int NULL
 );
 
 CREATE TABLE `like` (
@@ -62,23 +62,25 @@ CREATE TABLE `nutrients_type` (
  `best_time` varchar(20) NULL
 );
 
-CREATE TABLE `calendar` (
- `calendar_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
- `user_id` int NOT NULL,
- `supplement_id` int NOT NULL,
- `date` varchar(30) NULL COMMENT '년월일',
- `time` varchar(20) NULL COMMENT '시간-분',
- `tablets` int NULL COMMENT '약 개수',
- `day` int NULL COMMENT '요일'
-);
+CREATE TABLE `routine` (
+	`routine_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `user_id` int NOT NULL,
+    `supplement_id` int NOT NULL,
+    `time` varchar(10) NULL COMMENT '(hh:mm)',
+    `day` int NULL COMMENT '요일',
+    `tablets` int NULL
+    );
 
+CREATE TABLE `calendar` (
+	`calendar_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`routine_id` int NOT NULL,
+	`date` datetime NULL COMMENT '(yyyy-MM-dd)',
+	`taken` boolean NULL
+);
 
 ALTER TABLE `commonQuestion` ADD CONSTRAINT `PK_COMMONQUESTION` PRIMARY KEY (
  `user_id`
 );
-
-
-
 
 ALTER TABLE `nutrient_common_code` ADD CONSTRAINT `PK_NUTRIENT_COMMON_CODE` PRIMARY KEY (
  `supplement_id`
@@ -87,8 +89,6 @@ ALTER TABLE `nutrient_common_code` ADD CONSTRAINT `PK_NUTRIENT_COMMON_CODE` PRIM
 ALTER TABLE `nutrients_type` ADD CONSTRAINT `PK_NUTRIENTS_TYPE` PRIMARY KEY (
  `supplement_id`
 );
-
-
 
 ALTER TABLE `commonQuestion` ADD CONSTRAINT `FK_user_TO_commonQuestion_1` FOREIGN KEY (
  `user_id`
@@ -125,17 +125,45 @@ REFERENCES `supplement` (
  `supplement_id`
 );
 
-ALTER TABLE `calendar` ADD CONSTRAINT `FK_user_TO_calendar_1` FOREIGN KEY (
- `user_id`
+ALTER TABLE `routine` ADD CONSTRAINT `FK_user_TO_routine_1` FOREIGN KEY (
+	`user_id`
 )
 REFERENCES `user` (
- `user_id`
+	`user_id`
 );
 
-ALTER TABLE `calendar` ADD CONSTRAINT `FK_supplement_TO_calendar_1` FOREIGN KEY (
- `supplement_id`
+ALTER TABLE `routine` ADD CONSTRAINT `FK_supplement_TO_routine_1` FOREIGN KEY (
+	`supplement_id`
 )
 REFERENCES `supplement` (
- `supplement_id`
+	`supplement_id`
 );
 
+ALTER TABLE `calendar` ADD CONSTRAINT `FK_routine_TO_calendar_1` FOREIGN KEY (
+	`routine_id`
+)
+REFERENCES `routine` (
+	`routine_id`
+);
+
+show tables;
+
+select * from routine;
+
+insert into user values (
+	0, 'test@gmail.com', '김싸피', 26, 'F', '비타민 B', '유산균', '아연'
+);
+
+select * from `user`;
+
+insert into `supplement` values (
+	0, '10억 보장 유산균', 35000, '', '재료1, 재료2', 'Lactobacillus rhamnosus', 1
+);
+
+insert into `like` values (
+	0, 1, 1
+);
+
+select * from `like`;
+
+select * from `routine`;
