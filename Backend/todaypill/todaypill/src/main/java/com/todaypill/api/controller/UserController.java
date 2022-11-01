@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -21,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todaypill.codef.Codef;
+import com.todaypill.db.entity.User;
 import com.todaypill.request.GetHealthReq;
+import com.todaypill.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
 @CrossOrigin(origins = { "*" }, maxAge = 6000)
@@ -30,11 +33,13 @@ import io.swagger.annotations.ApiOperation;
 public class UserController {
 	
 	Codef codef;
-
+	UserService userService;
+	
 	@Autowired
-	public UserController(Codef codef) {
+	public UserController(Codef codef, UserService userService) {
 		super();
 		this.codef = codef;
+		this.userService = userService;
 	}
 	
 	
@@ -65,19 +70,62 @@ public class UserController {
         while((line = br.readLine()) != null) {
             result += line;
         }
-        System.out.println("responseBody => "+result);
+//        System.out.println("responseBody => "+result);
 
         JSONParser parser = new JSONParser();
         JSONObject jsonOb = (JSONObject)parser.parse(result);
+//      JSONObject kakaoAccount = jsonOb.get((Object)"kakao_account");
+        System.out.println("기본 객체 =>" + jsonOb);
+        JSONObject kakaoAccount = (JSONObject)jsonOb.get("kakao_account");
+        JSONObject getNickname = (JSONObject)kakaoAccount.get("profile");
+        
+        String name = (String)getNickname.get("nickname");
+        String age = (String)kakaoAccount.get("age_range");
+        age = age.substring(0,2);
+        int realAge = Integer.parseInt(age);
+        String email = (String)kakaoAccount.get("email");
+        String gender = (String)kakaoAccount.get("gender");
+        if(gender.equals("male")) gender = "남";
+        else if(gender.equals("Female")) gender = "여";
+        else gender = "x";
+        
+        System.out.println("카카오 =>"+kakaoAccount);
         System.out.println(jsonOb);
-        return new ResponseEntity<String>(HttpStatus.OK);
+        System.out.println(name);
+        System.out.println(realAge);
+        System.out.println(email);
+        System.out.println(gender);
+        User user = userService.signup(email, name, realAge, gender);
+        
+        if(user==null) {
+        	HashMap<String, Object> map = new HashMap();
+        	map.put("signup", false);
+        	map.put("name", name);
+        	map.put("age", realAge);        	
+        	map.put("email", email);
+        	map.put("gender", gender);
+            return new ResponseEntity<HashMap<String,Object>>(map, HttpStatus.OK);
+        }else {
+        	HashMap<String, Object> map = new HashMap();
+        	map.put("signup", true);
+        	map.put("name", name);
+        	map.put("age", realAge);        	
+        	map.put("email", email);
+        	map.put("gender", gender);
+            return new ResponseEntity<HashMap<String,Object>>(map, HttpStatus.OK);
+        }
+        
+
     }
-	
+
+
 	//3. 건강검진 내역 확인하기
-	@GetMapping("/getHealthCheckData")
-	@ApiOperation(value = "건강검진 내역을 가져오는지 확인한다", notes = "확인하자")
+	@PostMapping("/getHealthCheckData")
+	@ApiOperation(value = "건강검진 내역을 가져와서 영양소를 추천한다", notes = "추천하자")
 	public ResponseEntity<?> getHealthCheckData(@RequestBody GetHealthReq getHealthReq) throws Exception {
-		codef.getHealthCheckData(getHealthReq.getUserName(), getHealthReq.getPhoneNumber(), getHealthReq.getBirthday());
+		List<String> list = codef.getHealthCheckData(getHealthReq.getUserName(), getHealthReq.getPhoneNumber(), getHealthReq.getBirthday());
+		userService.updateRecommend(getHealthReq.getEmail(),list.get(1), list.get(2), list.get(3));
+		
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 	

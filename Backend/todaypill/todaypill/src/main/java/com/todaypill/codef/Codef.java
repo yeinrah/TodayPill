@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -22,7 +24,7 @@ import io.codef.api.EasyCodefServiceType;
 
 @Component
 public class Codef {
-	public void getHealthCheckData(String userName, String phoneNumber, String birthday) throws InterruptedException, IOException, ParseException {
+	public List<String> getHealthCheckData(String userName, String phoneNumber, String birthday) throws InterruptedException, IOException, ParseException {
 		EasyCodef codef = new EasyCodef();
 		String PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2AIbpmBsoFttEpq9vQZxi5VvSR6zidBfN3cqnG+88qRzYoql7iJ8nUVtQnrcvcUpSSKUKcnvbast1R9iCR03I5IdVcJCfgczdGi6ltGFB7HGLKpIuhf+r+AbNy2f/DSbjNW3TzoyCqcaJR6Uk+QTTjQxx3J4va+L4UCttmgDfc1KbzUkvnSz+XRSJ8Xvh91fTuxjhQ14T7zPuPrwtZjsW6HNHCSNsQKYUb8bW+y1umMWk6wg0lmq0rVfrqum1113cLZZFKurNY1XmT9MRofDLzurJoSJ2QRH+98tNV7/hFIcMRQ+u+r3/QjgjKTrxiEpJx8XL7Wm7zKPQo5h6WofHQIDAQAB";
 		String CLIENT_ID = "2a505173-8184-42a8-955c-2ca23734baf2";
@@ -89,9 +91,15 @@ public class Codef {
 		accountMap.put("is2Way",	true);	
 		System.out.println("accountMap2 =>" + accountMap);
 		JSONParser parser = new JSONParser();
+//		진짜로 할때
 			JSONObject jsonob = (JSONObject) parser.parse(result);
 			jsonob = (JSONObject) jsonob.get("data");
-
+			
+		//샌드박스
+//		System.out.println(result);
+//		JSONArray jsonArr = (JSONArray) parser.parse(result);
+//		JSONObject jsonob = (JSONObject)jsonArr.get(0);
+		
 			HashMap<String, Object> add = new HashMap<>();
 			add.put("jobIndex", Integer.parseInt(jsonob.get("jobIndex").toString()));
 			add.put("threadIndex", Integer.parseInt(jsonob.get("threadIndex").toString()));
@@ -114,14 +122,66 @@ public class Codef {
 //			}
 		
 //			accountMap.put("data",result);
-			Thread.sleep(20000);
+			Thread.sleep(15000);
 			result = codef.requestCertification(productUrl, EasyCodefServiceType.DEMO, accountMap);
 
-		
-		System.out.println(result);
-		
-		
-		HashMap<String, Object> resultMap2 = (HashMap<String, Object>)accountMap.get("result");
-		
+			//resReferenceList를 가져오는 것. 실제로는 resPreviewList를 가져오는게 맞는듯??
+			System.out.println(result);
+			responseMap = new ObjectMapper().readValue(result, HashMap.class);
+			resultMap = (HashMap<String, Object>)responseMap.get("data");
+			ArrayList<Object> list = (ArrayList)resultMap.get("resReferenceList");
+			System.out.println(list);
+			System.out.println(list.get(3).getClass().getName());
+			LinkedHashMap<String, Object> linkedHashMap = (LinkedHashMap)list.get(3);
+			System.out.println();
+//			System.out.println((String)linkedHashMap.get("resyGPT"));
+//			System.out.println((String)linkedHashMap.get("resTotalCholesterol"));
+//			System.out.println((String)linkedHashMap.get("resBloodPressure"));
+//			System.out.println((String)linkedHashMap.get("resBMI"));
+//			JSONObject listob = (JSONObject)parser.parse((String)list.get(3));
+//			System.out.println("bmi지수 =>"+listob.get("resBMI"));
+			
+			List<String> insufficientNutrient = new ArrayList();
+			
+			String strResHemoglobin = (String)linkedHashMap.get("resHemoglobin");
+			strResHemoglobin = strResHemoglobin.substring(2,6);
+			double resHemoglobin = Double.parseDouble(strResHemoglobin);
+			System.out.println(strResHemoglobin);
+			if(resHemoglobin<13.5) {
+				insufficientNutrient.add("철분");
+			}
+			String strResyGPT = (String)linkedHashMap.get("resyGPT");
+			strResyGPT = strResyGPT.substring(2,4);
+			int resyGPT = Integer.parseInt(strResyGPT);
+			System.out.println(strResyGPT);
+			if(resyGPT>50) {
+				insufficientNutrient.add("비타민 C");
+			}
+			String strResTotalCholesterol = (String)linkedHashMap.get("resTotalCholesterol");
+			strResTotalCholesterol = strResTotalCholesterol.substring(0,3);
+			int resTotalCholesterol = Integer.parseInt(strResTotalCholesterol);
+			System.out.println(resTotalCholesterol);
+			if(resTotalCholesterol>200) {
+				insufficientNutrient.add("오메가 3");
+			}
+			
+			String strResBloodPressure = (String)linkedHashMap.get("resBloodPressure");
+			strResBloodPressure = strResBloodPressure.substring(0,3);
+			int resBloodPressure = Integer.parseInt(strResBloodPressure);
+			System.out.println(resBloodPressure);
+			if(resBloodPressure>=140) {
+				insufficientNutrient.add("마그네슘");
+			}
+			
+			String strResBMI = (String)linkedHashMap.get("resBMI");
+			strResBMI = strResBMI.substring(0,2);
+			int resBMI = Integer.parseInt(strResBMI);
+			System.out.println(strResBMI);
+			if(resBMI>=23) {
+				insufficientNutrient.add("비타민 B");
+			}
+			
+			return insufficientNutrient;
+			
 	} 
 }
