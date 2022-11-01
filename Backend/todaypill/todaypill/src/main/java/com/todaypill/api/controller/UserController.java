@@ -127,10 +127,12 @@ public class UserController {
 	@PostMapping("/healthcheckdata")
 	@ApiOperation(value = "건강검진 내역을 가져와서 영양소를 추천한다", notes = "추천하자")
 	public ResponseEntity<?> getHealthCheckData(@RequestBody GetHealthReq getHealthReq) throws Exception {
-		List<String> list = codef.getHealthCheckData(getHealthReq.getUserName(), getHealthReq.getPhoneNumber(), getHealthReq.getBirthday());
-		userService.updateRecommend(getHealthReq.getEmail(),list.get(1), list.get(2), list.get(3));
+		HashMap<String,Object> map = codef.getHealthCheckData(getHealthReq.getUserName(), getHealthReq.getPhoneNumber(), getHealthReq.getBirthday());
+		List<String> list = (List<String>)map.get("list");
+		boolean check = (boolean)map.get("check");
+		userService.updateRecommend(getHealthReq.getEmail(),list.get(0), list.get(1), list.get(2));
 		
-		return new ResponseEntity<String>(HttpStatus.OK);
+		return new ResponseEntity<Boolean>(check, HttpStatus.OK);
 	}
 	
 	//4. 영양소 추천으로 인한 추천성분 업데이트
