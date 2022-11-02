@@ -50,6 +50,10 @@ import HealthScreeningDetail from "../screens/SurveyScreen/HealthScreeningDetail
 import HealthScreeningDetailScreen from "../screens/SurveyScreen/HealthScreeningDetailScreen";
 import SurveyLoadingScreen from "../screens/SurveyScreen/SurveyLoadingScreen";
 import PersonalRecommendationScreen from "../screens/SurveyScreen/PersonalRecommendationScreen";
+import NutrientDetailScreen from "../screens/SurveyScreen/NutrientDetailScreen";
+import SurveyDeepScreen from "../screens/SurveyScreen/SurveyDeepScreen";
+import SurveyDeepLoadingScreen from "../screens/SurveyScreen/SurveyDeepLoadingScreen";
+import PillResultScreen from "../screens/SurveyScreen/PillResultScreen";
 interface Inavigation {
   colorScheme: ColorSchemeName;
   LoginCheck: () => {};
@@ -112,6 +116,26 @@ export default function Navigation({ colorScheme, LoginCheck }: Inavigation) {
         <Stack.Screen
           name="PersonalRecommendationScreen"
           component={PersonalRecommendationScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="NutrientDetailScreen"
+          component={NutrientDetailScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SurveyDeepScreen"
+          component={SurveyDeepScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SurveyDeepLoadingScreen"
+          component={SurveyDeepLoadingScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="PillResultScreen"
+          component={PillResultScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

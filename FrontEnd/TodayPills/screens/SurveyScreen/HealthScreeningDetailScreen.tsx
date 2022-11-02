@@ -18,6 +18,9 @@ const HealthScreeningDetailScreen = ({ navigation }) => {
           size={48}
           color="black"
           style={styles.icon}
+          onPress={() => {
+            navigation.goBack();
+          }}
         />
         <View style={styles.textcontainer}>
           <Text style={[styles.text, styles.largetext]}>

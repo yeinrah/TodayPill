@@ -39,6 +39,7 @@ const KakaoScreen = ({ navigation }: any) => {
       console.log(value);
       await AsyncStorage.setItem("@storage_User", "정서");
       await AsyncStorage.setItem("@storage_userEmail", value.email);
+      await AsyncStorage.setItem("@storage_userNickName", value.name);
       // console.log(response);
       // console.log(value, "this is value");
       navigation.replace("LoginSuccessScreen");
