@@ -67,3 +67,25 @@ export type IBackground = {
   modalVisible?: boolean;
   modalCloseHandler?: () => void;
 };
+
+// {
+//   "cli": {
+//     "version": ">= 2.6.0"
+//   },
+//   "build": {
+//     "development": {
+//       "developmentClient": true,
+//       "distribution": "internal"
+//     },
+//     "preview": {
+//       "android": {
+//         "buildType": "apk"
+//       },
+//       "distribution": "internal"
+//     },
+//     "production": {}
+//   },
+//   "submit": {
+//     "production": {}
+//   }
+// }

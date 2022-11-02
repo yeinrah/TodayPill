@@ -20,12 +20,12 @@
       "supportsTablet": true
     },
     "android": {
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "permissions": ["NOTIFICATIONS"],
-
       "useNextNotificationsApi": true,
       "package": "com.todaypills_app",
       "googleServicesFile": "./google-services.json"
@@ -41,6 +41,11 @@
           "color": "#ffffff"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "de3b0933-f8e6-46e9-a623-23ed6b2dafce"
+      }
+    }
   }
 }
