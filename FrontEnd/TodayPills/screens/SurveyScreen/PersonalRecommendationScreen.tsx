@@ -25,7 +25,7 @@ const PersonalRecommendationScreen = ({ navigation }: any) => {
   const [name, setName] = useState("");
   // const str = require("../../assets/images/nutrients/sample1.png");
   const getMyName = async () => {
-    const nowName = await AsyncStorage.getItem("@storage_User");
+    const nowName = await AsyncStorage.getItem("@storage_UserNickName");
     setName(nowName);
   };
   const getMyList = async () => {

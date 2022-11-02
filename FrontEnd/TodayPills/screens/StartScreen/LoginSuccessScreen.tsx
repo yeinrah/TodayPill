@@ -6,7 +6,8 @@ import BackgroundScreen from "../BackgroundScreen";
 const LoginSuccessScreen = ({ navigation }: any) => {
   const [name, setName] = useState("");
   const getMyName = async () => {
-    const nowName = await AsyncStorage.getItem("@storage_User");
+    const nowName = await AsyncStorage.getItem("@storage_UserNickName");
+    console.log(nowName);
     setName(nowName);
   };
   useEffect(() => {
