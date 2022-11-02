@@ -1,45 +1,36 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
-import { Image, StyleSheet, Text, View, Pressable } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import BackgroundScreen from "../BackgroundScreen";
 
-const LoginSuccessScreen = ({ navigation }: any) => {
-  const [name, setName] = useState("");
-  const getMyName = async () => {
-    const nowName = await AsyncStorage.getItem("@storage_UserNickName");
-    console.log(nowName);
-    setName(nowName);
+const SurveyDeepLoadingScreen = ({ navigation }: any) => {
+  const [nowMyNutrient, setNowMyNutrient] = useState("");
+  const getMyNowNutrient = async () => {
+    const nutrient = await AsyncStorage.getItem("@storage_nowNutrient");
+    setNowMyNutrient(nutrient);
   };
   useEffect(() => {
-    getMyName();
+    getMyNowNutrient();
   }, []);
   return (
     <BackgroundScreen>
       <View style={styles.container}>
+        <View style={styles.textcontainer}>
+          <Text style={[styles.text, styles.greetingtext, styles.blacktext]}>
+            {nowMyNutrient} 맞춤 추천 완료 !!
+          </Text>
+        </View>
         <View style={styles.imagecontainer}>
           <Image
             style={styles.image}
             source={require("../../assets/images/youngyang/normal.png")}
           />
         </View>
-        <View style={styles.textcontainer}>
-          <Text style={[styles.text, styles.greetingtext, styles.blacktext]}>
-            반가워요!
-          </Text>
-          <View style={styles.flexrow}>
-            <Text style={[styles.text, styles.nametext, styles.whitetext]}>
-              {name}&nbsp;
-            </Text>
-            <Text style={[styles.text, styles.nametext, styles.blacktext]}>
-              님
-            </Text>
-          </View>
-        </View>
         <View style={styles.buttonOuterContainer}>
           <Pressable
             android_ripple={{ color: "#4E736F" }}
             style={styles.buttonInnerContainer}
-            onPress={() => navigation.navigate("HealthScreeningCheckScreen")}
+            onPress={() => navigation.navigate("PillResultScreen")}
           >
             <Text style={styles.title}>다음</Text>
           </Pressable>
@@ -48,7 +39,6 @@ const LoginSuccessScreen = ({ navigation }: any) => {
     </BackgroundScreen>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -63,7 +53,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     resizeMode: "contain",
-    marginTop: 20,
   },
   textcontainer: {
     alignItems: "center",
@@ -110,4 +99,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginSuccessScreen;
+export default SurveyDeepLoadingScreen;

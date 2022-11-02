@@ -6,7 +6,7 @@ import BackgroundScreen from "../BackgroundScreen";
 const SurveyStartScreen = ({ navigation }: any) => {
   const [name, setName] = useState("");
   const getMyName = async () => {
-    const nowName = await AsyncStorage.getItem("@storage_User");
+    const nowName = await AsyncStorage.getItem("@storage_UserNickName");
     setName(nowName);
   };
   useEffect(() => {
