@@ -29,7 +29,7 @@ const PersonalRecommendationScreen = ({ navigation }: any) => {
     setName(nowName);
   };
   const getMyList = async () => {
-    const email = await AsyncStorage.getItem("@storage_userEmail");
+    const email = await AsyncStorage.getItem("@storage_UserEmail");
     const userInfo = await getUserInfoByEmail(email);
     console.log(email, "email");
     console.log(userInfo, "userInfo");
