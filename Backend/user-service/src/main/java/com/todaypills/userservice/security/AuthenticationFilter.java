@@ -72,7 +72,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         String token = Jwts.builder()
                 .setSubject(userDetails.getUserId())
                 .setExpiration(new Date(System.currentTimeMillis() +
-                        Long.parseLong(env.getProperty("token.expiration_time"))))
+                        Long.parseLong(env.getProperty("token.expiration_time")))) //yml 파일에서 가져오는 모든 값은 String임
                 .signWith(SignatureAlgorithm.HS512, env.getProperty("token.secret"))
                 .compact();
 

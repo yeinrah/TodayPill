@@ -17,4 +17,7 @@ spring:
     username: root
     password: root
 
+logging:
+  level:
+    com.todaypills.userservice: DEBUG
 
