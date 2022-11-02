@@ -10,7 +10,7 @@ import {
   Button,
 } from "react-native";
 
-import { useState, useRef, useMemo, useCallback } from "react";
+import { useState, useRef, useMemo, useCallback, useEffect } from "react";
 import { accent, primary, secondary } from "../../../constants/Colors";
 import PillCard from "../../UI/PillCard";
 import { Ionicons } from "@expo/vector-icons";
@@ -21,6 +21,7 @@ import Animated from "react-native-reanimated";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import CustomBtn from "../../UI/CustomBtn";
 import WeekDayList from "./WeekDayList";
+import Notifications from "../../../utils/Notifications";
 
 const dummyRoutine = {
   time: "17:30",
@@ -42,6 +43,9 @@ export default function ModifyRoutineItem() {
 
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
 
+  const submitModifyRoutineHandler = () => {
+    console.warn("제출함!!!!!!!!!!!!!!!!!!!!");
+  };
   const showDatePicker = () => {
     setDatePickerVisible(true);
   };
@@ -69,8 +73,22 @@ export default function ModifyRoutineItem() {
     hideDatePicker();
   };
 
-  const alarmToggleSwitch = () =>
+  const alarmToggleSwitch = () => {
     setIsEnabled((previousState) => !previousState);
+  };
+
+  useEffect(() => {
+    if (isEnabled) {
+      const myDate = new Date(Date.now() + 5 * 1000);
+      Notifications.scheduledLocalNotifications(
+        "1",
+        "1",
+        myDate,
+        "영양제 먹어요!",
+        "마그네슘"
+      );
+    }
+  }, [isEnabled]);
 
   const decreaseHandler = () => {
     setPillCnt((pillCnt) => (pillCnt > 1 ? pillCnt - 1 : 1));
@@ -153,43 +171,11 @@ export default function ModifyRoutineItem() {
                 <Text style={styles.name}>섭취 요일</Text>
 
                 <Pressable
-                  onPress={() => handleSnapPress(2)}
+                  // onPress={() => handleSnapPress(2)}
                   // onPress={() => setModalVisible(true)}
                   style={styles.directionRow}
                 >
                   <Text style={styles.dayAndTimeName}>매일</Text>
-                  {/* <AntDesign name="right" size={24} color="black" /> */}
-                  <View>
-                    {/* <BottomSheet
-                    ref={sheetRef}
-                    snapPoints={[450, 300, 0]}
-                    borderRadius={10}
-                    renderContent={renderContent}
-                  /> */}
-                    <View>
-                      {/* <Button
-                      title="Snap To 90%"
-                      onPress={() => handleSnapPress(2)}
-                    />
-                    <Button
-                      title="Snap To 50%"
-                      onPress={() => handleSnapPress(1)}
-                    />
-                    <Button
-                      title="Snap To 25%"
-                      onPress={() => handleSnapPress(0)}
-                    /> */}
-                    </View>
-
-                    {/* <CustomModal
-                    modalVisible={modalVisible}
-                    modalCloseHandler={() => setModalVisible(false)}
-                  >
-                    <View style={styles.modalContainer}>
-                      <Text>모달!!!!!!!!!!!!!!!</Text>
-                    </View>
-                  </CustomModal> */}
-                  </View>
                 </Pressable>
               </View>
 
@@ -252,32 +238,18 @@ export default function ModifyRoutineItem() {
             </View>
           </View>
         </PillCard>
-        {/* <BottomSheet
-          ref={sheetRef}
-          snapPoints={snapPoints}
-          onChange={handleSheetChange}
-        >
-          <View style={styles.chooseDays}>
-            <WeekDayList />
+        <View>
+          <View style={styles.chooseBtn}>
+            <CustomBtn
+              buttonColor={accent}
+              title={"수정 완료"}
+              titleColor={"#fff"}
+              buttonWidth={"90%"}
+              onPress={submitModifyRoutineHandler}
+            />
           </View>
-          <BottomSheetView style={styles.bottomContainer}>
-            <View style={styles.chooseBtn}>
-              <CustomBtn
-                buttonColor={accent}
-                title={"수정 완료"}
-                titleColor={"#fff"}
-                buttonWidth={"90%"}
-                onPress={chooseDayHandler}
-              />
-            </View>
-          </BottomSheetView>
-        </BottomSheet> */}
+        </View>
       </View>
-
-      {/* <Text style={styles.takenDate}></Text>
-      <View style={styles.pillRoutineContainer}>
-     
-      </View> */}
     </ScrollView>
   );
 }

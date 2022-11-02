@@ -44,6 +44,13 @@ const dummyPills: PillProps[] = [
     brand: "종근당건강",
     pill: "칼슘 앤 마그네슘",
   },
+  {
+    image:
+      "https://contents.lotteon.com/itemimage/LO/14/19/59/10/62/_1/41/95/91/06/3/LO1419591062_1419591063_1.jpg",
+    // image: require("../../assets/images/pills/sample4.png"),
+    brand: "종근당건강",
+    pill: "칼슘 앤 마그네슘",
+  },
 ];
 
 export default function MyPickPills() {
@@ -84,8 +91,10 @@ const styles = StyleSheet.create({
     fontWeight: "900",
   },
   outerContainer: {
-    marginHorizontal: 10,
+    marginHorizontal: 5,
+
     marginVertical: 5,
+    // overflow: "hidden",
   },
   text: {
     fontSize: 17,
@@ -96,10 +105,11 @@ const styles = StyleSheet.create({
   cardscontainer: {
     flexDirection: "row",
     // justifyContent: "space-around",
-    padding: 10,
+    paddingVertical: 10,
     marginTop: 10,
-    // backgroundColor: "#ECF6F4",
-    // borderRadius: 10,
-    // elevation: 5,
+    paddingHorizontal: 5,
+    backgroundColor: "#ECF6F4",
+    borderRadius: 10,
+    elevation: 5,
   },
 });

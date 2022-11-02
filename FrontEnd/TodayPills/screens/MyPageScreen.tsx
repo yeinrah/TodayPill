@@ -20,6 +20,26 @@ import { accent, primary, secondary } from "../constants/Colors";
 import { RootTabScreenProps } from "../types";
 import BackgroundScreen from "./BackgroundScreen";
 
+// <Pressable
+// onPress={() => {
+//   console.log("이름 수정하기!");
+//   // setTimesPressed((current) => current + 1);
+// }}
+// style={styles.modifyContainer}
+// >
+// {({ pressed }) => (
+//   <Text
+//     style={[
+//       styles.modify,
+//       { color: pressed ? "black" : "#B7B7B7" },
+//     ]}
+//   >
+//     수정
+//     {/* {pressed ? 'Pressed!' : 'Press Me'} */}
+//   </Text>
+// )}
+// </Pressable>
+
 export default function MyPageScreen({ navigation }: any) {
   // RootTabScreenProps<"MyPage">
   const goMyPillsHandler = () => {
@@ -32,27 +52,6 @@ export default function MyPageScreen({ navigation }: any) {
           <View style={styles.myInfoContainer}>
             <View style={styles.nameContainer}>
               <Text style={styles.name}>정서님</Text>
-              <Pressable
-                onPress={() => {
-                  console.log("이름 수정하기!");
-                  // setTimesPressed((current) => current + 1);
-                }}
-                style={styles.modifyContainer}
-              >
-                {({ pressed }) => (
-                  <Text
-                    style={[
-                      styles.modify,
-                      { color: pressed ? "black" : "#B7B7B7" },
-                    ]}
-                  >
-                    수정
-                    {/* {pressed ? 'Pressed!' : 'Press Me'} */}
-                  </Text>
-                )}
-              </Pressable>
-
-              {/* <Button title="수정" /> */}
             </View>
             <View style={styles.ageContainer}>
               <Text style={styles.age}>만 26세 남성</Text>
@@ -84,7 +83,15 @@ export default function MyPageScreen({ navigation }: any) {
               buttonWidth={"90%"}
               onPress={() => console.log("추천 다시 받기 btn 클릭")}
             />
-            <CustomBtn
+            <Pressable
+              onPress={async () => {
+                await AsyncStorage.removeItem("@storage_User");
+                navigation.replace("Start");
+              }}
+            >
+              <Text style={styles.logout}>로그아웃</Text>
+            </Pressable>
+            {/* <CustomBtn
               buttonColor={primary}
               title={"로그아웃"}
               titleColor={"#fff"}
@@ -93,7 +100,7 @@ export default function MyPageScreen({ navigation }: any) {
                 await AsyncStorage.removeItem("@storage_User");
                 navigation.replace("Start");
               }}
-            />
+            /> */}
           </View>
         </ScrollView>
         {/* <View
@@ -205,21 +212,10 @@ const styles = StyleSheet.create({
   backgroundImage: {
     opacity: 0.15,
   },
+  logout: {
+    fontSize: 17,
+    fontWeight: "bold",
+    marginVertical: 13,
+    color: "#FF78A3",
+  },
 });
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     alignItems: "center",
-//     justifyContent: "center",
-//   },
-//   title: {
-//     fontSize: 20,
-//     fontWeight: "bold",
-//   },
-//   separator: {
-//     marginVertical: 30,
-//     height: 1,
-//     width: "80%",
-//   },
-// });
