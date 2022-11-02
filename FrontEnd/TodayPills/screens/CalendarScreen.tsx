@@ -6,6 +6,7 @@ import Card from "../components/UI/Card";
 import { RootTabScreenProps } from "../types";
 import { useState } from "react";
 import BackgroundScreen from "./BackgroundScreen";
+// import { getDeviceToken } from "../utils/Notifications";
 
 export default function CalendarScreen({
   navigation,
@@ -14,6 +15,7 @@ export default function CalendarScreen({
   const todayString = today.toISOString().split("T")[0];
   const [selectedDate, setSelectedDate] = useState(todayString);
   const dateChangeHandler = (date: string) => {
+    // getDeviceToken();
     console.log(date, "date 받음");
     setSelectedDate(date);
   };
