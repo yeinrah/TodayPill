@@ -4,7 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { useState } from "react";
 
-const SurveyScreen = ({ navigation }: any) => {
+const SurveyDeepScreen = ({ navigation }: any) => {
   const [selectedItem, setSelectedItem] = useState(0);
 
   return (
@@ -80,7 +80,7 @@ const SurveyScreen = ({ navigation }: any) => {
             <Pressable
               android_ripple={{ color: "#4E736F" }}
               style={styles.buttonInnerContainer}
-              onPress={() => navigation.navigate("SurveyLoadingScreen")}
+              onPress={() => navigation.navigate("SurveyDeepLoadingScreen")}
             >
               <Text style={styles.title}>다 음</Text>
             </Pressable>
@@ -173,5 +173,4 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
 });
-
-export default SurveyScreen;
+export default SurveyDeepScreen;
