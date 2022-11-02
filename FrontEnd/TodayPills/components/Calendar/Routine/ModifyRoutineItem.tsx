@@ -21,7 +21,8 @@ import Animated from "react-native-reanimated";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import CustomBtn from "../../UI/CustomBtn";
 import WeekDayList from "./WeekDayList";
-import Notifications from "../../../utils/Notifications";
+import * as Notifications from "expo-notifications";
+// import Notifications from "../../../utils/Notifications";
 
 const dummyRoutine = {
   time: "17:30",
@@ -79,14 +80,29 @@ export default function ModifyRoutineItem() {
 
   useEffect(() => {
     if (isEnabled) {
-      const myDate = new Date(Date.now() + 5 * 1000);
-      Notifications.scheduledLocalNotifications(
-        "1",
-        "1",
-        myDate,
-        "영양제 먹어요!",
-        "마그네슘"
-      );
+      const today = Date.now();
+      const date = new Date(today);
+      const target = new Date("Wed Nov 02 2022 13:03:30 GMT+0900 (KST)");
+      const timer = Math.floor((target.getTime() - date.getTime()) / 1000);
+      console.log(timer);
+      Notifications.scheduleNotificationAsync({
+        content: {
+          title: "오늘의 영양제",
+          body: '"킬레이트 마그네슘"을 드실 시간이에요!',
+        },
+        trigger: {
+          seconds: timer,
+        },
+      });
+
+      // const myDate = new Date(Date.now() + 5 * 1000);
+      // Notifications.scheduledLocalNotifications(
+      //   "1",
+      //   "1",
+      //   myDate,
+      //   "영양제 먹어요!",
+      //   "마그네슘"
+      // );
     }
   }, [isEnabled]);
 
