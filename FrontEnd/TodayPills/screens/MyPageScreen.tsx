@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 import { LinearGradient } from "expo-linear-gradient";
 import {
   StyleSheet,
@@ -9,6 +10,7 @@ import {
   Button,
   ScrollView,
 } from "react-native";
+import { kakaoLogout } from "../API/userAPI";
 import MyPickPills from "../components/MyPage/MyPickPills";
 import RecomNutritions from "../components/MyPage/Recommendations/RecomNutritions";
 import Card from "../components/UI/Card";
@@ -92,6 +94,23 @@ export default function MyPageScreen({ navigation }: any) {
                 await AsyncStorage.removeItem("@storage_userName");
                 await AsyncStorage.removeItem("@storage_userBirth");
                 await AsyncStorage.removeItem("@storage_userPhone");
+                const token = await AsyncStorage.getItem(
+                  "@storage_ACCESS_TOKEN"
+                );
+                console.log(token);
+                // kakaoLogout(token);
+                await axios.post(
+                  "https://kapi.kakao.com/v1/user/logout",
+                  {},
+                  {
+                    headers: {
+                      "Content-Type": "application/x-www-form-urlencoded",
+                      Authorization: `Bearer ${token}`,
+                    },
+                  }
+                );
+                await AsyncStorage.removeItem("@storage_ACCESS_TOKEN");
+
                 navigation.replace("Start");
               }}
             >
