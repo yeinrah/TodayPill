@@ -60,6 +60,11 @@ const KakaoScreen = ({ navigation }: any) => {
       await AsyncStorage.setItem("@storage_UserNickName", value.name);
       // console.log(response);
       // console.log(value, "this is value");
+      console.log(value.signup);
+      if (!value.signup) {
+        navigation.replace("MainScreen");
+        return;
+      }
       navigation.replace("LoginSuccessScreen");
       // const result = await storeUser(value);
       // if (result === "stored") {
