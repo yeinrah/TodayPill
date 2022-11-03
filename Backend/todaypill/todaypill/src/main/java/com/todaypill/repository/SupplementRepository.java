@@ -1,5 +1,7 @@
 package com.todaypill.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -14,4 +16,7 @@ public interface SupplementRepository extends JpaRepository<Supplement, Integer>
 	@Modifying
 	@Query(value = "update supplement set `like` =?2 where supplement_id= ?1", nativeQuery = true)
 	void updateLike(int supplementId, int like);
+	
+	@Query(value = "select * from supplement", nativeQuery = true)
+	List<Supplement> findAll();
 }
