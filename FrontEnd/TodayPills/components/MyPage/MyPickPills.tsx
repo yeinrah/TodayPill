@@ -60,13 +60,14 @@ export default function MyPickPills() {
   return (
     <View style={styles.likeContainer}>
       <View style={styles.myPickContainer}>
-        <Text style={styles.name}>나의 Pick</Text>
         <View style={styles.heartContainer}>
           <Image
-            source={require("../../assets/images/hearton.png")}
+            // source={require("../../assets/images/hearton.png")}
+            source={require("../../assets/images/heartOn1.png")}
             style={styles.heart}
           />
         </View>
+        <Text style={styles.name}>나의 Pick</Text>
       </View>
 
       <View style={styles.outerContainer}>

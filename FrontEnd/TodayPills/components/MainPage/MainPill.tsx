@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, ScrollView } from "react-native";
 import SimplePillCard from "../Cards/SimplePillCard";
 import PillItem from "../Pills/PillItem";
 
@@ -34,7 +34,20 @@ const MainPill = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>오늘 많은 이용자들이 본 영양제</Text>
-      <View style={styles.cardsContainer}>
+
+      <View style={styles.outerContainer}>
+        <ScrollView style={styles.cardsContainer} horizontal={true}>
+          {mainPills.map((pill, idx) => (
+            <PillItem
+              key={idx}
+              image={pill.image}
+              brand={pill.brand}
+              pill={pill.pill}
+            />
+          ))}
+        </ScrollView>
+      </View>
+      {/* <View style={styles.cardsContainer}>
         {mainPills.map((pill, idx) => (
           <PillItem
             key={idx}
@@ -49,7 +62,7 @@ const MainPill = () => {
           //     pill={mainPill.pill}
           //   />
         ))}
-      </View>
+      </View> */}
     </View>
   );
 };
@@ -65,9 +78,16 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginBottom: 10,
   },
+
+  outerContainer: {
+    marginHorizontal: 5,
+
+    marginVertical: 5,
+    // overflow: "hidden",
+  },
   cardsContainer: {
     flexDirection: "row",
-    justifyContent: "space-around",
+    // justifyContent: "space-around",
     paddingVertical: 10,
     marginTop: 10,
     paddingHorizontal: 5,

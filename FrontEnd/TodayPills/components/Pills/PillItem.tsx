@@ -23,8 +23,10 @@ const PillItem = (props: PillProps) => {
           <Image
             source={
               like
-                ? require("../../assets/images/hearton.png")
-                : require("../../assets/images/heartoff.png")
+                ? // ? require("../../assets/images/hearton.png")
+                  require("../../assets/images/heartOn3.png")
+                : // : require("../../assets/images/heartoff.png")
+                  require("../../assets/images/heartOff1.png")
             }
             style={styles.heart}
           />
@@ -49,11 +51,11 @@ const styles = StyleSheet.create({
   container: {
     // marginVertical: 5,
     marginHorizontal: 5,
-    width: 80,
+    width: 90,
   },
   cardcontainer: {
     width: "100%",
-    height: 70,
+    height: 80,
     position: "relative",
     justifyContent: "center",
     alignItems: "center",

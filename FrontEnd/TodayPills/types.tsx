@@ -69,7 +69,16 @@ export type IBackground = {
   width?: number | string;
   bgColor?: string;
   modalVisible?: boolean;
+  customStyle?: object;
   modalCloseHandler?: () => void;
+};
+
+export type IUserInfo = {
+  age: number;
+  gender: string;
+  name: string;
+  userId: number;
+  recommendNutrients: Array<string>;
 };
 
 // {
