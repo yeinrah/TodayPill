@@ -184,9 +184,13 @@ public class UserController {
 	}
 	
 	@PutMapping("/user/firstSurvey")
-	@ApiOperation(value = "update name", notes = "이름 바꾸기")
+	@ApiOperation(value = "1차 설문조사", notes = "1차 설문조사를 진행한다.")
 	public ResponseEntity<?> firstSurvey(@RequestBody UserFirstSurveyReq userFirstSurveyReq) throws Exception {
-		userService.userFirstSurvey(userFirstSurveyReq);
+		String[] arr = userService.userFirstSurvey(userFirstSurveyReq);
+		User user = userService.findOneByUserId(userFirstSurveyReq.getUserId());
+		userService.updateRecommend(user.getEmail(), arr[0], arr[1], arr[2]);
+		// commonQuestion 만들어주기
+		
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 

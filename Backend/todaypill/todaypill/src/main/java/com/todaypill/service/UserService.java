@@ -1,9 +1,11 @@
 package com.todaypill.service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -97,12 +99,18 @@ public class UserService {
 	}
 	
 	@Transactional
+	public User findOneByUserId(int userId) throws Exception {
+		User user = userRepository.findOneByUserId(userId);
+		return user;
+	}
+	
+	@Transactional
 	public void updateName(UpdateNameReq updateNameReq) throws Exception {
 		userRepository.updateName(updateNameReq.getUserId(), updateNameReq.getName());
 	}
 	
 	@Transactional
-	public void userFirstSurvey(UserFirstSurveyReq userFirstSurveyReq) throws Exception {
+	public String[] userFirstSurvey(UserFirstSurveyReq userFirstSurveyReq) throws Exception {
 		
 		int vitaminB=0;
 		int vitaminC=0;
@@ -119,7 +127,10 @@ public class UserService {
 		int profolis=0;
 		//밥 잘 먹고 있는지 -> boolean이면 뭘잘먹고있는지를 판단하기 힘듦
 		if(userFirstSurveyReq.isBalanced_meal()) {}
-		//큰 약 잘 먹는지 -> 이거에 대한 값을 어떻게 적용시켜야 할 지?
+		//이게 밥잘먹고있는지에 대한 string 받는곳
+		if(userFirstSurveyReq.getLack().contains("")) {}
+		
+		//큰 약 잘 먹는지 -> 2차 설문용
 		if(userFirstSurveyReq.is_ok_big_pill()) {}
 		//변비가 있으면 -> 유산균 더하기
 		if(userFirstSurveyReq.isConstipation()) {
@@ -154,11 +165,10 @@ public class UserService {
 		if(userFirstSurveyReq.getAllergy().contains("")) {
 			vitaminC+=2;
 		}
-		//뭐가 부족한지에 대한 string을 받아서 뭐든 넣어주면 될 것 같음
-		if(userFirstSurveyReq.getLack().contains("")) {}
-		//선호하는 브랜드 string을 받아서 해당 브랜드명이 들어있으면 뭘 해주면 될듯
+		
+		//선호하는 브랜드명 -> 2차설문용
 		if(userFirstSurveyReq.getPreferred_brand().contains("")) {}
-		//고민거리도 뭐 받아서 해주면 될듯
+		//고민거리도 뭐 받아서 해주면 될듯(버튼으로 체크하는 형식) 피로감, 눈건강, 피부건강 등 이거는 사용자가 원하는 것이기 때문에 높은 +
 		if(userFirstSurveyReq.getProblem().contains("")) {}
 		//햇빛 많이쬐면 쬔 만큼 비타민D 변수 조절
 		if(userFirstSurveyReq.getSkin()==1)vitaminD+=2;
@@ -180,9 +190,20 @@ public class UserService {
 		map.put("collagen", collagen);
 		map.put("Fe", Fe);
 		map.put("profolis", profolis);
-		List<Map<String, Integer>> list = new ArrayList(map.entrySet());
-		
-		
+		List<Map.Entry<String, Integer>> list = new ArrayList(map.entrySet());
+		list.sort(new Comparator<Map.Entry<String, Integer>>() {
+			@Override
+			public int compare(Entry<String, Integer> o1, Entry<String, Integer> o2) {
+				return o2.getValue() - o1.getValue();
+			}
+		});
+		String[] arr = new String[3];
+		for(int i=0; i<3;i++) {
+			System.out.println("key =>"+(list.get(i)).getKey()+"    value =>"+(list.get(i)).getValue());
+			arr[i]=(list.get(i)).getKey();
+		}
+
+		return arr;
 	}
 	
 }

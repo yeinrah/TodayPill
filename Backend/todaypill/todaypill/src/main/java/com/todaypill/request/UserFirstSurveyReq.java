@@ -19,7 +19,7 @@ public class UserFirstSurveyReq {
 
 	@ApiModelProperty(name = "유저 id", example = "1")
 	@NotNull(message = "user id를 입력하세요.")
-	private int userId;
+	private Integer userId;
 	
 	@ApiModelProperty(name = "흡연 여부", example = "true")
 	@NotNull(message = "흡연 여부 입력하세요.")

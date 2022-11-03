@@ -9,6 +9,8 @@ import com.todaypill.db.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer>{
+	
+//	@Query(value = "select * from user where user_id = ?1", nativeQuery = true)
 	User findOneByUserId(int userId);
 	
 	@Query(value = "select * from user where email = ?1", nativeQuery = true)
