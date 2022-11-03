@@ -40,6 +40,11 @@ export type RootStackParamList = {
   HealthScreeningDetailScreen: undefined;
   SurveyLoadingScreen: undefined;
   PersonalRecommendationScreen: undefined;
+  NutrientDetailScreen: undefined;
+  SurveyDeepScreen: undefined;
+  SurveyDeepLoadingScreen: undefined;
+  PillResultScreen: undefined;
+  GenderCheckScreen: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
@@ -67,3 +72,25 @@ export type IBackground = {
   modalVisible?: boolean;
   modalCloseHandler?: () => void;
 };
+
+// {
+//   "cli": {
+//     "version": ">= 2.6.0"
+//   },
+//   "build": {
+//     "development": {
+//       "developmentClient": true,
+//       "distribution": "internal"
+//     },
+//     "preview": {
+//       "android": {
+//         "buildType": "apk"
+//       },
+//       "distribution": "internal"
+//     },
+//     "production": {}
+//   },
+//   "submit": {
+//     "production": {}
+//   }
+// }

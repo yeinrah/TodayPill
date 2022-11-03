@@ -10,7 +10,8 @@ let access_token: string;
 // const REDIRECT_URI = `http://localhost:8080/api/user/login`;
 // const REDIRECT_URI = `http://43.200.42.181/api/user/login`;
 // const REDIRECT_URI = `http://localhost:8080/api/user/login`;
-const REDIRECT_URI = `http://10.0.2.2:8080/api/user/login`;
+const REDIRECT_URI = `https://k7a706.p.ssafy.io/api/user/login`;
+// const REDIRECT_URI = `http://10.0.2.2:8080/api/user/login`;
 // const REDIRECT_URI = `https://localhost:8080/api`;
 
 const INJECTED_JAVASCRIPT = `window.ReactNativeWebView.postMessage('message from webView')`;

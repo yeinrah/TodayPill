@@ -6,17 +6,25 @@ import Card from "../components/UI/Card";
 import { RootTabScreenProps } from "../types";
 import { useState } from "react";
 import BackgroundScreen from "./BackgroundScreen";
+import LoadingSpinner from "../components/UI/LoadingSpinner";
+// import { getDeviceToken } from "../utils/Notifications";
 
 export default function CalendarScreen({
   navigation,
 }: RootTabScreenProps<"Calendar">) {
+  const [isLoading, setisLoading] = useState(true);
+
   const today = new Date();
   const todayString = today.toISOString().split("T")[0];
   const [selectedDate, setSelectedDate] = useState(todayString);
   const dateChangeHandler = (date: string) => {
+    // getDeviceToken();
     console.log(date, "date 받음");
     setSelectedDate(date);
   };
+  // if (isLoading) {
+  //   return <LoadingSpinner />;
+  // }
   return (
     <BackgroundScreen>
       <Card>

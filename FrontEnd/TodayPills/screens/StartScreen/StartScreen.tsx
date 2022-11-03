@@ -1,23 +1,11 @@
 import { Button, StyleSheet, Text, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import BackgroundScreen from "../BackgroundScreen";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import CustomBtn from "../../components/UI/CustomBtn";
-import { useFocusEffect } from "@react-navigation/native";
 
 const StartScreen = ({ navigation }: any) => {
   const [clikedStart, setClickedStart] = useState(false);
-  const checkLogin = async () => {
-    if ((await AsyncStorage.getItem("@storage_User")) != null) {
-      navigation.replace("MainScreen");
-      console.log("startscreen");
-    }
-  };
-  useFocusEffect(
-    useCallback(() => {
-      checkLogin();
-    }, [])
-  );
   return (
     <BackgroundScreen>
       <View style={styles.container}>
@@ -34,8 +22,8 @@ const StartScreen = ({ navigation }: any) => {
               titleColor={"#fff"}
               buttonWidth={"200%"}
               onPress={async () => {
-                let temp = await AsyncStorage.setItem("@storage_User", "정서");
-                console.log(temp);
+                // let temp = await AsyncStorage.setItem("@storage_User", "정서");
+                // console.log(temp);
                 //   console.log(navigation, "a");
                 setClickedStart(true);
                 // navigation.replace("KakaoScreen");
@@ -48,8 +36,8 @@ const StartScreen = ({ navigation }: any) => {
               titleColor={"#fff"}
               buttonWidth={"200%"}
               onPress={async () => {
-                let temp = await AsyncStorage.setItem("@storage_User", null);
-                console.log(temp);
+                // let temp = await AsyncStorage.setItem("@storage_User", "");
+                // console.log(temp);
                 //   console.log(navigation, "a");
                 setClickedStart(false);
                 // navigation.replace("LoginScreen");
@@ -66,8 +54,8 @@ const StartScreen = ({ navigation }: any) => {
               titleColor={"#fff"}
               buttonWidth={"200%"}
               onPress={async () => {
-                let temp = await AsyncStorage.setItem("@storage_User", "정서");
-                console.log(temp);
+                // let temp = await AsyncStorage.setItem("@storage_User", "정서");
+                // console.log(temp);
                 //   console.log(navigation, "a");
                 navigation.replace("KakaoScreen");
                 //   navigation.goBack();
