@@ -39,7 +39,8 @@ const LoginSuccessScreen = ({ navigation }: any) => {
           <Pressable
             android_ripple={{ color: "#4E736F" }}
             style={styles.buttonInnerContainer}
-            onPress={() => navigation.navigate("HealthScreeningCheckScreen")}
+            // onPress={() => navigation.navigate("HealthScreeningCheckScreen")}
+            onPress={() => navigation.navigate("GenderCheckScreen")}
           >
             <Text style={styles.title}>다음</Text>
           </Pressable>
