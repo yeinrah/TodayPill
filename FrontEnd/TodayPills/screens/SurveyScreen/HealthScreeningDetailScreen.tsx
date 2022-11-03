@@ -18,6 +18,9 @@ const HealthScreeningDetailScreen = ({ navigation }) => {
           size={48}
           color="black"
           style={styles.icon}
+          onPress={() => {
+            navigation.goBack();
+          }}
         />
         <View style={styles.textcontainer}>
           <Text style={[styles.text, styles.largetext]}>
@@ -72,7 +75,7 @@ const HealthScreeningDetailScreen = ({ navigation }) => {
               await AsyncStorage.setItem("@storage_userName", name);
               await AsyncStorage.setItem("@storage_userBirth", birth);
               await AsyncStorage.setItem("@storage_userPhone", phone);
-              const email = await AsyncStorage.getItem("@storage_userEmail");
+              const email = await AsyncStorage.getItem("@storage_UserEmail");
               const result = await HealthScreeningCheck(
                 birth,
                 email,

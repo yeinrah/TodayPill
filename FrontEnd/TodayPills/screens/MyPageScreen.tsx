@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 import { LinearGradient } from "expo-linear-gradient";
 import {
   StyleSheet,
@@ -9,6 +10,7 @@ import {
   Button,
   ScrollView,
 } from "react-native";
+import { kakaoLogout } from "../API/userAPI";
 import MyPickPills from "../components/MyPage/MyPickPills";
 import RecomNutritions from "../components/MyPage/Recommendations/RecomNutritions";
 import Card from "../components/UI/Card";
@@ -19,6 +21,26 @@ import { accent, primary, secondary } from "../constants/Colors";
 // import { Text, View } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
 import BackgroundScreen from "./BackgroundScreen";
+
+// <Pressable
+// onPress={() => {
+//   console.log("이름 수정하기!");
+//   // setTimesPressed((current) => current + 1);
+// }}
+// style={styles.modifyContainer}
+// >
+// {({ pressed }) => (
+//   <Text
+//     style={[
+//       styles.modify,
+//       { color: pressed ? "black" : "#B7B7B7" },
+//     ]}
+//   >
+//     수정
+//     {/* {pressed ? 'Pressed!' : 'Press Me'} */}
+//   </Text>
+// )}
+// </Pressable>
 
 export default function MyPageScreen({ navigation }: any) {
   // RootTabScreenProps<"MyPage">
@@ -32,27 +54,6 @@ export default function MyPageScreen({ navigation }: any) {
           <View style={styles.myInfoContainer}>
             <View style={styles.nameContainer}>
               <Text style={styles.name}>정서님</Text>
-              <Pressable
-                onPress={() => {
-                  console.log("이름 수정하기!");
-                  // setTimesPressed((current) => current + 1);
-                }}
-                style={styles.modifyContainer}
-              >
-                {({ pressed }) => (
-                  <Text
-                    style={[
-                      styles.modify,
-                      { color: pressed ? "black" : "#B7B7B7" },
-                    ]}
-                  >
-                    수정
-                    {/* {pressed ? 'Pressed!' : 'Press Me'} */}
-                  </Text>
-                )}
-              </Pressable>
-
-              {/* <Button title="수정" /> */}
             </View>
             <View style={styles.ageContainer}>
               <Text style={styles.age}>만 26세 남성</Text>
@@ -84,8 +85,39 @@ export default function MyPageScreen({ navigation }: any) {
               buttonWidth={"90%"}
               onPress={() => console.log("추천 다시 받기 btn 클릭")}
             />
-            <CustomBtn
-              buttonColor={accent}
+            <Pressable
+              onPress={async () => {
+                await AsyncStorage.removeItem("@storage_UserId");
+                await AsyncStorage.removeItem("@storage_UserNickName");
+                await AsyncStorage.removeItem("@storage_UserEmail");
+                await AsyncStorage.removeItem("@storage_nowNutrient");
+                await AsyncStorage.removeItem("@storage_userName");
+                await AsyncStorage.removeItem("@storage_userBirth");
+                await AsyncStorage.removeItem("@storage_userPhone");
+                const token = await AsyncStorage.getItem(
+                  "@storage_ACCESS_TOKEN"
+                );
+                console.log(token);
+                // kakaoLogout(token);
+                await axios.post(
+                  "https://kapi.kakao.com/v1/user/logout",
+                  {},
+                  {
+                    headers: {
+                      "Content-Type": "application/x-www-form-urlencoded",
+                      Authorization: `Bearer ${token}`,
+                    },
+                  }
+                );
+                await AsyncStorage.removeItem("@storage_ACCESS_TOKEN");
+
+                navigation.replace("Start");
+              }}
+            >
+              <Text style={styles.logout}>로그아웃</Text>
+            </Pressable>
+            {/* <CustomBtn
+              buttonColor={primary}
               title={"로그아웃"}
               titleColor={"#fff"}
               buttonWidth={"90%"}
@@ -93,7 +125,7 @@ export default function MyPageScreen({ navigation }: any) {
                 await AsyncStorage.removeItem("@storage_User");
                 navigation.replace("Start");
               }}
-            />
+            /> */}
           </View>
         </ScrollView>
         {/* <View
@@ -205,21 +237,10 @@ const styles = StyleSheet.create({
   backgroundImage: {
     opacity: 0.15,
   },
+  logout: {
+    fontSize: 17,
+    fontWeight: "bold",
+    marginVertical: 13,
+    color: "#FF78A3",
+  },
 });
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     alignItems: "center",
-//     justifyContent: "center",
-//   },
-//   title: {
-//     fontSize: 20,
-//     fontWeight: "bold",
-//   },
-//   separator: {
-//     marginVertical: 30,
-//     height: 1,
-//     width: "80%",
-//   },
-// });

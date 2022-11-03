@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     container: {
         marginHorizontal: 10,
         marginTop: 15,
+        paddingBottom: 15,
     },
     text: {
         fontSize: 17,

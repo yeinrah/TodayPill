@@ -1,7 +1,18 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from "react";
 import { Image, StyleSheet, Text, View, Pressable } from "react-native";
 import BackgroundScreen from "../BackgroundScreen";
 
 const LoginSuccessScreen = ({ navigation }: any) => {
+  const [name, setName] = useState("");
+  const getMyName = async () => {
+    const nowName = await AsyncStorage.getItem("@storage_UserNickName");
+    console.log(nowName);
+    setName(nowName);
+  };
+  useEffect(() => {
+    getMyName();
+  }, []);
   return (
     <BackgroundScreen>
       <View style={styles.container}>
@@ -17,7 +28,7 @@ const LoginSuccessScreen = ({ navigation }: any) => {
           </Text>
           <View style={styles.flexrow}>
             <Text style={[styles.text, styles.nametext, styles.whitetext]}>
-              고은민&nbsp;
+              {name}&nbsp;
             </Text>
             <Text style={[styles.text, styles.nametext, styles.blacktext]}>
               님
@@ -28,7 +39,8 @@ const LoginSuccessScreen = ({ navigation }: any) => {
           <Pressable
             android_ripple={{ color: "#4E736F" }}
             style={styles.buttonInnerContainer}
-            onPress={() => navigation.navigate("HealthScreeningCheckScreen")}
+            // onPress={() => navigation.navigate("HealthScreeningCheckScreen")}
+            onPress={() => navigation.navigate("GenderCheckScreen")}
           >
             <Text style={styles.title}>다음</Text>
           </Pressable>

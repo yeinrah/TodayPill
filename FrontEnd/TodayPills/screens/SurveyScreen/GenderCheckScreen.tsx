@@ -4,9 +4,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { useState } from "react";
 
-const SurveyScreen = ({ navigation }: any) => {
+const GenderCheckScreen = ({ navigation }: any) => {
   const [selectedItem, setSelectedItem] = useState(0);
-
   return (
     <BackgroundScreen>
       <View style={styles.container}>
@@ -21,10 +20,10 @@ const SurveyScreen = ({ navigation }: any) => {
         />
         <View style={styles.textcontainer}>
           <Text style={[styles.text, styles.largetext]}>
-            흡연 여부를 알려주세요
+            성별을 알려주세요.
           </Text>
           <Text style={[styles.text, styles.smalltext]}>
-            흡연할 경우 조심해야 할 성분이 있어요
+            성별에 기반한 설문이 준비되어 있습니다.
           </Text>
         </View>
         <ScrollView>
@@ -40,7 +39,7 @@ const SurveyScreen = ({ navigation }: any) => {
                 onPress={() => setSelectedItem(1)}
               >
                 <View style={styles.itemflex}>
-                  <Text style={styles.itemtitle}>비흡연</Text>
+                  <Text style={styles.itemtitle}>남성</Text>
                   <AntDesign
                     name="checkcircleo"
                     size={24}
@@ -63,7 +62,7 @@ const SurveyScreen = ({ navigation }: any) => {
                 onPress={() => setSelectedItem(2)}
               >
                 <View style={styles.itemflex}>
-                  <Text style={styles.itemtitle}>흡연</Text>
+                  <Text style={styles.itemtitle}>여성</Text>
                   <AntDesign
                     name="checkcircleo"
                     size={24}
@@ -173,5 +172,4 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
 });
-
-export default SurveyScreen;
+export default GenderCheckScreen;

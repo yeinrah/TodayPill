@@ -7,15 +7,22 @@ import {
   ScrollView,
   Switch,
   Modal,
+  Button,
 } from "react-native";
 
-import { useState } from "react";
+import { useState, useRef, useMemo, useCallback, useEffect } from "react";
 import { accent, primary, secondary } from "../../../constants/Colors";
 import PillCard from "../../UI/PillCard";
 import { Ionicons } from "@expo/vector-icons";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Entypo, AntDesign } from "@expo/vector-icons";
-import CustomModal from "../../UI/CustomModal";
+import Animated from "react-native-reanimated";
+// import BottomSheet from "reanimated-bottom-sheet";
+import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
+import CustomBtn from "../../UI/CustomBtn";
+import WeekDayList from "./WeekDayList";
+import * as Notifications from "expo-notifications";
+// import Notifications from "../../../utils/Notifications";
 
 const dummyRoutine = {
   time: "17:30",
@@ -37,6 +44,9 @@ export default function ModifyRoutineItem() {
 
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
 
+  const submitModifyRoutineHandler = () => {
+    console.warn("제출함!!!!!!!!!!!!!!!!!!!!");
+  };
   const showDatePicker = () => {
     setDatePickerVisible(true);
   };
@@ -64,14 +74,76 @@ export default function ModifyRoutineItem() {
     hideDatePicker();
   };
 
-  const alarmToggleSwitch = () =>
+  const alarmToggleSwitch = () => {
     setIsEnabled((previousState) => !previousState);
+  };
+
+  useEffect(() => {
+    if (isEnabled) {
+      const today = Date.now();
+      const date = new Date(today);
+      const target = new Date("Wed Nov 02 2022 13:03:30 GMT+0900 (KST)");
+      const timer = Math.floor((target.getTime() - date.getTime()) / 1000);
+      console.log(timer);
+      Notifications.scheduleNotificationAsync({
+        content: {
+          title: "오늘의 영양제",
+          body: '"킬레이트 마그네슘"을 드실 시간이에요!',
+        },
+        trigger: {
+          seconds: timer,
+        },
+      });
+
+      // const myDate = new Date(Date.now() + 5 * 1000);
+      // Notifications.scheduledLocalNotifications(
+      //   "1",
+      //   "1",
+      //   myDate,
+      //   "영양제 먹어요!",
+      //   "마그네슘"
+      // );
+    }
+  }, [isEnabled]);
 
   const decreaseHandler = () => {
     setPillCnt((pillCnt) => (pillCnt > 1 ? pillCnt - 1 : 1));
   };
   const increaseHandler = () => {
     setPillCnt((pillCnt) => (pillCnt < 20 ? pillCnt + 1 : 20));
+  };
+
+  // const renderContent = () => (
+  //   <View
+  //     style={{
+  //       backgroundColor: "white",
+  //       padding: 16,
+  //       height: 450,
+  //     }}
+  //   >
+  //     <Text>Swipe down to close</Text>
+  //   </View>
+  // );
+  // ref
+  const sheetRef = useRef<BottomSheet>(null);
+
+  // variables
+  const snapPoints = useMemo(() => ["20%", "50%", "100%"], []);
+
+  // callbacks
+  const handleSheetChange = useCallback((index) => {
+    // console.warn("handleSheetChange", index);
+  }, []);
+  const handleSnapPress = useCallback((index) => {
+    sheetRef.current?.snapToIndex(index);
+  }, []);
+  const handleClosePress = useCallback(() => {
+    sheetRef.current?.close();
+  }, []);
+
+  const chooseDayHandler = () => {
+    // 선택한 요일들 인덱스로 array 만들어서 보내기
+    handleClosePress();
   };
   return (
     <ScrollView style={styles.outerContainer}>
@@ -108,34 +180,30 @@ export default function ModifyRoutineItem() {
       </PillCard>
 
       <View>
-        <PillCard height={150} width={"90%"} bgColor={"#edfbf9"}>
+        <PillCard height={160} width={"90%"} bgColor={"#edfbf9"}>
           <View style={styles.takenTimeInnerContainer}>
-            <View style={styles.dayAlarmContainer}>
-              <Text style={styles.name}>섭취 요일</Text>
+            <View style={styles.dayAlarmOuterContainer}>
+              <View style={styles.dayAlarmContainer}>
+                <Text style={styles.name}>섭취 요일</Text>
 
-              <Pressable
-                onPress={() => setModalVisible(true)}
-                style={styles.directionRow}
-              >
-                <Text style={styles.dayAndTimeName}>매일</Text>
-                <AntDesign name="right" size={24} color="black" />
-                <View>
-                  <CustomModal
-                    modalVisible={modalVisible}
-                    modalCloseHandler={() => setModalVisible(false)}
-                  >
-                    <View style={styles.modalContainer}>
-                      <Text>모달!!!!!!!!!!!!!!!</Text>
-                    </View>
-                  </CustomModal>
-                </View>
-              </Pressable>
+                <Pressable
+                  // onPress={() => handleSnapPress(2)}
+                  // onPress={() => setModalVisible(true)}
+                  style={styles.directionRow}
+                >
+                  <Text style={styles.dayAndTimeName}>매일</Text>
+                </Pressable>
+              </View>
+
+              <View style={styles.dayListContainer}>
+                <WeekDayList />
+              </View>
             </View>
 
             <View style={{ alignItems: "center" }}>
               <View style={[styles.separator, { width: "90%" }]} />
             </View>
-            <View style={styles.dayAlarmContainer}>
+            <View style={styles.dayAlarmSecondContainer}>
               <Text style={styles.name}>섭취 시간</Text>
 
               <Pressable onPress={showDatePicker} style={styles.directionRow}>
@@ -186,11 +254,18 @@ export default function ModifyRoutineItem() {
             </View>
           </View>
         </PillCard>
+        <View>
+          <View style={styles.chooseBtn}>
+            <CustomBtn
+              buttonColor={accent}
+              title={"수정 완료"}
+              titleColor={"#fff"}
+              buttonWidth={"90%"}
+              onPress={submitModifyRoutineHandler}
+            />
+          </View>
+        </View>
       </View>
-      {/* <Text style={styles.takenDate}></Text>
-      <View style={styles.pillRoutineContainer}>
-     
-      </View> */}
     </ScrollView>
   );
 }
@@ -298,16 +373,26 @@ const styles = StyleSheet.create({
     color: "#FF78A3",
   },
   dayAlarmOuterContainer: {
-    flex: 1,
+    flex: 5,
   },
   dayAlarmContainer: {
-    paddingHorizontal: 13,
+    paddingHorizontal: 17,
     flex: 1,
     height: "100%",
     // backgroundColor: "yellow",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  dayAlarmSecondContainer: {
+    paddingHorizontal: 13,
+    flex: 2,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  dayListContainer: {
+    flex: 1,
   },
   directionRow: {
     // backgroundColor: "red",
@@ -321,5 +406,26 @@ const styles = StyleSheet.create({
   modalContainer: {
     height: 150,
     width: 250,
+  },
+  // bottomOuterContainer: {
+  //   height: 150,
+  // },
+  bottomContainer: {
+    flex: 1,
+
+    // margin: 14,
+  },
+  contentContainer: {
+    flex: 1,
+    // alignItems: "center",
+  },
+
+  chooseDays: {
+    backgroundColor: "red",
+    flex: 1,
+  },
+  chooseBtn: {
+    flex: 1,
+    alignItems: "center",
   },
 });

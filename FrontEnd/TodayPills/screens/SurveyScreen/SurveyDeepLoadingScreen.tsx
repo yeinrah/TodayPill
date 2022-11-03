@@ -1,71 +1,83 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import BackgroundScreen from "../BackgroundScreen";
 
-const SurveyStartScreen = ({ navigation }: any) => {
-  const [name, setName] = useState("");
-  const getMyName = async () => {
-    const nowName = await AsyncStorage.getItem("@storage_UserNickName");
-    setName(nowName);
+const SurveyDeepLoadingScreen = ({ navigation }: any) => {
+  const [nowMyNutrient, setNowMyNutrient] = useState("");
+  const getMyNowNutrient = async () => {
+    const nutrient = await AsyncStorage.getItem("@storage_nowNutrient");
+    setNowMyNutrient(nutrient);
   };
   useEffect(() => {
-    getMyName();
+    getMyNowNutrient();
   }, []);
   return (
     <BackgroundScreen>
       <View style={styles.container}>
         <View style={styles.textcontainer}>
-          <View style={styles.flexrow}>
-            <Text style={[styles.text, styles.whitetext]}>{name}&nbsp;</Text>
-            <Text style={[styles.text, styles.blacktext]}>님의</Text>
-          </View>
-          <Text style={[styles.text, styles.blacktext]}>
-            건강 설문을 기반으로
+          <Text style={[styles.text, styles.greetingtext, styles.blacktext]}>
+            {nowMyNutrient} 맞춤 추천 완료 !!
           </Text>
-          <Text style={[styles.text, styles.blacktext]}>
-            필요한 영양 성분을
-          </Text>
-          <Text style={[styles.text, styles.blacktext]}>추천해드릴게요!</Text>
+        </View>
+        <View style={styles.imagecontainer}>
+          <Image
+            style={styles.image}
+            source={require("../../assets/images/youngyang/normal.png")}
+          />
         </View>
         <View style={styles.buttonOuterContainer}>
           <Pressable
             android_ripple={{ color: "#4E736F" }}
             style={styles.buttonInnerContainer}
-            onPress={() => navigation.navigate("SurveyScreen")}
+            onPress={() => navigation.navigate("PillResultScreen")}
           >
-            <Text style={styles.title}>설문하기</Text>
+            <Text style={styles.title}>다음</Text>
           </Pressable>
         </View>
       </View>
     </BackgroundScreen>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "space-around",
     alignItems: "center",
   },
+  imagecontainer: {
+    width: 100,
+    height: 150,
+  },
+  image: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "contain",
+  },
   textcontainer: {
     alignItems: "center",
-  },
-  flexrow: {
-    flexDirection: "row",
   },
   text: {
     fontWeight: "bold",
     textShadowColor: "rgba(0, 0, 0, 0.25)",
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 1,
+  },
+  greetingtext: {
     fontSize: 30,
+    marginBottom: 10,
+  },
+  nametext: {
+    fontSize: 40,
   },
   blacktext: {
     color: "black",
   },
   whitetext: {
     color: "white",
+  },
+  flexrow: {
+    flexDirection: "row",
   },
   buttonOuterContainer: {
     borderRadius: 20,
@@ -87,4 +99,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SurveyStartScreen;
+export default SurveyDeepLoadingScreen;

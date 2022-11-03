@@ -1,18 +1,58 @@
-import { View, TextInput, StyleSheet } from "react-native"
+import { View, TextInput, StyleSheet, Alert, Keyboard } from "react-native"
+import { Feather } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import { useRef, useState } from "react";
 
-const SearchBar = ({ navigation }: any) => {
+const SearchBar = ({ navigation, word }: any) => {
+    const [keyword, setKeyword] = useState(word);
+    const textinput = useRef();
+    const Search = () => {
+        if (keyword) {
+            navigation.navigate("SearchScreen", {word: keyword})
+        } else {
+            Alert.alert(
+                "",
+                "검색어를 입력하세요.",
+                [
+                    {
+                        text: "확인"
+                    }
+                ]
+            )
+        }
+    };
+
     return (
         <View style={styles.container}>
             <TextInput
                 style={styles.textinput}
                 placeholder="어떤 영양제를 찾으세요?"
+                onChangeText={(word) => setKeyword(word)}
+                onSubmitEditing={() => Search()}
+                value={keyword}
+                returnKeyType="search"
+                ref={textinput}
             />
+            {keyword ?
+                <Feather
+                    name="x"
+                    size={24}
+                    style={styles.clearicon}
+                    onPress={() => {
+                        setKeyword()
+                        textinput.current.clear()
+                    }}
+                /> :
+                null
+            }
             <Ionicons
                 name="search"
                 size={30}
                 style={styles.searchicon}
-                onPress={() => navigation.navigate("SearchScreen")}
+                onPress={() => {
+                    Search()
+                    Keyboard.dismiss()
+                }}
             />
         </View>
     )
@@ -33,9 +73,13 @@ const styles = StyleSheet.create({
         marginLeft: 30,
         marginRight: 30,
         paddingLeft: 20,
-        paddingRight: 40,
+        paddingRight: 66,
         elevation: 10,
         backgroundColor: "white",
+    },
+    clearicon: {
+        position: "absolute",
+        right: 70,
     },
     searchicon: {
         position: "absolute",
