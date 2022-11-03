@@ -4,6 +4,7 @@ import { Text, View } from "react-native";
 import WebView from "react-native-webview";
 import BackgroundScreen from "../BackgroundScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getUserInfoByEmail } from "../../API/userAPI";
 
 const REST_API_KEY = "acdc3561e2faeeafdcf245c2d609bd5d";
 let access_token: string;
@@ -36,9 +37,10 @@ const KakaoScreen = ({ navigation }: any) => {
       };
       const response = await axios.post(REDIRECT_URI, body);
       const value = response.data;
-      console.log(value);
+      console.log(value, "haha");
       console.log(value.name);
-      await AsyncStorage.setItem("@storage_User", "정서");
+      const userInfo = await getUserInfoByEmail(value.email);
+      await AsyncStorage.setItem("@storage_UserId", String(userInfo.userId));
       await AsyncStorage.setItem("@storage_UserEmail", value.email);
       await AsyncStorage.setItem("@storage_UserNickName", value.name);
       // console.log(response);
@@ -68,8 +70,6 @@ const KakaoScreen = ({ navigation }: any) => {
     <BackgroundScreen>
       <WebView
         style={{ flex: 1 }}
-        originWhitelist={["*"]}
-        scalesPageToFit={false}
         source={{
           uri: `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`,
         }}

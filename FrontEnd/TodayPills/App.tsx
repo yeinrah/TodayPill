@@ -25,7 +25,7 @@ export default function App() {
   };
   const loadData = async () => {
     try {
-      let userStorage = await AsyncStorage.getItem("@storage_User");
+      let userStorage = await AsyncStorage.getItem("@storage_UserId");
       if (userStorage) {
         setUserInfo(userStorage);
         return true;

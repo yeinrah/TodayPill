@@ -16,7 +16,7 @@ const NutrientDetailScreen = ({ navigation, route }: any) => {
   const [nutrientName, setNutrientName] = useState("");
   const { nutrient } = route.params;
   const getMyName = async () => {
-    const name = await AsyncStorage.getItem("@storage_userNickName");
+    const name = await AsyncStorage.getItem("@storage_UserNickName");
     setMyName(name);
   };
   const setDescription = async () => {

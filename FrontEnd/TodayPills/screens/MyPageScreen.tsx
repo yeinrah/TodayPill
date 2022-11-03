@@ -85,7 +85,13 @@ export default function MyPageScreen({ navigation }: any) {
             />
             <Pressable
               onPress={async () => {
-                await AsyncStorage.removeItem("@storage_User");
+                await AsyncStorage.removeItem("@storage_UserId");
+                await AsyncStorage.removeItem("@storage_UserNickName");
+                await AsyncStorage.removeItem("@storage_UserEmail");
+                await AsyncStorage.removeItem("@storage_nowNutrient");
+                await AsyncStorage.removeItem("@storage_userName");
+                await AsyncStorage.removeItem("@storage_userBirth");
+                await AsyncStorage.removeItem("@storage_userPhone");
                 navigation.replace("Start");
               }}
             >
