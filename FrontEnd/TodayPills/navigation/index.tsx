@@ -271,7 +271,7 @@ function Home() {
 function MaterialBottomTabNavigator({ navigation }: any) {
   const colorScheme = useColorScheme();
   const checkLogin = async () => {
-    if ((await AsyncStorage.getItem("@storage_User")) === null) {
+    if ((await AsyncStorage.getItem("@storage_UserId")) === null) {
       navigation.replace("Start");
     }
   };

@@ -11,7 +11,8 @@ const PillResultScreen = ({ navigation }: any) => {
   const [myName, setMyName] = useState("");
   const [nowMyNutrient, setNowMyNutrient] = useState("");
   const getMyName = async () => {
-    const name = await AsyncStorage.getItem("@storage_userNickName");
+    const name = await AsyncStorage.getItem("@storage_UserNickName");
+    console.log(name, "this is my name");
     setMyName(name);
   };
   const getMyNowNutrient = async () => {
