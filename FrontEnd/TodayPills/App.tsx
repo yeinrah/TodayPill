@@ -11,6 +11,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useCallback, useEffect, useState } from "react";
 import StartScreen from "./screens/StartScreen/StartScreen";
 import { useFocusEffect } from "@react-navigation/native";
+import * as Notifications from "expo-notifications";
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -37,6 +38,13 @@ export default function App() {
       console.log("error", e);
     }
   };
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: true,
+      shouldSetBadge: false,
+    }),
+  });
   // useEffect(() => {
   //   console.log("main start");
   //   loadData();
