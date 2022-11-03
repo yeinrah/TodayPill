@@ -13,6 +13,7 @@ import com.todaypill.db.entity.User;
 import com.todaypill.repository.LikeRepository;
 import com.todaypill.repository.SupplementRepository;
 import com.todaypill.repository.UserRepository;
+import com.todaypill.request.UpdateNameReq;
 
 @Service
 public class UserService {
@@ -90,6 +91,11 @@ public class UserService {
 	public User findOneByEmail(String email) throws Exception {
 		User user = userRepository.findOneByEmail(email);
 		return user;
+	}
+	
+	@Transactional
+	public void updateName(UpdateNameReq updateNameReq) throws Exception {
+		userRepository.updateName(updateNameReq.getUserId(), updateNameReq.getName());
 	}
 	
 }
