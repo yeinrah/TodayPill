@@ -52,6 +52,25 @@ export default function MyPageScreen({ navigation }: any) {
           <View style={styles.myInfoContainer}>
             <View style={styles.nameContainer}>
               <Text style={styles.name}>정서님</Text>
+              <Pressable
+                onPress={() => {
+                  console.log("이름 수정하기!");
+                  // setTimesPressed((current) => current + 1);
+                }}
+                style={styles.modifyContainer}
+              >
+                {({ pressed }) => (
+                  <Text
+                    style={[
+                      styles.modify,
+                      { color: pressed ? "black" : "#B7B7B7" },
+                    ]}
+                  >
+                    수정
+                    {/* {pressed ? 'Pressed!' : 'Press Me'} */}
+                  </Text>
+                )}
+              </Pressable>
             </View>
             <View style={styles.ageContainer}>
               <Text style={styles.age}>만 26세 남성</Text>

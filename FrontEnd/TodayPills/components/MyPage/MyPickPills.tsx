@@ -7,6 +7,7 @@ import {
   Text,
   Button,
   ScrollView,
+  Image,
 } from "react-native";
 import PillItem, { PillProps } from "../Pills/PillItem";
 
@@ -58,9 +59,18 @@ export default function MyPickPills() {
 
   return (
     <View style={styles.likeContainer}>
-      <Text style={styles.name}>나의 Pick</Text>
+      <View style={styles.myPickContainer}>
+        <Text style={styles.name}>나의 Pick</Text>
+        <View style={styles.heartContainer}>
+          <Image
+            source={require("../../assets/images/hearton.png")}
+            style={styles.heart}
+          />
+        </View>
+      </View>
+
       <View style={styles.outerContainer}>
-        <ScrollView style={styles.cardscontainer} horizontal={true}>
+        <ScrollView style={styles.cardsContainer} horizontal={true}>
           {dummyPills.map((pill, idx) => (
             <PillItem
               key={idx}
@@ -85,10 +95,31 @@ const styles = StyleSheet.create({
     // alignItems: "center",
     // justifyContent: "center",
   },
-  pickPillsContainer: {},
+
+  myPickContainer: {
+    flexDirection: "row",
+  },
+  heartContainer: {
+    // width: 50,
+    // height: 50,
+    // paddingBottom: 10,
+    // marginBottom: 5,
+    // position: "absolute",
+    // bottom: 0,
+    // right: -5,
+  },
+  heart: {
+    width: 45,
+    height: 45,
+    // paddingBottom: 20,
+    // width: "100%",
+    // height: "100%",
+    // resizeMode: "contain",
+  },
   name: {
     fontSize: 24,
     fontWeight: "900",
+    marginTop: 5,
   },
   outerContainer: {
     marginHorizontal: 5,
@@ -102,7 +133,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginBottom: 10,
   },
-  cardscontainer: {
+  cardsContainer: {
     flexDirection: "row",
     // justifyContent: "space-around",
     paddingVertical: 10,
