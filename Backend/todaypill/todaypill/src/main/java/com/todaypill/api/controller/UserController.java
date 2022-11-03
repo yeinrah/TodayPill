@@ -28,6 +28,7 @@ import com.todaypill.db.entity.Like;
 import com.todaypill.db.entity.User;
 import com.todaypill.request.GetHealthReq;
 import com.todaypill.request.InsertLikeReq;
+import com.todaypill.request.UpdateNameReq;
 import com.todaypill.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -172,5 +173,12 @@ public class UserController {
 	public ResponseEntity<?> deleteLike(@PathVariable String email) throws Exception {
 		User user = userService.findOneByEmail(email);
 		return new ResponseEntity<User>(user, HttpStatus.OK);
+	}
+	
+	@PutMapping("/user/updateName")
+	@ApiOperation(value = "update name", notes = "이름 바꾸기")
+	public ResponseEntity<?> updateName(@RequestBody UpdateNameReq updateNameReq) throws Exception {
+		userService.updateName(updateNameReq);
+		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 } 
