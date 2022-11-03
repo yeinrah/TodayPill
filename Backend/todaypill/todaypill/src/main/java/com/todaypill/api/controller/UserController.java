@@ -91,9 +91,11 @@ public class UserController {
         int realAge = Integer.parseInt(age);
         String email = (String)kakaoAccount.get("email");
         String gender = (String)kakaoAccount.get("gender");
-        if(gender.equals("male")) gender = "남";
-        else if(gender.equals("Female")) gender = "여";
-        else gender = "x";
+        System.out.println("성별은 이렇게 나옵니다. =>"+gender);
+//        if(gender.equals("male")) gender = "남";
+//        else if(gender.equals("female")) gender = "여";
+//        else gender = "x";
+        gender = "똥";
         
         System.out.println("카카오 =>"+kakaoAccount);
         System.out.println(jsonOb);
@@ -101,9 +103,9 @@ public class UserController {
         System.out.println(realAge);
         System.out.println(email);
         System.out.println(gender);
-        User user = userService.signup(email, name, realAge, gender);
+        boolean type = userService.signup(email, name, realAge, gender);
         
-        if(user==null) {
+        if(type==false) {
         	HashMap<String, Object> map = new HashMap();
         	map.put("signup", false);
         	map.put("name", name);
