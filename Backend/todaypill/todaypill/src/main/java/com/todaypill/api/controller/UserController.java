@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -201,8 +202,17 @@ public class UserController {
 		String[] arr = userService.userFirstSurvey(userFirstSurveyReq);
 		User user = userService.findOneByUserId(userFirstSurveyReq.getUserId());
 		userService.updateRecommend(user.getEmail(), arr[0], arr[1], arr[2]);
-		// commonQuestion 만들어주기
 		
+		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+	
+	//성별 바꿔주자
+	@PatchMapping("/user/patchgender/{email}/{gender}")
+	@ApiOperation(value = "성별 바꾸기", notes = "성별을 바꾼다.")
+	public ResponseEntity<?> patchGender(@PathVariable String email, @PathVariable String gender) throws Exception {
+		System.out.println(email);
+		System.out.println(gender);
+		userService.patchGender(email, gender);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 

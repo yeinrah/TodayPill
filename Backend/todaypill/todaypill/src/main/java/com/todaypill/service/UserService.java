@@ -240,4 +240,8 @@ public class UserService {
 		commonQuestionRepository.save(cq);
 	}
 	
+	@Transactional
+	public void patchGender(String email, String gender) throws Exception {
+		userRepository.patchGender(gender, email);
+	}
 }
