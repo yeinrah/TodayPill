@@ -51,6 +51,7 @@ import BackgroundScreen from "./BackgroundScreen";
 export default function MyPageScreen({ navigation }: any) {
   // RootTabScreenProps<"MyPage">
   const [myName, setMyName] = useState("");
+  const [isChangeName, setIsChangeName] = useState(false);
   // const [MyInfo, setMyInfo] = useState<IUserInfo>({});
   const [myInfo, setMyInfo] = useState<any>({});
 
@@ -72,17 +73,20 @@ export default function MyPageScreen({ navigation }: any) {
   useEffect(() => {
     getMyName();
     getMyInfo();
+    setIsChangeName(false);
     // getMyNowNutrient();
-  }, []);
+  }, [isChangeName]);
   return (
     <BackgroundScreen>
       <Card>
         <ScrollView style={styles.scrollView}>
           <View style={styles.myInfoContainer}>
             <View style={styles.nameContainer}>
-              <Text style={styles.name}>{myName} 님</Text>
+              <Text style={styles.name}>
+                {myName} <Text style={{ fontWeight: "500" }}>님</Text>
+              </Text>
 
-              <UpdateNickname />
+              <UpdateNickname onChangeName={setIsChangeName} />
             </View>
 
             <View style={styles.ageContainer}>
