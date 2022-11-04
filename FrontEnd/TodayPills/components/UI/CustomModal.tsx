@@ -2,10 +2,13 @@ import { StyleSheet, View, Pressable, Text } from "react-native";
 import Modal from "react-native-modal";
 import { IBackground } from "../../types";
 import { useState } from "react";
+import CustomBtn from "./CustomBtn";
+import { accent } from "../../constants/Colors";
 
 export default function CustomModal({
   children,
   modalVisible,
+  customStyle,
   modalCloseHandler,
 }: IBackground) {
   return (
@@ -17,13 +20,7 @@ export default function CustomModal({
         // }}
       >
         <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <View>{children}</View>
-            {/* <Text>Hello World!</Text> */}
-            <Pressable onPress={modalCloseHandler} style={[styles.button]}>
-              <Text>Hide Modal</Text>
-            </Pressable>
-          </View>
+          <View style={[styles.modalView, customStyle]}>{children}</View>
         </View>
       </Modal>
     </View>
@@ -58,34 +55,25 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22,
+    // marginTop: 22,
   },
   modalView: {
-    margin: 20,
+    // margin: 20,
     backgroundColor: "white",
     borderRadius: 20,
-    padding: 35,
+
+    // padding: 35,
     alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  button: {
-    borderRadius: 20,
     padding: 10,
-    elevation: 2,
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 2,
+    // },
+    // shadowOpacity: 0.25,
+    // shadowRadius: 4,
+    // elevation: 5,
   },
-  buttonOpen: {
-    backgroundColor: "#F194FF",
-  },
-  buttonClose: {
-    backgroundColor: "#2196F3",
-  },
+
   textStyle: {
     color: "white",
     fontWeight: "bold",

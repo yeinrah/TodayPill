@@ -14,10 +14,29 @@ const HealthScreeningCheck = async (
     userName,
   });
 };
+const updateUsername = async (userId: number, name: string) => {
+  console.warn("업데이트  닉네임!!!!!!!!!!!!!");
+  await api.put("/user/user/updateName", {
+    userId,
+    name,
+  });
+};
 const getUserInfoByEmail = async (email: string) => {
   const result = await api.get(`/user/user/${email}`);
-  return result.data;
+  const userInfo = {
+    age: result.data.age,
+    gender: result.data.age,
+    name: result.data.age,
+    userId: result.data.userId,
+    recommendNutrients: [
+      result.data.recommendOne,
+      result.data.recommendTwo,
+      result.data.recommendThree,
+    ],
+  };
+  return userInfo;
 };
+
 const kakaoLogout = async (ACCESS_TOKEN) => {
   // api.defaults.headers.common["Authorization"] = ACCESS_TOKEN;
   await api
@@ -30,4 +49,5 @@ const kakaoLogout = async (ACCESS_TOKEN) => {
     )
     .then((res) => console.log(res));
 };
-export { HealthScreeningCheck, getUserInfoByEmail, kakaoLogout };
+
+export { HealthScreeningCheck, getUserInfoByEmail, kakaoLogout, updateUsername };
