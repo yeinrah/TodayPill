@@ -29,6 +29,7 @@ import com.todaypill.db.entity.User;
 import com.todaypill.request.GetHealthReq;
 import com.todaypill.request.InsertLikeReq;
 import com.todaypill.request.UpdateNameReq;
+import com.todaypill.request.UserFirstSurveyReq;
 import com.todaypill.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -183,4 +184,16 @@ public class UserController {
 		userService.updateName(updateNameReq);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
+	
+	@PutMapping("/user/firstSurvey")
+	@ApiOperation(value = "1차 설문조사", notes = "1차 설문조사를 진행한다.")
+	public ResponseEntity<?> firstSurvey(@RequestBody UserFirstSurveyReq userFirstSurveyReq) throws Exception {
+		String[] arr = userService.userFirstSurvey(userFirstSurveyReq);
+		User user = userService.findOneByUserId(userFirstSurveyReq.getUserId());
+		userService.updateRecommend(user.getEmail(), arr[0], arr[1], arr[2]);
+		// commonQuestion 만들어주기
+		
+		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+
 } 

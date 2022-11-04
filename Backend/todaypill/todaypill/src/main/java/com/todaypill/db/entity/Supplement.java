@@ -25,24 +25,60 @@ public class Supplement {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "supplement_id")
-	private int supplementId;
+	private Integer supplementId;
+	
+	@Column(name = "supplement_type_id")
+	private Integer supplementTypeId;
 	
 	@Column(name = "name")
 	private String name;
 	
+	@Column(name = "brand")
+	private String brand;
+	
 	@Column(name = "price")
-	private double price;
+	private Integer price;
 	
 	@Column(name = "image")
 	private String image;
-	
-	@Column(name = "ingredients")
+		
+	// columnDefinition = "TEXT" 이거는 에러남
+	@Column(name = "ingredients", length = 2000)
 	private String ingredients;
+	
+	@Column(name = "bioavailability")
+	private Float bioavailability;
+	
+	@Column(name = "laxative")
+	private Float laxative;
+	
+	@Column(name = "kidney_disease")
+	private Float kidneyDisease;
+	
+	@Column(name = "consumer_lab_score")
+	private Integer consumerLabScore;
+	
+	@Column(name = "additional_efficacy")
+	private String additionalEfficacy;
 	
 	@Column(name = "note")
 	private String note;
-		
+	
+	@Column(name = "amount")
+	private String amount;
+	
+	@Column(name = "required_count")
+	private String requiredCount;
+	
+	@Column(name = "formula")
+	private String formula;
+	
 	@Column(name = "like")
-	private int like;
-}
+	private Integer like;
+	
+	@Column(name = "sustained_release")
+	private Boolean sustainedRelease;
 
+	@Column(name = "pill_size")
+	private String pillSize;
+}
