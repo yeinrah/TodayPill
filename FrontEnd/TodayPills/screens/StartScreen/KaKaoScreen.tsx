@@ -7,12 +7,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const REST_API_KEY = "acdc3561e2faeeafdcf245c2d609bd5d";
 let access_token: string;
-// const REDIRECT_URI = `http://localhost:8080/api/user/login`;
-// const REDIRECT_URI = `http://43.200.42.181/api/user/login`;
-// const REDIRECT_URI = `http://localhost:8080/api/user/login`;
+
 const REDIRECT_URI = `https://k7a706.p.ssafy.io/api/user/login`;
 // const REDIRECT_URI = `http://10.0.2.2:8080/api/user/login`;
-// const REDIRECT_URI = `https://localhost:8080/api`;
+
+const kakaoLogin_URI =
+  "https://accounts.kakao.com/login?continue=https%3A%2F%2Fkauth.kakao.com%2Foauth%2Fauthorize%3Fresponse_type%3Dcode%26redirect_uri%3Dhttp%253A%252F%252F10.0.2.2%253A8080%252Fapi%252Fuser%252Flogin%26through_account%3Dtrue%26client_id%3Dacdc3561e2faeeafdcf245c2d609bd5d";
+
 
 const INJECTED_JAVASCRIPT = `window.ReactNativeWebView.postMessage('message from webView')`;
 
