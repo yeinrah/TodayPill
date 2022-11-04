@@ -34,9 +34,9 @@ const PersonalRecommendationScreen = ({ navigation }: any) => {
     console.log(email, "email");
     console.log(userInfo, "userInfo");
     setMyNutrient([
-      userInfo.recommendOne,
-      userInfo.recommendTwo,
-      userInfo.recommendThree,
+      userInfo.recommendNutrients[0],
+      userInfo.recommendNutrients[1],
+      userInfo.recommendNutrients[2],
     ]);
   };
   useEffect(() => {
