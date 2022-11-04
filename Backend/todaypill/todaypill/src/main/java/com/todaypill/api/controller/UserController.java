@@ -203,6 +203,7 @@ public class UserController {
 			babyMap.put("name", supplement.getName());
 			babyMap.put("brand", supplement.getBrand());
 			babyMap.put("supplementId", supplement.getSupplementId());
+			babyMap.put("like", supplement.getLike());
 			supList.add(babyMap);
 		}
 		
