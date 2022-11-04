@@ -104,6 +104,7 @@ const PersonalRecommendationScreen = ({ navigation }: any) => {
           <CustomBtn
             buttonColor={accent}
             title={"홈으로 가기"}
+            fontSize={20}
             titleColor={"#fff"}
             buttonWidth={"70%"}
             onPress={() => navigation.navigate("MainScreen")}

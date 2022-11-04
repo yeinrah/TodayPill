@@ -17,5 +17,8 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 	@Modifying
 	@Query(value = "update user set recommend_one = ?2, recommend_two = ?3, recommend_three = ?4 where email = ?1", nativeQuery = true)
 	void updateRecommend(String email, String recoOne, String recoTwo, String recoThr);
-
+	
+	@Modifying
+	@Query(value = "update user set name = ?2 where user_Id = ?1", nativeQuery = true)
+	void updateName(int userId, String name);
 }

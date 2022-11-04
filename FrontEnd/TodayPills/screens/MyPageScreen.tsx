@@ -1,6 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from "react";
+
 import axios from "axios";
-import { LinearGradient } from "expo-linear-gradient";
+
 import {
   StyleSheet,
   Pressable,
@@ -10,16 +12,20 @@ import {
   Button,
   ScrollView,
 } from "react-native";
-import { kakaoLogout } from "../API/userAPI";
+
+import { getUserInfoByEmail, kakaoLogout } from "../API/userAPI";
+
 import MyPickPills from "../components/MyPage/MyPickPills";
 import RecomNutritions from "../components/MyPage/Recommendations/RecomNutritions";
+import UpdateNickname from "../components/MyPage/UpdateNickname";
 import Card from "../components/UI/Card";
 import CustomBtn from "../components/UI/CustomBtn";
+import CustomModal from "../components/UI/CustomModal";
 import { accent, primary, secondary } from "../constants/Colors";
 
 // import EditScreenInfo from "../components/EditScreenInfo";
 // import { Text, View } from "../components/Themed";
-import { RootTabScreenProps } from "../types";
+import { IUserInfo, RootTabScreenProps } from "../types";
 import BackgroundScreen from "./BackgroundScreen";
 
 // <Pressable
@@ -44,19 +50,44 @@ import BackgroundScreen from "./BackgroundScreen";
 
 export default function MyPageScreen({ navigation }: any) {
   // RootTabScreenProps<"MyPage">
+  const [myName, setMyName] = useState("");
+  // const [MyInfo, setMyInfo] = useState<IUserInfo>({});
+  const [myInfo, setMyInfo] = useState<any>({});
+
+  const getMyName = async () => {
+    const name = await AsyncStorage.getItem("@storage_UserNickName");
+    setMyName(name);
+  };
+
+  const getMyInfo = async () => {
+    const myEmail = await AsyncStorage.getItem("@storage_UserEmail");
+    const myInfo: IUserInfo = await getUserInfoByEmail(myEmail);
+    setMyInfo(myInfo);
+
+    console.log(myInfo);
+  };
   const goMyPillsHandler = () => {
     navigation.navigate("MyPills", { userId: 1 });
   };
+  useEffect(() => {
+    getMyName();
+    getMyInfo();
+    // getMyNowNutrient();
+  }, []);
   return (
     <BackgroundScreen>
       <Card>
         <ScrollView style={styles.scrollView}>
           <View style={styles.myInfoContainer}>
             <View style={styles.nameContainer}>
-              <Text style={styles.name}>정서님</Text>
+              <Text style={styles.name}>{myName} 님</Text>
+
+              <UpdateNickname />
             </View>
+
             <View style={styles.ageContainer}>
-              <Text style={styles.age}>만 26세 남성</Text>
+              <Text style={styles.age}>{myInfo.age}대</Text>
+              <Text style={styles.age}>남성</Text>
             </View>
           </View>
           <View style={styles.nutrBtnContainer}>
@@ -64,6 +95,7 @@ export default function MyPageScreen({ navigation }: any) {
               <CustomBtn
                 buttonColor={accent}
                 title={"내가 섭취중인 영양제"}
+                fontSize={20}
                 titleColor={"#fff"}
                 buttonWidth={"70%"}
                 onPress={goMyPillsHandler}
@@ -81,6 +113,7 @@ export default function MyPageScreen({ navigation }: any) {
             <CustomBtn
               buttonColor={accent}
               title={"영양성분 추천 다시 받기!"}
+              fontSize={20}
               titleColor={"#fff"}
               buttonWidth={"90%"}
               onPress={() => console.log("추천 다시 받기 btn 클릭")}
@@ -116,16 +149,6 @@ export default function MyPageScreen({ navigation }: any) {
             >
               <Text style={styles.logout}>로그아웃</Text>
             </Pressable>
-            {/* <CustomBtn
-              buttonColor={primary}
-              title={"로그아웃"}
-              titleColor={"#fff"}
-              buttonWidth={"90%"}
-              onPress={async () => {
-                await AsyncStorage.removeItem("@storage_User");
-                navigation.replace("Start");
-              }}
-            /> */}
           </View>
         </ScrollView>
         {/* <View
@@ -169,6 +192,7 @@ const styles = StyleSheet.create({
   },
   ageContainer: {
     width: "100%",
+    flexDirection: "row",
     // padding: 10,
   },
   nutrBtnContainer: {
@@ -210,21 +234,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     elevation: 5,
   },
-  modifyContainer: {
-    marginTop: 10,
-  },
+
   name: {
     fontSize: 24,
     fontWeight: "900",
   },
-  modify: {
-    fontSize: 15,
-    fontWeight: "900",
-  },
+
   age: {
     fontSize: 15,
     fontWeight: "bold",
     color: "#B7B7B7",
+    marginLeft: 5,
   },
   separator: {
     marginVertical: 30,

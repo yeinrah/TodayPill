@@ -70,6 +70,7 @@ const HealthScreeningDetailScreen = ({ navigation }) => {
             buttonColor={accent}
             title={"확인"}
             titleColor={"#fff"}
+            fontSize={20}
             buttonWidth={"70%"}
             onPress={async () => {
               await AsyncStorage.setItem("@storage_userName", name);

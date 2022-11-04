@@ -1,10 +1,4 @@
-import {
-  StyleSheet,
-  View,
-  Image,
-  Text,
-  ImageSourcePropType,
-} from "react-native";
+import { StyleSheet, View, Image, Text, Pressable } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useState } from "react";
 
@@ -25,13 +19,25 @@ const PillItem = (props: PillProps) => {
         <View style={styles.imagecontainer}>
           <Image source={{ uri: props.image }} style={styles.pillimage} />
         </View>
-        <AntDesign
+        <Pressable onPress={() => setLike(!like)} style={styles.heartContainer}>
+          <Image
+            source={
+              like
+                ? // ? require("../../assets/images/hearton.png")
+                  require("../../assets/images/heartOn3.png")
+                : // : require("../../assets/images/heartoff.png")
+                  require("../../assets/images/heartOff1.png")
+            }
+            style={styles.heart}
+          />
+        </Pressable>
+        {/* <AntDesign
           name="hearto"
-          size={12}
+          size={14}
           color={like ? "#E2C3DC" : "#CCCCCC"}
           style={styles.likeicon}
           onPress={() => setLike(!like)}
-        />
+        /> */}
       </View>
       <View style={styles.textcontainer}>
         <Text style={styles.brandname}>{props.brand}</Text>
@@ -45,11 +51,11 @@ const styles = StyleSheet.create({
   container: {
     // marginVertical: 5,
     marginHorizontal: 5,
-    width: 70,
+    width: 90,
   },
   cardcontainer: {
     width: "100%",
-    height: 65,
+    height: 80,
     position: "relative",
     justifyContent: "center",
     alignItems: "center",
@@ -67,10 +73,22 @@ const styles = StyleSheet.create({
     height: "100%",
     resizeMode: "contain",
   },
-  likeicon: {
+  // likeicon: {
+  //   position: "absolute",
+  //   bottom: 2,
+  //   right: 2,
+  // },
+  heartContainer: {
+    width: 30,
+    height: 30,
     position: "absolute",
-    bottom: 2,
-    right: 2,
+    bottom: 0,
+    right: -5,
+  },
+  heart: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "contain",
   },
   textcontainer: {
     width: "100%",
@@ -78,12 +96,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 2,
   },
   brandname: {
-    fontSize: 6,
+    fontSize: 9,
     color: "#B7B7B7",
   },
   pillname: {
     marginTop: 2,
-    fontSize: 8,
+    fontSize: 11,
     fontWeight: "bold",
   },
 });
