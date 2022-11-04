@@ -192,5 +192,7 @@ public class Codef {
 			returnMap.put("list", insufficientNutrient);
 			return returnMap;
 			
+			//1. 건강검진내역을 불러온 사용자라도 공통질문의 속성값을 모두 채울 수 있게 내역불러온사람용 공통질문만들기
+			//2. 
 	} 
 }

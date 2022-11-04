@@ -50,6 +50,7 @@ const PillResultScreen = ({ navigation }: any) => {
             buttonColor={accent}
             title={"홈으로 가기"}
             titleColor={"#fff"}
+            fontSize={20}
             buttonWidth={"70%"}
             onPress={() => navigation.navigate("MainScreen")}
           />
