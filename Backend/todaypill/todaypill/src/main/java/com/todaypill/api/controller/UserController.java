@@ -3,6 +3,7 @@ package com.todaypill.api.controller;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,12 +27,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.todaypill.codef.Codef;
 import com.todaypill.db.entity.Like;
+import com.todaypill.db.entity.Supplement;
 import com.todaypill.db.entity.User;
 import com.todaypill.request.DetailHealthReq;
 import com.todaypill.request.GetHealthReq;
 import com.todaypill.request.InsertLikeReq;
 import com.todaypill.request.UpdateNameReq;
 import com.todaypill.request.UserFirstSurveyReq;
+import com.todaypill.service.SupplementService;
 import com.todaypill.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -42,12 +45,13 @@ public class UserController {
 	
 	Codef codef;
 	UserService userService;
-	
+	SupplementService supplementService;
 	@Autowired
-	public UserController(Codef codef, UserService userService) {
+	public UserController(Codef codef, UserService userService, SupplementService supplementService) {
 		super();
 		this.codef = codef;
 		this.userService = userService;
+		this.supplementService = supplementService;
 	}
 	
 	
@@ -129,6 +133,9 @@ public class UserController {
     }
 
 
+
+
+
 	//3. 건강검진 내역 확인하기
 	@PostMapping("/healthcheckdata")
 	@ApiOperation(value = "건강검진 내역을 가져와서 영양소를 추천한다", notes = "추천하자")
@@ -182,6 +189,26 @@ public class UserController {
 		return new ResponseEntity<List<Integer>>(list, HttpStatus.OK);
 	}
 	
+	//유저가 누른 좋아요 개수를 통해서 프론트가 필요한 데이터 전달
+	@GetMapping("/userLike/{userId}")
+	@ApiOperation(value = "유저가 누른 좋아요 개수를 통해서 프론트가 필요한 데이터 전달", notes = "유저가 누른 좋아요 개수를 통해서 프론트가 필요한 데이터 전달한다.")
+	public ResponseEntity<?> getUserLike(@PathVariable int userId) throws Exception {
+		List<Like> list = userService.getUserLike(userId);
+		List<HashMap<String, Object>> supList = new ArrayList<>();
+		HashMap<String, Object> map = new HashMap<>();
+		for(int i=0; i<list.size();i++) {
+			Supplement supplement = supplementService.getSupplementList(list.get(i).getSupplementId());
+			HashMap<String, Object> babyMap = new HashMap<>();
+			babyMap.put("image", supplement.getImage());
+			babyMap.put("name", supplement.getName());
+			babyMap.put("brand", supplement.getBrand());
+			babyMap.put("supplementId", supplement.getSupplementId());
+			supList.add(babyMap);
+		}
+		
+		return new ResponseEntity<List<HashMap<String, Object>>>(supList, HttpStatus.OK);
+	}
+	
 	@GetMapping("/user/{email}")
 	@ApiOperation(value = "email로 유저 정보 얻기", notes = "유저 정보 얻기")
 	public ResponseEntity<?> deleteLike(@PathVariable String email) throws Exception {
@@ -215,5 +242,7 @@ public class UserController {
 		userService.patchGender(email, gender);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
+	
+
 
 } 

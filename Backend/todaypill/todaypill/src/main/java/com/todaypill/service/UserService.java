@@ -87,6 +87,12 @@ public class UserService {
 			supplementRepository.updateLike(supplementId, likeNum - 1);
 		}
 	}
+	
+	@Transactional
+	public List<Like> getUserLike(int userId) throws Exception {
+		List<Like> list = likeRepository.findAllByUserId(userId);
+		return list;
+	}
 
 	@Transactional
 	public List<Integer> likeListOfSupplement(int supplementId) throws Exception {
