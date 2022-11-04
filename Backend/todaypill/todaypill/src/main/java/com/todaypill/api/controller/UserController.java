@@ -167,10 +167,10 @@ public class UserController {
 	}
 	
 	//6. 좋아요 눌러진거 삭제하기
-	@DeleteMapping("/deletelike")
+	@DeleteMapping("/deletelike/{userId}/{supplementId}")
 	@ApiOperation(value = "좋아요 삭제하기", notes = "좋아요 테이블 데이터 삭제하기")
-	public ResponseEntity<?> deleteLike(@RequestBody InsertLikeReq insertLikeReq) throws Exception {
-		userService.deleteLike(insertLikeReq.getUserId(), insertLikeReq.getSupplementId());
+	public ResponseEntity<?> deleteLike(@PathVariable int userId, @PathVariable int supplementId) throws Exception {
+		userService.deleteLike(userId, supplementId);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 	
