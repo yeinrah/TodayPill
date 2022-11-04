@@ -7,13 +7,14 @@ import {
   Text,
   TextInput,
   KeyboardAvoidingView,
+  Alert,
 } from "react-native";
 import { updateUsername } from "../../API/userAPI";
 import { accent, primary } from "../../constants/Colors";
 import CustomBtn from "../UI/CustomBtn";
 import CustomModal from "../UI/CustomModal";
 
-export default function UpdateNickname() {
+export default function UpdateNickname({ onChangeName }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [username, setUsername] = useState("");
   const [nickname, setNickname] = useState(username);
@@ -21,18 +22,30 @@ export default function UpdateNickname() {
   const modalCloseHandler = () => {
     setModalVisible(false);
   };
+
+  const cancelHandler = () => {
+    // const currentName = await AsyncStorage.getItem("@storage_UserNickName");
+    // setNickname(currentName);
+    getCurrentNickname();
+    modalCloseHandler();
+  };
   const changeNicknameHandler = async (nickname: string) => {
     // put 요청 닉네임 변경
+    if (nickname.length === 0) {
+      Alert.alert("수정", "닉네임은 한 글자 이상 가능합니다!");
+      return;
+    }
     await AsyncStorage.setItem("@storage_UserNickName", nickname);
     const userId = await AsyncStorage.getItem("@storage_UserId");
     await updateUsername(parseInt(userId), nickname);
-    setUsername(nickname);
+    setNickname(nickname);
+    onChangeName(true);
 
     modalCloseHandler();
   };
   const getCurrentNickname = async () => {
     const currentName = await AsyncStorage.getItem("@storage_UserNickName");
-    setUsername(currentName);
+    setNickname(currentName);
   };
 
   useEffect(() => {
@@ -45,28 +58,32 @@ export default function UpdateNickname() {
         <CustomModal
           modalVisible={modalVisible}
           modalCloseHandler={modalCloseHandler}
-          customStyle={{ width: "80%", height: 220 }}
+          customStyle={{ width: "90%", height: 190 }}
         >
           <View style={styles.outerContainer}>
-            <View style={styles.container}>
+            <View style={styles.nameContainer}>
               <Text style={styles.nickname}>닉네임 수정</Text>
+            </View>
+            <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
+                // caretHidden={true}
+                maxLength={10}
                 onChangeText={(updatedNickname) => setNickname(updatedNickname)}
-                placeholder="닉네임"
+                placeholder="닉네임 입력"
                 autoFocus={true}
                 value={nickname}
                 onSubmitEditing={changeNicknameHandler}
               />
             </View>
             <View style={styles.btnContainer}>
-              <Pressable onPress={modalCloseHandler} style={styles.btn}>
+              <Pressable onPress={cancelHandler} style={styles.btn}>
                 {({ pressed }) => (
                   <Text
                     style={[
                       styles.confirmText,
 
-                      { color: pressed ? "black" : "#B7B7B7" },
+                      { color: pressed ? "black" : "# B7B7B7" },
                     ]}
                   >
                     취소
@@ -130,35 +147,45 @@ const styles = StyleSheet.create({
   outerContainer: {
     flex: 1,
     width: "100%",
-
+    justifyContent: "space-between",
     paddingHorizontal: 15,
     paddingTop: 15,
-    paddingBottom: 15,
+    // paddingBottom: 15,
   },
 
-  container: {
+  nameContainer: {
     flex: 1,
+    justifyContent: "space-between",
     // backgroundColor: "red",
-    width: "90%",
+    width: "100%",
     // flexDirection: "row",
     // alignItems: "center",
-    padding: 10,
+  },
+  inputContainer: {
+    flex: 1,
+    alignItems: "center",
+    // justifyContent: "center",
+    // backgroundColor: "red",
+    // marginBottom: 20,
   },
   input: {
     // height: 40,
     width: "90%",
-    fontSize: 20,
-    marginTop: 20,
+    fontSize: 18,
+    fontWeight: "bold",
+
+    // marginTop: 30,
     paddingBottom: 3,
+
     // margin: 12,
-    borderBottomWidth: 1,
+    borderBottomWidth: 2,
     borderBottomColor: "grey",
   },
   modifyContainer: {
     marginTop: 10,
   },
   confirmText: {
-    fontSize: 15,
+    fontSize: 18,
     fontWeight: "900",
   },
   // modalContainer: {
@@ -166,10 +193,12 @@ const styles = StyleSheet.create({
   //   height: 0,
   // },
   nickname: {
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: 20,
+    color: "#868686",
+    fontWeight: "900",
   },
   btnContainer: {
+    flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
   },

@@ -79,7 +79,7 @@ const GenderCheckScreen = ({ navigation }: any) => {
             <Pressable
               android_ripple={{ color: "#4E736F" }}
               style={styles.buttonInnerContainer}
-              onPress={() => navigation.navigate("SurveyLoadingScreen")}
+              onPress={() => navigation.navigate("HealthScreeningCheckScreen")}
             >
               <Text style={styles.title}>다 음</Text>
             </Pressable>
