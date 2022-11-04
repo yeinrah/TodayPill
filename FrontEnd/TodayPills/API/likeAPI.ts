@@ -32,18 +32,13 @@ const like = async (userId: number, supplementId: number) => {
 // };
 
 const dislike = async (userId: number, supplementId: number) => {
-  const data = {
-    supplementId,
-    userId,
-  };
-  await api.post(`/user/deletelike`, JSON.stringify(data));
-  // await api.delete(`/user/deletelike`, JSON.stringify(data));
+  await api.delete(`/user/deletelike/${userId}/${supplementId}`);
 };
 // const dislike = async (userId: number, supplementId: number) => {
 //   const data = {
 //     supplementId,
 //     userId,
-//       };r
+//       };
 //   await api.delete("/user/deletelike", JSON.stringify(data));
 // };
 
