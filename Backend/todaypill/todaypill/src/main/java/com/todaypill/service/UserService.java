@@ -11,12 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.todaypill.db.entity.CommonQuestion;
 import com.todaypill.db.entity.Like;
 import com.todaypill.db.entity.Supplement;
 import com.todaypill.db.entity.User;
+import com.todaypill.repository.CommonQuestionRepository;
 import com.todaypill.repository.LikeRepository;
 import com.todaypill.repository.SupplementRepository;
 import com.todaypill.repository.UserRepository;
+import com.todaypill.request.DetailHealthReq;
 import com.todaypill.request.UpdateNameReq;
 import com.todaypill.request.UserFirstSurveyReq;
 
@@ -27,17 +30,18 @@ public class UserService {
 	UserRepository userRepository;
 	LikeRepository likeRepository;
 	SupplementRepository supplementRepository;
+	CommonQuestionRepository commonQuestionRepository;
 	
 	
 	
 	public UserService(UserRepository userRepository, LikeRepository likeRepository,
-			SupplementRepository supplementRepository) {
+			SupplementRepository supplementRepository, CommonQuestionRepository commonQuestionRepository) {
 		super();
 		this.userRepository = userRepository;
 		this.likeRepository = likeRepository;
 		this.supplementRepository = supplementRepository;
+		this.commonQuestionRepository = commonQuestionRepository;
 	}
-	
 	//회원 등록
 	@Transactional
 	public boolean signup(String email, String name, int age, String gender) throws Exception {
@@ -204,8 +208,40 @@ public class UserService {
 			System.out.println("key =>"+(list.get(i)).getKey()+"    value =>"+(list.get(i)).getValue());
 			arr[i]=(list.get(i)).getKey();
 		}
-
+		System.out.println("알러지 길이 =>"+userFirstSurveyReq.getAllergy());
+		CommonQuestion cq = CommonQuestion.builder().allergy(userFirstSurveyReq.getAllergy()).
+				balanced_meal(userFirstSurveyReq.isBalanced_meal()).
+				constipation(userFirstSurveyReq.isConstipation()).diarrhea(userFirstSurveyReq.isDiarrhea()).
+				heartburn(userFirstSurveyReq.isHeartburn()).is_ok_big_pill(userFirstSurveyReq.is_ok_big_pill())
+				.kidney_disease(userFirstSurveyReq.isKidney_disease()).lack(userFirstSurveyReq.getLack()).
+				preferred_brand(userFirstSurveyReq.getPreferred_brand())
+				.pregnant(userFirstSurveyReq.isPregnant()).problem(userFirstSurveyReq.getProblem()).
+				skin(userFirstSurveyReq.getSkin()).smoking(userFirstSurveyReq.isSmoking())
+				.userId(userFirstSurveyReq.getUserId())
+				.build();
+		commonQuestionRepository.save(cq);
 		return arr;
 	}
 	
+	@Transactional
+	public void insertDetail(DetailHealthReq detailHealthReq) throws Exception {
+		boolean check = true;
+		if(detailHealthReq.getPillSize().length()!=0) check = false;
+		CommonQuestion cq = CommonQuestion.builder().allergy(null).
+				balanced_meal(false).
+				constipation(false).diarrhea(false).
+				heartburn(false).is_ok_big_pill(check)
+				.kidney_disease(false).lack(null).
+				preferred_brand(detailHealthReq.getBrand())
+				.pregnant(false).problem(null).
+				skin(0).smoking(false)
+				.userId(detailHealthReq.getUserId())
+				.build();
+		commonQuestionRepository.save(cq);
+	}
+	
+	@Transactional
+	public void patchGender(String email, String gender) throws Exception {
+		userRepository.patchGender(gender, email);
+	}
 }

@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.todaypill.codef.Codef;
 import com.todaypill.db.entity.Like;
 import com.todaypill.db.entity.User;
+import com.todaypill.request.DetailHealthReq;
 import com.todaypill.request.GetHealthReq;
 import com.todaypill.request.InsertLikeReq;
 import com.todaypill.request.UpdateNameReq;
@@ -139,6 +141,15 @@ public class UserController {
 		return new ResponseEntity<Boolean>(check, HttpStatus.OK);
 	}
 	
+	//큰 약 잘 먹는지, 선호하는 브랜드명, 
+	@PostMapping("/healthcheckdata/detailcheck")
+	@ApiOperation(value = "건강검진 받은사람들 부족한 데이터 설문", notes = "추천하자")
+	public ResponseEntity<?> setCommonQuestionForHealthCheck(@RequestBody DetailHealthReq detailHealthReq) throws Exception {
+		userService.insertDetail(detailHealthReq);
+		
+		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+	
 	//4. 영양소 추천으로 인한 추천성분 업데이트
 	@PutMapping("/recommend")
 	@ApiOperation(value = "추천성분 업데이트", notes = "추천성분 업데이트")
@@ -156,10 +167,10 @@ public class UserController {
 	}
 	
 	//6. 좋아요 눌러진거 삭제하기
-	@DeleteMapping("/deletelike")
+	@DeleteMapping("/deletelike/{userId}/{supplementId}")
 	@ApiOperation(value = "좋아요 삭제하기", notes = "좋아요 테이블 데이터 삭제하기")
-	public ResponseEntity<?> deleteLike(@RequestBody InsertLikeReq insertLikeReq) throws Exception {
-		userService.deleteLike(insertLikeReq.getUserId(), insertLikeReq.getSupplementId());
+	public ResponseEntity<?> deleteLike(@PathVariable int userId, @PathVariable int supplementId) throws Exception {
+		userService.deleteLike(userId, supplementId);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 	
@@ -191,8 +202,17 @@ public class UserController {
 		String[] arr = userService.userFirstSurvey(userFirstSurveyReq);
 		User user = userService.findOneByUserId(userFirstSurveyReq.getUserId());
 		userService.updateRecommend(user.getEmail(), arr[0], arr[1], arr[2]);
-		// commonQuestion 만들어주기
 		
+		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+	
+	//성별 바꿔주자
+	@PatchMapping("/user/patchgender/{email}/{gender}")
+	@ApiOperation(value = "성별 바꾸기", notes = "성별을 바꾼다.")
+	public ResponseEntity<?> patchGender(@PathVariable String email, @PathVariable String gender) throws Exception {
+		System.out.println(email);
+		System.out.println(gender);
+		userService.patchGender(email, gender);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
