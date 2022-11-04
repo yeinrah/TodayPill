@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.todaypill.codef.Codef;
 import com.todaypill.db.entity.Like;
 import com.todaypill.db.entity.User;
+import com.todaypill.request.DetailHealthReq;
 import com.todaypill.request.GetHealthReq;
 import com.todaypill.request.InsertLikeReq;
 import com.todaypill.request.UpdateNameReq;
@@ -137,6 +138,15 @@ public class UserController {
 		userService.updateRecommend(getHealthReq.getEmail(),list.get(0), list.get(1), list.get(2));
 		
 		return new ResponseEntity<Boolean>(check, HttpStatus.OK);
+	}
+	
+	//큰 약 잘 먹는지, 선호하는 브랜드명, 
+	@PostMapping("/healthcheckdata/detailcheck")
+	@ApiOperation(value = "건강검진 받은사람들 부족한 데이터 설문", notes = "추천하자")
+	public ResponseEntity<?> setCommonQuestionForHealthCheck(@RequestBody DetailHealthReq detailHealthReq) throws Exception {
+		userService.insertDetail(detailHealthReq);
+		
+		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 	
 	//4. 영양소 추천으로 인한 추천성분 업데이트
