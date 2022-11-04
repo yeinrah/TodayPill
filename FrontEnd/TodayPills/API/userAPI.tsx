@@ -25,8 +25,8 @@ const getUserInfoByEmail = async (email: string) => {
   const result = await api.get(`/user/user/${email}`);
   const userInfo = {
     age: result.data.age,
-    gender: result.data.age,
-    name: result.data.age,
+    gender: result.data.gender,
+    name: result.data.name,
     userId: result.data.userId,
     recommendNutrients: [
       result.data.recommendOne,
@@ -50,4 +50,9 @@ const kakaoLogout = async (ACCESS_TOKEN) => {
     .then((res) => console.log(res));
 };
 
-export { HealthScreeningCheck, getUserInfoByEmail, kakaoLogout, updateUsername };
+export {
+  HealthScreeningCheck,
+  getUserInfoByEmail,
+  kakaoLogout,
+  updateUsername,
+};
