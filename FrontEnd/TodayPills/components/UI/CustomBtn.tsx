@@ -14,6 +14,7 @@ export default function CustomBtn(props: any) {
   //   buttonColor: "#000",
   //   titleColor: "#fff",
   //   onPress: () => null,
+  //   fontSize: 20,
   // };
 
   return (
@@ -34,7 +35,12 @@ export default function CustomBtn(props: any) {
         ]}
         onPress={props.onPress}
       >
-        <Text style={[styles.title, { color: props.titleColor }]}>
+        <Text
+          style={[
+            styles.title,
+            { color: props.titleColor, fontSize: props.fontSize },
+          ]}
+        >
           {props.title}
         </Text>
       </Pressable>
@@ -59,7 +65,6 @@ const styles = StyleSheet.create({
     // justifyContent: "center",
   },
   title: {
-    fontSize: 20,
     fontWeight: "bold",
     textAlign: "center",
   },

@@ -261,6 +261,7 @@ export default function ModifyRoutineItem() {
               title={"수정 완료"}
               titleColor={"#fff"}
               buttonWidth={"90%"}
+              fontSize={20}
               onPress={submitModifyRoutineHandler}
             />
           </View>
