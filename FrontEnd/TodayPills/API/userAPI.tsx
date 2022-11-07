@@ -37,7 +37,7 @@ const getUserInfoByEmail = async (email: string) => {
   return userInfo;
 };
 
-const kakaoLogout = async (ACCESS_TOKEN) => {
+const kakaoLogout = async (ACCESS_TOKEN: string) => {
   // api.defaults.headers.common["Authorization"] = ACCESS_TOKEN;
   await api
     .post(
@@ -50,9 +50,17 @@ const kakaoLogout = async (ACCESS_TOKEN) => {
     .then((res) => console.log(res));
 };
 
+const changeGender = async (email: string, gender: string) => {
+  await api.patch(`/user/user/patchgender/${email}/${gender}`);
+};
+const afterBasicSurvey = async (data) => {
+  await api.put("/user/user/firstSurvey", { data });
+};
 export {
   HealthScreeningCheck,
   getUserInfoByEmail,
   kakaoLogout,
   updateUsername,
+  changeGender,
+  afterBasicSurvey,
 };
