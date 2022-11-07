@@ -1,35 +1,33 @@
-import { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
+import { useState, useEffect, useCallback } from "react";
 import { View, StyleSheet, Text, ScrollView } from "react-native";
+import { fetchAllSupplements } from "../../API/supplementAPI";
 import SimplePillCard from "../Cards/SimplePillCard";
 import PillItem from "../Pills/PillItem";
 
 const MainPill = () => {
-  const [mainPills, setMainPills] = useState([
-    {
-      image:
-        "http://www.ckdhc.com/upload/images/2022/09/23/4780647029480112efc3f69ab03891713bc1d2a29134a323adf20e5619dbf5d9",
-      brand: "종근당건강",
-      pill: "락토핏 생유산균 코어",
-    },
-    {
-      image: "https://cdn.pillyze.io/products/v1/10k/f7ac75f0-10992/1000",
+  const [userId, setUserId] = useState(0);
+  const [mainPills, setMainPills] = useState([]);
 
-      brand: "닥터스베스트",
-      pill: "킬레이트 마그네슘",
-    },
-    {
-      image: "https://dimg.donga.com/wps/NEWS/IMAGE/2014/09/27/66754815.1.jpg",
+  const getAllSupplements = async () => {
+    const currentUserId = await AsyncStorage.getItem("@storage_UserId");
+    setUserId(parseInt(currentUserId));
+    const allSupplements = await fetchAllSupplements();
+    setMainPills(allSupplements);
+    // const userId = await AsyncStorage.getItem("@storage_UserId");
+  };
+  useFocusEffect(
+    useCallback(() => {
+      getAllSupplements();
 
-      brand: "고려은단",
-      pill: "비타민C 1000",
-    },
-    {
-      image:
-        "https://contents.lotteon.com/itemimage/LO/14/19/59/10/62/_1/41/95/91/06/3/LO1419591062_1419591063_1.jpg",
-      brand: "종근당건강",
-      pill: "칼슘 앤 마그네슘",
-    },
-  ]);
+      // return () => {
+
+      // };
+    }, [userId])
+  );
+  // useEffect(() => {
+  // }, []);
 
   return (
     <View style={styles.container}>
@@ -39,10 +37,12 @@ const MainPill = () => {
         <ScrollView style={styles.cardsContainer} horizontal={true}>
           {mainPills.map((pill, idx) => (
             <PillItem
-              key={idx}
+              key={pill.supplementId}
+              userId={userId}
+              pillId={pill.supplementId}
               image={pill.image}
               brand={pill.brand}
-              pill={pill.pill}
+              pill={pill.supplementName}
             />
           ))}
         </ScrollView>

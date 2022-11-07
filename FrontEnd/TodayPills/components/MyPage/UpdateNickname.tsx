@@ -24,10 +24,8 @@ export default function UpdateNickname({ onChangeName }) {
   };
 
   const cancelHandler = () => {
-    // const currentName = await AsyncStorage.getItem("@storage_UserNickName");
-    // setNickname(currentName);
-    getCurrentNickname();
     modalCloseHandler();
+    getCurrentNickname();
   };
   const changeNicknameHandler = async (nickname: string) => {
     // put 요청 닉네임 변경

@@ -56,6 +56,7 @@ import SurveyDeepLoadingScreen from "../screens/SurveyScreen/SurveyDeepLoadingSc
 import PillResultScreen from "../screens/SurveyScreen/PillResultScreen";
 import GenderCheckScreen from "../screens/SurveyScreen/GenderCheckScreen";
 import FirstAddSurvey from "../screens/AddSurvey/FirstAddSurvey";
+import AllSupplementsScreen from "../screens/HomeScreen/AllSupplementsScreen";
 interface Inavigation {
   colorScheme: ColorSchemeName;
   LoginCheck: () => {};
@@ -275,6 +276,11 @@ function Home() {
       <Stack.Screen
         name="NutrientScreen"
         component={NutrientScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AllSupplementsScreen"
+        component={AllSupplementsScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

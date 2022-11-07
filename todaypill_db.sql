@@ -121,20 +121,18 @@ CREATE TABLE IF NOT EXISTS `supplement` (
   `consumer_lab_score` int DEFAULT NULL,
   `formula` varchar(255) DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
-  `ingredients` varchar(2000) DEFAULT NULL,
+  `ingredients` varchar(2500) DEFAULT NULL,
   `kidney_disease` float DEFAULT NULL,
   `laxative` float DEFAULT NULL,
   `like` int DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
+  `supplement_name` varchar(255) DEFAULT NULL,
   `note` varchar(255) DEFAULT NULL,
   `pill_size` varchar(255) DEFAULT NULL,
-  `price` int DEFAULT NULL,
+  `price` float DEFAULT NULL,
   `required_count` varchar(255) DEFAULT NULL,
-  `sustained_release` bit(1) DEFAULT NULL,
-  `supplement_type_id` bigint DEFAULT NULL,
-  PRIMARY KEY (`supplement_id`),
-  KEY `FKs2g0smnur1l6e5g3wqwd1w5l1` (`supplement_type_id`),
-  CONSTRAINT `FKs2g0smnur1l6e5g3wqwd1w5l1` FOREIGN KEY (`supplement_type_id`) REFERENCES `supplement_type` (`supplement_type_id`)
+  `sustained_release` boolean DEFAULT NULL,
+  `category` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`supplement_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 테이블 데이터 todaypill.supplement:~0 rows (대략적) 내보내기

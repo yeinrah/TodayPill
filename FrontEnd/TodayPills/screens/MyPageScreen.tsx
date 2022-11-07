@@ -23,30 +23,8 @@ import CustomBtn from "../components/UI/CustomBtn";
 import CustomModal from "../components/UI/CustomModal";
 import { accent, primary, secondary } from "../constants/Colors";
 
-// import EditScreenInfo from "../components/EditScreenInfo";
-// import { Text, View } from "../components/Themed";
 import { IUserInfo, RootTabScreenProps } from "../types";
 import BackgroundScreen from "./BackgroundScreen";
-
-// <Pressable
-// onPress={() => {
-//   console.log("이름 수정하기!");
-//   // setTimesPressed((current) => current + 1);
-// }}
-// style={styles.modifyContainer}
-// >
-// {({ pressed }) => (
-//   <Text
-//     style={[
-//       styles.modify,
-//       { color: pressed ? "black" : "#B7B7B7" },
-//     ]}
-//   >
-//     수정
-//     {/* {pressed ? 'Pressed!' : 'Press Me'} */}
-//   </Text>
-// )}
-// </Pressable>
 
 export default function MyPageScreen({ navigation }: any) {
   // RootTabScreenProps<"MyPage">
@@ -91,6 +69,7 @@ export default function MyPageScreen({ navigation }: any) {
 
             <View style={styles.ageContainer}>
               <Text style={styles.age}>{myInfo.age}대</Text>
+              {/* gender 받아오는거!!! */}
               <Text style={styles.age}>남성</Text>
             </View>
           </View>
