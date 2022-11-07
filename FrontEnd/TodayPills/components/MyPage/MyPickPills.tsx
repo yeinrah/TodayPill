@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   StyleSheet,
   ImageBackground,
@@ -10,66 +11,38 @@ import {
   ScrollView,
   Image,
 } from "react-native";
+import { fetchMyPicks } from "../../API/likeAPI";
 import { fetchAllSupplements } from "../../API/supplementAPI";
 import PillItem, { PillProps } from "../Pills/PillItem";
-
-// const dummyPills: PillProps[] = [
-//   {
-//     // image: require("../../assets/images/pills/sample1.png"),
-//     image:
-//       "http://www.ckdhc.com/upload/images/2022/09/23/4780647029480112efc3f69ab03891713bc1d2a29134a323adf20e5619dbf5d9",
-//     brand: "종근당건강",
-//     pill: "락토핏 생유산균 코어",
-//   },
-//   {
-//     image: "https://cdn.pillyze.io/products/v1/10k/f7ac75f0-10992/1000",
-//     // image: require("../../assets/images/pills/sample2.png"),
-//     brand: "닥터스베스트",
-//     pill: "킬레이트 마그네슘",
-//   },
-//   {
-//     image: "https://dimg.donga.com/wps/NEWS/IMAGE/2014/09/27/66754815.1.jpg",
-//     // image: require("../../assets/images/pills/sample3.png"),
-//     brand: "고려은단",
-//     pill: "비타민C 1000",
-//   },
-//   {
-//     image:
-//       "https://contents.lotteon.com/itemimage/LO/14/19/59/10/62/_1/41/95/91/06/3/LO1419591062_1419591063_1.jpg",
-//     // image: require("../../assets/images/pills/sample4.png"),
-//     brand: "종근당건강",
-//     pill: "칼슘 앤 마그네슘",
-//   },
-//   {
-//     image:
-//       "https://contents.lotteon.com/itemimage/LO/14/19/59/10/62/_1/41/95/91/06/3/LO1419591062_1419591063_1.jpg",
-//     // image: require("../../assets/images/pills/sample4.png"),
-//     brand: "종근당건강",
-//     pill: "칼슘 앤 마그네슘",
-//   },
-//   {
-//     image:
-//       "https://contents.lotteon.com/itemimage/LO/14/19/59/10/62/_1/41/95/91/06/3/LO1419591062_1419591063_1.jpg",
-//     // image: require("../../assets/images/pills/sample4.png"),
-//     brand: "종근당건강",
-//     pill: "칼슘 앤 마그네슘",
-//   },
-// ];
 
 export default function MyPickPills() {
   const [pickedPills, setPickedPills] = useState([]);
   const [userId, setUserId] = useState(0);
+  const [disLiked, setDisLiked] = useState(false);
 
-  const getAllSupplements = async () => {
+  const getMyPicks = async () => {
     const currentUserId = await AsyncStorage.getItem("@storage_UserId");
     setUserId(parseInt(currentUserId));
-    const allSupplements = await fetchAllSupplements();
-    setPickedPills(allSupplements);
+    const myPicks = await fetchMyPicks(parseInt(currentUserId));
+    setPickedPills(myPicks);
+  };
+  const dislikeHandler = () => {
+    setDisLiked((disliked) => !disliked);
   };
 
-  useEffect(() => {
-    getAllSupplements();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      getMyPicks();
+
+      // return () => {
+
+      // };
+    }, [userId, disLiked])
+  );
+
+  // useEffect(() => {
+  // getMyPicks();
+  // }, []);
 
   return (
     <View style={styles.likeContainer}>
@@ -94,6 +67,7 @@ export default function MyPickPills() {
               image={pill.image}
               brand={pill.brand}
               pill={pill.name}
+              onPressDislike={dislikeHandler}
             />
           ))}
         </ScrollView>
@@ -153,6 +127,7 @@ const styles = StyleSheet.create({
   cardsContainer: {
     flexDirection: "row",
     // justifyContent: "space-around",
+    minHeight: 100,
     paddingVertical: 10,
     marginTop: 10,
     paddingHorizontal: 5,

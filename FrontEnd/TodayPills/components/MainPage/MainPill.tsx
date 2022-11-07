@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useState, useEffect } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import { useState, useEffect, useCallback } from "react";
 import { View, StyleSheet, Text, ScrollView } from "react-native";
 import { fetchAllSupplements } from "../../API/supplementAPI";
 import SimplePillCard from "../Cards/SimplePillCard";
@@ -7,30 +8,7 @@ import PillItem from "../Pills/PillItem";
 
 const MainPill = () => {
   const [userId, setUserId] = useState(0);
-  const [mainPills, setMainPills] = useState([
-    // {
-    //   image:
-    //     "http://www.ckdhc.com/upload/images/2022/09/23/4780647029480112efc3f69ab03891713bc1d2a29134a323adf20e5619dbf5d9",
-    //   brand: "종근당건강",
-    //   name: "락토핏 생유산균 코어",
-    // },
-    // {
-    //   image: "https://cdn.pillyze.io/products/v1/10k/f7ac75f0-10992/1000",
-    //   brand: "닥터스베스트",
-    //   name: "킬레이트 마그네슘",
-    // },
-    // {
-    //   image: "https://dimg.donga.com/wps/NEWS/IMAGE/2014/09/27/66754815.1.jpg",
-    //   brand: "고려은단",
-    //   name: "비타민C 1000",
-    // },
-    // {
-    //   image:
-    //     "https://contents.lotteon.com/itemimage/LO/14/19/59/10/62/_1/41/95/91/06/3/LO1419591062_1419591063_1.jpg",
-    //   brand: "종근당건강",
-    //   name: "칼슘 앤 마그네슘",
-    // },
-  ]);
+  const [mainPills, setMainPills] = useState([]);
 
   const getAllSupplements = async () => {
     const currentUserId = await AsyncStorage.getItem("@storage_UserId");
@@ -39,10 +17,17 @@ const MainPill = () => {
     setMainPills(allSupplements);
     // const userId = await AsyncStorage.getItem("@storage_UserId");
   };
+  useFocusEffect(
+    useCallback(() => {
+      getAllSupplements();
 
-  useEffect(() => {
-    getAllSupplements();
-  }, []);
+      // return () => {
+
+      // };
+    }, [userId])
+  );
+  // useEffect(() => {
+  // }, []);
 
   return (
     <View style={styles.container}>
@@ -57,7 +42,7 @@ const MainPill = () => {
               pillId={pill.supplementId}
               image={pill.image}
               brand={pill.brand}
-              pill={pill.name}
+              pill={pill.supplementName}
             />
           ))}
         </ScrollView>
