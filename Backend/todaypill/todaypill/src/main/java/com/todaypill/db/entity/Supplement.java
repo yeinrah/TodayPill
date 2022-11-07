@@ -1,84 +1,80 @@
 package com.todaypill.db.entity;
 
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import javax.persistence.*;
 
 @Entity
-@Table(name = "supplement")
 @Getter
-@Setter
-@Builder
+@Table(name = "supplement")
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Supplement {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "supplement_id")
 	private Integer supplementId;
-	
-	@Column(name = "supplement_type_id")
-	private Integer supplementTypeId;
-	
-	@Column(name = "name")
-	private String name;
-	
-	@Column(name = "brand")
+
+	private String category;
+
+	@Column(name = "supplement_name")
+	private String supplementName;
+
+	@Column
+	private Double price;
+
+	@Column
 	private String brand;
-	
-	@Column(name = "price")
-	private Integer price;
-	
-	@Column(name = "image")
+
+	@Column
 	private String image;
-		
+
 	// columnDefinition = "TEXT" 이거는 에러남
-	@Column(name = "ingredients", length = 2000)
+	@Column(name = "ingredients", length = 2500)
 	private String ingredients;
-	
-	@Column(name = "bioavailability")
-	private Float bioavailability;
-	
-	@Column(name = "laxative")
-	private Float laxative;
-	
+
+	@Column
+	private Double bioavailability;
+
+	@Column
+	private Double laxative;
+
 	@Column(name = "kidney_disease")
-	private Float kidneyDisease;
-	
+	private Double kidneyDisease;
+
 	@Column(name = "consumer_lab_score")
 	private Integer consumerLabScore;
-	
+
 	@Column(name = "additional_efficacy")
 	private String additionalEfficacy;
-	
-	@Column(name = "note")
+
+	@Column
 	private String note;
-	
-	@Column(name = "amount")
+
+	@Column
 	private String amount;
-	
+
 	@Column(name = "required_count")
 	private String requiredCount;
-	
-	@Column(name = "formula")
+
+	@Column
 	private String formula;
-	
-	@Column(name = "like")
+
+	@Column
 	private Integer like;
-	
+
 	@Column(name = "sustained_release")
 	private Boolean sustainedRelease;
-
+	
 	@Column(name = "pill_size")
 	private String pillSize;
+	
+	@Column(name = "best_time")
+	private String bestTime;
 }
