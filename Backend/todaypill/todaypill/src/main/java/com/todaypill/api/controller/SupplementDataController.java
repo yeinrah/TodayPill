@@ -21,7 +21,7 @@ import com.todaypill.service.VitaminDService;
 import com.todaypill.service.ZincService;
 
 @RestController
-public class SupplementController {
+public class SupplementDataController {
 	@Autowired
 	private VitaminBService vitaminBService;
 
@@ -61,7 +61,7 @@ public class SupplementController {
 	@Autowired
 	private PropolisService propolisService;
 
-	public SupplementController(VitaminBService vitaminBService, VitaminCService vitaminCService,
+	public SupplementDataController(VitaminBService vitaminBService, VitaminCService vitaminCService,
 			VitaminDService vitaminDService, MultivitaminService multivitaminService, MagnesiumService magnesiumService,
 			Omega3Service omega3Service, MilkthisleService milkthisleService, LuteinService luteinService,
 			ZincService zincService, ProbioticsService probioticsService, CollagenService collagenService,
