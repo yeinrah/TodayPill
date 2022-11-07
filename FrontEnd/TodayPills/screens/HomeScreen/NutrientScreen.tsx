@@ -3,19 +3,19 @@ import DetailedPillCard from "../../components/Cards/DetailedPillCard";
 import Card from "../../components/UI/Card";
 import BackgroundScreen from "../BackgroundScreen";
 
-const NutrientScreen = ({ navigation }: any) => {
+const NutrientScreen = ({ navigation, route }: any) => {
     return (
         <BackgroundScreen>
             <Card>
                 <View>
                     <Text style={styles.text}>
-                        비타민 C
+                        {route.params.nutrient}
                     </Text>
                     <View style={styles.buttonOuterContainer}>
                         <Pressable
                             android_ripple={{ color: "#4E736F" }}
                             style={styles.buttonInnerContainer}
-                            onPress={() => console.log("hi")}
+                            onPress={() => navigation.navigate("NutrientDetailScreen", { nutrient: [route.params.nutrient] })}
                         >
                             <Text style={styles.title}>
                                 영양제 추천받기

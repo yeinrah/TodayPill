@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import SimpleNutrientCard from "../Cards/SimpleNutrientCard";
+import NutrientImage from "../Data/NutrientImage";
 
 const MainNutrient = ({ navigation }: any) => {
     const [mainNutrients, setMainNutrients] = useState([
-       {image: require("../../assets/images/nutrients/sample1.png"), nutrient: "비타민 C"}, 
-       {image: require("../../assets/images/nutrients/sample2.png"), nutrient: "오메가-3"}, 
-       {image: require("../../assets/images/nutrients/sample3.png"), nutrient: "유산균"}, 
-       {image: require("../../assets/images/nutrients/sample4.png"), nutrient: "마그네슘"}, 
-       {image: require("../../assets/images/nutrients/sample5.png"), nutrient: "비타민 D"}, 
-       {image: require("../../assets/images/nutrients/sample6.png"), nutrient: "히알루론산"}
+       {image: require("../../assets/images/nutrients/1.png"), nutrient: "비타민 C"}, 
+       {image: require("../../assets/images/nutrients/2.png"), nutrient: "오메가 3"}, 
+       {image: require("../../assets/images/nutrients/3.png"), nutrient: "유산균"}, 
+       {image: require("../../assets/images/nutrients/4.png"), nutrient: "마그네슘"}, 
+       {image: require("../../assets/images/nutrients/5.png"), nutrient: "비타민 D"}, 
+       {image: require("../../assets/images/nutrients/6.png"), nutrient: "프로폴리스"}
     ]);
 
     return (
@@ -18,13 +19,13 @@ const MainNutrient = ({ navigation }: any) => {
                 모든 성분
             </Text>
             <View style={styles.cardscontainer}>
-                {mainNutrients.map((mainNutrient, idx) =>
+                {Object.entries(NutrientImage).map((mainNutrient, idx) =>
                     <Pressable
                         key={idx}
-                        onPress={() => navigation.navigate("NutrientScreen")}>
+                        onPress={() => navigation.navigate("NutrientScreen", { nutrient: mainNutrient[0] })}>
                         <SimpleNutrientCard
-                            image={mainNutrient.image}
-                            nutrient={mainNutrient.nutrient}
+                            image={mainNutrient[1]}
+                            nutrient={mainNutrient[0]}
                         />
                     </Pressable>
                 )}

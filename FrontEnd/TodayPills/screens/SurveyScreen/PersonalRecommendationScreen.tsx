@@ -67,7 +67,7 @@ const PersonalRecommendationScreen = ({ navigation }: any) => {
                   });
                 }}
               >
-                <Image source={NutrientImage[index]} style={styles.image} />
+                <Image source={NutrientImage[item]} style={styles.image} />
                 <View style={styles.tagStyle}>
                   <MaterialCommunityIcons
                     style={styles.tagStyle}
