@@ -1,28 +1,79 @@
 import { StyleSheet, View, Image, Text, Pressable } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { dislike, fetchLikeUsers, like } from "../../API/likeAPI";
 
 export interface PillProps {
   //   image: ImageSourcePropType;
+  pillId: number;
+  userId: number;
   image: string;
   brand: string;
   pill: string;
 }
 
 const PillItem = (props: PillProps) => {
-  const [like, setLike] = useState(false);
   //   const imagePath = require(`../../assets/images/pills/sample${props.image}.png`);
   //   console.log(imagePath);
+  const userId = props.userId;
+  const supplementId = props.pillId;
+  const [isLiked, setIsLiked] = useState(false);
+
+  const [likeCnt, setLikeCnt] = useState(0);
+  const [isLikeChange, setIsLikeChange] = useState(false);
+
+  const likeHandler = async () => {
+    await like(userId, supplementId);
+    setIsLiked(true);
+
+    // setIsLikeChange(true);
+  };
+
+  const dislikeHandler = async () => {
+    console.warn(userId, "번 유저가", supplementId, "번 영양제 좋아요취소");
+
+    await dislike(userId, supplementId);
+    setIsLiked(false);
+
+    // setIsLikeChange(false);
+  };
+
+  useEffect(() => {
+    // setIsLoading(true);
+    (async () => {
+      const likeUsersList = await fetchLikeUsers(supplementId);
+      // console.log(likeUsersList, supplementId, "번 째 영양제 좋아한사람");
+      if (likeUsersList.length === 0) {
+        setIsLiked(false);
+      } else {
+        for (const eachId of likeUsersList) {
+          if (eachId === userId) {
+            setIsLiked(true);
+          } else {
+            setIsLiked(false);
+          }
+        }
+      }
+
+      setLikeCnt(likeUsersList.length);
+      // setIsLikeChange(false);
+    })();
+  }, [userId, supplementId, isLiked]);
+
   return (
     <View style={styles.container}>
       <View style={styles.cardcontainer}>
         <View style={styles.imagecontainer}>
           <Image source={{ uri: props.image }} style={styles.pillimage} />
         </View>
-        <Pressable onPress={() => setLike(!like)} style={styles.heartContainer}>
+
+        <Pressable
+          onPress={isLiked ? dislikeHandler : likeHandler}
+          style={styles.heartContainer}
+        >
           <Image
             source={
-              like
+              isLiked
                 ? // ? require("../../assets/images/hearton.png")
                   require("../../assets/images/heartOn3.png")
                 : // : require("../../assets/images/heartoff.png")
@@ -31,6 +82,9 @@ const PillItem = (props: PillProps) => {
             style={styles.heart}
           />
         </Pressable>
+        <View>
+          <Text>{likeCnt} 개</Text>
+        </View>
         {/* <AntDesign
           name="hearto"
           size={14}

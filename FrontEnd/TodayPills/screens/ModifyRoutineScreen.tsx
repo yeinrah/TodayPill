@@ -25,10 +25,6 @@ export default function ModifyRoutineScreen({ navigation, route }: any) {
   // RootStackScreenProps<"MyPills">
   const [pillId, setPillId] = useState(route.pillId);
 
-  // const addRoutinePillHandler = () => {
-  //   navigation.navigate("Search", { userId: 1 });
-  // };
-
   return (
     <BackgroundScreen>
       <Card>
