@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import BackgroundScreen from "../BackgroundScreen";
 

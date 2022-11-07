@@ -1,12 +1,15 @@
 import { StyleSheet, View, ActivityIndicator } from "react-native";
 import { accent } from "../../constants/Colors";
+import BackgroundScreen from "../../screens/BackgroundScreen";
 import { IBackground } from "../../types";
 
 export default function LoadingSpinner() {
   return (
-    <View style={styles.container}>
-      <ActivityIndicator size={"large"} color={accent} />
-    </View>
+    <BackgroundScreen>
+      <View style={styles.container}>
+        <ActivityIndicator size={"large"} color={accent} />
+      </View>
+    </BackgroundScreen>
   );
 }
 

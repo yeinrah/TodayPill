@@ -1,12 +1,15 @@
 import { useEffect } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import { afterBasicSurvey } from "../../API/userAPI";
+import { afterBasicSurvey, afterScreeningCheck } from "../../API/userAPI";
 import BackgroundScreen from "../BackgroundScreen";
 
 const SurveyLoadingScreen = ({ navigation, route }: any) => {
   useEffect(() => {
     console.log("haha", route.params.answerSheet);
-    afterBasicSurvey(route.params.answerSheet);
+    let size = Object.keys(route.params.answerSheet).length;
+    console.log(size);
+    if (size > 5) afterBasicSurvey(route.params.answerSheet);
+    else afterScreeningCheck(route.params.answerSheet);
   }, []);
   return (
     <BackgroundScreen>
