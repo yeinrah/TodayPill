@@ -231,12 +231,10 @@ public class UserService {
 	
 	@Transactional
 	public void insertDetail(DetailHealthReq detailHealthReq) throws Exception {
-		boolean check = true;
-		if(detailHealthReq.getPillSize().length()!=0) check = false;
 		CommonQuestion cq = CommonQuestion.builder().allergy(null).
 				balanced_meal(false).
 				constipation(false).diarrhea(false).
-				heartburn(false).is_ok_big_pill(check)
+				heartburn(false).is_ok_big_pill(detailHealthReq.getPillSize())
 				.kidney_disease(false).lack(null).
 				preferred_brand(detailHealthReq.getBrand())
 				.pregnant(false).problem(null).

@@ -11,9 +11,9 @@ import lombok.Setter;
 @Setter
 @ApiModel("DetailHealthReq")
 public class DetailHealthReq {
-	@ApiModelProperty(name = "알약 크기 ", example = "1.5")
+	@ApiModelProperty(name = "알약 크기 ", example = "true")
 	@NotNull(message = "알약 크기를 입력하세요.")
-	private String pillSize;
+	private Boolean pillSize;
 
 	@ApiModelProperty(name = "브랜드 ", example = "롯데")
 	@NotNull(message = "선호 브랜드를 입력하세요.")
