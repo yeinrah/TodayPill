@@ -9,7 +9,7 @@ const fetchLikeUsers = async (supplementId: number) => {
 
 const fetchMyPicks = async (userId: number) => {
   const result = await api.get(`/user/userLike/${userId}`);
-  console.warn("나의 찜", result.data);
+  // console.warn("나의 찜", result.data);
   return result.data;
 };
 
