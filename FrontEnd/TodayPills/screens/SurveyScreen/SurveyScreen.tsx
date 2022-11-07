@@ -2,11 +2,75 @@ import { StyleSheet, Text, View, Pressable, ScrollView } from "react-native";
 import BackgroundScreen from "../BackgroundScreen";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import AnswerSurvey from "../../components/Cards/AnswerSurvey";
 
 const SurveyScreen = ({ navigation }: any) => {
   const [selectedItem, setSelectedItem] = useState(0);
-
+  const [nowStage, setNowStage] = useState(0);
+  const [answerSheet, setAnswerSheet] = useState<any>({
+    smoking: false,
+    pregnant: false,
+    allergy: "",
+    heartburn: false,
+    diarrhea: false,
+    constipation: false,
+    kidney_disease: false,
+    outdoor_activity: 0,
+    balanced_meal: false,
+    lack: "",
+    is_ok_big_pill: false,
+    preferred_brand: "",
+    problem: "",
+  });
+  const surveyData = [
+    [
+      "smoking",
+      "임신 여부를 알려주세요",
+      "임산부에 맞는 영양성분이 추천됩니다.",
+      ["YES", "NO"],
+    ],
+    [
+      "pregnant",
+      "흡연 여부를 알려주세요",
+      "흡연할 경우 조심해야 할 성분이 있어요",
+      ["YES", "NO"],
+    ],
+    ["allergy", "알러지가 있나요?", "입력해주세요."],
+    ["heartburn", "속쓰림 증상이 있나요?", "알려주세요", ["YES.", "NO."]],
+    ["diarrhea", "설사를 하나요?", "알려주세요", ["YES.", "NO."]],
+    ["constipation", "변비가 있나요?", "알려주세요", ["YES.", "NO."]],
+    ["kidney_disease", "신장질환이 있나요?", "알려주세요", ["YES.", "NO."]],
+    [
+      "outdoor_activity",
+      "야외활동을 얼마나 하세요?",
+      "알려주세요",
+      ["일주일에 4번이상", "일주일에 3번", "일주일에 2번", "일주일에 1번"],
+    ],
+    [
+      "balanced_meal",
+      "평소 균형잡힌 식사를 하시나요?",
+      "알려주세요",
+      ["YES", "NO"],
+      // ["채소", "생선", "육류", "과일"],
+    ],
+    [
+      "lack",
+      "평소 먹는 음식을 알려주세요",
+      "복수 선택 가능합니다.",
+      ["채소", "생선", "육류", "과일"],
+    ],
+    ["is_ok_big_pill", "알약이 커도 괜찮을까요?", "알려주세요", ["YES.", "NO"]],
+    ["preferred_brand", "선호하는 영양제 브랜드가 있나요?", "알려주세요"],
+    ["problem", "해결하고자 하는 문제가 있나요?", "자유롭게 알려주세요"],
+    [],
+  ];
+  useEffect(() => {
+    if (nowStage === surveyData.length - 1) {
+      console.log(answerSheet);
+      navigation.navigate("SurveyLoadingScreen", { answerSheet: answerSheet });
+    }
+  }, [nowStage]);
   return (
     <BackgroundScreen>
       <View style={styles.container}>
@@ -21,66 +85,49 @@ const SurveyScreen = ({ navigation }: any) => {
         />
         <View style={styles.textcontainer}>
           <Text style={[styles.text, styles.largetext]}>
-            흡연 여부를 알려주세요
+            {surveyData[nowStage][1]}
           </Text>
           <Text style={[styles.text, styles.smalltext]}>
-            흡연할 경우 조심해야 할 성분이 있어요
+            {surveyData[nowStage][2]}
           </Text>
         </View>
         <ScrollView>
-          <View style={styles.itemcontainer}>
-            <View style={styles.itemoutercontainer}>
-              <Pressable
-                android_ripple={{ color: "#4E736F" }}
-                style={
-                  selectedItem === 1
-                    ? styles.iteminnercontainerClicked
-                    : styles.iteminnercontainer
-                }
-                onPress={() => setSelectedItem(1)}
-              >
-                <View style={styles.itemflex}>
-                  <Text style={styles.itemtitle}>비흡연</Text>
-                  <AntDesign
-                    name="checkcircleo"
-                    size={24}
-                    color="black"
-                    style={styles.icon1}
-                  />
-                </View>
-              </Pressable>
-            </View>
-          </View>
-          <View style={styles.itemcontainer}>
-            <View style={styles.itemoutercontainer}>
-              <Pressable
-                android_ripple={{ color: "#4E736F" }}
-                style={
-                  selectedItem === 2
-                    ? styles.iteminnercontainerClicked
-                    : styles.iteminnercontainer
-                }
-                onPress={() => setSelectedItem(2)}
-              >
-                <View style={styles.itemflex}>
-                  <Text style={styles.itemtitle}>흡연</Text>
-                  <AntDesign
-                    name="checkcircleo"
-                    size={24}
-                    color="black"
-                    style={styles.icon1}
-                  />
-                </View>
-              </Pressable>
-            </View>
-          </View>
+          <AnswerSurvey
+            selectedItem={selectedItem}
+            setSelectedItem={setSelectedItem}
+            nowStage={nowStage}
+            surveyData={surveyData}
+          />
         </ScrollView>
         <View style={styles.buttoncontainer}>
           <View style={styles.buttonOuterContainer}>
             <Pressable
               android_ripple={{ color: "#4E736F" }}
               style={styles.buttonInnerContainer}
-              onPress={() => navigation.navigate("SurveyLoadingScreen")}
+              onPress={async () => {
+                setNowStage(nowStage + 1);
+                let answer: boolean | number;
+                //균형잡힌 식사 관련 질문
+                if (nowStage === 8) {
+                  if (selectedItem === 0) {
+                    console.log("균형 잡힌 식사를 합니다.");
+                    setNowStage(nowStage + 2);
+                  } else console.log("균형 잡히지 않은 식사를 합니다.");
+                }
+                if (nowStage === 9) {
+                  answer = selectedItem;
+                } else if (surveyData[nowStage][3]) {
+                  selectedItem == 0 ? (answer = true) : (answer = false);
+                  if (nowStage === 7) {
+                    answer = selectedItem;
+                  }
+                } else answer = selectedItem;
+                setAnswerSheet({
+                  ...answerSheet,
+                  [`${surveyData[nowStage][0]}`]: answer,
+                });
+                setSelectedItem(0);
+              }}
             >
               <Text style={styles.title}>다 음</Text>
             </Pressable>

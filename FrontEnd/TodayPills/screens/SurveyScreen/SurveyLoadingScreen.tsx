@@ -1,7 +1,13 @@
+import { useEffect } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { afterBasicSurvey } from "../../API/userAPI";
 import BackgroundScreen from "../BackgroundScreen";
 
-const SurveyLoadingScreen = ({ navigation }: any) => {
+const SurveyLoadingScreen = ({ navigation, route }: any) => {
+  useEffect(() => {
+    console.log("haha", route.params.answerSheet);
+    afterBasicSurvey(route.params.answerSheet);
+  }, []);
   return (
     <BackgroundScreen>
       <View style={styles.container}>
