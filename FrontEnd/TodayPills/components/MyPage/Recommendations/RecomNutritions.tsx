@@ -7,6 +7,7 @@ import {
   Text,
   Button,
   ScrollView,
+  Image,
 } from "react-native";
 import PillItem, { PillProps } from "../../Pills/PillItem";
 import RecomItem from "./RecomItem";
@@ -18,11 +19,20 @@ export default function RecomNutritions() {
 
   return (
     <View style={styles.likeContainer}>
-      <Text style={styles.name}>추천 영양성분</Text>
+      <View style={styles.myPickContainer}>
+        <Image
+          // source={require("../../assets/images/hearton.png")}
+          source={require("../../../assets/images/likeIcon.png")}
+          style={styles.pill}
+        />
+
+        <Text style={styles.name}>추천 영양성분</Text>
+      </View>
+
       <View>
         <View style={styles.cardscontainer}>
           {dummyNutritions.map((nut, idx) => (
-            <RecomItem nutName={nut} key={idx} />
+            <RecomItem nutName={nut} key={idx} id={idx} />
 
             // <View style={styles.outerContainer}>
             //   <View key={idx} style={styles.nutContainer}>
@@ -49,12 +59,22 @@ const styles = StyleSheet.create({
     // alignItems: "center",
     // justifyContent: "center",
   },
-  pickPillsContainer: {},
   name: {
     fontSize: 24,
     fontWeight: "900",
+    marginTop: 5,
   },
-
+  myPickContainer: {
+    flexDirection: "row",
+  },
+  pill: {
+    width: 45,
+    height: 45,
+    // paddingBottom: 20,
+    // width: "100%",
+    // height: "100%",
+    // resizeMode: "contain",
+  },
   text: {
     fontSize: 17,
     fontWeight: "bold",

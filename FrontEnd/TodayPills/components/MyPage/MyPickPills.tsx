@@ -7,6 +7,7 @@ import {
   Text,
   Button,
   ScrollView,
+  Image,
 } from "react-native";
 import PillItem, { PillProps } from "../Pills/PillItem";
 
@@ -44,6 +45,13 @@ const dummyPills: PillProps[] = [
     brand: "종근당건강",
     pill: "칼슘 앤 마그네슘",
   },
+  {
+    image:
+      "https://contents.lotteon.com/itemimage/LO/14/19/59/10/62/_1/41/95/91/06/3/LO1419591062_1419591063_1.jpg",
+    // image: require("../../assets/images/pills/sample4.png"),
+    brand: "종근당건강",
+    pill: "칼슘 앤 마그네슘",
+  },
 ];
 
 export default function MyPickPills() {
@@ -51,9 +59,19 @@ export default function MyPickPills() {
 
   return (
     <View style={styles.likeContainer}>
-      <Text style={styles.name}>나의 Pick</Text>
+      <View style={styles.myPickContainer}>
+        <View style={styles.heartContainer}>
+          <Image
+            // source={require("../../assets/images/hearton.png")}
+            source={require("../../assets/images/heartOn1.png")}
+            style={styles.heart}
+          />
+        </View>
+        <Text style={styles.name}>나의 Pick</Text>
+      </View>
+
       <View style={styles.outerContainer}>
-        <ScrollView style={styles.cardscontainer} horizontal={true}>
+        <ScrollView style={styles.cardsContainer} horizontal={true}>
           {dummyPills.map((pill, idx) => (
             <PillItem
               key={idx}
@@ -78,14 +96,37 @@ const styles = StyleSheet.create({
     // alignItems: "center",
     // justifyContent: "center",
   },
-  pickPillsContainer: {},
+
+  myPickContainer: {
+    flexDirection: "row",
+  },
+  heartContainer: {
+    // width: 50,
+    // height: 50,
+    // paddingBottom: 10,
+    // marginBottom: 5,
+    // position: "absolute",
+    // bottom: 0,
+    // right: -5,
+  },
+  heart: {
+    width: 45,
+    height: 45,
+    // paddingBottom: 20,
+    // width: "100%",
+    // height: "100%",
+    // resizeMode: "contain",
+  },
   name: {
     fontSize: 24,
     fontWeight: "900",
+    marginTop: 5,
   },
   outerContainer: {
-    marginHorizontal: 10,
+    marginHorizontal: 5,
+
     marginVertical: 5,
+    // overflow: "hidden",
   },
   text: {
     fontSize: 17,
@@ -93,13 +134,14 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginBottom: 10,
   },
-  cardscontainer: {
+  cardsContainer: {
     flexDirection: "row",
     // justifyContent: "space-around",
-    padding: 10,
+    paddingVertical: 10,
     marginTop: 10,
-    // backgroundColor: "#ECF6F4",
-    // borderRadius: 10,
-    // elevation: 5,
+    paddingHorizontal: 5,
+    backgroundColor: "#ECF6F4",
+    borderRadius: 10,
+    elevation: 5,
   },
 });

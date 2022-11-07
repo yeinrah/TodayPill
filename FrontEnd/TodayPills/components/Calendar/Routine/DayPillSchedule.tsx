@@ -1,10 +1,11 @@
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { deleteZero } from "../functions/deleteZero";
-import { getDayOfWeek } from "../functions/getDayOfWeek";
+import { deleteZero } from "../../functions/deleteZero";
+import { getDayOfWeek } from "../../functions/getDayOfWeek";
 import { useState } from "react";
 import RoutineItem from "./RoutineItem";
-import { primary } from "../../constants/Colors";
+import { accent, primary, secondary } from "../../../constants/Colors";
+import { useNavigation } from "@react-navigation/native";
 
 export interface PillScheduleProps {
   selectedDate: string;
@@ -37,6 +38,7 @@ const dummyRoutine = [
 ];
 
 export default function DayPillSchedule({ selectedDate }: PillScheduleProps) {
+  const navigation = useNavigation<any>();
   const [pillRoutine, setPillRoutine] = useState(dummyRoutine);
   const dayOfWeek = getDayOfWeek(selectedDate);
   const dayString = `${deleteZero(selectedDate.slice(5, 7))}월 ${deleteZero(
@@ -44,16 +46,19 @@ export default function DayPillSchedule({ selectedDate }: PillScheduleProps) {
   )}일 ${dayOfWeek}요일`;
 
   const addRoutineHandler = () => {
-    console.log("수정 버튼 누름!!!!");
+    navigation.navigate("MyPills", { userId: 1 });
   };
+
   return (
     <View style={styles.container}>
       <View style={styles.eachDateContainer}>
-        <Text style={styles.takenDate}>{dayString}</Text>
+        <View style={styles.takenDateContainer}>
+          <Text style={styles.takenDate}>{dayString}</Text>
+        </View>
         <Pressable onPress={addRoutineHandler}>
           <MaterialCommunityIcons
             name="pencil-circle"
-            size={34}
+            size={35}
             color={primary}
           />
         </Pressable>
@@ -86,13 +91,25 @@ const styles = StyleSheet.create({
   },
   eachDateContainer: {
     flexDirection: "row",
+    marginTop: 20,
     justifyContent: "space-between",
+    alignItems: "center",
     width: "90%",
   },
+  takenDateContainer: {
+    marginHorizontal: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 7,
+    borderRadius: 30,
+    // backgroundColor: "#FFEFFC",
+    backgroundColor: accent,
+  },
   takenDate: {
-    fontSize: 26,
+    fontSize: 24,
     fontWeight: "900",
-    paddingHorizontal: 25,
+    color: "white",
+    // color: accent,
+    // paddingHorizontal: 25,
   },
   pillRoutineContainer: {
     minHeight: 200,

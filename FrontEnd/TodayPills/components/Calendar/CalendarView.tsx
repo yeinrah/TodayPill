@@ -140,7 +140,7 @@ export default function CalendarView({
         // style={styles.calendar}
         style={{
           width: "100%",
-          borderRadius: 10,
+          borderRadius: 20,
           paddingHorizontal: 15,
           paddingVertical: 8,
           // margin: 12,

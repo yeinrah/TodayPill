@@ -1,22 +1,30 @@
 // import EditScreenInfo from "../components/EditScreenInfo";
 import { StyleSheet, View, Text, ScrollView } from "react-native";
 import CalendarView from "../components/Calendar/CalendarView";
-import DayPillSchedule from "../components/Calendar/DayPillSchedule";
+import DayPillSchedule from "../components/Calendar/Routine/DayPillSchedule";
 import Card from "../components/UI/Card";
 import { RootTabScreenProps } from "../types";
 import { useState } from "react";
 import BackgroundScreen from "./BackgroundScreen";
+import LoadingSpinner from "../components/UI/LoadingSpinner";
+// import { getDeviceToken } from "../utils/Notifications";
 
 export default function CalendarScreen({
   navigation,
 }: RootTabScreenProps<"Calendar">) {
+  const [isLoading, setisLoading] = useState(true);
+
   const today = new Date();
   const todayString = today.toISOString().split("T")[0];
   const [selectedDate, setSelectedDate] = useState(todayString);
   const dateChangeHandler = (date: string) => {
+    // getDeviceToken();
     console.log(date, "date 받음");
     setSelectedDate(date);
   };
+  // if (isLoading) {
+  //   return <LoadingSpinner />;
+  // }
   return (
     <BackgroundScreen>
       <Card>
@@ -53,6 +61,7 @@ export default function CalendarScreen({
 const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
+    marginTop: 20,
     // alignItems: "center",
     // justifyContent: "center",
   },
@@ -62,8 +71,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   titleContainer: {
-    height: 80,
-    paddingTop: 30,
+    // height: 0,
+    paddingTop: 10,
+    paddingBottom: 20,
     // alignItems: "center",
     // justifyContent: "center",
   },

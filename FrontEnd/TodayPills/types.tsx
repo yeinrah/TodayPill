@@ -22,8 +22,29 @@ export type RootStackParamList = {
   Modal: undefined;
   NotFound: undefined;
   Start: undefined;
+  MyPills: undefined;
+  Search: undefined;
+  MyPage: undefined;
+  ModifyRoutine: undefined;
+  Calendar: undefined;
   KakaoScreen: undefined;
   LoginScreen: undefined;
+  HomeScreen: undefined;
+  SearchScreen: undefined;
+  NutrientScreen: undefined;
+  LoginSuccessScreen: undefined;
+  MainScreen: undefined;
+  HealthScreeningCheckScreen: undefined;
+  SurveyStartScreen: undefined;
+  SurveyScreen: undefined;
+  HealthScreeningDetailScreen: undefined;
+  SurveyLoadingScreen: undefined;
+  PersonalRecommendationScreen: undefined;
+  NutrientDetailScreen: undefined;
+  SurveyDeepScreen: undefined;
+  SurveyDeepLoadingScreen: undefined;
+  PillResultScreen: undefined;
+  GenderCheckScreen: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
@@ -45,4 +66,40 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
 
 export type IBackground = {
   children?: JSX.Element;
+  height?: number | string;
+  width?: number | string;
+  bgColor?: string;
+  modalVisible?: boolean;
+  customStyle?: object;
+  modalCloseHandler?: () => void;
 };
+
+export type IUserInfo = {
+  age: number;
+  gender: string;
+  name: string;
+  userId: number;
+  recommendNutrients: Array<string>;
+};
+
+// {
+//   "cli": {
+//     "version": ">= 2.6.0"
+//   },
+//   "build": {
+//     "development": {
+//       "developmentClient": true,
+//       "distribution": "internal"
+//     },
+//     "preview": {
+//       "android": {
+//         "buildType": "apk"
+//       },
+//       "distribution": "internal"
+//     },
+//     "production": {}
+//   },
+//   "submit": {
+//     "production": {}
+//   }
+// }

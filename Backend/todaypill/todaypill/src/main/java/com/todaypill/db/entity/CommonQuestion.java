@@ -27,53 +27,44 @@ public class CommonQuestion {
 	@Column(name = "user_id")
 	private int userId;
 	
-	@Column(name = "smoke")
-	private boolean smoke;
+	@Column(name = "smoking")
+	private boolean smoking;
 	
 	@Column(name = "pregnant")
-	private int pregnant;
+	private boolean pregnant;
 	
 	@Column(name = "allergy")
-	private boolean allergy;
+	private String allergy;
 	
-	@Column(name = "pollen")
-	private boolean pollen;
+	@Column(name = "heartburn")
+	private boolean heartburn;
 	
-	@Column(name = "honey")
-	private boolean honey;
+	@Column(name = "diarrhea")
+	private boolean diarrhea;
 		
-	@Column(name = "bee")
-	private boolean bee;
+	@Column(name = "constipation")
+	private boolean constipation;
 	
-	@Column(name = "eyes")
-	private boolean eyes;
+	@Column(name = "kidney_disease")
+	private boolean kidney_disease;
 	
-	@Column(name = "vessel")
-	private boolean vessel;
+	@Column(name = "outdoor_activity")
+	private Integer outdoor_activity;
 	
-	@Column(name = "liver")
-	private boolean liver;
+	@Column(name = "balanced_meal")
+	private boolean balanced_meal;
 	
-	@Column(name = "intestine")
-	private boolean intestine;
+	@Column(name = "lack")
+	private String lack;
 	
-	@Column(name = "skin")
-	private boolean skin;
+	@Column(name = "is_ok_big_pill")
+	private boolean is_ok_big_pill;
 	
-	@Column(name = "anemia")
-	private boolean anemia;
+	@Column(name = "preferred_brand")
+	private String preferred_brand;
 	
-	@Column(name = "immune")
-	private boolean immune;
-	
-	@Column(name = "fatigue")
-	private boolean fatigue;
-
-	@Column(name = "outdoor")
-	private boolean outdoor;
-	
-	@Column(name = "eat")
-	private boolean eat;
+	@Column(name = "problem")
+	private String problem;
 	
 	
 }

@@ -17,13 +17,14 @@ const StartScreen = ({ navigation }: any) => {
         {!clikedStart && (
           <View style={styles.btnGroup}>
             <CustomBtn
-              buttonColor={"#000000"}
+              buttonColor={"#FFCE31"}
               title={"카카오 시작하기"}
               titleColor={"#fff"}
+              fontSize={20}
               buttonWidth={"200%"}
               onPress={async () => {
-                let temp = await AsyncStorage.setItem("@storage_User", "정서");
-                console.log(temp);
+                // let temp = await AsyncStorage.setItem("@storage_User", "정서");
+                // console.log(temp);
                 //   console.log(navigation, "a");
                 setClickedStart(true);
                 // navigation.replace("KakaoScreen");
@@ -31,13 +32,14 @@ const StartScreen = ({ navigation }: any) => {
               }}
             />
             <CustomBtn
-              buttonColor={"#000000"}
+              buttonColor={"#E881B1"}
               title={"돌아가기"}
               titleColor={"#fff"}
+              fontSize={20}
               buttonWidth={"200%"}
               onPress={async () => {
-                let temp = await AsyncStorage.setItem("@storage_User", "");
-                console.log(temp);
+                // let temp = await AsyncStorage.setItem("@storage_User", "");
+                // console.log(temp);s
                 //   console.log(navigation, "a");
                 setClickedStart(false);
                 // navigation.replace("LoginScreen");
@@ -49,13 +51,14 @@ const StartScreen = ({ navigation }: any) => {
         {clikedStart && (
           <View style={styles.btnGroup}>
             <CustomBtn
-              buttonColor={"#000000"}
+              buttonColor={"#FFCE31"}
               title={"카카오 로그인"}
               titleColor={"#fff"}
+              fontSize={20}
               buttonWidth={"200%"}
               onPress={async () => {
-                let temp = await AsyncStorage.setItem("@storage_User", "정서");
-                console.log(temp);
+                // let temp = await AsyncStorage.setItem("@storage_User", "정서");
+                // console.log(temp);
                 //   console.log(navigation, "a");
                 navigation.replace("KakaoScreen");
                 //   navigation.goBack();

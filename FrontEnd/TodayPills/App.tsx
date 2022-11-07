@@ -11,6 +11,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useCallback, useEffect, useState } from "react";
 import StartScreen from "./screens/StartScreen/StartScreen";
 import { useFocusEffect } from "@react-navigation/native";
+import * as Notifications from "expo-notifications";
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -18,21 +19,32 @@ export default function App() {
   const [userInfo, setUserInfo] = useState("");
   const storeData = async (value: string) => {
     try {
-      await AsyncStorage.setItem("@storage_Key", value);
+      await AsyncStorage.setItem("@storage_User", value);
     } catch (e) {
       // saving error
     }
   };
   const loadData = async () => {
     try {
-      let userStorage = await AsyncStorage.getItem("@storage_User");
-      if (userStorage) setUserInfo(userStorage);
+      let userStorage = await AsyncStorage.getItem("@storage_UserId");
+      if (userStorage) {
+        setUserInfo(userStorage);
+        return true;
+      }
       console.log(userStorage, "name");
       console.log(userInfo, "userInfo");
+      return false;
     } catch (e) {
       console.log("error", e);
     }
   };
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: true,
+      shouldSetBadge: false,
+    }),
+  });
   // useEffect(() => {
   //   console.log("main start");
   //   loadData();
@@ -55,23 +67,7 @@ export default function App() {
         <Navigation colorScheme={colorScheme} LoginCheck={loadData} />
         {userInfo && (
           <>
-            {/* <Navigation colorScheme={colorScheme} /> */}
             <StatusBar />
-            {/* <Button
-              title="로그인"
-              onPress={async () => {
-                let temp = await AsyncStorage.setItem("@storage_User", "정서");
-                console.log(temp);
-              }}
-            />
-            <Button
-              title="로그아웃"
-              onPress={async () => {
-                let temp = await AsyncStorage.setItem("@storage_User", "");
-                console.log("logout");
-                setUserInfo("");
-              }}
-            /> */}
           </>
         )}
       </SafeAreaProvider>

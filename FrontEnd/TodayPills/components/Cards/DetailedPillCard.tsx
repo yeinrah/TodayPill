@@ -1,5 +1,4 @@
-import { StyleSheet, View, Image, Text } from "react-native";
-import { AntDesign } from '@expo/vector-icons';
+import { StyleSheet, View, Image, Text, Pressable } from "react-native";
 import { useState } from "react";
 import { Ionicons } from '@expo/vector-icons';
 
@@ -35,13 +34,17 @@ const DetailedPillCard = () => {
                     </Text>
                 </View>
             </View>
-            <AntDesign
-                name="hearto"
-                size={24}
-                color={like ? "#E2C3DC" : "#CCCCCC"}
-                style={styles.likeicon}
+            <Pressable
                 onPress={() => setLike(!like)}
-            />
+                style={styles.heartcontainer}
+            >
+                <Image
+                    source={like ?
+                    require("../../assets/images/hearton.png") :
+                    require("../../assets/images/heartoff.png")}
+                    style={styles.heart}
+                />
+            </Pressable>
         </View>
     )
 };
@@ -50,6 +53,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
         position: "relative",
+        marginTop: 10,
         marginHorizontal: 10,
         height: 90,
         backgroundColor: "#F4FAF9",
@@ -97,10 +101,17 @@ const styles = StyleSheet.create({
         color: "#B7B7B7",
         fontSize: 8,
     },
-    likeicon: {
+    heartcontainer: {
         position: "absolute",
-        top: 5,
-        right: 5,
+        top: 0,
+        right: 0,
+        width: 50,
+        height: 50,
+    },
+    heart: {
+        width: "100%",
+        height: "100%",
+        resizeMode: "contain",
     },
 });
 
