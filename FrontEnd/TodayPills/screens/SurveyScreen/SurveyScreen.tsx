@@ -4,6 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import AnswerSurvey from "../../components/Cards/AnswerSurvey";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SurveyScreen = ({ navigation }: any) => {
   const [selectedItem, setSelectedItem] = useState(0);
@@ -105,6 +106,10 @@ const SurveyScreen = ({ navigation }: any) => {
               android_ripple={{ color: "#4E736F" }}
               style={styles.buttonInnerContainer}
               onPress={async () => {
+                let uid = "";
+                if (nowStage === 0) {
+                  uid = await AsyncStorage.getItem("@storage_UserId");
+                }
                 setNowStage(nowStage + 1);
                 let answer: boolean | number;
                 //균형잡힌 식사 관련 질문
@@ -123,6 +128,7 @@ const SurveyScreen = ({ navigation }: any) => {
                   }
                 } else answer = selectedItem;
                 setAnswerSheet({
+                  userId: uid,
                   ...answerSheet,
                   [`${surveyData[nowStage][0]}`]: answer,
                 });
