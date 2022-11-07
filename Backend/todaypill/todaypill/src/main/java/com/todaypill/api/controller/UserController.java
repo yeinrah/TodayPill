@@ -227,6 +227,7 @@ public class UserController {
 	@PutMapping("/user/firstSurvey")
 	@ApiOperation(value = "1차 설문조사", notes = "1차 설문조사를 진행한다.")
 	public ResponseEntity<?> firstSurvey(@RequestBody UserFirstSurveyReq userFirstSurveyReq) throws Exception {
+		System.out.println("컨트롤러에서의 outdoor =>"+userFirstSurveyReq.getOutdoor_activity());
 		String[] arr = userService.userFirstSurvey(userFirstSurveyReq);
 		User user = userService.findOneByUserId(userFirstSurveyReq.getUserId());
 		userService.updateRecommend(user.getEmail(), arr[0], arr[1], arr[2]);

@@ -183,10 +183,10 @@ public class UserService {
 		//고민거리도 뭐 받아서 해주면 될듯(버튼으로 체크하는 형식) 피로감, 눈건강, 피부건강 등 이거는 사용자가 원하는 것이기 때문에 높은 +
 		if(userFirstSurveyReq.getProblem().contains("")) {}
 		//햇빛 많이쬐면 쬔 만큼 비타민D 변수 조절
-		if(userFirstSurveyReq.getSkin()==1)vitaminD+=2;
-		else if(userFirstSurveyReq.getSkin()==2)vitaminD+=1.5;
-		else if(userFirstSurveyReq.getSkin()==3)vitaminD+=1;
-		else if(userFirstSurveyReq.getSkin()==4)vitaminD+=0.5;
+		if(userFirstSurveyReq.getOutdoor_activity()==1)vitaminD+=2;
+		else if(userFirstSurveyReq.getOutdoor_activity()==2)vitaminD+=1.5;
+		else if(userFirstSurveyReq.getOutdoor_activity()==3)vitaminD+=1;
+		else if(userFirstSurveyReq.getOutdoor_activity()==4)vitaminD+=0.5;
 		
 		Map<String,Integer> map = new HashMap<String, Integer>();
 		map.put("vitaminB", vitaminB);
@@ -222,7 +222,7 @@ public class UserService {
 				.kidney_disease(userFirstSurveyReq.isKidney_disease()).lack(userFirstSurveyReq.getLack()).
 				preferred_brand(userFirstSurveyReq.getPreferred_brand())
 				.pregnant(userFirstSurveyReq.isPregnant()).problem(userFirstSurveyReq.getProblem()).
-				skin(userFirstSurveyReq.getSkin()).smoking(userFirstSurveyReq.isSmoking())
+				outdoor_activity(userFirstSurveyReq.getOutdoor_activity()).smoking(userFirstSurveyReq.isSmoking())
 				.userId(userFirstSurveyReq.getUserId())
 				.build();
 		commonQuestionRepository.save(cq);
@@ -240,7 +240,7 @@ public class UserService {
 				.kidney_disease(false).lack(null).
 				preferred_brand(detailHealthReq.getBrand())
 				.pregnant(false).problem(null).
-				skin(0).smoking(false)
+				outdoor_activity(0).smoking(false)
 				.userId(detailHealthReq.getUserId())
 				.build();
 		commonQuestionRepository.save(cq);
