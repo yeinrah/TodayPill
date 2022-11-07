@@ -1,5 +1,6 @@
 package com.todaypill.db.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
@@ -11,80 +12,69 @@ import javax.persistence.*;
 @Getter
 @Table(name = "supplement")
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Supplement {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long supplementId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer supplementId;
 
-    @Column(name = "supplement_name")
-    private String supplementName;
+	private String category;
 
-    @Column
-    private Double price;
+	@Column(name = "supplement_name")
+	private String supplementName;
 
-    @Column
-    private String brand;
+	@Column
+	private Double price;
 
-    @Column
-    private String image;
+	@Column
+	private String brand;
 
-    @Column
-    private String ingredients;
+	@Column
+	private String image;
 
-    @Column
-    private Double bioavailability;
+	// columnDefinition = "TEXT" 이거는 에러남
+	@Column(name = "ingredients", length = 2500)
+	private String ingredients;
 
-    @Column
-    private Double laxative;
+	@Column
+	private Double bioavailability;
 
-    @Column(name = "kidney_disease")
-    private Double kidneyDisease;
+	@Column
+	private Double laxative;
 
-    @Column(name = "consumer_lab_score")
-    private Integer consumerLabScore;
+	@Column(name = "kidney_disease")
+	private Double kidneyDisease;
 
-    @Column(name = "additional_efficacy")
-    private String additionalEfficacy;
+	@Column(name = "consumer_lab_score")
+	private Integer consumerLabScore;
 
-    @Column
-    private String note;
+	@Column(name = "additional_efficacy")
+	private String additionalEfficacy;
 
-    @Column
-    private String amount;
+	@Column
+	private String note;
 
-    @Column(name = "required_count")
-    private String requiredCount;
+	@Column
+	private String amount;
 
-    @Column
-    private String formula;
+	@Column(name = "required_count")
+	private String requiredCount;
 
-    @Column
-    private Integer like;
+	@Column
+	private String formula;
 
-    @Column(name = "sustained_release")
-    private Boolean sustainedRelease;
+	@Column
+	private Integer like;
 
-    @Builder
-    public Supplement(Long supplementId, String supplementName, Double price, String brand, String image, String ingredients, Double bioavailability, Double laxative, Double kidneyDisease, Integer consumerLabScore, String additionalEfficacy, String note, String amount, String requiredCount, String formula, Integer like, Boolean sustainedRelease) {
-        this.supplementId = supplementId;
-        this.supplementName = supplementName;
-        this.price = price;
-        this.brand = brand;
-        this.image = image;
-        this.ingredients = ingredients;
-        this.bioavailability = bioavailability;
-        this.laxative = laxative;
-        this.kidneyDisease = kidneyDisease;
-        this.consumerLabScore = consumerLabScore;
-        this.additionalEfficacy = additionalEfficacy;
-        this.note = note;
-        this.amount = amount;
-        this.requiredCount = requiredCount;
-        this.formula = formula;
-        this.like = like;
-        this.sustainedRelease = sustainedRelease;
-    }
-    
+	@Column(name = "sustained_release")
+	private Boolean sustainedRelease;
+	
+	@Column(name = "pill_size")
+	private String pillSize;
+	
+	@Column(name = "best_time")
+	private String bestTime;
 }

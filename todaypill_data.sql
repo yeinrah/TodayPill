@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS `crawl`;
+DROP DATABASE IF EXISTS `todaypill`;
 
-CREATE DATABASE IF NOT EXISTS `crawl` collate utf8mb4_general_ci;
-USE `crawl`;
+CREATE DATABASE IF NOT EXISTS `todaypill` collate utf8mb4_general_ci;
+USE `todaypill`;
 
 CREATE TABLE `vitaminb` (
 	`id` int AUTO_INCREMENT PRIMARY KEY,
@@ -958,25 +958,5 @@ INSERT INTO `propolis` (`id`,`img`,`name`,`price`,`serving`,`nutrition`,`categor
 INSERT INTO `propolis` (`id`,`img`,`name`,`price`,`serving`,`nutrition`,`category`) VALUES (59,'https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nnr/nnr32659/v/26.jpg','NaturaNectar, Throat Guardian 스프레이, 비 베리, 30ml(1fl oz)','24,534','3회 분사','프로폴리스물추출물(PWE-M) [0.17mg/ml로 표준화된 유기농아로마산(페놀산), 카페익산, 페룰산, 신남산 a.o] 0.48ml †','프로폴리스');
 
 INSERT INTO `propolis` (`id`,`img`,`name`,`price`,`serving`,`nutrition`,`category`) VALUES (61,'https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/bkn/bkn14203/v/62.jpg','Beekeeper\'s Naturals, B. 파워드, 슈퍼 푸드 꿀, 330g(11.6oz)','51,138','1티스푼(7g)','칼로리 25  / 총 탄수화물 6g 2%* / 총 당류 5g † / 첨가당 5g  10%* / 벌꽃가루 530mg † / 로열젤리복합체(로열젤리, 동결건조로열젤리) 370mg † / 꿀벌프로폴리스추출물 42mg † / 꿀 6.2g †','프로폴리스');
-
-create table `supplement` (
-    		`supplement_id` bigint not null auto_increment, 
-    		`supplement_name` varchar(255), 
-    		`price` double, 
-    		`brand` varchar(255), 
-    		`image` varchar(255), 
-    		`ingredients` text, 
-    		`bioavailability` double, 
-    		`laxative` double, 
-    		`kidney_disease` double, 
-    		`consumer_lab_score` integer, 
-    		`additional_efficacy` varchar(255), 
-    		`note` varchar(255), 
-    		`amount` varchar(20), 
-    		`required_count` varchar(255), 
-    		`formula` varchar(255), 
-    		`like` integer, 
-    		`sustained_release` bit, 
-    		primary key (`supplement_id`)) engine=InnoDB;
 
 select * from supplement;

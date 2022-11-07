@@ -36,6 +36,7 @@ public class ZincService {
 
 		List<Zinc> list = zincRepository.findAll();
 		for (Zinc m : list) {
+			String category = m.getCategory();
 			String supplementName = m.getName();
 			String[] ps = m.getPrice().split(",");
 			Double price = Double.parseDouble(ps[0].concat(ps[1]));
@@ -96,7 +97,7 @@ public class ZincService {
 			String additionalEfficacy = sb.toString();
 			if (sb.length() > 0)
 				additionalEfficacy = sb.toString().substring(0, sb.length() - 2);
-			String note = "";
+			String note = "저녁 식후 30분";
 			String[] detail = m.getName().split(", ");
 			String amount = detail[detail.length - 1];
 			String requiredCount = m.getServing();
@@ -112,11 +113,14 @@ public class ZincService {
 			if (m.getName().contains("서방형") || m.getName().contains("리포좀") || m.getName().contains("리포조멀")
 					|| m.getName().contains("sustained") || m.getName().contains("timed"))
 				sustainedRelease = true;
-			Supplement supplement = Supplement.builder().supplementName(supplementName).price(price).brand(brand)
-					.image(image).ingredients(ingredients).bioavailability(bioavailability).laxative(laxative)
-					.kidneyDisease(kidneyDisease).consumerLabScore(consumerLabScore)
+			String pillSize = "";
+			String bestTime = "19:00";
+			Supplement supplement = Supplement.builder().category(category).supplementName(supplementName).price(price)
+					.brand(brand).image(image).ingredients(ingredients).bioavailability(bioavailability)
+					.laxative(laxative).kidneyDisease(kidneyDisease).consumerLabScore(consumerLabScore)
 					.additionalEfficacy(additionalEfficacy).note(note).amount(amount).requiredCount(requiredCount)
-					.formula(formula).like(like).sustainedRelease(sustainedRelease).build();
+					.formula(formula).like(like).sustainedRelease(sustainedRelease).pillSize(pillSize)
+					.bestTime(bestTime).build();
 			supplementRepository.save(supplement);
 		}
 	}
