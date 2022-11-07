@@ -48,4 +48,10 @@ public class SupplementService {
 		return supplement;
 	}
 	
+	@Transactional
+	public List<Supplement> getLikeTop10() throws Exception {
+		return supplementRepository.findLikeTop10();
+	}
+	
+	
 }
