@@ -4,6 +4,8 @@ import Card from "../../components/UI/Card";
 import SearchBar from "../../components/TopBar/SearchBar";
 import MainPill from "../../components/MainPage/MainPill";
 import MainNutrient from "../../components/MainPage/MainNutrient";
+import CustomBtn from "../../components/UI/CustomBtn";
+import { accent } from "../../constants/Colors";
 
 export default function HomeScreen({ navigation }: any) {
   return (
@@ -14,6 +16,19 @@ export default function HomeScreen({ navigation }: any) {
           <ScrollView>
             <MainPill />
             <MainNutrient navigation={navigation} />
+            <CustomBtn
+              buttonColor={accent}
+              title={"모든 영양제 보기"}
+              fontSize={20}
+              titleColor={"#fff"}
+              buttonWidth={"90%"}
+              onPress={() =>
+                navigation.navigate("AllSupplementsScreen", {
+                  // userId 바꾸기!
+                  // userId: 1,
+                })
+              }
+            />
           </ScrollView>
         </View>
       </Card>
