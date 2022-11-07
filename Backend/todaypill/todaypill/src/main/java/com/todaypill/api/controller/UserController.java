@@ -197,7 +197,7 @@ public class UserController {
 		List<HashMap<String, Object>> supList = new ArrayList<>();
 		HashMap<String, Object> map = new HashMap<>();
 		for(int i=0; i<list.size();i++) {
-			Supplement supplement = supplementService.getSupplementList(list.get(i).getSupplementId());
+			Supplement supplement = supplementService.getSupplement(list.get(i).getSupplementId());
 			HashMap<String, Object> babyMap = new HashMap<>();
 			babyMap.put("image", supplement.getImage());
 			babyMap.put("name", supplement.getName());

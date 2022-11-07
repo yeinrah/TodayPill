@@ -189,19 +189,19 @@ public class UserService {
 		else if(userFirstSurveyReq.getOutdoor_activity()==4)vitaminD+=0.5;
 		
 		Map<String,Integer> map = new HashMap<String, Integer>();
-		map.put("vitaminB", vitaminB);
-		map.put("vitaminC", vitaminC);
-		map.put("vitaminD", vitaminD);
-		map.put("multivitamin", multivitamin);
-		map.put("magnesium", magnesium);
-		map.put("omega3", omega3);
-		map.put("milkcistle", milkcistle);
-		map.put("lutain", lutain);
-		map.put("Zn", Zn);
-		map.put("lactobacillus", lactobacillus);
-		map.put("collagen", collagen);
-		map.put("Fe", Fe);
-		map.put("profolis", profolis);
+		map.put("비타민 B", vitaminB);
+		map.put("비타민 C", vitaminC);
+		map.put("비타민 D", vitaminD);
+		map.put("종합비타민", multivitamin);
+		map.put("마그네슘", magnesium);
+		map.put("오메가-3", omega3);
+		map.put("밀크시슬", milkcistle);
+		map.put("루테인", lutain);
+		map.put("아연", Zn);
+		map.put("유산균", lactobacillus);
+		map.put("콜라겐", collagen);
+		map.put("철분", Fe);
+		map.put("프로폴리스", profolis);
 		List<Map.Entry<String, Integer>> list = new ArrayList(map.entrySet());
 		list.sort(new Comparator<Map.Entry<String, Integer>>() {
 			@Override

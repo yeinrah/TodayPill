@@ -57,6 +57,12 @@ public class SupplementController {
 		List<Supplement> list = supplementService.findAll();
 		return new ResponseEntity<List<Supplement>>(list, HttpStatus.OK);
 	}
-
+	
+	@GetMapping("/{supplementId}")
+	@ApiOperation(value = "supplement id로 해당 영양제 정보를 가져온다", notes = "가져온다")
+	public ResponseEntity<?> findSupplement(@PathVariable int supplementId) throws Exception {
+		Supplement supplement = supplementService.getSupplement(supplementId);
+		return new ResponseEntity<Supplement>(supplement, HttpStatus.OK);
+	}
 
 } 

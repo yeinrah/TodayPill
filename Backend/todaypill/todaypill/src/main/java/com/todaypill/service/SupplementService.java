@@ -43,7 +43,7 @@ public class SupplementService {
 	}
 	
 	@Transactional
-	public Supplement getSupplementList(int supplementId) throws Exception {
+	public Supplement getSupplement(int supplementId) throws Exception {
 		Supplement supplement = supplementRepository.findOneBySupplementId(supplementId);
 		return supplement;
 	}
