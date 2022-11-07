@@ -64,5 +64,12 @@ public class SupplementController {
 		Supplement supplement = supplementService.getSupplement(supplementId);
 		return new ResponseEntity<Supplement>(supplement, HttpStatus.OK);
 	}
+	
+	@GetMapping("/findLikeTop10")
+	@ApiOperation(value = "supplement 중 like 순위 10위 안의 영양제를 가져온다", notes = "가져온다")
+	public ResponseEntity<?> findLikeTop10() throws Exception {
+		List<Supplement> list = supplementService.getLikeTop10();
+		return new ResponseEntity<List<Supplement>>(list, HttpStatus.OK);
+	}
 
 } 
