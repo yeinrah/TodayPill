@@ -31,13 +31,14 @@ const PillItem = (props: PillProps) => {
     if (likeUsersList.length === 0) {
       setIsLiked(false);
     } else {
-      for (const eachId of likeUsersList) {
-        if (eachId === userId) {
-          setIsLiked(true);
-        } else {
-          setIsLiked(false);
-        }
-      }
+      // for (const eachId of likeUsersList) {
+      //   if (eachId === userId) {
+      //     setIsLiked(true);
+      //   } else {
+      //     setIsLiked(false);
+      //   }
+      // }
+      likeUsersList.includes(userId) ? setIsLiked(true) : setIsLiked(false);
     }
     setLikeCnt(likeUsersList.length);
   };
