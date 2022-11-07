@@ -55,6 +55,7 @@ import SurveyDeepScreen from "../screens/SurveyScreen/SurveyDeepScreen";
 import SurveyDeepLoadingScreen from "../screens/SurveyScreen/SurveyDeepLoadingScreen";
 import PillResultScreen from "../screens/SurveyScreen/PillResultScreen";
 import GenderCheckScreen from "../screens/SurveyScreen/GenderCheckScreen";
+import FirstAddSurvey from "../screens/AddSurvey/FirstAddSurvey";
 interface Inavigation {
   colorScheme: ColorSchemeName;
   LoginCheck: () => {};
@@ -142,6 +143,11 @@ export default function Navigation({ colorScheme, LoginCheck }: Inavigation) {
         <Stack.Screen
           name="GenderCheckScreen"
           component={GenderCheckScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="FirstAddSurvey"
+          component={FirstAddSurvey}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
