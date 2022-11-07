@@ -200,7 +200,7 @@ public class UserController {
 			Supplement supplement = supplementService.getSupplement(list.get(i).getSupplementId());
 			HashMap<String, Object> babyMap = new HashMap<>();
 			babyMap.put("image", supplement.getImage());
-			babyMap.put("name", supplement.getName());
+			babyMap.put("name", supplement.getSupplementName());
 			babyMap.put("brand", supplement.getBrand());
 			babyMap.put("supplementId", supplement.getSupplementId());
 			babyMap.put("like", supplement.getLike());
