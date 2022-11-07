@@ -57,7 +57,7 @@ const MainPill = () => {
               pillId={pill.supplementId}
               image={pill.image}
               brand={pill.brand}
-              pill={pill.name}
+              pill={pill.supplementName}
             />
           ))}
         </ScrollView>

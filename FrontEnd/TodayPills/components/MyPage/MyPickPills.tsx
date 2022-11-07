@@ -10,6 +10,7 @@ import {
   ScrollView,
   Image,
 } from "react-native";
+import { fetchMyPicks } from "../../API/likeAPI";
 import { fetchAllSupplements } from "../../API/supplementAPI";
 import PillItem, { PillProps } from "../Pills/PillItem";
 
@@ -60,15 +61,15 @@ export default function MyPickPills() {
   const [pickedPills, setPickedPills] = useState([]);
   const [userId, setUserId] = useState(0);
 
-  const getAllSupplements = async () => {
+  const getMyPicks = async () => {
     const currentUserId = await AsyncStorage.getItem("@storage_UserId");
-    setUserId(parseInt(currentUserId));
-    const allSupplements = await fetchAllSupplements();
-    setPickedPills(allSupplements);
+    // setUserId(parseInt(currentUserId));
+    const myPicks = await fetchMyPicks(parseInt(currentUserId));
+    setPickedPills(myPicks);
   };
 
   useEffect(() => {
-    getAllSupplements();
+    getMyPicks();
   }, []);
 
   return (
