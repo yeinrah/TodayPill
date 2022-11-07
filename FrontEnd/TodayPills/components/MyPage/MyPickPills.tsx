@@ -59,17 +59,25 @@ export default function MyPickPills() {
 
       <View style={styles.outerContainer}>
         <ScrollView style={styles.cardsContainer} horizontal={true}>
-          {pickedPills.map((pill, idx) => (
-            <PillItem
-              key={pill.supplementId}
-              pillId={pill.supplementId}
-              userId={userId}
-              image={pill.image}
-              brand={pill.brand}
-              pill={pill.name}
-              onPressDislike={dislikeHandler}
-            />
-          ))}
+          {pickedPills.length === 0 ? (
+            <View style={styles.textContainer}>
+              <Text style={styles.emptyText}>
+                하트를 눌러 영양제를 찜해보세요!
+              </Text>
+            </View>
+          ) : (
+            pickedPills.map((pill, idx) => (
+              <PillItem
+                key={pill.supplementId}
+                pillId={pill.supplementId}
+                userId={userId}
+                image={pill.image}
+                brand={pill.brand}
+                pill={pill.name}
+                onPressDislike={dislikeHandler}
+              />
+            ))
+          )}
         </ScrollView>
       </View>
     </View>
@@ -123,6 +131,20 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginLeft: 5,
     marginBottom: 10,
+  },
+
+  textContainer: {
+    // width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 10,
+  },
+  emptyText: {
+    fontSize: 18,
+    color: "#B7B7B7",
+    // fontWeight: "bold",
+    // marginLeft: 5,
+    // marginBottom: 10,
   },
   cardsContainer: {
     flexDirection: "row",

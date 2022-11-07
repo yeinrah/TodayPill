@@ -3,7 +3,7 @@ const api = apiInstance();
 
 const fetchAllSupplements = async () => {
   const result = await api.get(`/supplement/findAll`);
-  console.log(result.data);
+  // console.log(result.data);
   return result.data;
 };
 

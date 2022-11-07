@@ -3,32 +3,40 @@ import BackgroundScreen from "../BackgroundScreen";
 import Card from "../../components/UI/Card";
 import SearchBar from "../../components/TopBar/SearchBar";
 import DetailedPillCard from "../../components/Cards/DetailedPillCard";
-import { useEffect, useState } from "react";
-import { getAllSupplements } from "../../API/supplementAPI";
+import { useEffect, useState, useCallback } from "react";
+import { fetchAllSupplements } from "../../API/supplementAPI";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function SearchScreen({ navigation, route }: any) {
   //searchResults: 검색어를 이름에 포함하는 영양제 배열
   const [searchResults, setSearchResults] = useState([]);
   const filterSupplements = async (word) => {
-    const supplements = await getAllSupplements();
-    const filteredSupplements = supplements.filter(supplement => 
-      supplement.name.includes(word)
+    const supplements = await fetchAllSupplements();
+    const filteredSupplements = supplements.filter((supplement) =>
+      supplement.supplementName.includes(word)
     );
+    console.warn(filteredSupplements.length);
     setSearchResults(filteredSupplements);
-  }
-  
-  useEffect(() => {
-    filterSupplements(route.params.word);
-  }, [route.params.word])
+  };
+
+  // useEffect(() => {
+  //   filterSupplements(route.params.word);
+  // }, [route.params.word]);
+  useFocusEffect(
+    useCallback(() => {
+      filterSupplements(route.params.word);
+
+      // return () => {
+
+      // };
+    }, [route.params.word])
+  );
 
   return (
     <BackgroundScreen>
       <Card>
         <View style={styles.container}>
-          <SearchBar
-            navigation={navigation}
-            word={route.params.word}
-          />
+          <SearchBar navigation={navigation} word={route.params.word} />
           <ScrollView>
             <DetailedPillCard />
             <DetailedPillCard />
