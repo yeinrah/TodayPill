@@ -87,6 +87,12 @@ public class UserService {
 			supplementRepository.updateLike(supplementId, likeNum - 1);
 		}
 	}
+	
+	@Transactional
+	public List<Like> getUserLike(int userId) throws Exception {
+		List<Like> list = likeRepository.findAllByUserId(userId);
+		return list;
+	}
 
 	@Transactional
 	public List<Integer> likeListOfSupplement(int supplementId) throws Exception {
@@ -177,25 +183,25 @@ public class UserService {
 		//고민거리도 뭐 받아서 해주면 될듯(버튼으로 체크하는 형식) 피로감, 눈건강, 피부건강 등 이거는 사용자가 원하는 것이기 때문에 높은 +
 		if(userFirstSurveyReq.getProblem().contains("")) {}
 		//햇빛 많이쬐면 쬔 만큼 비타민D 변수 조절
-		if(userFirstSurveyReq.getSkin()==1)vitaminD+=2;
-		else if(userFirstSurveyReq.getSkin()==2)vitaminD+=1.5;
-		else if(userFirstSurveyReq.getSkin()==3)vitaminD+=1;
-		else if(userFirstSurveyReq.getSkin()==4)vitaminD+=0.5;
+		if(userFirstSurveyReq.getOutdoor_activity()==1)vitaminD+=2;
+		else if(userFirstSurveyReq.getOutdoor_activity()==2)vitaminD+=1.5;
+		else if(userFirstSurveyReq.getOutdoor_activity()==3)vitaminD+=1;
+		else if(userFirstSurveyReq.getOutdoor_activity()==4)vitaminD+=0.5;
 		
 		Map<String,Integer> map = new HashMap<String, Integer>();
-		map.put("vitaminB", vitaminB);
-		map.put("vitaminC", vitaminC);
-		map.put("vitaminD", vitaminD);
-		map.put("multivitamin", multivitamin);
-		map.put("magnesium", magnesium);
-		map.put("omega3", omega3);
-		map.put("milkcistle", milkcistle);
-		map.put("lutain", lutain);
-		map.put("Zn", Zn);
-		map.put("lactobacillus", lactobacillus);
-		map.put("collagen", collagen);
-		map.put("Fe", Fe);
-		map.put("profolis", profolis);
+		map.put("비타민 B", vitaminB);
+		map.put("비타민 C", vitaminC);
+		map.put("비타민 D", vitaminD);
+		map.put("종합비타민", multivitamin);
+		map.put("마그네슘", magnesium);
+		map.put("오메가-3", omega3);
+		map.put("밀크시슬", milkcistle);
+		map.put("루테인", lutain);
+		map.put("아연", Zn);
+		map.put("유산균", lactobacillus);
+		map.put("콜라겐", collagen);
+		map.put("철분", Fe);
+		map.put("프로폴리스", profolis);
 		List<Map.Entry<String, Integer>> list = new ArrayList(map.entrySet());
 		list.sort(new Comparator<Map.Entry<String, Integer>>() {
 			@Override
@@ -216,7 +222,7 @@ public class UserService {
 				.kidney_disease(userFirstSurveyReq.isKidney_disease()).lack(userFirstSurveyReq.getLack()).
 				preferred_brand(userFirstSurveyReq.getPreferred_brand())
 				.pregnant(userFirstSurveyReq.isPregnant()).problem(userFirstSurveyReq.getProblem()).
-				skin(userFirstSurveyReq.getSkin()).smoking(userFirstSurveyReq.isSmoking())
+				outdoor_activity(userFirstSurveyReq.getOutdoor_activity()).smoking(userFirstSurveyReq.isSmoking())
 				.userId(userFirstSurveyReq.getUserId())
 				.build();
 		commonQuestionRepository.save(cq);
@@ -234,7 +240,7 @@ public class UserService {
 				.kidney_disease(false).lack(null).
 				preferred_brand(detailHealthReq.getBrand())
 				.pregnant(false).problem(null).
-				skin(0).smoking(false)
+				outdoor_activity(0).smoking(false)
 				.userId(detailHealthReq.getUserId())
 				.build();
 		commonQuestionRepository.save(cq);

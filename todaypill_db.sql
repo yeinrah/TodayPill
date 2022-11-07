@@ -15,12 +15,12 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
--- todaypills 데이터베이스 구조 내보내기
-DROP DATABASE IF EXISTS `todaypills`;
-CREATE DATABASE IF NOT EXISTS `todaypills` DEFAULT CHARACTER SET utf8mb4;
-USE `todaypills`;
+-- todaypill 데이터베이스 구조 내보내기
+DROP DATABASE IF EXISTS `todaypill`;
+CREATE DATABASE IF NOT EXISTS `todaypill` DEFAULT CHARACTER SET utf8mb4;
+USE `todaypill`;
 
--- 테이블 todaypills.calendar 구조 내보내기
+-- 테이블 todaypill.calendar 구조 내보내기
 DROP TABLE IF EXISTS `calendar`;
 CREATE TABLE IF NOT EXISTS `calendar` (
   `calendar_id` int NOT NULL AUTO_INCREMENT,
@@ -33,43 +33,46 @@ CREATE TABLE IF NOT EXISTS `calendar` (
   PRIMARY KEY (`calendar_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- 테이블 데이터 todaypills.calendar:~0 rows (대략적) 내보내기
+-- 테이블 데이터 todaypill.calendar:~0 rows (대략적) 내보내기
 
--- 테이블 todaypills.commonquestion 구조 내보내기
+-- 테이블 todaypill.commonquestion 구조 내보내기
 DROP TABLE IF EXISTS `commonquestion`;
 CREATE TABLE IF NOT EXISTS `commonquestion` (
   `user_id` int NOT NULL AUTO_INCREMENT,
-  `allergy` bit(1) DEFAULT NULL,
-  `anemia` bit(1) DEFAULT NULL,
-  `bee` bit(1) DEFAULT NULL,
-  `eat` bit(1) DEFAULT NULL,
-  `eyes` bit(1) DEFAULT NULL,
-  `fatigue` bit(1) DEFAULT NULL,
-  `honey` bit(1) DEFAULT NULL,
-  `immune` bit(1) DEFAULT NULL,
-  `intestine` bit(1) DEFAULT NULL,
-  `liver` bit(1) DEFAULT NULL,
-  `outdoor` bit(1) DEFAULT NULL,
-  `pollen` bit(1) DEFAULT NULL,
-  `pregnant` int DEFAULT NULL,
-  `skin` bit(1) DEFAULT NULL,
-  `smoke` bit(1) DEFAULT NULL,
-  `vessel` bit(1) DEFAULT NULL,
-  `balanced_meal` varchar(255) DEFAULT NULL,
-  `constipation` bit(1) DEFAULT NULL,
-  `diarrhea` bit(1) DEFAULT NULL,
+  `smoking` bit(1) DEFAULT NULL,
+  `pregnant` bit(1) DEFAULT NULL,
+  `allergy` text DEFAULT NULL,
   `heartburn` bit(1) DEFAULT NULL,
-  `is_ok_big_pill` bit(1) DEFAULT NULL,
+  `diarrhea` bit(1) DEFAULT NULL,
+  `constipation` bit(1) DEFAULT NULL,
   `kidney_disease` bit(1) DEFAULT NULL,
-  `outdoor_activity` varchar(255) DEFAULT NULL,
+  `outdoor_activity` int DEFAULT NULL,
+  `balanced_meal` bit(1) DEFAULT NULL,
+  `lack` varchar(255) DEFAULT NULL,
+  `is_ok_big_pill` bit(1) DEFAULT NULL,
   `preferred_brand` varchar(255) DEFAULT NULL,
   `problem` varchar(255) DEFAULT NULL,
+  
+  -- `anemia` bit(1) DEFAULT NULL,
+  -- `eat` bit(1) DEFAULT NULL,
+  -- `eyes` bit(1) DEFAULT NULL,
+  -- `fatigue` bit(1) DEFAULT NULL,
+  -- `immune` bit(1) DEFAULT NULL,
+  -- `intestine` bit(1) DEFAULT NULL,
+  -- `liver` bit(1) DEFAULT NULL,
+  -- `outdoor` bit(1) DEFAULT NULL,
+
+  -- `vessel` bit(1) DEFAULT NULL,
+
+
+
+
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- 테이블 데이터 todaypills.commonquestion:~0 rows (대략적) 내보내기
+-- 테이블 데이터 todaypill.commonquestion:~0 rows (대략적) 내보내기
 
--- 테이블 todaypills.like 구조 내보내기
+-- 테이블 todaypill.like 구조 내보내기
 DROP TABLE IF EXISTS `like`;
 CREATE TABLE IF NOT EXISTS `like` (
   `like_id` int NOT NULL AUTO_INCREMENT,
@@ -78,9 +81,9 @@ CREATE TABLE IF NOT EXISTS `like` (
   PRIMARY KEY (`like_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- 테이블 데이터 todaypills.like:~0 rows (대략적) 내보내기
+-- 테이블 데이터 todaypill.like:~0 rows (대략적) 내보내기
 
--- 테이블 todaypills.nutrients_type 구조 내보내기
+-- 테이블 todaypill.nutrients_type 구조 내보내기
 DROP TABLE IF EXISTS `nutrients_type`;
 CREATE TABLE IF NOT EXISTS `nutrients_type` (
   `supplement_id` int NOT NULL AUTO_INCREMENT,
@@ -89,11 +92,11 @@ CREATE TABLE IF NOT EXISTS `nutrients_type` (
   PRIMARY KEY (`supplement_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- 테이블 데이터 todaypills.nutrients_type:~0 rows (대략적) 내보내기
+-- 테이블 데이터 todaypill.nutrients_type:~0 rows (대략적) 내보내기
 
 
--- 테이블 데이터 todaypills.nutrient_common_code:~0 rows (대략적) 내보내기
--- 테이블 todaypills.routine 구조 내보내기
+-- 테이블 데이터 todaypill.nutrient_common_code:~0 rows (대략적) 내보내기
+-- 테이블 todaypill.routine 구조 내보내기
 DROP TABLE IF EXISTS `routine`;
 CREATE TABLE IF NOT EXISTS `routine` (
   `routine_id` int NOT NULL AUTO_INCREMENT,
@@ -105,9 +108,9 @@ CREATE TABLE IF NOT EXISTS `routine` (
   PRIMARY KEY (`routine_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- 테이블 데이터 todaypills.routine:~0 rows (대략적) 내보내기
+-- 테이블 데이터 todaypill.routine:~0 rows (대략적) 내보내기
 
--- 테이블 todaypills.supplement 구조 내보내기
+-- 테이블 todaypill.supplement 구조 내보내기
 DROP TABLE IF EXISTS `supplement`;
 CREATE TABLE IF NOT EXISTS `supplement` (
   `supplement_id` int NOT NULL AUTO_INCREMENT,
@@ -134,9 +137,9 @@ CREATE TABLE IF NOT EXISTS `supplement` (
   CONSTRAINT `FKs2g0smnur1l6e5g3wqwd1w5l1` FOREIGN KEY (`supplement_type_id`) REFERENCES `supplement_type` (`supplement_type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- 테이블 데이터 todaypills.supplement:~0 rows (대략적) 내보내기
+-- 테이블 데이터 todaypill.supplement:~0 rows (대략적) 내보내기
 
--- 테이블 todaypills.user 구조 내보내기
+-- 테이블 todaypill.user 구조 내보내기
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `user_id` int NOT NULL AUTO_INCREMENT,
@@ -150,10 +153,19 @@ CREATE TABLE IF NOT EXISTS `user` (
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- 테이블 데이터 todaypills.user:~0 rows (대략적) 내보내기
+-- 테이블 데이터 todaypill.user:~0 rows (대략적) 내보내기
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
+alter table supplement convert to charset utf8;
+alter table calendar convert to charset utf8;
+alter table commonquestion convert to charset utf8;
+alter table `like` convert to charset utf8;
+alter table `nutrients_type` convert to charset utf8;
+alter table `routine` convert to charset utf8;
+alter table `supplement` convert to charset utf8;
+alter table `user` convert to charset utf8;
+

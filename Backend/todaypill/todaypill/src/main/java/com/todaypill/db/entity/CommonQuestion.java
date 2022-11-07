@@ -48,8 +48,8 @@ public class CommonQuestion {
 	@Column(name = "kidney_disease")
 	private boolean kidney_disease;
 	
-	@Column(name = "skin")
-	private int skin;
+	@Column(name = "outdoor_activity")
+	private Integer outdoor_activity;
 	
 	@Column(name = "balanced_meal")
 	private boolean balanced_meal;

@@ -42,5 +42,10 @@ public class SupplementService {
 		return list;
 	}
 	
+	@Transactional
+	public Supplement getSupplement(int supplementId) throws Exception {
+		Supplement supplement = supplementRepository.findOneBySupplementId(supplementId);
+		return supplement;
+	}
 	
 }
