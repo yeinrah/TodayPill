@@ -70,7 +70,7 @@ export default function MyPageScreen({ navigation }: any) {
             <View style={styles.ageContainer}>
               <Text style={styles.age}>{myInfo.age}대</Text>
               {/* gender 받아오는거!!! */}
-              <Text style={styles.age}>남성</Text>
+              <Text style={styles.age}>{myInfo.gender}</Text>
             </View>
           </View>
           <View style={styles.nutrBtnContainer}>

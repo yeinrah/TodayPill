@@ -7,6 +7,12 @@ const fetchLikeUsers = async (supplementId: number) => {
   return result.data;
 };
 
+const fetchMyPicks = async (userId: number) => {
+  const result = await api.get(`/user/userLike/${userId}`);
+  // console.warn("나의 찜", result.data);
+  return result.data;
+};
+
 const like = async (userId: number, supplementId: number) => {
   const data = {
     supplementId,
@@ -42,4 +48,4 @@ const dislike = async (userId: number, supplementId: number) => {
 //   await api.delete("/user/deletelike", JSON.stringify(data));
 // };
 
-export { fetchLikeUsers, like, dislike };
+export { fetchLikeUsers, like, dislike, fetchMyPicks };

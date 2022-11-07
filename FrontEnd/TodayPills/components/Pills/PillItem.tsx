@@ -1,7 +1,8 @@
 import { StyleSheet, View, Image, Text, Pressable } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { dislike, fetchLikeUsers, like } from "../../API/likeAPI";
+import { useFocusEffect } from "@react-navigation/native";
 
 export interface PillProps {
   //   image: ImageSourcePropType;
@@ -10,6 +11,8 @@ export interface PillProps {
   image: string;
   brand: string;
   pill: string;
+  // onPressDislike?: (isDisliked: boolean) => void;
+  onPressDislike?: () => void;
 }
 
 const PillItem = (props: PillProps) => {
@@ -21,6 +24,23 @@ const PillItem = (props: PillProps) => {
 
   const [likeCnt, setLikeCnt] = useState(0);
   const [isLikeChange, setIsLikeChange] = useState(false);
+
+  const getLikeOrNot = async () => {
+    const likeUsersList = await fetchLikeUsers(supplementId);
+    // console.log(likeUsersList, supplementId, "번 째 영양제 좋아한사람");
+    if (likeUsersList.length === 0) {
+      setIsLiked(false);
+    } else {
+      for (const eachId of likeUsersList) {
+        if (eachId === userId) {
+          setIsLiked(true);
+        } else {
+          setIsLiked(false);
+        }
+      }
+    }
+    setLikeCnt(likeUsersList.length);
+  };
 
   const likeHandler = async () => {
     await like(userId, supplementId);
@@ -35,30 +55,19 @@ const PillItem = (props: PillProps) => {
     await dislike(userId, supplementId);
     setIsLiked(false);
 
+    props.onPressDislike();
     // setIsLikeChange(false);
   };
 
-  useEffect(() => {
-    // setIsLoading(true);
-    (async () => {
-      const likeUsersList = await fetchLikeUsers(supplementId);
-      // console.log(likeUsersList, supplementId, "번 째 영양제 좋아한사람");
-      if (likeUsersList.length === 0) {
-        setIsLiked(false);
-      } else {
-        for (const eachId of likeUsersList) {
-          if (eachId === userId) {
-            setIsLiked(true);
-          } else {
-            setIsLiked(false);
-          }
-        }
-      }
+  useFocusEffect(
+    useCallback(() => {
+      getLikeOrNot();
 
-      setLikeCnt(likeUsersList.length);
-      // setIsLikeChange(false);
-    })();
-  }, [userId, supplementId, isLiked]);
+      // return () => {
+
+      // };
+    }, [userId, supplementId, isLiked])
+  );
 
   return (
     <View style={styles.container}>

@@ -55,7 +55,7 @@ export default function AllSupplementsScreen({ navigation, route }: any) {
                     // }
                     image={pill.image}
                     brand={pill.brand}
-                    pill={pill.name}
+                    pill={pill.supplementName}
                   />
                 ))}
               </ScrollView>
