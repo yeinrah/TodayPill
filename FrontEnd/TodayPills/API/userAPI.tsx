@@ -54,7 +54,7 @@ const changeGender = async (email: string, gender: string) => {
   await api.patch(`/user/user/patchgender/${email}/${gender}`);
 };
 const afterBasicSurvey = async (data) => {
-  await api.put("/user/user/firstSurvey", { data });
+  await api.put("/user/user/firstSurvey", data);
 };
 export {
   HealthScreeningCheck,
