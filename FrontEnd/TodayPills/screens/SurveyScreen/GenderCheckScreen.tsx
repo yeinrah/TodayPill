@@ -3,9 +3,12 @@ import BackgroundScreen from "../BackgroundScreen";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { useState } from "react";
+import { changeGender } from "../../API/userAPI";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const GenderCheckScreen = ({ navigation }: any) => {
   const [selectedItem, setSelectedItem] = useState(0);
+  const [nowGender, setNowGender] = useState("");
   return (
     <BackgroundScreen>
       <View style={styles.container}>
@@ -36,7 +39,10 @@ const GenderCheckScreen = ({ navigation }: any) => {
                     ? styles.iteminnercontainerClicked
                     : styles.iteminnercontainer
                 }
-                onPress={() => setSelectedItem(1)}
+                onPress={() => {
+                  setNowGender("남성");
+                  setSelectedItem(1);
+                }}
               >
                 <View style={styles.itemflex}>
                   <Text style={styles.itemtitle}>남성</Text>
@@ -59,7 +65,10 @@ const GenderCheckScreen = ({ navigation }: any) => {
                     ? styles.iteminnercontainerClicked
                     : styles.iteminnercontainer
                 }
-                onPress={() => setSelectedItem(2)}
+                onPress={() => {
+                  setSelectedItem(2);
+                  setNowGender("여성");
+                }}
               >
                 <View style={styles.itemflex}>
                   <Text style={styles.itemtitle}>여성</Text>
@@ -79,7 +88,15 @@ const GenderCheckScreen = ({ navigation }: any) => {
             <Pressable
               android_ripple={{ color: "#4E736F" }}
               style={styles.buttonInnerContainer}
-              onPress={() => navigation.navigate("HealthScreeningCheckScreen")}
+              onPress={async () => {
+                // console.log(await AsyncStorage.getItem("2s"))
+                changeGender(
+                  await AsyncStorage.getItem("@storage_UserEmail"),
+                  nowGender
+                );
+                await AsyncStorage.setItem("@storage_UserGender", nowGender);
+                navigation.navigate("HealthScreeningCheckScreen");
+              }}
             >
               <Text style={styles.title}>다 음</Text>
             </Pressable>
