@@ -15,7 +15,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { HealthScreeningCheck } from "../../API/userAPI";
 import LoadingSpinner from "../../components/UI/LoadingSpinner";
 const HealthScreeningDetailScreen = ({ navigation }) => {
-  const [name, setName] = useState("김정서");
+  const [name, setName] = useState("");
   const [birth, setBirth] = useState("");
   const [phone, setPhone] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -51,7 +51,9 @@ const HealthScreeningDetailScreen = ({ navigation }) => {
                 <TextInput
                   style={styles.inputText}
                   placeholder="김정서"
-                  value="김정서"
+                  onChangeText={(text) => {
+                    setName(text);
+                  }}
                 />
               </View>
               <View style={styles.textBox}>
