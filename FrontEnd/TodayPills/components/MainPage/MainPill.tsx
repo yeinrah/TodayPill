@@ -17,6 +17,9 @@ const MainPill = () => {
     setMainPills(allSupplements);
     // const userId = await AsyncStorage.getItem("@storage_UserId");
   };
+  // useEffect(() => {
+  //   getAllSupplements();
+  // }, []);
   useFocusEffect(
     useCallback(() => {
       getAllSupplements();
@@ -26,8 +29,6 @@ const MainPill = () => {
       // };
     }, [userId])
   );
-  // useEffect(() => {
-  // }, []);
 
   return (
     <View style={styles.container}>
@@ -43,6 +44,7 @@ const MainPill = () => {
               image={pill.image}
               brand={pill.brand}
               pill={pill.supplementName}
+              onPressDislike={() => console.log("좋아요취소")}
             />
           ))}
         </ScrollView>
