@@ -115,16 +115,16 @@ export default function MyPageScreen({ navigation }: any) {
                 );
                 console.log(token);
                 // kakaoLogout(token);
-                await axios.post(
-                  "https://kapi.kakao.com/v1/user/logout",
-                  {},
-                  {
-                    headers: {
-                      "Content-Type": "application/x-www-form-urlencoded",
-                      Authorization: `Bearer ${token}`,
-                    },
-                  }
-                );
+                // await axios.post(
+                //   "https://kapi.kakao.com/v1/user/logout",
+                //   {},
+                //   {
+                //     headers: {
+                //       "Content-Type": "application/x-www-form-urlencoded",
+                //       Authorization: `Bearer ${token}`,
+                //     },
+                //   }
+                // );
                 await AsyncStorage.removeItem("@storage_ACCESS_TOKEN");
 
                 navigation.replace("Start");
