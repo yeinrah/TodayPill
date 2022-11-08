@@ -12,6 +12,9 @@ import com.todaypill.db.entity.Routine;
 public interface RoutineRepository extends JpaRepository<Routine, Integer>{
 	List<Routine> findAllByUserId(int userId);
 	
+	@Query(value = "select * from `routine` where user_id = ?1 and day like %?2%", nativeQuery = true)
+	List<Routine> findAllByUserIdAndDay(int userId, String day);
+	
 	Routine findOneByRoutineId(int routineId);
 	
 	@Query(value = "delete * from `routine` where routine_id = ?1", nativeQuery = true)

@@ -37,10 +37,10 @@ public class ProbioticsService {
 		List<Probiotics> list = probioticsRepository.findAll();
 		for (Probiotics m : list) {
 			String category = m.getCategory();
-			String supplementName = m.getName();
+			String brand = m.getName().split(",")[0];
+			String supplementName = m.getName().substring(brand.length() + 2);
 			String[] ps = m.getPrice().split(",");
 			Double price = Double.parseDouble(ps[0].concat(ps[1]));
-			String brand = supplementName.split(",")[0];
 			String image = m.getImg();
 			String ingredients = m.getNutrition();
 

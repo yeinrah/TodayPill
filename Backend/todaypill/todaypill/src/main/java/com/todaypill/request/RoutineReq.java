@@ -20,9 +20,9 @@ public class RoutineReq {
 	@NotNull(message = "시간을 입력하세요.")
 	private String time;
 
-	@ApiModelProperty(name = "요일", example = "1")
+	@ApiModelProperty(name = "요일", example = "1, 2, 3, 4, 5")
 	@NotNull(message = "요일을 입력하세요.")
-	private int day;
+	private String day;
 	
 	@ApiModelProperty(name = "개수", example = "2")
 	@NotNull(message = "개수를 입력하세요.")

@@ -18,25 +18,14 @@ public class Calendar {
 		@Column(name = "calendar_id")
 		private int calendarId;
 		
+		@Column(name = "routine_id")
+		private int routineId;
+		
 		@Column(name = "user_id")
 		private int userId;
 		
-		@Column(name = "supplement_id")
-		private int supplementId;
-		
-		@Column(name = "date")
 		// yyyy-MM-dd
 		private String date;
 
-		@Column(name = "time")
-		// hh-mm
-		private String time;
-		
-		@Column(name = "tablets")
-		private int tablets;
-		
-		@Column(name = "day")
-		// 일월화수목금토 - 0123456
-		private int day;
-				
+		private Boolean taken;
 }
