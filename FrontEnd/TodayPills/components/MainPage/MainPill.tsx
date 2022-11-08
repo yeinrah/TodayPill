@@ -2,36 +2,53 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import { useState, useEffect, useCallback } from "react";
 import { View, StyleSheet, Text, ScrollView } from "react-native";
-import { fetchAllSupplements } from "../../API/supplementAPI";
+import {
+  fetchAllSupplements,
+  fetchPopularSupplements,
+} from "../../API/supplementAPI";
 import SimplePillCard from "../Cards/SimplePillCard";
 import PillItem from "../Pills/PillItem";
 
 const MainPill = () => {
   const [userId, setUserId] = useState(0);
   const [mainPills, setMainPills] = useState([]);
+  const [likeChanged, setLikeChanged] = useState(false);
 
-  const getAllSupplements = async () => {
+  const getPopularSupplements = async () => {
     const currentUserId = await AsyncStorage.getItem("@storage_UserId");
     setUserId(parseInt(currentUserId));
-    const allSupplements = await fetchAllSupplements();
-    // console.log(allSupplements);
-    setMainPills(allSupplements.slice(1, 9));
+    const popularSupplements = await fetchPopularSupplements();
+    // console.log(PopularSupplements);
+    setMainPills(popularSupplements);
     // const userId = await AsyncStorage.getItem("@storage_UserId");
   };
+
+  const likeChangeHandler = () => {
+    setLikeChanged((likedOrNot) => !likedOrNot);
+  };
+  // const getAllSupplements = async () => {
+  //   const currentUserId = await AsyncStorage.getItem("@storage_UserId");
+  //   setUserId(parseInt(currentUserId));
+  //   const allSupplements = await fetchAllSupplements();
+  //   // console.log(allSupplements);
+  //   setMainPills(allSupplements.slice(1, 9));
+  //   // const userId = await AsyncStorage.getItem("@storage_UserId");
+  // };
   // useEffect(() => {
   //   getAllSupplements();
   // }, []);
+
   useFocusEffect(
     useCallback(() => {
-      getAllSupplements();
+      getPopularSupplements();
       // return () => {
       // };
-    }, [userId])
+    }, [userId, likeChanged])
   );
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>오늘 많은 이용자들이 본 영양제</Text>
+      <Text style={styles.text}>가장 인기있는 영양제</Text>
 
       <View style={styles.outerContainer}>
         <ScrollView style={styles.cardsContainer} horizontal={true}>
@@ -43,7 +60,8 @@ const MainPill = () => {
               image={pill.image}
               brand={pill.brand}
               pill={pill.supplementName}
-              onPressDislike={() => console.log("좋아요취소")}
+              // onPressDislike={() => console.log("좋아요취소")}
+              onPressChange={likeChangeHandler}
             />
           ))}
         </ScrollView>

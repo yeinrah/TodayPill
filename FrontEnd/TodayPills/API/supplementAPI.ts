@@ -6,6 +6,11 @@ const fetchAllSupplements = async () => {
   // console.log(result.data);
   return result.data;
 };
+const fetchPopularSupplements = async () => {
+  const result = await api.get(`/supplement/findLikeTop10`);
+  // console.log(result.data);
+  return result.data;
+};
 
 // const updateUsername = async (userId: number, name: string) => {
 //   console.warn("업데이트  닉네임!!!!!!!!!!!!!");
@@ -28,4 +33,4 @@ const fetchAllSupplements = async () => {
 //     .then((res) => console.log(res));
 // };
 
-export { fetchAllSupplements };
+export { fetchAllSupplements, fetchPopularSupplements };

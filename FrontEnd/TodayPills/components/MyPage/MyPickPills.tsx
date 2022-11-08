@@ -74,7 +74,7 @@ export default function MyPickPills() {
                 image={pill.image}
                 brand={pill.brand}
                 pill={pill.name}
-                onPressDislike={dislikeHandler}
+                onPressChange={dislikeHandler}
               />
             ))
           )}

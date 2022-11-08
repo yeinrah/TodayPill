@@ -13,7 +13,7 @@ export interface PillProps {
   brand: string;
   pill: string;
   // onPressDislike?: (isDisliked: boolean) => void;
-  onPressDislike: () => void;
+  onPressChange: () => void;
 }
 
 const PillItem = (props: PillProps) => {
@@ -47,7 +47,7 @@ const PillItem = (props: PillProps) => {
   const likeHandler = async () => {
     await like(userId, supplementId);
     setIsLiked(true);
-
+    props.onPressChange();
     // setIsLikeChange(true);
   };
 
@@ -57,10 +57,10 @@ const PillItem = (props: PillProps) => {
     await dislike(userId, supplementId);
     setIsLiked(false);
 
-    props.onPressDislike();
+    props.onPressChange();
     // setIsLikeChange(false);
   };
-  console.log(props.image);
+  // console.log(props.image);
   useFocusEffect(
     useCallback(() => {
       getLikeOrNot();
