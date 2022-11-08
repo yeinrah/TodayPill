@@ -60,7 +60,7 @@ const PillItem = (props: PillProps) => {
     props.onPressDislike();
     // setIsLikeChange(false);
   };
-
+  console.log(props.image);
   useFocusEffect(
     useCallback(() => {
       getLikeOrNot();
@@ -77,11 +77,8 @@ const PillItem = (props: PillProps) => {
         <View style={styles.imagecontainer}>
           <Image source={{ uri: props.image }} style={styles.pillimage} />
         </View>
-        <View>
-          <Pressable
-            onPress={isLiked ? dislikeHandler : likeHandler}
-            style={styles.heartContainer}
-          >
+        <View style={styles.heartContainer}>
+          <Pressable onPress={isLiked ? dislikeHandler : likeHandler}>
             <Image
               source={
                 isLiked
@@ -93,11 +90,13 @@ const PillItem = (props: PillProps) => {
               style={styles.heart}
             />
           </Pressable>
-          <View>
-            <Text>{likeCnt}</Text>
+          <View style={styles.likeCnt}>
+            <Text style={styles.likeText}>{likeCnt}</Text>
           </View>
         </View>
-        {/* <AntDesign
+        {/* <View style={styles.likeContainer}>
+        </View> */}
+        {/* <AntDesign 
           name="hearto"
           size={14}
           color={like ? "#E2C3DC" : "#CCCCCC"}
@@ -107,7 +106,8 @@ const PillItem = (props: PillProps) => {
       </View>
       <View style={styles.textcontainer}>
         <Text style={styles.brandname}>{props.brand}</Text>
-        <Text style={styles.pillname}>{cutLongTitle(props.pill, 8)}</Text>
+        <Text style={styles.pillname}>{cutLongTitle(props.pill, 11)}</Text>
+        {/* <Text style={styles.pillname}>{props.pill}</Text> */}
       </View>
     </View>
   );
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     height: 80,
     position: "relative",
     justifyContent: "center",
-    alignItems: "center",
+    // alignItems: "center",
     backgroundColor: "white",
     elevation: 3,
     borderRadius: 10,
@@ -140,17 +140,37 @@ const styles = StyleSheet.create({
     height: "100%",
     resizeMode: "contain",
   },
+
+  likeContainer: {
+    // flexDirection: "column-reverse",
+    // backgroundColor: "yellow",
+    // justifyContent: "center",
+    // alignItems: "center",
+  },
+  likeCnt: {
+    position: "absolute",
+    bottom: 3,
+    right: -3,
+    // backgroundColor: "blue",
+  },
   // likeicon: {
   //   position: "absolute",
   //   bottom: 2,
   //   right: 2,
   // },
+
+  likeText: {
+    fontSize: 12,
+    color: "#6B6B6B",
+
+    // fontWeight: "bold",
+  },
   heartContainer: {
     width: 30,
     height: 30,
     position: "absolute",
-    bottom: 0,
-    right: -5,
+    bottom: 3,
+    right: 10,
   },
   heart: {
     width: "100%",

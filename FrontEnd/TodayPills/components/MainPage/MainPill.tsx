@@ -14,7 +14,8 @@ const MainPill = () => {
     const currentUserId = await AsyncStorage.getItem("@storage_UserId");
     setUserId(parseInt(currentUserId));
     const allSupplements = await fetchAllSupplements();
-    setMainPills(allSupplements);
+    // console.log(allSupplements);
+    setMainPills(allSupplements.slice(1, 9));
     // const userId = await AsyncStorage.getItem("@storage_UserId");
   };
   // useEffect(() => {
@@ -23,9 +24,7 @@ const MainPill = () => {
   useFocusEffect(
     useCallback(() => {
       getAllSupplements();
-
       // return () => {
-
       // };
     }, [userId])
   );
