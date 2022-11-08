@@ -19,7 +19,7 @@ export default function AllSupplementsScreen({ navigation, route }: any) {
     const currentUserId = await AsyncStorage.getItem("@storage_UserId");
     setUserId(parseInt(currentUserId));
     const allSupplements = await fetchAllSupplements();
-    setAllPills(allSupplements);
+    setAllPills(allSupplements.slice(1, 50));
     // const userId = await AsyncStorage.getItem("@storage_UserId");
   };
 

@@ -52,7 +52,7 @@ const PillItem = (props: PillProps) => {
   };
 
   const dislikeHandler = async () => {
-    console.warn(userId, "번 유저가", supplementId, "번 영양제 좋아요취소");
+    // console.warn(userId, "번 유저가", supplementId, "번 영양제 좋아요취소");
 
     await dislike(userId, supplementId);
     setIsLiked(false);
