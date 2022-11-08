@@ -116,9 +116,9 @@ const SurveyScreen = ({ navigation }: any) => {
               style={styles.buttonInnerContainer}
               onPress={async () => {
                 let uid = "";
-                if (nowStage === 1) {
-                  uid = await AsyncStorage.getItem("@storage_UserId");
-                }
+
+                uid = await AsyncStorage.getItem("@storage_UserId");
+
                 setNowStage(nowStage + 1);
                 let answer: boolean | number;
                 //균형잡힌 식사 관련 질문

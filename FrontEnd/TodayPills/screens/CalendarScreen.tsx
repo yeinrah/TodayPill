@@ -4,24 +4,44 @@ import CalendarView from "../components/Calendar/CalendarView";
 import DayPillSchedule from "../components/Calendar/Routine/DayPillSchedule";
 import Card from "../components/UI/Card";
 import { RootTabScreenProps } from "../types";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import BackgroundScreen from "./BackgroundScreen";
 import LoadingSpinner from "../components/UI/LoadingSpinner";
+import { useFocusEffect } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { getDeviceToken } from "../utils/Notifications";
 
 export default function CalendarScreen({
   navigation,
 }: RootTabScreenProps<"Calendar">) {
-  const [isLoading, setisLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [UserName, setUserName] = useState("");
 
   const today = new Date();
   const todayString = today.toISOString().split("T")[0];
   const [selectedDate, setSelectedDate] = useState(todayString);
+
   const dateChangeHandler = (date: string) => {
     // getDeviceToken();
-    console.log(date, "date 받음");
+    // console.log(date, "date 받음");
     setSelectedDate(date);
   };
+  const getNickname = async () => {
+    const currentUserNickName = await AsyncStorage.getItem(
+      "@storage_UserNickName"
+    );
+    setUserName(currentUserNickName);
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      getNickname();
+      // return () => {
+
+      // };
+    }, [])
+  );
+
   // if (isLoading) {
   //   return <LoadingSpinner />;
   // }
@@ -31,7 +51,7 @@ export default function CalendarScreen({
         <ScrollView style={styles.scrollView}>
           <View style={styles.titleContainer}>
             <Text style={styles.title}>
-              <Text style={styles.name}>정서 </Text>님의 캘린더
+              <Text style={styles.name}>{UserName} </Text>님의 캘린더
             </Text>
             {/* <View
             style={styles.separator}
