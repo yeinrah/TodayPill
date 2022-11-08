@@ -3,6 +3,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { useState, useEffect, useCallback } from "react";
 import { dislike, fetchLikeUsers, like } from "../../API/likeAPI";
 import { useFocusEffect } from "@react-navigation/native";
+import { cutLongTitle } from "../functions/CutLongTitle";
 
 export interface PillProps {
   //   image: ImageSourcePropType;
@@ -12,7 +13,7 @@ export interface PillProps {
   brand: string;
   pill: string;
   // onPressDislike?: (isDisliked: boolean) => void;
-  onPressDislike?: () => void;
+  onPressDislike: () => void;
 }
 
 const PillItem = (props: PillProps) => {
@@ -76,24 +77,25 @@ const PillItem = (props: PillProps) => {
         <View style={styles.imagecontainer}>
           <Image source={{ uri: props.image }} style={styles.pillimage} />
         </View>
-
-        <Pressable
-          onPress={isLiked ? dislikeHandler : likeHandler}
-          style={styles.heartContainer}
-        >
-          <Image
-            source={
-              isLiked
-                ? // ? require("../../assets/images/hearton.png")
-                  require("../../assets/images/heartOn3.png")
-                : // : require("../../assets/images/heartoff.png")
-                  require("../../assets/images/heartOff1.png")
-            }
-            style={styles.heart}
-          />
-        </Pressable>
         <View>
-          <Text>{likeCnt} 개</Text>
+          <Pressable
+            onPress={isLiked ? dislikeHandler : likeHandler}
+            style={styles.heartContainer}
+          >
+            <Image
+              source={
+                isLiked
+                  ? // ? require("../../assets/images/hearton.png")
+                    require("../../assets/images/heartOn3.png")
+                  : // : require("../../assets/images/heartoff.png")
+                    require("../../assets/images/heartOff1.png")
+              }
+              style={styles.heart}
+            />
+          </Pressable>
+          <View>
+            <Text>{likeCnt}</Text>
+          </View>
         </View>
         {/* <AntDesign
           name="hearto"
@@ -105,7 +107,7 @@ const PillItem = (props: PillProps) => {
       </View>
       <View style={styles.textcontainer}>
         <Text style={styles.brandname}>{props.brand}</Text>
-        <Text style={styles.pillname}>{props.pill}</Text>
+        <Text style={styles.pillname}>{cutLongTitle(props.pill, 8)}</Text>
       </View>
     </View>
   );
@@ -113,11 +115,12 @@ const PillItem = (props: PillProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    // marginVertical: 5,
-    marginHorizontal: 5,
-    width: 90,
+    marginVertical: 5,
+    marginHorizontal: 8,
+    width: 100,
   },
   cardcontainer: {
+    flexDirection: "row",
     width: "100%",
     height: 80,
     position: "relative",

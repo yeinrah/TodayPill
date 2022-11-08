@@ -36,7 +36,7 @@ const SearchBar = ({ navigation, word }: any) => {
           size={24}
           style={styles.clearicon}
           onPress={() => {
-            setKeyword();
+            setKeyword("");
             textinput.current.clear();
           }}
         />
