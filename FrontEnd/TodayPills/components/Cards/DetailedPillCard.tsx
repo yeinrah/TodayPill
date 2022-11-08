@@ -1,21 +1,50 @@
 import { StyleSheet, View, Image, Text, Pressable } from "react-native";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Ionicons } from "@expo/vector-icons";
+import { fetchLikeUsers, like, dislike } from "../../API/likeAPI";
+import { useFocusEffect } from "@react-navigation/native";
 
-const DetailedPillCard = (props) => {
-  const [like, setLike] = useState(false);
+const DetailedPillCard = (props: any) => {
+  const [isLiked, setIsLiked] = useState(false);
+  const [likeCnt, setLikeCnt] = useState(0);
+
+  const getLikeOrNot = async () => {
+    const likeUsersList = await fetchLikeUsers(props.supplementId).catch((e)=>console.log("0번 오류", e));
+    if (likeUsersList.length === 0) {
+      setIsLiked(false);
+    } else {
+      likeUsersList.includes(props.userId) ? setIsLiked(true) : setIsLiked(false);
+    }
+    setLikeCnt(likeUsersList.length);
+  };
+
+  const likeHandler = async () => {
+    await like(props.userId, props.supplementId).catch((e)=>console.log("1번 오류", e));
+    setIsLiked(true);
+  };
+
+  const dislikeHandler = async () => {
+    await dislike(props.userId, props.supplementId).catch((e)=>console.log("2번 오류", e));
+    setIsLiked(false);
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      getLikeOrNot();
+    }, [props.userId, props.supplementId, isLiked])
+  );
 
   return (
     <View style={styles.container}>
       <Image
-        source={require("../../assets/images/pills/sample1.png")}
+        source={{uri : props.image}}
         style={styles.image}
       />
       <View style={styles.textcontainer}>
         <Text style={styles.brandname}>{props.brand}</Text>
-        <Text style={styles.pillname}>{props.pill}</Text>
+        <Text style={styles.pillname}>{props.supplementName}</Text>
         {/* 수정하기!!! */}
-        <Text style={styles.feature}>몸에 좋음</Text>
+        <Text style={styles.feature}>{props.note}</Text>
         <Text style={styles.feature}>맛도 좋음</Text>
         <View style={styles.alertcontainer}>
           <Ionicons name="warning" size={10} color="#FFCE31" />
@@ -25,16 +54,21 @@ const DetailedPillCard = (props) => {
           </Text>
         </View>
       </View>
-      <Pressable onPress={() => setLike(!like)} style={styles.heartcontainer}>
-        <Image
-          source={
-            like
-              ? require("../../assets/images/hearton.png")
-              : require("../../assets/images/heartoff.png")
-          }
-          style={styles.heart}
-        />
-      </Pressable>
+      <View style={styles.heartcontainer}>
+        <Pressable onPress={isLiked ? dislikeHandler : likeHandler} style={styles.heartbutton}>
+          <Image
+            source={
+              isLiked
+                ? require("../../assets/images/heartOn3.png")
+                : require("../../assets/images/heartOff1.png")
+            }
+            style={styles.heart}
+          />
+        </Pressable>
+        <Text>
+          {likeCnt}
+        </Text>
+      </View>
     </View>
   );
 };
@@ -59,6 +93,7 @@ const styles = StyleSheet.create({
   },
   textcontainer: {
     marginTop: 5,
+    paddingRight: 50,
   },
   brandname: {
     fontSize: 7,
@@ -95,6 +130,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
     right: 0,
+    width: 50,
+    height: 70,
+    alignItems: "center",
+  },
+  heartbutton: {
     width: 50,
     height: 50,
   },
