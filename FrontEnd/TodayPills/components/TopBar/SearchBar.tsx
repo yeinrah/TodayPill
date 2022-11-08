@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     position: "relative",
-    marginTop: 15,
+    marginVertical: 15,
   },
   textinput: {
     height: 36,
