@@ -99,7 +99,9 @@ export default function MyPageScreen({ navigation }: any) {
               fontSize={20}
               titleColor={"#fff"}
               buttonWidth={"90%"}
-              onPress={() => console.log("추천 다시 받기 btn 클릭")}
+              onPress={() => {
+                navigation.replace("HealthScreeningCheckScreen");
+              }}
             />
             <Pressable
               onPress={async () => {
