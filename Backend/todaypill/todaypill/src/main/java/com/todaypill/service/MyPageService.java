@@ -70,8 +70,14 @@ public class MyPageService {
 	}
 	
 	@Transactional
-	public List<Calendar> getCalendarList(int userId, String month) {
+	public List<Calendar> getCalendarMonthList(int userId, String month) {
 		List<Calendar> list = calendarRepository.findAllByMonth(userId, month);
+		return list;
+	}
+	
+	@Transactional
+	public List<Calendar> getCalendarDayList(int userId, String date) {
+		List<Calendar> list = calendarRepository.findAllByMonth(userId, date);
 		return list;
 	}
 	
