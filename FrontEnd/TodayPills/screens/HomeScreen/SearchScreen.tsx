@@ -48,11 +48,11 @@ export default function SearchScreen({ navigation, route }: any) {
             {searchResults.map((each, idx) => (
               <DetailedPillCard
                 key={each.supplementId}
-                pillId={each.supplementId}
+                supplementId={each.supplementId}
                 userId={userId}
                 image={each.image}
                 brand={each.brand}
-                pill={each.name}
+                supplementName={each.supplementName}
                 // onPressDislike={dislikeHandler}
               />
             ))}
