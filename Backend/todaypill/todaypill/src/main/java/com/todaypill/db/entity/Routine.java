@@ -35,8 +35,8 @@ public class Routine {
 		private String time;
 		
 		@Column(name = "day")
-		// 일월화수목금토 - 0123456
-		private int day;
+		// 전부,월화수목금토일 - 0,1234567
+		private String day;
 
 		@Column(name = "tablets")
 		private int tablets;
