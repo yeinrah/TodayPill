@@ -76,6 +76,12 @@ const PillItem = (props: PillProps) => {
       <View style={styles.cardcontainer}>
         <View style={styles.imagecontainer}>
           <Image source={{ uri: props.image }} style={styles.pillimage} />
+          {/* <Image
+            source={{
+              uri: "https://cloudinary.images-iherb.com/image/upload/images/jrw/jrw03042/v/109.jpg",
+            }}
+            style={styles.pillimage}
+          /> */}
         </View>
         <View style={styles.heartContainer}>
           <Pressable onPress={isLiked ? dislikeHandler : likeHandler}>
@@ -125,7 +131,7 @@ const styles = StyleSheet.create({
     height: 80,
     position: "relative",
     justifyContent: "center",
-    // alignItems: "center",
+    alignItems: "center",
     backgroundColor: "white",
     elevation: 3,
     borderRadius: 10,
@@ -160,14 +166,14 @@ const styles = StyleSheet.create({
   // },
 
   likeText: {
-    fontSize: 12,
+    fontSize: 10,
     color: "#6B6B6B",
 
     // fontWeight: "bold",
   },
   heartContainer: {
-    width: 30,
-    height: 30,
+    width: 25,
+    height: 25,
     position: "absolute",
     bottom: 3,
     right: 10,

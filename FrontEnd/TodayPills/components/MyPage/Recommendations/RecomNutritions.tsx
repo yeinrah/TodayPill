@@ -1,5 +1,7 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import {
   StyleSheet,
   ImageBackground,
@@ -9,14 +11,31 @@ import {
   ScrollView,
   Image,
 } from "react-native";
+import { getUserInfoByEmail } from "../../../API/userAPI";
 import PillItem, { PillProps } from "../../Pills/PillItem";
 import RecomItem from "./RecomItem";
 
-const dummyNutritions = ["비타민 D", "오메가 3", "유산균"];
-
 export default function RecomNutritions() {
+  const [myNutritions, setMyNutritions] = useState([]);
+  const [userId, setUserId] = useState(0);
+  const getRecomNut = async () => {
+    // const currentUserId = await AsyncStorage.getItem("@storage_UserId");
+    // setUserId(parseInt(currentUserId));
+    const myEmail = await AsyncStorage.getItem("@storage_UserEmail");
+    const userInfo = await getUserInfoByEmail(myEmail);
+    setMyNutritions(userInfo.recommendNutrients);
+    // setMyNutritions(myNutrients);
+  };
   // const [pickedPills, setPickedPills] = useState([]);
+  useFocusEffect(
+    useCallback(() => {
+      getRecomNut();
 
+      // return () => {
+
+      // };
+    }, [userId])
+  );
   return (
     <View style={styles.likeContainer}>
       <View style={styles.myPickContainer}>
@@ -31,7 +50,7 @@ export default function RecomNutritions() {
 
       <View>
         <View style={styles.cardscontainer}>
-          {dummyNutritions.map((nut, idx) => (
+          {myNutritions.map((nut, idx) => (
             <RecomItem nutName={nut} key={idx} id={idx} />
 
             // <View style={styles.outerContainer}>
