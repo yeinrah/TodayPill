@@ -34,6 +34,9 @@ import com.todaypill.request.GetHealthReq;
 import com.todaypill.request.InsertLikeReq;
 import com.todaypill.request.UpdateNameReq;
 import com.todaypill.request.UserFirstSurveyReq;
+import com.todaypill.request.UserSecondSurveyReq;
+import com.todaypill.response.SupplementAndScoreRes;
+import com.todaypill.service.RecommendService;
 import com.todaypill.service.SupplementService;
 import com.todaypill.service.UserService;
 
@@ -46,12 +49,16 @@ public class UserController {
 	Codef codef;
 	UserService userService;
 	SupplementService supplementService;
+	RecommendService recommendService;
+	
 	@Autowired
-	public UserController(Codef codef, UserService userService, SupplementService supplementService) {
+	public UserController(Codef codef, UserService userService, SupplementService supplementService,
+			RecommendService recommendService) {
 		super();
 		this.codef = codef;
 		this.userService = userService;
 		this.supplementService = supplementService;
+		this.recommendService = recommendService;
 	}
 	
 	
@@ -131,6 +138,11 @@ public class UserController {
         
 
     }
+
+
+
+
+
 
 
 
@@ -233,6 +245,13 @@ public class UserController {
 		userService.updateRecommend(user.getEmail(), arr[0], arr[1], arr[2]);
 		
 		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+	@PostMapping("/user/secondSurvey")
+	@ApiOperation(value = "영양제 설문조사", notes = "2차 설문조사를 진행한다.")
+	public ResponseEntity<?> secondSurvey(@RequestBody UserSecondSurveyReq userSecondSurveyReq) throws Exception {
+		System.out.println(userSecondSurveyReq.getEmail());
+			List<SupplementAndScoreRes> list = recommendService.recommendSupplement(userSecondSurveyReq);
+		return new ResponseEntity<List<SupplementAndScoreRes>>(list, HttpStatus.OK);
 	}
 	
 	//성별 바꿔주자
