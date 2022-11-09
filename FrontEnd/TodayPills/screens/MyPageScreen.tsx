@@ -23,30 +23,8 @@ import CustomBtn from "../components/UI/CustomBtn";
 import CustomModal from "../components/UI/CustomModal";
 import { accent, primary, secondary } from "../constants/Colors";
 
-// import EditScreenInfo from "../components/EditScreenInfo";
-// import { Text, View } from "../components/Themed";
 import { IUserInfo, RootTabScreenProps } from "../types";
 import BackgroundScreen from "./BackgroundScreen";
-
-// <Pressable
-// onPress={() => {
-//   console.log("이름 수정하기!");
-//   // setTimesPressed((current) => current + 1);
-// }}
-// style={styles.modifyContainer}
-// >
-// {({ pressed }) => (
-//   <Text
-//     style={[
-//       styles.modify,
-//       { color: pressed ? "black" : "#B7B7B7" },
-//     ]}
-//   >
-//     수정
-//     {/* {pressed ? 'Pressed!' : 'Press Me'} */}
-//   </Text>
-// )}
-// </Pressable>
 
 export default function MyPageScreen({ navigation }: any) {
   // RootTabScreenProps<"MyPage">
@@ -91,7 +69,8 @@ export default function MyPageScreen({ navigation }: any) {
 
             <View style={styles.ageContainer}>
               <Text style={styles.age}>{myInfo.age}대</Text>
-              <Text style={styles.age}>남성</Text>
+              {/* gender 받아오는거!!! */}
+              <Text style={styles.age}>{myInfo.gender}</Text>
             </View>
           </View>
           <View style={styles.nutrBtnContainer}>
@@ -120,7 +99,9 @@ export default function MyPageScreen({ navigation }: any) {
               fontSize={20}
               titleColor={"#fff"}
               buttonWidth={"90%"}
-              onPress={() => console.log("추천 다시 받기 btn 클릭")}
+              onPress={() => {
+                navigation.replace("HealthScreeningCheckScreen");
+              }}
             />
             <Pressable
               onPress={async () => {
@@ -136,16 +117,16 @@ export default function MyPageScreen({ navigation }: any) {
                 );
                 console.log(token);
                 // kakaoLogout(token);
-                await axios.post(
-                  "https://kapi.kakao.com/v1/user/logout",
-                  {},
-                  {
-                    headers: {
-                      "Content-Type": "application/x-www-form-urlencoded",
-                      Authorization: `Bearer ${token}`,
-                    },
-                  }
-                );
+                // await axios.post(
+                //   "https://kapi.kakao.com/v1/user/logout",
+                //   {},
+                //   {
+                //     headers: {
+                //       "Content-Type": "application/x-www-form-urlencoded",
+                //       Authorization: `Bearer ${token}`,
+                //     },
+                //   }
+                // );
                 await AsyncStorage.removeItem("@storage_ACCESS_TOKEN");
 
                 navigation.replace("Start");

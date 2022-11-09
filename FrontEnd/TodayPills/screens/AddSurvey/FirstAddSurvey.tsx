@@ -6,81 +6,24 @@ import { useEffect, useState } from "react";
 import AnswerSurvey from "../../components/Cards/AnswerSurvey";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const SurveyScreen = ({ navigation }: any) => {
+const FirstAddSurvey = ({ navigation }: any) => {
   const [selectedItem, setSelectedItem] = useState(1);
   const [nowStage, setNowStage] = useState(0);
   const [answerSheet, setAnswerSheet] = useState<any>({
-    smoking: false,
-    pregnant: false,
-    allergy: "",
-    heartburn: false,
-    diarrhea: false,
-    constipation: false,
-    kidney_disease: false,
-    outdoor_activity: 0,
-    balanced_meal: false,
-    lack: "",
     is_ok_big_pill: false,
     preferred_brand: "",
-    problem: "",
   });
   const surveyData = [
-    [
-      "smoking",
-      "임신 여부를 알려주세요",
-      "임산부에 맞는 영양성분이 추천됩니다.",
-      ["YES", "NO"],
-    ],
-    [
-      "pregnant",
-      "흡연 여부를 알려주세요",
-      "흡연할 경우 조심해야 할 성분이 있어요",
-      ["YES", "NO"],
-    ],
-    ["allergy", "알러지가 있나요?", "입력해주세요."],
-    ["heartburn", "속쓰림 증상이 있나요?", "알려주세요", ["YES.", "NO."]],
-    ["diarrhea", "설사를 하나요?", "알려주세요", ["YES.", "NO."]],
-    ["constipation", "변비가 있나요?", "알려주세요", ["YES.", "NO."]],
-    ["kidney_disease", "신장질환이 있나요?", "알려주세요", ["YES.", "NO."]],
-    [
-      "outdoor_activity",
-      "야외활동을 얼마나 하세요?",
-      "알려주세요",
-      ["일주일에 4번이상", "일주일에 3번", "일주일에 2번", "일주일에 1번"],
-    ],
-    [
-      "balanced_meal",
-      "평소 균형잡힌 식사를 하시나요?",
-      "알려주세요",
-      ["YES", "NO"],
-      // ["채소", "생선", "육류", "과일"],
-    ],
-    [
-      "lack",
-      "평소 먹는 음식을 알려주세요",
-      "복수 선택 가능합니다.",
-      ["채소", "생선", "육류", "과일"],
-    ],
     ["is_ok_big_pill", "알약이 커도 괜찮을까요?", "알려주세요", ["YES.", "NO"]],
     ["preferred_brand", "선호하는 영양제 브랜드가 있나요?", "알려주세요"],
-    ["problem", "해결하고자 하는 문제가 있나요?", "자유롭게 알려주세요"],
     [],
   ];
-  const checkGender = async () => {
-    let nowGender = await AsyncStorage.getItem("@storage_UserGender");
-    if (nowGender === "남성") {
-      setNowStage(1);
-    }
-  };
-  useEffect(() => {
-    checkGender();
-  }, []);
   useEffect(() => {
     if (nowStage === surveyData.length - 1) {
       console.log(answerSheet);
       navigation.navigate("SurveyLoadingScreen", { answerSheet: answerSheet });
     }
-  }, [nowStage]);
+  }, [answerSheet]);
   return (
     <BackgroundScreen>
       <View style={styles.container}>
@@ -115,10 +58,7 @@ const SurveyScreen = ({ navigation }: any) => {
               android_ripple={{ color: "#4E736F" }}
               style={styles.buttonInnerContainer}
               onPress={async () => {
-                let uid = "";
-                // if (nowStage === 1) {
-                uid = await AsyncStorage.getItem("@storage_UserId");
-                // }
+                let uid = await AsyncStorage.getItem("@storage_UserId");
                 setNowStage(nowStage + 1);
                 let answer: boolean | number;
                 //균형잡힌 식사 관련 질문
@@ -235,5 +175,4 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
 });
-
-export default SurveyScreen;
+export default FirstAddSurvey;

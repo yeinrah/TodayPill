@@ -20,6 +20,8 @@ public interface SupplementRepository extends JpaRepository<Supplement, Integer>
 	@Query(value = "select * from supplement", nativeQuery = true)
 	List<Supplement> findAll();
 	
+	@Query(value = "select * from supplement order by `like` desc limit 10", nativeQuery = true)
+	List<Supplement> findLikeTop10();
 //	@Query(value = "select * from supplement where supplement_id=?1", nativeQuery = true)
 //	Supplement findOneBySupplementId(int supplementId);
 }

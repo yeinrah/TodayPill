@@ -54,8 +54,14 @@ const AnswerSurvey = ({
                         : styles.iteminnercontainer
                     }
                     onPress={() => {
-                      setMultiSelected(multiSelceted + item);
-                      setSelectedItem(multiSelceted + item);
+                      console.log(multiSelceted);
+                      if (multiSelceted.indexOf(item) >= 0) {
+                        setMultiSelected(multiSelceted.replace(item, ""));
+                        setSelectedItem(multiSelceted.replace(item, ""));
+                      } else {
+                        setMultiSelected(multiSelceted + item);
+                        setSelectedItem(multiSelceted + item);
+                      }
                     }}
                   >
                     <View style={styles.itemflex}>
