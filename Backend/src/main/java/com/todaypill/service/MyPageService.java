@@ -97,9 +97,8 @@ public class MyPageService {
 	}
 
 	@Transactional
-	public void deleteRoutine(int routineId) {
-		Routine routine = routineRepository.findOneByRoutineId(routineId);
-		routineRepository.delete(routine);
+	public void updateRoutineVisibility(int routineId, String deletedSince) {
+		routineRepository.updateRoutineVisibility(routineId, deletedSince);
 	}
 	
 	@Transactional

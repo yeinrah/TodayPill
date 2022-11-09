@@ -35,9 +35,12 @@ public class Routine {
 		private String time;
 		
 		@Column(name = "day")
-		// 전부,월화수목금토일 - 0,1234567
+		// 월화수목금토일 - 1234567
 		private String day;
 
 		@Column(name = "tablets")
 		private int tablets;
+		
+		@Column(name = "deleted_since")
+		private String deletedSince;
 }
