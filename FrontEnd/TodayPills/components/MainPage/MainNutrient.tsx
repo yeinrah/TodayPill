@@ -12,7 +12,7 @@ const MainNutrient = ({ navigation }: any) => {
     {
       nutId: 6,
       image: require("../../assets/images/nutrients/sample2.png"),
-      nutrient: "오메가-3",
+      nutrient: "오메가3",
     },
     {
       nutId: 10,

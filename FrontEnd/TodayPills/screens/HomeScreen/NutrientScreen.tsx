@@ -2,9 +2,29 @@ import { StyleSheet, Text, View, Pressable, ScrollView } from "react-native";
 import DetailedPillCard from "../../components/Cards/DetailedPillCard";
 import Card from "../../components/UI/Card";
 import BackgroundScreen from "../BackgroundScreen";
+import { useCallback, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { fetchAllSupplements } from "../../API/supplementAPI";
+import { useFocusEffect } from "@react-navigation/native";
 
 const NutrientScreen = ({ navigation, route }: any) => {
   const { nutId, nutrient } = route.params;
+  const [userId, setUserId] = useState(0);
+  const [pills, setPills] = useState([]);
+
+  const getAllSupplements = async () => {
+    const currentUserId = await AsyncStorage.getItem("@storage_UserId");
+    setUserId(parseInt(currentUserId));
+    const allSupplements = await fetchAllSupplements();
+    const supplements = allSupplements.filter(i => i.category === nutrient);
+    setPills(supplements);
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      getAllSupplements();
+    }, [userId])
+  );
 
   return (
     <BackgroundScreen>
@@ -21,10 +41,18 @@ const NutrientScreen = ({ navigation, route }: any) => {
             </Pressable>
           </View>
           <ScrollView>
-            <DetailedPillCard />
-            <DetailedPillCard />
-            <DetailedPillCard />
-            <DetailedPillCard />
+            {pills.map((pill, idx) => (
+              <DetailedPillCard
+                key={idx}
+                userId={userId}
+                supplementId={pill.supplementId}
+                image={pill.image}
+                brand={pill.brand}
+                supplementName={pill.supplementName}
+                like={pill.like}
+                note={pill.note}
+              />
+            ))}
             <View style={styles.height} />
           </ScrollView>
         </View>
