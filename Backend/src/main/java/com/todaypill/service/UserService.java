@@ -77,7 +77,6 @@ public class UserService {
 
 	@Transactional
 	public void deleteLike(int userId, int supplementId) throws Exception {
-		// 기존 영양제의 찜 값 가져오기
 		Supplement supplement = supplementRepository.findOneBySupplementId(supplementId);
 		int likeNum = supplement.getLike();
 		// 영양제의 찜 1 감소
