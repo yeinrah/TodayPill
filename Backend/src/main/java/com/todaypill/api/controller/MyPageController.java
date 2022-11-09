@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -65,9 +65,9 @@ public class MyPageController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@DeleteMapping("/{userId}/mysupplement/{routineId}")
-	@ApiOperation(value = "유저가 복용하는 영양제 데이터를 삭제한다.", notes = "routine id 필요")
-	public ResponseEntity<?> deleteSupplement(@PathVariable int routineId, @RequestBody String deletedSince) throws Exception {
+	@PatchMapping("/{userId}/mysupplement/{routineId}")
+	@ApiOperation(value = "유저가 복용하는 영양제 데이터를 삭제(deleteSince 날짜 추가)한다.", notes = "routine id, 삭제일자 String 필요")
+	public ResponseEntity<?> updateRoutineVisibility(@PathVariable int routineId, @RequestBody String deletedSince) throws Exception {
 		myPageService.updateRoutineVisibility(routineId, deletedSince);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
