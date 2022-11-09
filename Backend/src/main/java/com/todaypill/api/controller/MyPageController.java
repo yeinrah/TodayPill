@@ -67,8 +67,8 @@ public class MyPageController {
 
 	@DeleteMapping("/{userId}/mysupplement/{routineId}")
 	@ApiOperation(value = "유저가 복용하는 영양제 데이터를 삭제한다.", notes = "routine id 필요")
-	public ResponseEntity<?> deleteSupplement(@PathVariable int routineId) throws Exception {
-		myPageService.deleteRoutine(routineId);
+	public ResponseEntity<?> deleteSupplement(@PathVariable int routineId, @RequestBody String deletedSince) throws Exception {
+		myPageService.updateRoutineVisibility(routineId, deletedSince);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 

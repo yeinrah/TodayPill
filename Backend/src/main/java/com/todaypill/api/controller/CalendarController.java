@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.todaypill.db.entity.Calendar;
 import com.todaypill.db.entity.Routine;
+import com.todaypill.request.CalendarReq;
 import com.todaypill.service.MyPageService;
 
 import io.swagger.annotations.ApiOperation;
@@ -48,17 +49,19 @@ public class CalendarController {
 		List<Calendar> calendarList = myPageService.getCalendarDayList(userId, date);
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("routineList", routineList);
-		map.put("calendarList", calendarList);		
+		map.put("calendarList", calendarList);
 		return new ResponseEntity<>(map, HttpStatus.OK);
 	}
-	
+
 	@PatchMapping("/{userId}/{date}")
 	@ApiOperation(value = "복용 데이터를 기록한다.", notes = "user id, date(String) 필요")
-	public ResponseEntity<?> insertCalendar(@PathVariable int userId, @RequestBody Calendar calendar) {
+	public ResponseEntity<?> insertCalendar(@RequestBody CalendarReq calendarReq) {
+		Calendar calendar = Calendar.builder().routineId(calendarReq.getRoutineId()).userId(calendarReq.getUserId())
+				.date(calendarReq.getDate()).taken(true).build();
 		myPageService.insertCalendar(calendar);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/{calendarId}")
 	@ApiOperation(value = "복용 데이터를 삭제한다.", notes = "user id, date(String) 필요")
 	public ResponseEntity<?> deleteCalendar(@PathVariable int calendarId) {

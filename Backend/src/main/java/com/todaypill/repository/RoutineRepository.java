@@ -3,6 +3,7 @@ package com.todaypill.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +18,7 @@ public interface RoutineRepository extends JpaRepository<Routine, Integer>{
 	
 	Routine findOneByRoutineId(int routineId);
 	
-	@Query(value = "delete * from `routine` where routine_id = ?1", nativeQuery = true)
-	void deleteRoutine(int routineId);
+	@Modifying
+	@Query(value = "update `routine` set deleted_since = ?2 where routine_id = ?1", nativeQuery = true)
+	void updateRoutineVisibility(int routineId, String deletedSince);
 }
