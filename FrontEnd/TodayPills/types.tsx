@@ -47,6 +47,7 @@ export type RootStackParamList = {
   GenderCheckScreen: undefined;
   FirstAddSurvey: undefined;
   AllSupplementsScreen: undefined;
+  SecondAddSurvey: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =

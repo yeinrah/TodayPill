@@ -17,9 +17,9 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const PersonalRecommendationScreen = ({ navigation }: any) => {
   const [myNutrient, setMyNutrient] = useState([
-    "비타민c",
-    "비타민a",
-    "비타민d",
+    "비타민 C",
+    "비타민 A",
+    "비타민 D",
   ]);
   // const [nutrientImage, setNutrientImage] = useState<string[]>(NutrientImage);
   const [name, setName] = useState("");
