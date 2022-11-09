@@ -70,14 +70,14 @@ public class MyPageService {
 	}
 	
 	@Transactional
-	public List<Calendar> getCalendarMonthList(int userId, String month) {
+	public List<Calendar> getCalendarMonthList(int userId, int month) {
 		List<Calendar> list = calendarRepository.findAllByMonth(userId, month);
 		return list;
 	}
 	
 	@Transactional
 	public List<Calendar> getCalendarDayList(int userId, String date) {
-		List<Calendar> list = calendarRepository.findAllByMonth(userId, date);
+		List<Calendar> list = calendarRepository.findAllByDate(userId, date);
 		return list;
 	}
 	
@@ -87,8 +87,8 @@ public class MyPageService {
 	}
 
 	@Transactional
-	public void deleteCalendar(int routineId, String date) {
-		calendarRepository.deleteCalendar(routineId, date);
+	public void deleteCalendar(int calendarId) {
+		calendarRepository.deleteCalendar(calendarId);
 	}
 	
 	@Transactional
