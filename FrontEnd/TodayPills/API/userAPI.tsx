@@ -65,6 +65,18 @@ const afterScreeningCheck = async (data) => {
     userId: Number(data.userId),
   });
 };
+const afterSecondSurvey = async (data) => {
+  const res = await api.post("/user/user/secondSurvey", {
+    additionalEfficacy: data.additionalEfficacy,
+    category: data.category,
+    email: data.email,
+    formula: data.formula,
+    lowerPriceLimit: data.lowerPriceLimit,
+    upperPriceLimit: data.upperPriceLimit,
+    sustainedRelease: data.sustainedRelease,
+  });
+  return res;
+};
 export {
   HealthScreeningCheck,
   getUserInfoByEmail,
@@ -73,4 +85,5 @@ export {
   changeGender,
   afterBasicSurvey,
   afterScreeningCheck,
+  afterSecondSurvey,
 };

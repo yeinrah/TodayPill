@@ -9,37 +9,43 @@ const DetailedPillCard = (props: any) => {
   const [likeCnt, setLikeCnt] = useState(0);
 
   const getLikeOrNot = async () => {
-    const likeUsersList = await fetchLikeUsers(props.supplementId).catch((e)=>console.log("0번 오류", e));
+    const likeUsersList = await fetchLikeUsers(props.supplementId).catch((e) =>
+      console.log("0번 오류", e)
+    );
     if (likeUsersList.length === 0) {
       setIsLiked(false);
     } else {
-      likeUsersList.includes(props.userId) ? setIsLiked(true) : setIsLiked(false);
+      likeUsersList.includes(props.userId)
+        ? setIsLiked(true)
+        : setIsLiked(false);
     }
     setLikeCnt(likeUsersList.length);
   };
 
   const likeHandler = async () => {
-    await like(props.userId, props.supplementId).catch((e)=>console.log("1번 오류", e));
+    await like(props.userId, props.supplementId).catch((e) =>
+      console.log("1번 오류", e)
+    );
     setIsLiked(true);
   };
 
   const dislikeHandler = async () => {
-    await dislike(props.userId, props.supplementId).catch((e)=>console.log("2번 오류", e));
+    await dislike(props.userId, props.supplementId).catch((e) =>
+      console.log("2번 오류", e)
+    );
     setIsLiked(false);
   };
 
   useFocusEffect(
     useCallback(() => {
       getLikeOrNot();
+      console.log(props);
     }, [props.userId, props.supplementId, isLiked])
   );
 
   return (
     <View style={styles.container}>
-      <Image
-        source={{uri : props.image}}
-        style={styles.image}
-      />
+      <Image source={{ uri: props.image }} style={styles.image} />
       <View style={styles.textcontainer}>
         <Text style={styles.brandname}>{props.brand}</Text>
         <Text style={styles.pillname}>{props.supplementName}</Text>
@@ -55,7 +61,10 @@ const DetailedPillCard = (props: any) => {
         </View>
       </View>
       <View style={styles.heartcontainer}>
-        <Pressable onPress={isLiked ? dislikeHandler : likeHandler} style={styles.heartbutton}>
+        <Pressable
+          onPress={isLiked ? dislikeHandler : likeHandler}
+          style={styles.heartbutton}
+        >
           <Image
             source={
               isLiked
@@ -65,9 +74,7 @@ const DetailedPillCard = (props: any) => {
             style={styles.heart}
           />
         </Pressable>
-        <Text>
-          {likeCnt}
-        </Text>
+        <Text>{likeCnt}</Text>
       </View>
     </View>
   );

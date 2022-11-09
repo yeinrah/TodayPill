@@ -31,8 +31,6 @@ const PersonalRecommendationScreen = ({ navigation }: any) => {
   const getMyList = async () => {
     const email = await AsyncStorage.getItem("@storage_UserEmail");
     const userInfo = await getUserInfoByEmail(email);
-    console.log(email, "email");
-    console.log(userInfo, "userInfo");
     setMyNutrient([
       userInfo.recommendNutrients[0],
       userInfo.recommendNutrients[1],

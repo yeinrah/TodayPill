@@ -1,17 +1,28 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { afterSecondSurvey } from "../../API/userAPI";
 import BackgroundScreen from "../BackgroundScreen";
 
 const SurveyDeepLoadingScreen = ({ navigation, route }: any) => {
   const [nowMyNutrient, setNowMyNutrient] = useState("");
+  const [itemList, setItemList] = useState([]);
   const getMyNowNutrient = async () => {
     const nutrient = await AsyncStorage.getItem("@storage_nowNutrient");
     setNowMyNutrient(nutrient);
   };
+  const getResult = async () => {
+    console.log(route.params.answerSheet, "hah");
+    let arr = await afterSecondSurvey(route.params.answerSheet);
+    setItemList([...itemList, arr]);
+  };
   useEffect(() => {
     getMyNowNutrient();
     console.log(route.params.answerSheet);
+    // afterSecondSurvey(route.params.answerSheet).then((res) =>
+    //   console.log(res, "haha")
+    // );
+    getResult();
   }, []);
   return (
     <BackgroundScreen>
@@ -31,7 +42,11 @@ const SurveyDeepLoadingScreen = ({ navigation, route }: any) => {
           <Pressable
             android_ripple={{ color: "#4E736F" }}
             style={styles.buttonInnerContainer}
-            onPress={() => navigation.navigate("PillResultScreen")}
+            onPress={() =>
+              navigation.navigate("PillResultScreen", {
+                answerSheet: itemList,
+              })
+            }
           >
             <Text style={styles.title}>다음</Text>
           </Pressable>
