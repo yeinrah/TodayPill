@@ -56,7 +56,8 @@ public class RecommendService {
                 double score = 0;
                 Integer labScore = 0;
                 String additionalEfficacy = "";
-                if (userSecondSurveyReq.getLowerPriceLimit() < supplement.getPrice() && userSecondSurveyReq.getUpperPriceLimit() > supplement.getPrice()) {
+                if (userSecondSurveyReq.getLowerPriceLimit() < supplement.getPrice() && userSecondSurveyReq.getUpperPriceLimit() > supplement.getPrice() 
+                	&& supplement.getCategory().contains(userSecondSurveyReq.getCategory())) {
                 	
                     score = (commonQuestion.getPreferred_brand().equals(supplement.getBrand()) ? 3 : 0)
                             + supplement.getBioavailability()
