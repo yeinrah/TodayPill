@@ -249,7 +249,6 @@ public class UserController {
 	@PostMapping("/user/secondSurvey")
 	@ApiOperation(value = "영양제 설문조사", notes = "2차 설문조사를 진행한다.")
 	public ResponseEntity<?> secondSurvey(@RequestBody UserSecondSurveyReq userSecondSurveyReq) throws Exception {
-		System.out.println(userSecondSurveyReq.getEmail());
 			List<SupplementAndScoreRes> list = recommendService.recommendSupplement(userSecondSurveyReq);
 		return new ResponseEntity<List<SupplementAndScoreRes>>(list, HttpStatus.OK);
 	}

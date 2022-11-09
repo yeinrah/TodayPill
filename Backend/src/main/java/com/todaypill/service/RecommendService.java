@@ -66,9 +66,10 @@ public class RecommendService {
                             + (supplement.getConsumerLabScore() == null ? labScore : supplement.getConsumerLabScore())
                             + (supplement.getAdditionalEfficacy() != null && supplement.getAdditionalEfficacy().contains(userSecondSurveyReq.getAdditionalEfficacy()) ? 3 : 0)
                             + (commonQuestion.is_ok_big_pill() && supplement.getRequiredCount().contains("1") ? 3 : -3)
-    //                        + (!userInfoRes.getCommonQuestion().isOkBigPill() ? supplement.getPillSize() : 0)
+//                            + (commonQuestion.is_ok_big_pill() ? supplement.getPillSize() : 0)
                             + (userSecondSurveyReq.getFormula().equals(supplement.getFormula()) ? 3 : 0)
-                            + (userSecondSurveyReq.getSustainedRelease() && supplement.getSustainedRelease() ? 3 : 0);
+                            + (userSecondSurveyReq.getSustainedRelease() && supplement.getSustainedRelease() ? 3 : 0)
+                    		+ (supplement.getBrand().contains(commonQuestion.getPreferred_brand()) ? 10 : 0);
                     //}
                 }
                 supplementAndScoreRes.add(new SupplementAndScoreRes(supplement.getSupplementId(),supplement.getCategory()
@@ -89,11 +90,9 @@ public class RecommendService {
             	int a =o2.getScore().intValue();
             	int b = o1.getScore().intValue();
             return a-b;
-//            	return 1;
             });
-            //[1,1,1,1,1,1,1,1,1,1,1,1,1,1,,1,]
             List<SupplementAndScoreRes> list = new ArrayList();
-            for(int i=0; i<10;i++) {
+            for(int i=0; i<7;i++) {
             	list.add(supplementAndScoreRes.get(i));
             }
             return list;
