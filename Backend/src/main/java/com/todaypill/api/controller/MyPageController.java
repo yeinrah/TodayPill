@@ -60,23 +60,27 @@ public class MyPageController {
 	public ResponseEntity<?> insertSupplement(@PathVariable int userId, @RequestBody RoutineReq routineReq)
 			throws Exception {
 		Routine routine = Routine.builder().userId(userId).supplementId(routineReq.getSupplementId())
-				.time(routineReq.getTime()).day(routineReq.getDay()).tablets(routineReq.getTablets()).build();
+				.time(routineReq.getTime()).day(routineReq.getDay()).tablets(routineReq.getTablets())
+				.pushAlarm(routineReq.getPushAlarm()).build();
 		myPageService.insertRoutine(routine);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@PatchMapping("/{userId}/mysupplement/{routineId}")
 	@ApiOperation(value = "유저가 복용하는 영양제 데이터를 삭제(deleteSince 날짜 추가)한다.", notes = "routine id, 삭제일자 String 필요")
-	public ResponseEntity<?> updateRoutineVisibility(@PathVariable int routineId, @RequestBody String deletedSince) throws Exception {
+	public ResponseEntity<?> updateRoutineVisibility(@PathVariable int routineId, @RequestBody String deletedSince)
+			throws Exception {
 		myPageService.updateRoutineVisibility(routineId, deletedSince);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@PutMapping("/{userId}/mysupplement/{routineId}")
 	@ApiOperation(value = "유저가 복용하는 영양제 데이터를 수정한다.", notes = "routine id 필요")
-	public ResponseEntity<?> updateSupplement(@PathVariable int userId, @PathVariable int routineId, @RequestBody RoutineReq routineReq) throws Exception {
+	public ResponseEntity<?> updateSupplement(@PathVariable int userId, @PathVariable int routineId,
+			@RequestBody RoutineReq routineReq) throws Exception {
 		Routine routine = Routine.builder().userId(userId).supplementId(routineReq.getSupplementId())
-				.time(routineReq.getTime()).day(routineReq.getDay()).tablets(routineReq.getTablets()).build();
+				.time(routineReq.getTime()).day(routineReq.getDay()).tablets(routineReq.getTablets())
+				.pushAlarm(routineReq.getPushAlarm()).build();
 		myPageService.updateRoutine(routineId, routine);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
