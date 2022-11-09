@@ -17,6 +17,46 @@ import * as Notifications from "expo-notifications";
 // } from "react-native-recoil-persist";
 // import { RecoilRoot } from "recoil";
 
+//  ------------- 스플래시 애니메이션 추가
+
+// import React, { useState } from "react";
+// import { StatusBar } from "expo-status-bar";
+// import { StyleSheet, Text, View } from "react-native";
+// import AnimatedSplash from "react-native-animated-splash-screen";
+
+// export default function App() {
+//   const [loading, setLoading] = useState(false);
+
+//   setTimeout(() => {
+//     setLoading(true);
+//   }, 3000);
+
+//   return (
+//     <AnimatedSplash
+//       translucent={true}
+//       isLoaded={loading}
+//       logoImage={require("./assets/splash.png")}
+//       backgroundColor={"#262626"}
+//       logoHeight={150}
+//       logoWidth={150}
+//     >
+//       <View style={styles.container}>
+//         <Text>Open up App.js to start working on your app!</Text>
+//         <StatusBar style="auto" />
+//       </View>
+//     </AnimatedSplash>
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#fff",
+//     alignItems: "center",
+//     justifyContent: "center",
+//   },
+// });
+
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
