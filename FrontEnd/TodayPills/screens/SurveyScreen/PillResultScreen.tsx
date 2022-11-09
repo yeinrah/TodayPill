@@ -52,7 +52,9 @@ const PillResultScreen = ({ navigation }: any) => {
             titleColor={"#fff"}
             fontSize={20}
             buttonWidth={"70%"}
-            onPress={() => navigation.navigate("MainScreen")}
+            onPress={() => {
+              navigation.navigate("PersonalRecommendationScreen");
+            }}
           />
           <CustomBtn
             buttonColor={accent}
@@ -60,7 +62,9 @@ const PillResultScreen = ({ navigation }: any) => {
             titleColor={"#fff"}
             fontSize={20}
             buttonWidth={"70%"}
-            onPress={() => navigation.navigate("MainScreen")}
+            onPress={() => {
+              navigation.navigate("MainScreen");
+            }}
           />
         </View>
       </ScrollView>

@@ -5,19 +5,24 @@ import { AntDesign } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import AnswerSurvey from "../../components/Cards/AnswerSurvey";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import SurveyQuestion from "../../components/Data/SurveyAdditionalEfficiency";
+import SurveyFormula from "../../components/Data/SurveyFormula";
 
 const SecondAddSurvey = ({ navigation }: any) => {
   const [selectedItem, setSelectedItem] = useState(1);
   const [nowStage, setNowStage] = useState(0);
   const [answerSheet, setAnswerSheet] = useState<any>({
-    is_ok_big_pill: false,
-    preferred_brand: "",
+    lowerPriceLimit: 0,
+    upperPriceLimit: 0,
+    additionalEfficiency: "",
+    formula: "",
+    sustainedRelease: false,
   });
   const surveyData = [
     ["lowerPriceLimit", "원하는 최소 가격을 알려주세요", "이 가격은 넘자"],
     ["upperPriceLimit", "원하는 최대 가격을 알려주세요", "이 가격은 넘지말자"],
     [
-      "additionalEfficacy",
+      "additionalEfficiency",
       "추가로 원하는 효과가 있나요?",
       "선택해주세요",
       ["스트레스 완화", "기억력 증진", "혈액순환", "에너지 충전", "근육통"],
@@ -74,29 +79,23 @@ const SecondAddSurvey = ({ navigation }: any) => {
               style={styles.buttonInnerContainer}
               onPress={async () => {
                 let uid = await AsyncStorage.getItem("@storage_UserId");
+                let uemail = await AsyncStorage.getItem("@storage_UserEmail");
                 setNowStage(nowStage + 1);
                 let answer: boolean | number;
-                //균형잡힌 식사 관련 질문
-                if (nowStage === 8) {
-                  if (selectedItem === 0) {
-                    console.log("균형 잡힌 식사를 합니다.");
-                    setNowStage(nowStage + 2);
-                  } else console.log("균형 잡히지 않은 식사를 합니다.");
-                }
-                if (nowStage === 9) {
-                  answer = selectedItem;
+                if (nowStage === 2) {
+                  answer = SurveyQuestion.get(selectedItem);
+                } else if (nowStage === 3) {
+                  answer = SurveyFormula.get(selectedItem);
                 } else if (surveyData[nowStage][3]) {
                   selectedItem == 0 ? (answer = true) : (answer = false);
-                  if (nowStage === 7) {
-                    answer = selectedItem;
-                  }
                 } else answer = selectedItem;
                 setAnswerSheet({
                   userId: uid,
+                  email: uemail,
                   ...answerSheet,
                   [`${surveyData[nowStage][0]}`]: answer,
                 });
-                setSelectedItem(0);
+                setSelectedItem(1);
               }}
             >
               <Text style={styles.title}>다 음</Text>
