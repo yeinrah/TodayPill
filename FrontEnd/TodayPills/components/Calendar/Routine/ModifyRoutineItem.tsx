@@ -44,6 +44,7 @@ export default function ModifyRoutineItem({
     cnt: 1,
   };
   const [routineItem, setRoutineItem] = useState(firstRoutine);
+  const [selectedRoutineDays, setSelectedRoutineDays] = useState("");
   const [hour, setHour] = useState(1);
 
   const [supplementDetail, setSupplementDetail] = useState({
@@ -236,6 +237,14 @@ export default function ModifyRoutineItem({
     handleClosePress();
   };
 
+  console.log(selectedRoutineDays, "올라온 날들");
+  // -------------------------------------------------
+  // -------------------------------------------------
+  // -------------------------------------------------
+  // -------------------------------------------------
+  // -------------------------------------------------
+  // -------------------------------------------------
+
   return (
     <ScrollView style={styles.outerContainer}>
       <PillCard height={400} width={"90%"} bgColor={"#edfbf9"}>
@@ -272,23 +281,23 @@ export default function ModifyRoutineItem({
       </PillCard>
 
       <View>
-        <PillCard height={160} width={"90%"} bgColor={"#edfbf9"}>
+        <PillCard height={200} width={"90%"} bgColor={"#edfbf9"}>
           <View style={styles.takenTimeInnerContainer}>
             <View style={styles.dayAlarmOuterContainer}>
-              <View style={styles.dayAlarmContainer}>
-                <Text style={styles.name}>섭취 요일</Text>
+              <View style={styles.dayOuterContainer}>
+                <View style={styles.dayAlarmContainer}>
+                  <Text style={styles.name}>섭취 요일</Text>
+                  <Text style={styles.name}>{selectedRoutineDays}</Text>
 
-                <Pressable
-                  // onPress={() => handleSnapPress(2)}
-                  // onPress={() => setModalVisible(true)}
-                  style={styles.directionRow}
-                >
                   <Text style={styles.dayAndTimeName}>매일</Text>
-                </Pressable>
+                </View>
+                <Text style={styles.dayExplText}>
+                  아래 요일을 클릭하여 섭취 요일을 선택해주세요.
+                </Text>
               </View>
 
               <View style={styles.dayListContainer}>
-                <WeekDayList />
+                <WeekDayList addRoutineDaysHandler={setSelectedRoutineDays} />
               </View>
             </View>
 
@@ -471,14 +480,23 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: "#FF78A3",
   },
+  dayExplText: {
+    fontSize: 10,
+    color: "#FF78A3",
+    paddingHorizontal: 15,
+  },
   dayAlarmOuterContainer: {
-    flex: 5,
+    flex: 6,
+  },
+  dayOuterContainer: {
+    flex: 3,
+    // backgroundColor: "yellow",
   },
   dayAlarmContainer: {
-    paddingHorizontal: 17,
     flex: 1,
-    height: "100%",
-    // backgroundColor: "yellow",
+    paddingHorizontal: 17,
+    // backgroundColor: "blue",
+
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -491,7 +509,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   dayListContainer: {
-    flex: 1,
+    flex: 5,
   },
   directionRow: {
     // backgroundColor: "red",
@@ -519,10 +537,6 @@ const styles = StyleSheet.create({
     // alignItems: "center",
   },
 
-  chooseDays: {
-    backgroundColor: "red",
-    flex: 1,
-  },
   chooseBtn: {
     flex: 1,
     alignItems: "center",

@@ -1,22 +1,64 @@
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { primary } from "../../../constants/Colors";
+import { useFocusEffect } from "@react-navigation/native";
 
 export interface WeekDayProps {
   day: string;
-  idx: number;
+  dayId: number;
+  isDaysSelectCompleted: boolean;
+  daySelectHandler: (dayId: number) => void;
+  deleteDayHandler: (dayId: number) => void;
+
+  // daySelectHandler: (dayObj: object) => void;
 }
 
-export default function WeekDay({ day, idx }: WeekDayProps) {
+export default function WeekDay({
+  day,
+  dayId,
+  daySelectHandler,
+  deleteDayHandler,
+  isDaysSelectCompleted,
+}: WeekDayProps) {
   const [isPressed, setIsPressed] = useState(false);
+  // const [dayObject, setDayObject] = useState({});
+  // dayObject[dayId] = isPressed;
+  // console.log(dayObject);
+  if (isDaysSelectCompleted && isPressed) {
+    daySelectHandler(dayId);
+  }
+  if (isDaysSelectCompleted && !isPressed) {
+    deleteDayHandler(dayId);
+  }
+
+  const changeDaySelectHandler = () => {
+    // const dayObject = {};
+    // dayObject[dayId] = isPressed;
+    // console.log(dayObject);
+    // daySelectHandler({ dayId: selectOrNot });
+    // console.log({ dayId: selectOrNot });
+  };
+
   const pressDayHandler = () => {
     setIsPressed(true);
+    // changeDaySelectHandler(true);
   };
   const unpressDayHandler = () => {
     setIsPressed(false);
+
+    // changeDaySelectHandler(false);
+    // daySelectHandler({ dayId: false });
   };
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        // daySelectHandler(dayObject);
+      };
+    }, [])
+  );
+
   return (
     // <Pressable
     // //       onPress={() => navigation.navigate("Modal")}
