@@ -12,7 +12,6 @@ const PillResultScreen = ({ navigation }: any) => {
   const [nowMyNutrient, setNowMyNutrient] = useState("");
   const getMyName = async () => {
     const name = await AsyncStorage.getItem("@storage_UserNickName");
-    console.log(name, "this is my name");
     setMyName(name);
   };
   const getMyNowNutrient = async () => {
@@ -32,7 +31,8 @@ const PillResultScreen = ({ navigation }: any) => {
           color="black"
           style={styles.icon}
           onPress={() => {
-            navigation.goBack();
+            // navigation.goBack();
+            navigation.replace("PersonalRecommendationScreen");
           }}
         />
         <View style={styles.titleGroup}>
