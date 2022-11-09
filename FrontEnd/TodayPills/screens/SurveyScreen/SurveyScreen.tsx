@@ -116,9 +116,7 @@ const SurveyScreen = ({ navigation }: any) => {
               style={styles.buttonInnerContainer}
               onPress={async () => {
                 let uid = "";
-
                 uid = await AsyncStorage.getItem("@storage_UserId");
-
                 setNowStage(nowStage + 1);
                 let answer: boolean | number;
                 //균형잡힌 식사 관련 질문
@@ -141,7 +139,7 @@ const SurveyScreen = ({ navigation }: any) => {
                   ...answerSheet,
                   [`${surveyData[nowStage][0]}`]: answer,
                 });
-                setSelectedItem(0);
+                setSelectedItem(1);
               }}
             >
               <Text style={styles.title}>다 음</Text>

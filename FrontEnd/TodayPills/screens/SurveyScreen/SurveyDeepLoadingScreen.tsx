@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import BackgroundScreen from "../BackgroundScreen";
 
-const SurveyDeepLoadingScreen = ({ navigation }: any) => {
+const SurveyDeepLoadingScreen = ({ navigation, route }: any) => {
   const [nowMyNutrient, setNowMyNutrient] = useState("");
   const getMyNowNutrient = async () => {
     const nutrient = await AsyncStorage.getItem("@storage_nowNutrient");
@@ -11,6 +11,7 @@ const SurveyDeepLoadingScreen = ({ navigation }: any) => {
   };
   useEffect(() => {
     getMyNowNutrient();
+    console.log(route.params.answerSheet);
   }, []);
   return (
     <BackgroundScreen>

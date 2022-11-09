@@ -58,7 +58,7 @@ const afterBasicSurvey = async (data) => {
   await api.put("/user/user/firstSurvey", data);
 };
 const afterScreeningCheck = async (data) => {
-  console.log("zzzasdasz", data.preferred_brand);
+  // console.log("zzzasdasz", data.preferred_brand);
   await api.post("/user/healthcheckdata/detailcheck", {
     brand: data.preferred_brand,
     pillSize: data.is_ok_big_pill,
