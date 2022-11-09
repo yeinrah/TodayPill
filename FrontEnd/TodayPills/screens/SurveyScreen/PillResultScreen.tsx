@@ -48,6 +48,14 @@ const PillResultScreen = ({ navigation }: any) => {
         <View style={styles.btn}>
           <CustomBtn
             buttonColor={accent}
+            title={"영양제 추천 다시 받기!"}
+            titleColor={"#fff"}
+            fontSize={20}
+            buttonWidth={"70%"}
+            onPress={() => navigation.navigate("MainScreen")}
+          />
+          <CustomBtn
+            buttonColor={accent}
             title={"홈으로 가기"}
             titleColor={"#fff"}
             fontSize={20}

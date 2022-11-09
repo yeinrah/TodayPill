@@ -57,6 +57,7 @@ import PillResultScreen from "../screens/SurveyScreen/PillResultScreen";
 import GenderCheckScreen from "../screens/SurveyScreen/GenderCheckScreen";
 import FirstAddSurvey from "../screens/AddSurvey/FirstAddSurvey";
 import AllSupplementsScreen from "../screens/HomeScreen/AllSupplementsScreen";
+import SecondAddSurvey from "../screens/AddSurvey/SecondAddSurvey";
 interface Inavigation {
   colorScheme: ColorSchemeName;
   LoginCheck: () => {};
@@ -149,6 +150,11 @@ export default function Navigation({ colorScheme, LoginCheck }: Inavigation) {
         <Stack.Screen
           name="FirstAddSurvey"
           component={FirstAddSurvey}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SecondAddSurvey"
+          component={SecondAddSurvey}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

@@ -141,7 +141,7 @@ const SurveyScreen = ({ navigation }: any) => {
                   ...answerSheet,
                   [`${surveyData[nowStage][0]}`]: answer,
                 });
-                setSelectedItem(0);
+                setSelectedItem(1);
               }}
             >
               <Text style={styles.title}>다 음</Text>

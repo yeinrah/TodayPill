@@ -73,14 +73,15 @@ const NutrientDetailScreen = ({ navigation, route }: any) => {
                 android_ripple={{ color: "#4E736F" }}
                 style={styles.buttonInnerContainer}
                 onPress={async () => {
-                  if (
-                    (await AsyncStorage.getItem("@storage_didPlusSurvey")) !==
-                    null
-                  ) {
-                    navigation.navigate("pillResultScreen");
-                  } else {
-                    navigation.navigate("SurveyDeepScreen");
-                  }
+                  // if (
+                  //   (await AsyncStorage.getItem("@storage_didPlusSurvey")) !==
+                  //   null
+                  // ) {
+                  //   navigation.navigate("pillResultScreen");
+                  // } else {
+                  //   navigation.navigate("SurveyDeepScreen");
+                  // }
+                  navigation.navigate("SecondAddSurvey");
                 }}
               >
                 <Text style={styles.title}>추천 받기</Text>
