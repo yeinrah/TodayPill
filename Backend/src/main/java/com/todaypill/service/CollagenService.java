@@ -59,6 +59,8 @@ public class CollagenService {
 			}
 
 			Integer consumerLabScore = 0;
+			if (brand.contains("Bulletproof") && brand.contains("Chocolate Collagen Protein"))
+				consumerLabScore = -10;
 
 			String additionalEfficacy = sb.toString();
 			String note = "수면 1시간 전";

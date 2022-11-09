@@ -85,6 +85,8 @@ public class ProbioticsService {
 			}
 
 			Integer consumerLabScore = 0;
+			if (brand.contains("Dr. Ohhira's") && brand.contains("Dr. Ohhira's Probiotics"))
+				consumerLabScore = -10;
 
 			for (String s : set) {
 				sb.append(s);

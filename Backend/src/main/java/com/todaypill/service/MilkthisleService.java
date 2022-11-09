@@ -68,6 +68,10 @@ public class MilkthisleService {
 			}
 
 			Integer consumerLabScore = 0;
+			if (brand.contains("NOW") && brand.contains("Silymarin"))
+				consumerLabScore = -10;
+			if (brand.contains("Vitamin Shoppe") && brand.contains("Milk Thistle Extract"))
+				consumerLabScore = -10;
 
 			for (String s : set) {
 				sb.append(s);

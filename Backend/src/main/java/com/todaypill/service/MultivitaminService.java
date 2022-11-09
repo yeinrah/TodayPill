@@ -35,6 +35,18 @@ public class MultivitaminService {
 		// String note, Float amount, Float requiredCount, String formula, Integer like,
 		// Boolean sustainedRelease
 
+		String[][] notApproved = {
+				{"Nutrilite", "Daily"},
+				{"Vitafusion", "MultiVites - Natural Berry, Peach & Orange Flavors"},
+				{"Vimerson Health","Women's Multivitamin"},
+				{"Vimerson Health","Women's Multivitamin"},
+				{"New Chapter","Perfect Prenatal™ Multivitamin"},
+				{"Rainbow Light","Prenatal One"},
+				{"CVS Health","Men's Daily Gummies"},
+				{"Innate","Men's 40+ Multivitamin"},
+				{"MegaFood","Men's One Daily"},
+		};
+		
 		List<Multivitamin> list = multivitaminRepository.findAll();
 		for (Multivitamin m : list) {
 			String category = m.getCategory();
@@ -151,7 +163,10 @@ public class MultivitaminService {
 			}
 
 			Integer consumerLabScore = 0;
-
+			for (int i = 0; i < notApproved.length; i++)
+				if (brand.contains(notApproved[i][0]) && brand.contains(notApproved[i][1]))
+					consumerLabScore = -10;
+			
 			for (String s : set) {
 				sb.append(s);
 				sb.append(", ");

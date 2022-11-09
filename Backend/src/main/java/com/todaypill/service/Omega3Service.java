@@ -72,6 +72,10 @@ public class Omega3Service {
 			}
 
 			Integer consumerLabScore = 0;
+			if (brand.contains("Viva Naturals") && brand.contains("Antarctic Krill Oil"))
+				consumerLabScore = -10;
+			if (brand.contains("Freshfield") && brand.contains("Vegan Omega-3 DHA + DPA"))
+				consumerLabScore = -10;
 
 			for (String s : set) {
 				sb.append(s);

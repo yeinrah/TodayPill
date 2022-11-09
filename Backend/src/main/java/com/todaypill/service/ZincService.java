@@ -88,6 +88,8 @@ public class ZincService {
 			}
 
 			Integer consumerLabScore = 0;
+			if (brand.contains("MegaFood") && brand.contains("Zinc"))
+				consumerLabScore = -10;
 
 			for (String s : set) {
 				sb.append(s);

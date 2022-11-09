@@ -71,6 +71,8 @@ public class LuteinService {
 			}
 
 			Integer consumerLabScore = 0;
+			if (brand.contains("Doctor's Best") && brand.contains("Lutein with OptiLut"))
+				consumerLabScore = -10;
 
 			String additionalEfficacy = sb.toString();
 			String note = "저녁 식후 30분";

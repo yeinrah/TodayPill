@@ -34,6 +34,13 @@ public class VitaminBService {
 		// String note, Float amount, Float requiredCount, String formula, Integer like,
 		// Boolean sustainedRelease, String pillSize, String bestTime
 
+		String[][] notApproved = {
+				{"Centrum Energy","Vitality"},
+				{"Pure Synergy","Super B-Complex"},
+				{"Pure Encapsulations","B-Complex Plus"},
+				{"Nutricost","Vitamin B2 400 mg"}
+		};
+		
 		List<VitaminB> list = vitaminBRepository.findAll();
 		for (VitaminB m : list) {
 			String category = m.getCategory();
@@ -150,7 +157,10 @@ public class VitaminBService {
 			}
 
 			Integer consumerLabScore = 0;
-
+			for (int i = 0; i < notApproved.length; i++)
+				if (brand.contains(notApproved[i][0]) && brand.contains(notApproved[i][1]))
+					consumerLabScore = -10;
+			
 			for (String s : set) {
 				sb.append(s);
 				sb.append(", ");
