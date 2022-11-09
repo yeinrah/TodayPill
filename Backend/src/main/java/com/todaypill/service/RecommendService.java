@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import springfox.documentation.swagger2.mappers.ModelMapper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -48,7 +49,7 @@ public class RecommendService {
             List<Supplement> supplementList = (List<Supplement>)supplementRepository.findAll();
             //List<Supplement> supplementList = (List<Supplement>) mapper.map(supplementRepository.findAll(), Supplement.class);
 
-
+            double cnt = 0.0001;
             for (Supplement supplement :supplementList)    {
                 double score = 0;
                 Integer labScore = 0;
@@ -73,7 +74,8 @@ public class RecommendService {
                         , supplement.getConsumerLabScore(), supplement.getAdditionalEfficacy(), supplement.getNote(),supplement.getAmount()
                         , supplement.getRequiredCount(), supplement.getFormula(), supplement.getLike(),supplement.getSustainedRelease()
                         ,supplement.getPillSize(),supplement.getBestTime(), score));
-
+                cnt+=0.0001;
+                score+=cnt;
             }
             supplementAndScoreRes.sort((o1, o2) -> (int) (o2.getScore()  - o1.getScore()));
 
