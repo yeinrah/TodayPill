@@ -9,6 +9,9 @@ import com.todaypill.repository.SupplementRepository;
 import com.todaypill.repository.UserRepository;
 import com.todaypill.request.UserSecondSurveyReq;
 import com.todaypill.response.SupplementAndScoreRes;
+
+import net.bytebuddy.utility.privilege.GetSystemPropertyAction;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,7 +51,6 @@ public class RecommendService {
             List<SupplementAndScoreRes> supplementAndScoreRes = new ArrayList<>();
             List<Supplement> supplementList = (List<Supplement>)supplementRepository.findAll();
             //List<Supplement> supplementList = (List<Supplement>) mapper.map(supplementRepository.findAll(), Supplement.class);
-
             double cnt = 0.0001;
             for (Supplement supplement :supplementList)    {
                 double score = 0;
@@ -76,10 +78,24 @@ public class RecommendService {
                         ,supplement.getPillSize(),supplement.getBestTime(), score));
                 cnt+=0.0001;
                 score+=cnt;
+//                System.out.println(score);
             }
-            supplementAndScoreRes.sort((o1, o2) -> (int) (o2.getScore()  - o1.getScore()));
-
-            return supplementAndScoreRes;
+            supplementAndScoreRes.sort((o1, o2) -> {
+//            	if(o1.getScore() == o2.getScore()) return 1;
+//            	System.out.println((int)(o2.getScore() - o1.getScore()));
+//            	return (int) (o2.getScore()  - o1.getScore());});
+            	
+            	int a =o2.getScore().intValue();
+            	int b = o1.getScore().intValue();
+            return a-b;
+//            	return 1;
+            });
+            //[1,1,1,1,1,1,1,1,1,1,1,1,1,1,,1,]
+            List<SupplementAndScoreRes> list = new ArrayList();
+            for(int i=0; i<10;i++) {
+            	list.add(supplementAndScoreRes.get(i));
+            }
+            return list;
     }
 //    userInfoRes.getCommonQuestion() userInfoRes.getCommonQuestion() = new userInfoRes.getCommonQuestion()(1L, "kmj9247@naver.com", "woman"
 //            , 26, 52F, false, false, false, "sometimes", "lackFish"
