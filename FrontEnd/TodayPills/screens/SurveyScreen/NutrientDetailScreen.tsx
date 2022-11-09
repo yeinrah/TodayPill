@@ -7,9 +7,10 @@ import {
 } from "react-native";
 import BackgroundScreen from "../BackgroundScreen";
 import { Ionicons } from "@expo/vector-icons";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import NutrientDescription from "../../components/Data/NutrientDescription";
+import { useFocusEffect } from "@react-navigation/native";
 
 const NutrientDetailScreen = ({ navigation, route }: any) => {
   const [myName, setMyName] = useState<string>();
@@ -24,10 +25,12 @@ const NutrientDetailScreen = ({ navigation, route }: any) => {
       JSON.stringify(nutrient[0]).slice(1, nutrient[0].length + 1)
     );
   };
-  useEffect(() => {
-    getMyName();
-    setDescription();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      getMyName();
+      setDescription();
+    }, [])
+  );
   return (
     <BackgroundScreen>
       <View style={styles.container}>

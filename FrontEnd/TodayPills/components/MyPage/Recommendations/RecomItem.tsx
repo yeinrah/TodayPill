@@ -8,8 +8,11 @@ import {
   Image,
   Button,
   ScrollView,
+  Pressable,
 } from "react-native";
 import pillIcons from "../../Data/pillIcons";
+import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export interface RecomItemProps {
   nutName: string;
@@ -19,20 +22,30 @@ export interface RecomItemProps {
 
 export default function RecomItem({ nutName, id }: RecomItemProps) {
   // const [pickedPills, setPickedPills] = useState([]);
-
+  const navigation = useNavigation<any>();
   return (
     <View style={styles.outerContainer}>
-      <View style={styles.nutContainer}>
-        {/* <FontAwesome5 name="pills" size={22} color="#8EE8DE" /> */}
-        <Image
-          // source={require("../../assets/images/hearton.png")}
-          source={pillIcons[id]}
-          style={styles.icon}
-        />
-        <View style={styles.textContainer}>
-          <Text style={styles.nutrition}>{nutName}</Text>
+      <Pressable
+        onPress={async () => {
+          console.log(nutName);
+          await AsyncStorage.setItem("@storage_nowNutrient", nutName);
+          navigation.navigate("NutrientDetailScreen", {
+            nutrient: [nutName],
+          });
+        }}
+      >
+        <View style={styles.nutContainer}>
+          {/* <FontAwesome5 name="pills" size={22} color="#8EE8DE" /> */}
+          <Image
+            // source={require("../../assets/images/hearton.png")}
+            source={pillIcons[id]}
+            style={styles.icon}
+          />
+          <View style={styles.textContainer}>
+            <Text style={styles.nutrition}>{nutName}</Text>
+          </View>
         </View>
-      </View>
+      </Pressable>
     </View>
   );
 }
