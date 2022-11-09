@@ -27,4 +27,8 @@ public class RoutineReq {
 	@ApiModelProperty(name = "개수", example = "2")
 	@NotNull(message = "개수를 입력하세요.")
 	private int tablets;
+	
+	@ApiModelProperty(name = "푸시알람", example = "False")
+	@NotNull(message = "true / false 를 입력하세요.")
+	private Boolean pushAlarm;
 }
