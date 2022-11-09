@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.todaypill.db.entity.CommonQuestion;
 import com.todaypill.db.entity.Like;
+import com.todaypill.db.entity.Propolis;
 import com.todaypill.db.entity.Supplement;
 import com.todaypill.db.entity.User;
 import com.todaypill.repository.CommonQuestionRepository;
@@ -123,23 +124,51 @@ public class UserService {
 	@Transactional
 	public String[] userFirstSurvey(UserFirstSurveyReq userFirstSurveyReq) throws Exception {
 		
-		int vitaminB=0;
-		int vitaminC=0;
-		int vitaminD=0;
-		int multivitamin=0;
-		int magnesium=0;
-		int omega3=0;
-		int milkcistle=0;
-		int lutain=0;
-		int Zn=0;
-		int lactobacillus=0;
-		int collagen=0;
-		int Fe=0;
-		int profolis=0;
+		double vitaminB=0.000001;
+		double vitaminC=0.000002;
+		double vitaminD=0.000003;
+		double multivitamin=0.000004;
+		double magnesium=0.000005;
+		double omega3=0.000006;
+		double milkcistle=0.000007;
+		double lutain=0.000008;
+		double Zn=0.000009;
+		double lactobacillus=0.00001;
+		double collagen=0.000011;
+		double Fe=0.000012;
+		double profolis=0.000013;
+		String eatData = "생선, 육류, 채소, 과일";
 		//밥 잘 먹고 있는지 -> boolean이면 뭘잘먹고있는지를 판단하기 힘듦
 		if(userFirstSurveyReq.isBalanced_meal()) {}
 		//이게 밥잘먹고있는지에 대한 string 받는곳
-		if(userFirstSurveyReq.getLack().contains("")) {}
+		if(userFirstSurveyReq.getLack().contains("생선")) {
+			eatData = eatData.replace("생선", "");
+		}
+		if(userFirstSurveyReq.getLack().contains("육류")) {
+			eatData = eatData.replace("육류", "");
+		}
+		if(userFirstSurveyReq.getLack().contains("채소")) {
+			eatData = eatData.replace("채소", "");
+		}
+		if(userFirstSurveyReq.getLack().contains("과일")) {
+			eatData = eatData.replace("과일", "");
+		}
+		//잘 먹고 있는 음식을 제외하고 부족한 데이터에서 걸리면 해당 영양소를 ++
+		if(eatData.contains("생선")) {
+			omega3+= 3;
+		}
+		if(eatData.contains("육류")) {
+			Fe+= 2;
+			Zn+= 2;
+			magnesium+=2;
+		}
+		if(eatData.contains("채소")) {
+			vitaminB+=2;
+			vitaminC+=2;
+		}
+		if(eatData.contains("과일")) {
+			vitaminC+=2;	
+		}
 		
 		//큰 약 잘 먹는지 -> 2차 설문용
 		if(userFirstSurveyReq.is_ok_big_pill()) {}
@@ -175,7 +204,12 @@ public class UserService {
 		//무슨 알러지든 간에 항산화제인 비타민 C는 도움이 된다.
 		if(userFirstSurveyReq.getAllergy().contains("")) {
 			vitaminC+=2;
+			lactobacillus+=2;
 		}
+		if(userFirstSurveyReq.getAllergy().contains("꽃")) {
+			profolis-=10;
+		}
+		
 		
 		//선호하는 브랜드명 -> 2차설문용
 		if(userFirstSurveyReq.getPreferred_brand().contains("")) {}
@@ -187,7 +221,7 @@ public class UserService {
 		else if(userFirstSurveyReq.getOutdoor_activity()==3)vitaminD+=1;
 		else if(userFirstSurveyReq.getOutdoor_activity()==4)vitaminD+=0.5;
 		
-		Map<String,Integer> map = new HashMap<String, Integer>();
+		Map<String,Double> map = new HashMap<String, Double>();
 		map.put("비타민 B", vitaminB);
 		map.put("비타민 C", vitaminC);
 		map.put("비타민 D", vitaminD);
