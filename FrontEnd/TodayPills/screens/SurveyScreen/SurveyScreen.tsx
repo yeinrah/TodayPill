@@ -37,7 +37,12 @@ const SurveyScreen = ({ navigation }: any) => {
       "흡연할 경우 조심해야 할 성분이 있어요",
       ["YES", "NO"],
     ],
-    ["allergy", "알러지가 있나요?", "입력해주세요."],
+    [
+      "allergy",
+      "알러지가 있나요?",
+      "입력해주세요.",
+      ["해당없음", "꽃가루", "벌", "고양이", "비염", "기타"],
+    ],
     ["heartburn", "속쓰림 증상이 있나요?", "알려주세요", ["YES.", "NO."]],
     ["diarrhea", "설사를 하나요?", "알려주세요", ["YES.", "NO."]],
     ["constipation", "변비가 있나요?", "알려주세요", ["YES.", "NO."]],
@@ -62,8 +67,25 @@ const SurveyScreen = ({ navigation }: any) => {
       ["채소", "생선", "육류", "과일"],
     ],
     ["is_ok_big_pill", "알약이 커도 괜찮을까요?", "알려주세요", ["YES.", "NO"]],
-    ["preferred_brand", "선호하는 영양제 브랜드가 있나요?", "알려주세요"],
-    ["problem", "해결하고자 하는 문제가 있나요?", "자유롭게 알려주세요"],
+    [
+      "preferred_brand",
+      "선호하는 영양제 브랜드가 있나요?",
+      "알려주세요",
+      [
+        "없음",
+        "solgar",
+        "california gold nutrition",
+        "natural factors",
+        "life extension",
+        "기타",
+      ],
+    ],
+    [
+      "problem",
+      "해결하고자 하는 문제가 있나요?",
+      "자유롭게 알려주세요",
+      ["해당없음", "피로감", "눈건강", "피부건강", "소화불량", "기타"],
+    ],
     [],
   ];
   const checkGender = async () => {
@@ -80,7 +102,7 @@ const SurveyScreen = ({ navigation }: any) => {
       console.log(answerSheet);
       navigation.navigate("SurveyLoadingScreen", { answerSheet: answerSheet });
     }
-  }, [nowStage]);
+  }, [answerSheet]);
   return (
     <BackgroundScreen>
       <View style={styles.container}>
@@ -118,7 +140,7 @@ const SurveyScreen = ({ navigation }: any) => {
                 let uid = "";
                 uid = await AsyncStorage.getItem("@storage_UserId");
                 setNowStage(nowStage + 1);
-                let answer: boolean | number;
+                let answer: boolean | number | string = "";
                 //균형잡힌 식사 관련 질문
                 if (nowStage === 8) {
                   if (selectedItem === 0) {
@@ -126,14 +148,22 @@ const SurveyScreen = ({ navigation }: any) => {
                     setNowStage(nowStage + 2);
                   } else console.log("균형 잡히지 않은 식사를 합니다.");
                 }
-                if (nowStage === 9) {
+                //복수선택
+                if (
+                  nowStage === 9 ||
+                  nowStage === 2 ||
+                  nowStage === 11 ||
+                  nowStage === 12
+                ) {
                   answer = selectedItem;
+                  console.log(answer);
                 } else if (surveyData[nowStage][3]) {
                   selectedItem == 0 ? (answer = true) : (answer = false);
                   if (nowStage === 7) {
                     answer = selectedItem;
                   }
                 } else answer = selectedItem;
+
                 setAnswerSheet({
                   userId: uid,
                   ...answerSheet,

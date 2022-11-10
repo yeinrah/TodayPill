@@ -57,20 +57,21 @@ const PillResultScreen = ({ navigation, route }: any) => {
         </View>
         <View>
           {/* <DetailedPillCard /> */}
-          {route.params.answerSheet[0].data.map((item, index) => {
-            console.log(item);
-            return (
-              <DetailedPillCard
-                supplementId={item.supplementId}
-                supplementName={item.supplementName}
-                brand={item.brand}
-                note={item.note}
-                userId={userId}
-                image={item.image}
-                key={index}
-              />
-            );
-          })}
+          {route.params.answerSheet[0].data &&
+            route.params.answerSheet[0].data.map((item, index) => {
+              console.log(item);
+              return (
+                <DetailedPillCard
+                  supplementId={item.supplementId}
+                  supplementName={item.supplementName}
+                  brand={item.brand}
+                  note={item.note}
+                  userId={userId}
+                  image={item.image}
+                  key={index}
+                />
+              );
+            })}
         </View>
         <View style={styles.btn}>
           <CustomBtn
