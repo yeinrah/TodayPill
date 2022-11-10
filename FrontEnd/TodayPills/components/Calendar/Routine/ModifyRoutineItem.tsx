@@ -8,6 +8,7 @@ import {
   Switch,
   Modal,
   Button,
+  Alert,
 } from "react-native";
 
 import { useState, useRef, useMemo, useCallback, useEffect } from "react";
@@ -24,7 +25,11 @@ import WeekDayList from "./WeekDayList";
 import * as Notifications from "expo-notifications";
 import { useFocusEffect } from "@react-navigation/native";
 import { fetchSupplementDetail } from "../../../API/supplementAPI";
-import { fetchAllRoutineSupplements } from "../../../API/routineAPI";
+import {
+  addMyRoutineSupplement,
+  fetchAllRoutineSupplements,
+  updateMyRoutineSupplement,
+} from "../../../API/routineAPI";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import PushNotifications from "./PushNotifications";
 // import Notifications from "../../../utils/Notifications";
@@ -33,18 +38,9 @@ export default function ModifyRoutineItem({
   navigation,
   pillId,
   updateOrNot,
+  prevRoutineDetail,
 }: any) {
   const [userId, setUserId] = useState(0);
-  const firstRoutine = {
-    time: "17:30",
-    days: [5, 6],
-    brand: "나우푸드",
-    pillName: "비타민 C 1000",
-    imgUrl:
-      "https://contents.lotteon.com/itemimage/LO/14/19/59/10/62/_1/41/95/91/06/3/LO1419591062_1419591063_1.jpg",
-    cnt: 1,
-  };
-  const [routineItem, setRoutineItem] = useState(firstRoutine);
   const [selectedRoutineDays, setSelectedRoutineDays] = useState("");
   const [takenDaysName, setTakenDaysName] = useState("");
   const [isDaySubmitted, setIsDaySubmitted] = useState(false);
@@ -57,30 +53,71 @@ export default function ModifyRoutineItem({
     bestTime: "",
     requiredCount: "",
   });
-  const [pillCnt, setPillCnt] = useState(routineItem.cnt);
+  const [pillCnt, setPillCnt] = useState(1);
   const [isAlarmEnabled, setIsAlarmEnabled] = useState(false);
-
   const [takenTime, setTakenTime] = useState("");
   const [isAM, setIsAM] = useState(true);
 
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
 
-  const submitModifyRoutineHandler = () => {
+  const submitModifyRoutineHandler = async () => {
+    if (!isDaySubmitted) {
+      return Alert.alert(
+        "섭취 요일",
+        "섭취 요일을 선택 후 완료 버튼을 클릭해주세요!"
+      );
+    }
+
+    let submitTakenTime = takenTime;
+    if (!isAM) {
+      const PMHour = parseInt(takenTime.slice(0, 2)) + 12;
+      submitTakenTime = `${PMHour}:${takenTime.slice(3, 5)}`;
+    }
+    // console.log(
+    //   userId,
+    //   pillId,
+    //   selectedRoutineDays,
+    //   isAlarmEnabled,
+    //   pillCnt,
+    //   submitTakenTime
+    // );
+
+    updateOrNot === "true"
+      ? await updateMyRoutineSupplement(
+          userId,
+          prevRoutineDetail.routineId,
+          pillId,
+          selectedRoutineDays,
+          isAlarmEnabled,
+          pillCnt,
+          submitTakenTime
+        )
+      : await addMyRoutineSupplement(
+          userId,
+          pillId,
+          selectedRoutineDays,
+          isAlarmEnabled,
+          pillCnt,
+          submitTakenTime
+        );
+    navigation.navigate("MyPills", { userId });
     console.warn("제출함!!!!!!!!!!!!!!!!!!!!");
   };
 
-  const getMyAllRoutineSupplements = async () => {
+  const getSupplementDetail = async () => {
     const currentUserId = await AsyncStorage.getItem("@storage_UserId");
     setUserId(parseInt(currentUserId));
-    const allMyRoutines = await fetchAllRoutineSupplements(userId);
-
-    // setSupplementDetail(eachSupplementDetail);
-  };
-  const getSupplementDetail = async () => {
     const eachSupplementDetail = await fetchSupplementDetail(pillId);
     // if (eachSupplementDetail.bestTime.slice(0,2))
-    timeConvert(eachSupplementDetail.bestTime);
-    // setPillCnt(eachSupplementDetail.requiredCount);
+    if (updateOrNot === "false") {
+      console.warn(updateOrNot);
+      setTakenTime(timeConvert(eachSupplementDetail.bestTime));
+      // setPillCnt(1);
+    } else {
+      setIsAlarmEnabled(prevRoutineDetail.pushAlarm);
+      setPillCnt(prevRoutineDetail.tablets);
+      setTakenTime(timeConvert(prevRoutineDetail.time));
+    }
     // setTakenTime(eachSupplementDetail.bestTime);
 
     setSupplementDetail(eachSupplementDetail);
@@ -99,7 +136,7 @@ export default function ModifyRoutineItem({
     // setIsDaySubmitted(false);
   };
 
-  const handleConfirm = (date: Date) => {
+  const handleTimeConfirm = (date: Date) => {
     // console.warn("A date has been picked: ", date);
     let hour = date.getHours();
     let minute = date.getMinutes().toString();
@@ -111,18 +148,24 @@ export default function ModifyRoutineItem({
     } else {
       setIsAM(true);
     }
+    let hourString = hour.toString();
 
     if (minute.length === 1) {
       minute = "0" + minute;
     }
+    if (hourString.length === 1) {
+      hourString = "0" + hourString;
+    }
 
-    setTakenTime(`${hour}:${minute}`);
+    setTakenTime(`${hourString}:${minute}`);
     hideDatePicker();
   };
 
   const timeConvert = (timeString: string) => {
     let hour = parseInt(timeString.slice(0, 2));
+
     const minute = timeString.slice(3, 5);
+
     if (hour > 12) {
       hour -= 12;
       setIsAM(false);
@@ -131,11 +174,8 @@ export default function ModifyRoutineItem({
     } else {
       setIsAM(true);
     }
-    setTakenTime(`${hour}:${minute}`);
-
-    if (updateOrNot === "false") {
-      console.log(updateOrNot, "수정이면 true, 처음 등록하는 거면 false");
-    }
+    return `${hour}:${minute}`;
+    // setTakenTime(`${hour}:${minute}`);
   };
   // useCallback(() => {
   //   if (!updateOrNot) {
@@ -150,6 +190,10 @@ export default function ModifyRoutineItem({
       // getMyAllRoutineSupplements();
       getSupplementDetail();
 
+      // if (updateOrNot === "true") {
+      //   setPillCnt(prevRoutineDetail.tablets);
+      //   setTakenTime(timeConvert(prevRoutineDetail.time));
+      // }
       // return () => {
 
       // };
@@ -251,7 +295,7 @@ export default function ModifyRoutineItem({
                   isVisible={isDatePickerVisible}
                   mode="time"
                   // display="clock"
-                  onConfirm={handleConfirm}
+                  onConfirm={handleTimeConfirm}
                   onCancel={hideDatePicker}
 
                   // isDarkModeEnabled={true}
@@ -264,7 +308,10 @@ export default function ModifyRoutineItem({
       </View>
 
       <View>
-        <PushNotifications addAlarmHandler={setIsAlarmEnabled} />
+        <PushNotifications
+          addAlarmHandler={setIsAlarmEnabled}
+          isAlarm={isAlarmEnabled}
+        />
         <View>
           <View style={styles.chooseBtn}>
             <CustomBtn

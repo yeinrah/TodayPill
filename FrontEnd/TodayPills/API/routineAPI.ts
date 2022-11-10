@@ -29,6 +29,14 @@ const fetchAllRoutineSupplements = async (userId: number) => {
   return result.data;
 };
 
+const deleteMySupplement = async (
+  userId: number,
+  routineId: number,
+  dateStr: string
+) => {
+  await api.patch(`/mypage/${userId}/mysupplement/${routineId}`, dateStr);
+};
+
 const addMyRoutineSupplement = async (
   userId: number,
   supplementId: number,
@@ -37,7 +45,7 @@ const addMyRoutineSupplement = async (
   tablets: number,
   time: string
 ) => {
-  console.log(supplementId, day, pushAlarm, tablets, time);
+  // console.log(supplementId, day, pushAlarm, tablets, time);
   await api.post(`/mypage/${userId}/mysupplement`, {
     supplementId,
     day,
@@ -46,5 +54,36 @@ const addMyRoutineSupplement = async (
     time,
   });
 };
+const updateMyRoutineSupplement = async (
+  userId: number,
+  routineId: number,
+  supplementId: number,
+  day: string,
+  pushAlarm: boolean,
+  tablets: number,
+  time: string
+) => {
+  console.warn(
+    "루틴 복약 수정",
+    supplementId,
+    routineId,
+    day,
+    pushAlarm,
+    tablets,
+    time
+  );
+  await api.put(`/mypage/${userId}/mysupplement/${routineId}`, {
+    supplementId,
+    day,
+    pushAlarm,
+    tablets,
+    time,
+  });
+};
 
-export { fetchAllRoutineSupplements };
+export {
+  fetchAllRoutineSupplements,
+  addMyRoutineSupplement,
+  deleteMySupplement,
+  updateMyRoutineSupplement,
+};

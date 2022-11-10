@@ -15,9 +15,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export interface PushProps {
   addAlarmHandler: (alarmOrNot: boolean) => void;
+  isAlarm: boolean;
 }
 
-export default function PushNotifications({ addAlarmHandler }: PushProps) {
+export default function PushNotifications({
+  addAlarmHandler,
+  isAlarm,
+}: PushProps) {
   // export default function PushNotifications({
   //   navigation,
   //   pillId,
@@ -25,7 +29,9 @@ export default function PushNotifications({ addAlarmHandler }: PushProps) {
   // }: any) {
   const [userId, setUserId] = useState(0);
 
-  const [isAlarmEnabled, setIsAlarmEnabled] = useState(false);
+  // const [isAlarmEnabled, setIsAlarmEnabled] = useState(false);
+
+  // setIsAlarmEnabled(isAlarm);
 
   // const getMyAllRoutineSupplements = async () => {
   //   const currentUserId = await AsyncStorage.getItem("@storage_UserId");
@@ -55,19 +61,28 @@ export default function PushNotifications({ addAlarmHandler }: PushProps) {
   // );
 
   const alarmToggleSwitch = () => {
-    setIsAlarmEnabled((previousState) => {
-      addAlarmHandler(!previousState);
-      return !previousState;
-    });
+    addAlarmHandler(!isAlarm);
+
+    // setIsAlarmEnabled((previousState) => {
+    //   addAlarmHandler(!previousState);
+    //   return !previousState;
+    // });
   };
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     setIsAlarmEnabled(isAlarm);
+  //     console.log(isAlarm, "푸시알람");
+  //   }, [])
+  // );
 
   useEffect(() => {
-    if (isAlarmEnabled) {
+    // if (isAlarmEnabled) {
+    if (isAlarm) {
       const today = Date.now();
       const date = new Date(today);
       const target = new Date("Wed Nov 02 2022 13:03:30 GMT+0900 (KST)");
       const timer = Math.floor((target.getTime() - date.getTime()) / 1000);
-      console.log(timer, "푸시알람시간");
+      console.log(timer, "푸시알람시간", isAlarm);
       Notifications.scheduleNotificationAsync({
         content: {
           title: "오늘의 영양제",
@@ -77,7 +92,6 @@ export default function PushNotifications({ addAlarmHandler }: PushProps) {
           seconds: timer,
         },
       });
-
       // const myDate = new Date(Date.now() + 5 * 1000);
       // Notifications.scheduledLocalNotifications(
       //   "1",
@@ -87,7 +101,8 @@ export default function PushNotifications({ addAlarmHandler }: PushProps) {
       //   "마그네슘"
       // );
     }
-  }, [isAlarmEnabled]);
+  }, [isAlarm]);
+  // }, [isAlarmEnabled]);
 
   return (
     <PillCard height={130} width={"90%"} bgColor={"#edfbf9"}>
@@ -98,10 +113,12 @@ export default function PushNotifications({ addAlarmHandler }: PushProps) {
             // style={{ height: "50%" }}
             style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] }}
             trackColor={{ false: "#767577", true: accent }}
-            thumbColor={isAlarmEnabled ? "white" : "#f4f3f4"}
+            // thumbColor={isAlarmEnabled ? "white" : "#f4f3f4"}
+            thumbColor={isAlarm ? "white" : "#f4f3f4"}
             // ios_backgroundColor="#3e3e3e"
             onValueChange={alarmToggleSwitch}
-            value={isAlarmEnabled}
+            // value={isAlarmEnabled}
+            value={isAlarm}
           />
         </View>
         <View style={styles.alarmExplanation}>

@@ -6,6 +6,7 @@ import WeekDay from "./WeekDay";
 import { accent, primary, secondary } from "../../../constants/Colors";
 import CustomBtn from "../../UI/CustomBtn";
 import { useFocusEffect } from "@react-navigation/native";
+import { getDaysName } from "../../functions/getDaysName";
 
 const weekDays = ["월", "화", "수", "목", "금", "토", "일"];
 
@@ -20,14 +21,15 @@ export default function WeekDayList(props: any) {
   const submitDaysNames = submitDays.map(
     (eachDayId: number) => weekDays[eachDayId - 1]
   );
-  let finalSubmitDaysNames: string = submitDaysNames.join(", ");
-  if (submitDaysNames.length === 7) {
-    finalSubmitDaysNames = "매일";
-  } else if (finalSubmitDaysNames === "월, 화, 수, 목, 금") {
-    finalSubmitDaysNames = "주중";
-  } else if (finalSubmitDaysNames === "토, 일") {
-    finalSubmitDaysNames = "주말";
-  }
+  const finalSubmitDaysNames = getDaysName(submitDaysNames);
+  // let finalSubmitDaysNames: string = submitDaysNames.join(", ");
+  // if (submitDaysNames.length === 7) {
+  //   finalSubmitDaysNames = "매일";
+  // } else if (finalSubmitDaysNames === "월, 화, 수, 목, 금") {
+  //   finalSubmitDaysNames = "주중";
+  // } else if (finalSubmitDaysNames === "토, 일") {
+  //   finalSubmitDaysNames = "주말";
+  // }
 
   props.addRoutineDaysHandler(submitDays.join(", "));
   // props.onChangeDaysName(finalSubmitDaysNames);

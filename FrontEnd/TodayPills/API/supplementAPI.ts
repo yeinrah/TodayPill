@@ -12,7 +12,6 @@ const fetchPopularSupplements = async () => {
   return result.data;
 };
 const fetchSupplementDetail = async (supplementId) => {
-  // console.log(supplementId);
   const result = await api.get(`/supplement/${supplementId}`);
   const supplementDetail = {
     name: result.data.supplementName,
@@ -22,7 +21,7 @@ const fetchSupplementDetail = async (supplementId) => {
     bestTime: result.data.bestTime,
     requiredCount: result.data.requiredCount,
   };
-  console.log(result.data);
+
   return supplementDetail;
 };
 
