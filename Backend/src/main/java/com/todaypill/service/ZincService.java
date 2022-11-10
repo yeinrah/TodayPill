@@ -63,22 +63,22 @@ public class ZincService {
 			if (ingredients.contains("아세트산") || ingredients.contains("acetate") || ingredients.contains("아세테이트")) {
 				cnt++;
 				bioavailability += 4;
-				set.add("cold");
+				set.add("감기 완화");
 			}
 			if (ingredients.contains("무기산") || ingredients.contains("inorganic")) {
 				cnt++;
 				bioavailability += 2;
-				set.add("skin_disease");
+				set.add("피부병 완화");
 			}
 			if (ingredients.contains("산화") || ingredients.contains("oxide") || ingredients.contains("옥사이드")) {
 				cnt++;
 				bioavailability += 2;
-				set.add("scald");
+				set.add("화상 완화");
 			}
 			if (ingredients.contains("글루콘산") || ingredients.contains("gluconate") || ingredients.contains("글루코네이트")) {
 				cnt++;
 				bioavailability += 4;
-				set.add("immune");
+				set.add("면역 증진");
 			}
 			
 			if (cnt != 0) {
@@ -88,6 +88,8 @@ public class ZincService {
 			}
 
 			Integer consumerLabScore = 0;
+			if (brand.contains("MegaFood") && brand.contains("Zinc"))
+				consumerLabScore = -10;
 
 			for (String s : set) {
 				sb.append(s);
@@ -115,12 +117,13 @@ public class ZincService {
 				sustainedRelease = true;
 			String pillSize = "";
 			String bestTime = "19:00";
+			String caution = "철분과 함께 먹으면 흡수율이 저해돼요!";
 			Supplement supplement = Supplement.builder().category(category).supplementName(supplementName).price(price)
 					.brand(brand).image(image).ingredients(ingredients).bioavailability(bioavailability)
 					.laxative(laxative).kidneyDisease(kidneyDisease).consumerLabScore(consumerLabScore)
 					.additionalEfficacy(additionalEfficacy).note(note).amount(amount).requiredCount(requiredCount)
 					.formula(formula).like(like).sustainedRelease(sustainedRelease).pillSize(pillSize)
-					.bestTime(bestTime).build();
+					.bestTime(bestTime).caution(caution).build();
 			supplementRepository.save(supplement);
 		}
 	}

@@ -72,6 +72,10 @@ public class Omega3Service {
 			}
 
 			Integer consumerLabScore = 0;
+			if (brand.contains("Viva Naturals") && brand.contains("Antarctic Krill Oil"))
+				consumerLabScore = -10;
+			if (brand.contains("Freshfield") && brand.contains("Vegan Omega-3 DHA + DPA"))
+				consumerLabScore = -10;
 
 			for (String s : set) {
 				sb.append(s);
@@ -99,12 +103,13 @@ public class Omega3Service {
 				sustainedRelease = true;
 			String pillSize = "";
 			String bestTime = "13:00";
+			String caution = "키토산과 함께 복용하면 안 돼요!";
 			Supplement supplement = Supplement.builder().category(category).supplementName(supplementName).price(price)
 					.brand(brand).image(image).ingredients(ingredients).bioavailability(bioavailability)
 					.laxative(laxative).kidneyDisease(kidneyDisease).consumerLabScore(consumerLabScore)
 					.additionalEfficacy(additionalEfficacy).note(note).amount(amount).requiredCount(requiredCount)
 					.formula(formula).like(like).sustainedRelease(sustainedRelease).pillSize(pillSize)
-					.bestTime(bestTime).build();
+					.bestTime(bestTime).caution(caution).build();
 			supplementRepository.save(supplement);
 		}
 	}

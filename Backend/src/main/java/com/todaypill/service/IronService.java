@@ -57,78 +57,78 @@ public class IronService {
 					|| ingredients.contains("글라이시네이트")) {
 				cnt++;
 				bioavailability += 5;
-				set.add("stress_relief");
+				set.add("스트레스 완화");
 			}
 			if (ingredients.contains("구연산") || ingredients.contains("시트레이트") || ingredients.contains("citrate")) {
 				cnt++;
 				bioavailability += 6;
 				laxative += 3;
-				set.add("stress_relief");
+				set.add("스트레스 완화");
 			}
 			if (ingredients.contains("트레온산") || ingredients.contains("threonate") || ingredients.contains("트레오네이트")) {
 				cnt++;
 				bioavailability += 5;
-				set.add("memory_boost");
+				set.add("기억력 증진");
 			}
 			if (ingredients.contains("타우린") || ingredients.contains("taurate") || ingredients.contains("타우레이트")) {
 				cnt++;
 				bioavailability += 6;
-				set.add("blood_circulation");
+				set.add("기억력 증진");
 			}
 			if (ingredients.contains("아스파르트산") || ingredients.contains("aspartate") || ingredients.contains("아스파테이트")) {
 				cnt++;
 				bioavailability += 5;
-				set.add("energy_boost");
+				set.add("에너지 증진");
 			}
 			if (ingredients.contains("말산") || ingredients.contains("malate") || ingredients.contains("말레이트")) {
 				cnt++;
 				bioavailability += 5;
-				set.add("muscle_pain");
+				set.add("근육통 완화");
 			}
 			if (ingredients.contains("글루콘산") || ingredients.contains("gluconate") || ingredients.contains("글루코네이트")) {
 				cnt++;
 				bioavailability += 6;
-				set.add("stress_relief");
+				set.add("근육통 완화");
 			}
 			if (ingredients.contains("젖산") || ingredients.contains("lactate") || ingredients.contains("락테이트")) {
 				cnt++;
 				bioavailability += 3;
 				kidneyDisease -= 10;
-				set.add("stress_relief");
+				set.add("근육통 완화");
 			}
 			if (ingredients.contains("황산") || ingredients.contains("sulfate") || ingredients.contains("설페이트")) {
 				cnt++;
 				bioavailability += 3;
 				laxative += 5;
-				set.add("stress_relief");
+				set.add("근육통 완화");
 			}
 			if (ingredients.contains("산화") || ingredients.contains("oxide") || ingredients.contains("옥사이드")) {
 				cnt++;
 				bioavailability += 3;
 				laxative += 5;
-				set.add("stress_relief");
+				set.add("근육통 완화");
 			}
 			if (ingredients.contains("탄산") || ingredients.contains("carbonate") || ingredients.contains("카보네이트")) {
 				cnt++;
 				bioavailability += 3;
-				set.add("antacid");
+				set.add("제산제 효과");
 			}
 			if (ingredients.contains("오로트산") || ingredients.contains("orotate") || ingredients.contains("오로테이트")) {
 				cnt++;
 				bioavailability += 5;
-				set.add("blood_circulation");
+				set.add("혈액 순환");
 			}
 			if (ingredients.contains("염화") || ingredients.contains("chloride") || ingredients.contains("클로라이드")) {
 				cnt++;
 				bioavailability += 3;
 				laxative += 3;
-				set.add("antacid");
+				set.add("제산제 효과");
 			}
 			if (ingredients.contains("수산화") || ingredients.contains("hydroxide") || ingredients.contains("하이드로옥사이드")) {
 				cnt++;
 				bioavailability += 3;
 				laxative += 5;
-				set.add("stress_relief");
+				set.add("스트레스 완화");
 			}
 
 			if (cnt != 0) {
@@ -165,12 +165,13 @@ public class IronService {
 				sustainedRelease = true;
 			String pillSize = "";
 			String bestTime = "08:00";
+			String caution = "꼭 체내 철분 수치를 정확히 파악한 뒤 복용해주세요!";
 			Supplement supplement = Supplement.builder().category(category).supplementName(supplementName).price(price)
 					.brand(brand).image(image).ingredients(ingredients).bioavailability(bioavailability)
 					.laxative(laxative).kidneyDisease(kidneyDisease).consumerLabScore(consumerLabScore)
 					.additionalEfficacy(additionalEfficacy).note(note).amount(amount).requiredCount(requiredCount)
 					.formula(formula).like(like).sustainedRelease(sustainedRelease).pillSize(pillSize)
-					.bestTime(bestTime).build();
+					.bestTime(bestTime).caution(caution).build();
 			supplementRepository.save(supplement);
 		}
 	}

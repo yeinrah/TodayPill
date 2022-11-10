@@ -35,6 +35,18 @@ public class MultivitaminService {
 		// String note, Float amount, Float requiredCount, String formula, Integer like,
 		// Boolean sustainedRelease
 
+		String[][] notApproved = {
+				{"Nutrilite", "Daily"},
+				{"Vitafusion", "MultiVites - Natural Berry, Peach & Orange Flavors"},
+				{"Vimerson Health","Women's Multivitamin"},
+				{"Vimerson Health","Women's Multivitamin"},
+				{"New Chapter","Perfect Prenatal™ Multivitamin"},
+				{"Rainbow Light","Prenatal One"},
+				{"CVS Health","Men's Daily Gummies"},
+				{"Innate","Men's 40+ Multivitamin"},
+				{"MegaFood","Men's One Daily"},
+		};
+		
 		List<Multivitamin> list = multivitaminRepository.findAll();
 		for (Multivitamin m : list) {
 			String category = m.getCategory();
@@ -57,91 +69,91 @@ public class MultivitaminService {
 					|| ingredients.contains("thiamine HCI")) {
 				cnt++;
 				bioavailability += -5;
-				set.add("muscle_pain");
+				set.add("근육통 완화");
 			}
 			if (ingredients.contains("티아민 나이트레이트") || ingredients.contains("티아민 질산염")
 					|| ingredients.contains("thiamine nitrate")) {
 				cnt++;
 				bioavailability += -5;
-				set.add("vitality");
+				set.add("에너지 증진");
 			}
 			if (ingredients.contains("티아민 피로인산") || ingredients.contains("TPP")
 					|| ingredients.contains("thiamine pyrophosphate")) {
 				cnt++;
 				bioavailability += 5;
-				set.add("energy_production");
+				set.add("에너지 증진");
 			}
 			if (ingredients.contains("벤포티아민") || ingredients.contains("benfotiamine")) {
 				cnt++;
 				bioavailability += 5;
-				set.add("immune");
+				set.add("에너지 증진");
 			}
 			if (ingredients.contains("푸르설티아민") || ingredients.contains("fursultiamine")) {
 				cnt++;
 				bioavailability += 5;
-				set.add("neuralgia");
+				set.add("신경통 완화");
 			}
 			if (ingredients.contains("비스벤티아민") || ingredients.contains("bisbentiamine")) {
 				cnt++;
 				bioavailability += 5;
-				set.add("joint_pain");
+				set.add("관절 건강");
 			}
 			if (ingredients.contains("리보플라빈") || ingredients.contains("riboflavin") || ingredients.contains("글루코네이트")) {
 				cnt++;
-				set.add("migraine");
+				set.add("신경통 완화");
 			}
 			if (ingredients.contains("리보플라빈포스페이트") || ingredients.contains("riboflavine-5-phosphate")) {
 				cnt++;
 				bioavailability += 1;
-				set.add("Hair_loss");
+				set.add("탈모 완화");
 			}
 			if (ingredients.contains("판토텐산") || ingredients.contains("pantothenic acid")
 					|| ingredients.contains("설페이트")) {
 				cnt++;
-				set.add("lessening_of_tension");
+				set.add("스트레스 완화");
 			}
 			if (ingredients.contains("판테틴") || ingredients.contains("pantethine")) {
 				cnt++;
 				bioavailability += 1;
-				set.add("Stress_control");
+				set.add("스트레스 완화");
 			}
 			if (ingredients.contains("피리독신 염산염") || ingredients.contains("pyridoxine HCI")) {
 				cnt++;
-				set.add("amino_acid_metabolism");
+				set.add("스트레스 완화");
 			}
 			if (ingredients.contains("피리독설포스페이트") || ingredients.contains("pyridoxal-5-phosphate")) {
 				cnt++;
 				bioavailability += 1;
-				set.add("homocysteine_control");
+				set.add("독성 물질 경감");
 			}
 			if (ingredients.contains("엽산") || ingredients.contains("folic acid")) {
 				cnt++;
-				set.add("heart_disease");
+				set.add("독성 물질 경감");
 			}
 			if (ingredients.contains("메틸테트라히드로폴레이트") || ingredients.contains("5-methyltetrahydrofolate")
 					|| ingredients.contains("5-MTHF")) {
 				cnt++;
 				bioavailability += 1;
-				set.add("Depression");
+				set.add("우울증 완화");
 			}
 			if (ingredients.contains("시아노코발라민") || ingredients.contains("cyanocobalamin")) {
 				cnt++;
-				set.add("blood");
+				set.add("혈액순환");
 			}
 			if (ingredients.contains("히드록소코발라민") || ingredients.contains("hydroxocobalamin")) {
 				cnt++;
 				bioavailability += 1;
-				set.add("Cancer");
+				set.add("신경통 완화");
 			}
 			if (ingredients.contains("메틸코발라민") || ingredients.contains("methylcobalamin")) {
 				cnt++;
 				bioavailability += 1;
-				set.add("appetite_boost");
+				set.add("면역 증진");
 			}
 			if (ingredients.contains("아데노실코발라민") || ingredients.contains("adenocylcobalamin")) {
 				cnt++;
 				bioavailability += 1;
-				set.add("brain_cells");
+				set.add("독성 물질 경감");
 			}
 
 			if (cnt != 0) {
@@ -151,7 +163,10 @@ public class MultivitaminService {
 			}
 
 			Integer consumerLabScore = 0;
-
+			for (int i = 0; i < notApproved.length; i++)
+				if (brand.contains(notApproved[i][0]) && brand.contains(notApproved[i][1]))
+					consumerLabScore = -10;
+			
 			for (String s : set) {
 				sb.append(s);
 				sb.append(", ");
@@ -178,12 +193,13 @@ public class MultivitaminService {
 				sustainedRelease = true;
 			String pillSize = "";
 			String bestTime = "13:00";
+			String caution = "";
 			Supplement supplement = Supplement.builder().category(category).supplementName(supplementName).price(price)
 					.brand(brand).image(image).ingredients(ingredients).bioavailability(bioavailability)
 					.laxative(laxative).kidneyDisease(kidneyDisease).consumerLabScore(consumerLabScore)
 					.additionalEfficacy(additionalEfficacy).note(note).amount(amount).requiredCount(requiredCount)
 					.formula(formula).like(like).sustainedRelease(sustainedRelease).pillSize(pillSize)
-					.bestTime(bestTime).build();
+					.bestTime(bestTime).caution(caution).build();
 			supplementRepository.save(supplement);
 		}
 	}
