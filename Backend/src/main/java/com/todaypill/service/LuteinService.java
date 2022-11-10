@@ -56,12 +56,12 @@ public class LuteinService {
 			if (ingredients.contains("지아잔틴") || supplementName.contains("zeaxanthin") || supplementName.contains("제아잔틴")) {
 				cnt++;
 				bioavailability += 5;
-				sb.append("antioxidant");
+				sb.append("항산화");
 			}
 			if (ingredients.contains("아스타잔틴") || supplementName.contains("astaxanthin")) {
 				cnt++;
 				bioavailability += 3;
-				sb.append("antioxidant");
+				sb.append("항산화");
 			}
 			
 			if (cnt != 0) {

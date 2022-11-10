@@ -63,22 +63,22 @@ public class ZincService {
 			if (ingredients.contains("아세트산") || ingredients.contains("acetate") || ingredients.contains("아세테이트")) {
 				cnt++;
 				bioavailability += 4;
-				set.add("cold");
+				set.add("감기 완화");
 			}
 			if (ingredients.contains("무기산") || ingredients.contains("inorganic")) {
 				cnt++;
 				bioavailability += 2;
-				set.add("skin_disease");
+				set.add("피부병 완화");
 			}
 			if (ingredients.contains("산화") || ingredients.contains("oxide") || ingredients.contains("옥사이드")) {
 				cnt++;
 				bioavailability += 2;
-				set.add("scald");
+				set.add("화상 완화");
 			}
 			if (ingredients.contains("글루콘산") || ingredients.contains("gluconate") || ingredients.contains("글루코네이트")) {
 				cnt++;
 				bioavailability += 4;
-				set.add("immune");
+				set.add("면역 증진");
 			}
 			
 			if (cnt != 0) {

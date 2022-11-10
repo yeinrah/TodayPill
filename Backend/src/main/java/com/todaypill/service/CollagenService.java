@@ -50,7 +50,7 @@ public class CollagenService {
 			StringBuilder sb = new StringBuilder();
 			
 			if (ingredients.contains("II") || supplementName.contains("관절") || supplementName.contains("조인트"))
-				sb.append("joint_health");
+				sb.append("관절 건강");
 			
 			if (cnt != 0) {
 				bioavailability = (double) Math.round(bioavailability / cnt * 10) / 10.0;
