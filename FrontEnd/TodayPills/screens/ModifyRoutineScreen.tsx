@@ -15,15 +15,15 @@ import { RootStackScreenProps } from "../types";
 import BackgroundScreen from "./BackgroundScreen";
 import Card from "../components/UI/Card";
 import GoBackBtn from "../components/UI/GoBackBtn";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { accent, primary } from "../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import RoutineDetailList from "../components/Calendar/Routine/RoutineDetailList";
 import ModifyRoutineItem from "../components/Calendar/Routine/ModifyRoutineItem";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 
 export default function ModifyRoutineScreen({ navigation, route }: any) {
   // RootStackScreenProps<"MyPills">
-  const [pillId, setPillId] = useState(route.pillId);
 
   return (
     <BackgroundScreen>
@@ -39,7 +39,11 @@ export default function ModifyRoutineScreen({ navigation, route }: any) {
                 {/* <Text style={styles.text}>{pillId}</Text> */}
               </View>
             </View>
-            <ModifyRoutineItem />
+            <ModifyRoutineItem
+              navigation={navigation}
+              pillId={route.params?.pillId}
+              updateOrNot={route.params?.update}
+            />
           </View>
         </View>
       </Card>

@@ -2,14 +2,17 @@ import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { afterSecondSurvey } from "../../API/userAPI";
 import DetailedPillCard from "../../components/Cards/DetailedPillCard";
 import CustomBtn from "../../components/UI/CustomBtn";
 import { accent } from "../../constants/Colors";
 import BackgroundScreen from "../BackgroundScreen";
 
-const PillResultScreen = ({ navigation }: any) => {
+const PillResultScreen = ({ navigation, route }: any) => {
   const [myName, setMyName] = useState("");
   const [nowMyNutrient, setNowMyNutrient] = useState("");
+  const [userId, setUserId] = useState(0);
+  const [itemList, setItemList] = useState([]);
   const getMyName = async () => {
     const name = await AsyncStorage.getItem("@storage_UserNickName");
     setMyName(name);
@@ -18,9 +21,21 @@ const PillResultScreen = ({ navigation }: any) => {
     const nutrient = await AsyncStorage.getItem("@storage_nowNutrient");
     setNowMyNutrient(nutrient);
   };
+  // const getUserId = async () => {
+  //   let id = await AsyncStorage.getItem("@storage_UserId");
+  //   setUserId(Number(id));
+  // };
+  // const getResult = async () => {
+  //   await getUserId();
+  //   let arr = afterSecondSurvey(route.params.answerSheet);
+  //   setItemList([...itemList, arr]);
+  //   return arr;
+  // };
   useEffect(() => {
     getMyName();
     getMyNowNutrient();
+    // console.log(route.params.answerSheet);
+    // getResult();
   }, []);
   return (
     <BackgroundScreen>
@@ -41,9 +56,21 @@ const PillResultScreen = ({ navigation }: any) => {
           </Text>
         </View>
         <View>
-          <DetailedPillCard />
-          <DetailedPillCard />
-          <DetailedPillCard />
+          {/* <DetailedPillCard /> */}
+          {route.params.answerSheet[0].data.map((item, index) => {
+            console.log(item);
+            return (
+              <DetailedPillCard
+                supplementId={item.supplementId}
+                supplementName={item.supplementName}
+                brand={item.brand}
+                note={item.note}
+                userId={userId}
+                image={item.image}
+                key={index}
+              />
+            );
+          })}
         </View>
         <View style={styles.btn}>
           <CustomBtn

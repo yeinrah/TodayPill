@@ -14,7 +14,7 @@ const SecondAddSurvey = ({ navigation }: any) => {
   const [answerSheet, setAnswerSheet] = useState<any>({
     lowerPriceLimit: 0,
     upperPriceLimit: 0,
-    additionalEfficiency: "",
+    additionalEfficacy: "",
     formula: "",
     sustainedRelease: false,
   });
@@ -22,7 +22,7 @@ const SecondAddSurvey = ({ navigation }: any) => {
     ["lowerPriceLimit", "원하는 최소 가격을 알려주세요", "이 가격은 넘자"],
     ["upperPriceLimit", "원하는 최대 가격을 알려주세요", "이 가격은 넘지말자"],
     [
-      "additionalEfficiency",
+      "additionalEfficacy",
       "추가로 원하는 효과가 있나요?",
       "선택해주세요",
       ["스트레스 완화", "기억력 증진", "혈액순환", "에너지 충전", "근육통"],
@@ -80,9 +80,14 @@ const SecondAddSurvey = ({ navigation }: any) => {
               onPress={async () => {
                 let uid = await AsyncStorage.getItem("@storage_UserId");
                 let uemail = await AsyncStorage.getItem("@storage_UserEmail");
+                let nowSelectedNutrient = await AsyncStorage.getItem(
+                  "@storage_nowNutrient"
+                );
                 setNowStage(nowStage + 1);
                 let answer: boolean | number;
-                if (nowStage === 2) {
+                if (nowStage === 0 || nowStage === 1) {
+                  answer = Number(selectedItem);
+                } else if (nowStage === 2) {
                   answer = SurveyQuestion.get(selectedItem);
                 } else if (nowStage === 3) {
                   answer = SurveyFormula.get(selectedItem);
@@ -92,6 +97,7 @@ const SecondAddSurvey = ({ navigation }: any) => {
                 setAnswerSheet({
                   userId: uid,
                   email: uemail,
+                  category: nowSelectedNutrient,
                   ...answerSheet,
                   [`${surveyData[nowStage][0]}`]: answer,
                 });

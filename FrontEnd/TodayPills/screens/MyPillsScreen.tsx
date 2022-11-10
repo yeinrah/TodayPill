@@ -10,7 +10,7 @@ import {
 
 // import EditScreenInfo from "../components/EditScreenInfo";
 // import { Text, View } from "../components/Themed";
-
+import { useEffect, useState, useCallback } from "react";
 import { RootStackScreenProps } from "../types";
 import BackgroundScreen from "./BackgroundScreen";
 import Card from "../components/UI/Card";
@@ -18,12 +18,29 @@ import GoBackBtn from "../components/UI/GoBackBtn";
 import { accent, primary } from "../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import RoutineDetailList from "../components/Calendar/Routine/RoutineDetailList";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function MyPillsScreen({ navigation }: any) {
   // RootStackScreenProps<"MyPills">
-  const addRoutinePillHandler = () => {
-    navigation.navigate("Search", { userId: 1 });
+  const [userId, setUserId] = useState(0);
+  const getMyId = async () => {
+    const currentUserId = await AsyncStorage.getItem("@storage_UserId");
+    setUserId(parseInt(currentUserId));
   };
+  const addRoutinePillHandler = () => {
+    navigation.navigate("Search", { userId });
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      getMyId();
+
+      // return () => {
+
+      // };
+    }, [userId])
+  );
 
   return (
     <BackgroundScreen>
