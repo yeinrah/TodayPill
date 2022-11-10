@@ -22,31 +22,67 @@ import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import CustomBtn from "../../UI/CustomBtn";
 import WeekDayList from "./WeekDayList";
 import * as Notifications from "expo-notifications";
+import { useFocusEffect } from "@react-navigation/native";
+import { fetchSupplementDetail } from "../../../API/supplementAPI";
+import { fetchAllRoutineSupplements } from "../../../API/routineAPI";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 // import Notifications from "../../../utils/Notifications";
 
-const dummyRoutine = {
-  time: "17:30",
-  days: [5, 6],
-  brand: "나우푸드",
-  pillName: "비타민 C 1000",
-  imgUrl:
-    "https://contents.lotteon.com/itemimage/LO/14/19/59/10/62/_1/41/95/91/06/3/LO1419591062_1419591063_1.jpg",
-  cnt: 1,
-};
+export default function ModifyRoutineItem({
+  navigation,
+  pillId,
+  updateOrNot,
+}: any) {
+  const [userId, setUserId] = useState(0);
+  const firstRoutine = {
+    time: "17:30",
+    days: [5, 6],
+    brand: "나우푸드",
+    pillName: "비타민 C 1000",
+    imgUrl:
+      "https://contents.lotteon.com/itemimage/LO/14/19/59/10/62/_1/41/95/91/06/3/LO1419591062_1419591063_1.jpg",
+    cnt: 1,
+  };
+  const [routineItem, setRoutineItem] = useState(firstRoutine);
+  const [selectedRoutineDays, setSelectedRoutineDays] = useState("");
+  const [hour, setHour] = useState(1);
 
-export default function ModifyRoutineItem() {
-  const [routineItem, setRoutineItem] = useState(dummyRoutine);
+  const [supplementDetail, setSupplementDetail] = useState({
+    name: "",
+    brand: "",
+    image: "",
+    ingredients: "",
+    bestTime: "",
+    requiredCount: "",
+  });
   const [pillCnt, setPillCnt] = useState(routineItem.cnt);
   const [isEnabled, setIsEnabled] = useState(false);
+
+  const [takenTime, setTakenTime] = useState("");
   const [isAM, setIsAM] = useState(true);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [takenTime, setTakenTime] = useState("08:00");
 
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
 
   const submitModifyRoutineHandler = () => {
     console.warn("제출함!!!!!!!!!!!!!!!!!!!!");
   };
+
+  const getMyAllRoutineSupplements = async () => {
+    const currentUserId = await AsyncStorage.getItem("@storage_UserId");
+    setUserId(parseInt(currentUserId));
+    const allMyRoutines = await fetchAllRoutineSupplements(userId);
+
+    // setSupplementDetail(eachSupplementDetail);
+  };
+  const getSupplementDetail = async () => {
+    const eachSupplementDetail = await fetchSupplementDetail(pillId);
+    // if (eachSupplementDetail.bestTime.slice(0,2))
+    timeConvert(eachSupplementDetail.bestTime);
+    // setTakenTime(eachSupplementDetail.bestTime);
+
+    setSupplementDetail(eachSupplementDetail);
+  };
+
   const showDatePicker = () => {
     setDatePickerVisible(true);
   };
@@ -64,15 +100,70 @@ export default function ModifyRoutineItem() {
       setIsAM(false);
     } else if (hour == 12) {
       setIsAM(false);
+    } else {
+      setIsAM(true);
     }
 
     if (minute.length === 1) {
       minute = "0" + minute;
     }
 
-    setTakenTime(`${hour}: ${minute}`);
+    setTakenTime(`${hour}:${minute}`);
     hideDatePicker();
   };
+
+  const timeConvert = (timeString: string) => {
+    let hour = parseInt(timeString.slice(0, 2));
+    const minute = timeString.slice(3, 5);
+    if (hour > 12) {
+      hour -= 12;
+      setIsAM(false);
+    } else if (hour == 12) {
+      setIsAM(false);
+    } else {
+      setIsAM(true);
+    }
+    console.warn(hour, minute);
+    setTakenTime(`${hour}:${minute}`);
+    // return `${hour}: ${minute}`;
+    // setTakenTime(`${hour}: ${minute}`);
+  };
+  // console.log(timeConvert("10:00"));
+  // timeConvert(supplementDetail.bestTime);
+
+  if (updateOrNot === "false") {
+    // timeConvert(supplementDetail.bestTime);
+
+    console.log(updateOrNot);
+  }
+
+  // useCallback(() => {
+  //   if (!updateOrNot) {
+  //     console.log(updateOrNot);
+
+  //     timeConvert(supplementDetail.bestTime);
+  //   }
+  // }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      // getMyAllRoutineSupplements();
+      getSupplementDetail();
+
+      // return () => {
+
+      // };
+    }, [pillId])
+  );
+
+  // -----------------------------
+  // -----------------------------
+  // -----------------------------
+  // -----------------------------
+  // -----------------------------
+  // -----------------------------
+  // -----------------------------
+  // -----------------------------
 
   const alarmToggleSwitch = () => {
     setIsEnabled((previousState) => !previousState);
@@ -145,6 +236,15 @@ export default function ModifyRoutineItem() {
     // 선택한 요일들 인덱스로 array 만들어서 보내기
     handleClosePress();
   };
+
+  console.log(selectedRoutineDays, "올라온 날들");
+  // -------------------------------------------------
+  // -------------------------------------------------
+  // -------------------------------------------------
+  // -------------------------------------------------
+  // -------------------------------------------------
+  // -------------------------------------------------
+
   return (
     <ScrollView style={styles.outerContainer}>
       <PillCard height={400} width={"90%"} bgColor={"#edfbf9"}>
@@ -152,7 +252,7 @@ export default function ModifyRoutineItem() {
           <View style={styles.imageOuterContainer}>
             <View style={styles.imageContainer}>
               <Image
-                source={{ uri: routineItem.imgUrl }}
+                source={{ uri: supplementDetail.image }}
                 style={styles.pillImage}
               />
             </View>
@@ -160,11 +260,12 @@ export default function ModifyRoutineItem() {
           <View style={styles.pillDetailContainer}>
             <View style={styles.nameContainer}>
               <Text style={styles.name}>제품명</Text>
-              <Text style={styles.pillName}>{routineItem.pillName}</Text>
+              {/* <Text style={styles.pillName}>{routineItem.pillName}</Text> */}
+              <Text style={styles.pillName}>{supplementDetail.name}</Text>
               <View style={styles.separator} />
             </View>
             <View style={styles.cntContainer}>
-              <Text style={styles.name}>섭취 횟수</Text>
+              <Text style={styles.name}>섭취 개수</Text>
               <View style={styles.modifyCnt}>
                 <Pressable onPress={decreaseHandler}>
                   <Entypo name="circle-with-minus" size={27} color={accent} />
@@ -180,23 +281,23 @@ export default function ModifyRoutineItem() {
       </PillCard>
 
       <View>
-        <PillCard height={160} width={"90%"} bgColor={"#edfbf9"}>
+        <PillCard height={200} width={"90%"} bgColor={"#edfbf9"}>
           <View style={styles.takenTimeInnerContainer}>
             <View style={styles.dayAlarmOuterContainer}>
-              <View style={styles.dayAlarmContainer}>
-                <Text style={styles.name}>섭취 요일</Text>
+              <View style={styles.dayOuterContainer}>
+                <View style={styles.dayAlarmContainer}>
+                  <Text style={styles.name}>섭취 요일</Text>
+                  <Text style={styles.name}>{selectedRoutineDays}</Text>
 
-                <Pressable
-                  // onPress={() => handleSnapPress(2)}
-                  // onPress={() => setModalVisible(true)}
-                  style={styles.directionRow}
-                >
                   <Text style={styles.dayAndTimeName}>매일</Text>
-                </Pressable>
+                </View>
+                <Text style={styles.dayExplText}>
+                  아래 요일을 클릭하여 섭취 요일을 선택해주세요.
+                </Text>
               </View>
 
               <View style={styles.dayListContainer}>
-                <WeekDayList />
+                <WeekDayList addRoutineDaysHandler={setSelectedRoutineDays} />
               </View>
             </View>
 
@@ -208,7 +309,13 @@ export default function ModifyRoutineItem() {
 
               <Pressable onPress={showDatePicker} style={styles.directionRow}>
                 <Text style={styles.dayAndTimeName}>
-                  {takenTime} {isAM ? "AM" : "PM"}
+                  {/* {supplementDetail.bestTime} {isAM ? "AM" : "PM"} */}
+                  <Text
+                    style={isAM ? { color: primary } : { color: "#309388" }}
+                  >
+                    {isAM ? "AM" : "PM"}
+                  </Text>{" "}
+                  {takenTime}
                   {/* dayTimePicker 쓰기 */}
                 </Text>
                 <DateTimePickerModal
@@ -323,7 +430,7 @@ const styles = StyleSheet.create({
   },
   pillName: {
     marginVertical: 7,
-    fontSize: 23,
+    fontSize: 17,
     fontWeight: "bold",
   },
   separator: {
@@ -373,14 +480,23 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: "#FF78A3",
   },
+  dayExplText: {
+    fontSize: 10,
+    color: "#FF78A3",
+    paddingHorizontal: 15,
+  },
   dayAlarmOuterContainer: {
-    flex: 5,
+    flex: 6,
+  },
+  dayOuterContainer: {
+    flex: 3,
+    // backgroundColor: "yellow",
   },
   dayAlarmContainer: {
-    paddingHorizontal: 17,
     flex: 1,
-    height: "100%",
-    // backgroundColor: "yellow",
+    paddingHorizontal: 17,
+    // backgroundColor: "blue",
+
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -393,7 +509,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   dayListContainer: {
-    flex: 1,
+    flex: 5,
   },
   directionRow: {
     // backgroundColor: "red",
@@ -421,10 +537,6 @@ const styles = StyleSheet.create({
     // alignItems: "center",
   },
 
-  chooseDays: {
-    backgroundColor: "red",
-    flex: 1,
-  },
   chooseBtn: {
     flex: 1,
     alignItems: "center",

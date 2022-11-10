@@ -6,6 +6,8 @@ import { accent, primary, secondary } from "../../../constants/Colors";
 import PillCard from "../../UI/PillCard";
 import { getDayOfWeekString } from "../../functions/getDayOfWeekString";
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../../types";
 
 export interface RoutineDetailProps {
   key: number;
@@ -25,13 +27,19 @@ export default function RoutineItemDetail({
   name,
   cnt,
 }: RoutineDetailProps) {
-  const navigation = useNavigation<any>();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [takenDaysStr, setTakenDaysStr] = useState("");
   let takenDays = "";
 
   const modifyRoutineHandler = () => {
-    navigation.navigate("ModifyRoutine", { pillId: 1 });
+    // --------------------------------------------###############################
+    // 진짜 supplementId 추가하긱!!!!!!!!!!!!!!!
+    navigation.navigate("ModifyRoutine", { pillId: 1, update: "true" });
   };
+
+  // useFocusEffect 쓰기!!!!!!!!!!!!!!!!!!!!!!!
+
   useEffect(() => {
     if (days.length === 7) {
       takenDays = "매일";
@@ -46,7 +54,7 @@ export default function RoutineItemDetail({
 
   return (
     <View style={styles.outerContainer}>
-      <PillCard height={85} width={"90%"} bgColor={"#edfbf9"}>
+      <PillCard height={85} width={"90%"} bgColor={"white"}>
         <Pressable
           android_ripple={{ color: "#4E736F" }}
           style={styles.cardContainer}

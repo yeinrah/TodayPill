@@ -2,11 +2,16 @@ import { StyleSheet, View, Image, Text, Pressable } from "react-native";
 import { useState, useCallback } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { fetchLikeUsers, like, dislike } from "../../API/likeAPI";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import PillCard from "../UI/PillCard";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../types";
 
 const DetailedPillCard = (props: any) => {
   const [isLiked, setIsLiked] = useState(false);
   const [likeCnt, setLikeCnt] = useState(0);
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const getLikeOrNot = async () => {
     const likeUsersList = await fetchLikeUsers(props.supplementId).catch((e) =>
@@ -39,66 +44,92 @@ const DetailedPillCard = (props: any) => {
   useFocusEffect(
     useCallback(() => {
       getLikeOrNot();
-      console.log(props);
     }, [props.userId, props.supplementId, isLiked])
   );
 
   return (
-    <View style={styles.container}>
-      <Image source={{ uri: props.image }} style={styles.image} />
-      <View style={styles.textcontainer}>
-        <Text style={styles.brandname}>{props.brand}</Text>
-        <Text style={styles.pillname}>{props.supplementName}</Text>
-        {/* 수정하기!!! */}
-        <Text style={styles.feature}>{props.note}</Text>
-        <Text style={styles.feature}>맛도 좋음</Text>
-        <View style={styles.alertcontainer}>
-          <Ionicons name="warning" size={10} color="#FFCE31" />
-          <Text style={styles.blackalert}>주의&nbsp;</Text>
-          <Text style={styles.greyalert}>
-            고용량 포함, 장기 복용시 전문가와 상의
-          </Text>
-        </View>
-      </View>
-      <View style={styles.heartcontainer}>
+    <View style={styles.outerContainer}>
+      <PillCard height={95} width={"90%"} bgColor={"white"}>
         <Pressable
-          onPress={isLiked ? dislikeHandler : likeHandler}
-          style={styles.heartbutton}
+          android_ripple={{ color: "#4E736F" }}
+          style={styles.cardContainer}
+          onPress={() => {
+            navigation.navigate("ModifyRoutine", {
+              pillId: props.supplementId,
+              update: "false",
+            });
+          }}
         >
-          <Image
-            source={
-              isLiked
-                ? require("../../assets/images/heartOn3.png")
-                : require("../../assets/images/heartOff1.png")
-            }
-            style={styles.heart}
-          />
+          <Image source={{ uri: props.image }} style={styles.image} />
+          <View style={styles.textcontainer}>
+            <Text style={styles.brandname}>{props.brand}</Text>
+            <Text style={styles.pillname}>{props.supplementName}</Text>
+            {/* 수정하기!!! */}
+            <Text style={styles.feature}>{props.note}</Text>
+            <Text style={styles.feature}>정보 추가해야함...</Text>
+            <View style={styles.alertcontainer}>
+              <Ionicons name="warning" size={10} color="#FFCE31" />
+              <Text style={styles.blackalert}>주의&nbsp;</Text>
+              <Text style={styles.greyalert}>
+                고용량 포함, 장기 복용시 전문가와 상의
+              </Text>
+            </View>
+          </View>
+          <View style={styles.heartcontainer}>
+            <Text style={styles.likeCnt}>{likeCnt}</Text>
+            <Pressable
+              onPress={isLiked ? dislikeHandler : likeHandler}
+              style={styles.heartbutton}
+            >
+              <Image
+                source={
+                  isLiked
+                    ? require("../../assets/images/heartOn3.png")
+                    : require("../../assets/images/heartOff1.png")
+                }
+                style={styles.heart}
+              />
+            </Pressable>
+          </View>
         </Pressable>
-        <Text>{likeCnt}</Text>
-      </View>
+      </PillCard>
     </View>
+    // <View style={styles.container}>
+    // </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    position: "relative",
-    marginTop: 10,
-    marginHorizontal: 10,
-    height: 90,
-    backgroundColor: "#F4FAF9",
-    elevation: 10,
-    borderRadius: 10,
+  outerContainer: {
+    // marginTop: 13,
   },
+
+  cardContainer: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  // container: {
+  //   // justifyContent: "space-between",
+  //   // position: "relative",
+  //   marginTop: 13,
+  //   marginHorizontal: 15,
+  //   height: 90,
+  //   // backgroundColor: "#F4FAF9",
+  //   backgroundColor: "white",
+  //   elevation: 10,
+  //   borderRadius: 10,
+  // },
   image: {
     marginVertical: 5,
     marginHorizontal: 10,
-    width: 80,
-    height: 80,
+    // width: 70,
+    width: "20%",
+    height: 70,
     resizeMode: "contain",
   },
   textcontainer: {
+    width: "60%",
     marginTop: 5,
     paddingRight: 50,
   },
@@ -134,21 +165,29 @@ const styles = StyleSheet.create({
     fontSize: 8,
   },
   heartcontainer: {
-    position: "absolute",
-    top: 0,
-    right: 0,
-    width: 50,
-    height: 70,
+    height: "100%",
+    marginLeft: 10,
+    marginBottom: 10,
+    flexDirection: "column-reverse",
+    // position: "absolute",
+    // top: 10,
+    // right: 0,
+    // width: 50,
+    // height: 70,
     alignItems: "center",
   },
   heartbutton: {
-    width: 50,
-    height: 50,
+    width: 40,
+    height: 35,
+    marginBottom: -5,
   },
   heart: {
     width: "100%",
     height: "100%",
     resizeMode: "contain",
+  },
+  likeCnt: {
+    color: "#6B6B6B",
   },
 });
 
