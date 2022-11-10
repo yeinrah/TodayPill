@@ -2,10 +2,12 @@ import { StyleSheet, View, Text, Pressable } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { deleteZero } from "../../functions/deleteZero";
 import { getDayOfWeek } from "../../functions/getDayOfWeek";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import RoutineItem from "./RoutineItem";
 import { accent, primary, secondary } from "../../../constants/Colors";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { fetchAllRoutineSupplements } from "../../../API/routineAPI";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export interface PillScheduleProps {
   selectedDate: string;
@@ -39,16 +41,30 @@ const dummyRoutine = [
 
 export default function DayPillSchedule({ selectedDate }: PillScheduleProps) {
   const navigation = useNavigation<any>();
-  const [pillRoutine, setPillRoutine] = useState(dummyRoutine);
+  const [userId, setUserId] = useState(0);
+  const [pillRoutine, setPillRoutine] = useState([]);
   const dayOfWeek = getDayOfWeek(selectedDate);
   const dayString = `${deleteZero(selectedDate.slice(5, 7))}월 ${deleteZero(
     selectedDate.slice(8, 10)
   )}일 ${dayOfWeek}요일`;
 
   const addRoutineHandler = () => {
-    navigation.navigate("MyPills", { userId: 1 });
+    // 밑에 userId 변경!!
+    navigation.navigate("MyPills", { userId: userId });
   };
+  const getMyAllRoutineSupplements = async () => {
+    const currentUserId = await AsyncStorage.getItem("@storage_UserId");
+    setUserId(parseInt(currentUserId));
+    const allMyRoutines = await fetchAllRoutineSupplements(userId);
 
+    // setSupplementDetail(eachSupplementDetail);
+  };
+  useFocusEffect(
+    useCallback(() => {
+      // getMyAllRoutineSupplements();
+      getMyAllRoutineSupplements();
+    }, [userId])
+  );
   return (
     <View style={styles.container}>
       <View style={styles.eachDateContainer}>

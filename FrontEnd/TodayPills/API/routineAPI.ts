@@ -1,20 +1,6 @@
 import apiInstance from "./index";
 const api = apiInstance();
 
-// const HealthScreeningCheck = async (
-//   birthday: string,
-//   email: string,
-//   phoneNumber: string,
-//   userName: string
-// ) => {
-//   console.log(birthday, email, phoneNumber, userName);
-//   await api.post("/user/healthcheckdata", {
-//     birthday: birthday,
-//     email: email,
-//     phoneNumber,
-//     userName,
-//   });
-// };
 // const updateUsername = async (userId: number, name: string) => {
 //   console.warn("업데이트  닉네임!!!!!!!!!!!!!");
 //   await api.put("/user/user/updateName", {
@@ -43,4 +29,61 @@ const fetchAllRoutineSupplements = async (userId: number) => {
   return result.data;
 };
 
-export { fetchAllRoutineSupplements };
+const deleteMySupplement = async (
+  userId: number,
+  routineId: number,
+  dateStr: string
+) => {
+  await api.patch(`/mypage/${userId}/mysupplement/${routineId}`, dateStr);
+};
+
+const addMyRoutineSupplement = async (
+  userId: number,
+  supplementId: number,
+  day: string,
+  pushAlarm: boolean,
+  tablets: number,
+  time: string
+) => {
+  // console.log(supplementId, day, pushAlarm, tablets, time);
+  await api.post(`/mypage/${userId}/mysupplement`, {
+    supplementId,
+    day,
+    pushAlarm,
+    tablets,
+    time,
+  });
+};
+const updateMyRoutineSupplement = async (
+  userId: number,
+  routineId: number,
+  supplementId: number,
+  day: string,
+  pushAlarm: boolean,
+  tablets: number,
+  time: string
+) => {
+  console.warn(
+    "루틴 복약 수정",
+    supplementId,
+    routineId,
+    day,
+    pushAlarm,
+    tablets,
+    time
+  );
+  await api.put(`/mypage/${userId}/mysupplement/${routineId}`, {
+    supplementId,
+    day,
+    pushAlarm,
+    tablets,
+    time,
+  });
+};
+
+export {
+  fetchAllRoutineSupplements,
+  addMyRoutineSupplement,
+  deleteMySupplement,
+  updateMyRoutineSupplement,
+};

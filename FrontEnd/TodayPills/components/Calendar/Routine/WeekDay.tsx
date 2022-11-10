@@ -11,6 +11,7 @@ export interface WeekDayProps {
   isDaysSelectCompleted: boolean;
   daySelectHandler: (dayId: number) => void;
   deleteDayHandler: (dayId: number) => void;
+  submitChangeHandler: () => void;
 
   // daySelectHandler: (dayObj: object) => void;
 }
@@ -21,6 +22,7 @@ export default function WeekDay({
   daySelectHandler,
   deleteDayHandler,
   isDaysSelectCompleted,
+  submitChangeHandler,
 }: WeekDayProps) {
   const [isPressed, setIsPressed] = useState(false);
   // const [dayObject, setDayObject] = useState({});
@@ -33,19 +35,14 @@ export default function WeekDay({
     deleteDayHandler(dayId);
   }
 
-  const changeDaySelectHandler = () => {
-    // const dayObject = {};
-    // dayObject[dayId] = isPressed;
-    // console.log(dayObject);
-    // daySelectHandler({ dayId: selectOrNot });
-    // console.log({ dayId: selectOrNot });
-  };
-
   const pressDayHandler = () => {
+    submitChangeHandler;
+    submitChangeHandler();
     setIsPressed(true);
     // changeDaySelectHandler(true);
   };
   const unpressDayHandler = () => {
+    submitChangeHandler();
     setIsPressed(false);
 
     // changeDaySelectHandler(false);

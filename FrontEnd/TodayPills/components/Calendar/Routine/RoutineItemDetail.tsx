@@ -1,60 +1,93 @@
 import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 
 import { FontAwesome } from "@expo/vector-icons";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { accent, primary, secondary } from "../../../constants/Colors";
 import PillCard from "../../UI/PillCard";
 import { getDayOfWeekString } from "../../functions/getDayOfWeekString";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../../types";
+import { fetchSupplementDetail } from "../../../API/supplementAPI";
+import { getDaysName } from "../../functions/getDaysName";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getDateStr } from "../../functions/getDateStr";
+import { deleteMySupplement } from "../../../API/routineAPI";
 
 export interface RoutineDetailProps {
   key: number;
+  routineId: number;
+  supplementId: number;
   time: string;
-  days: Array<number>;
-  image: string;
-  brand: string;
-  name: string;
-  cnt: number;
+  daysStr: string;
+  pushAlarm: boolean;
+  tablets: number;
+  onClickDelete: () => void;
 }
 
+const weekDays = ["월", "화", "수", "목", "금", "토", "일"];
+
 export default function RoutineItemDetail({
+  key,
+  routineId,
+  supplementId,
   time,
-  days,
-  image,
-  brand,
-  name,
-  cnt,
+  daysStr,
+  pushAlarm,
+  tablets,
+  onClickDelete,
 }: RoutineDetailProps) {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const [userId, setUserId] = useState(0);
+
   const [takenDaysStr, setTakenDaysStr] = useState("");
-  let takenDays = "";
+  const [supplementDetail, setSupplementDetail] = useState<any>({});
 
   const modifyRoutineHandler = () => {
     // --------------------------------------------###############################
     // 진짜 supplementId 추가하긱!!!!!!!!!!!!!!!
-    navigation.navigate("ModifyRoutine", { pillId: 1, update: "true" });
+    navigation.navigate("ModifyRoutine", {
+      pillId: supplementId,
+      update: "true",
+      tablets,
+      // days: supplementDetailItem.day 이거 state으로 저장해서 보내기,
+      time,
+      pushAlarm,
+      routineId,
+    });
   };
 
-  // useFocusEffect 쓰기!!!!!!!!!!!!!!!!!!!!!!!
+  const getSupplementDetail = async () => {
+    const supplementDetailItem: any = await fetchSupplementDetail(supplementId);
+    setSupplementDetail(supplementDetailItem);
+  };
 
-  useEffect(() => {
-    if (days.length === 7) {
-      takenDays = "매일";
-    } else {
-      for (let eachDay of days) {
-        takenDays += getDayOfWeekString(eachDay) + " ";
-        // setTakenDays(getDayOfWeekString(eachDay) + " ");
-      }
-    }
-    setTakenDaysStr(takenDays);
-  }, []);
+  const deleteMyRoutineSupplement = async () => {
+    const currentUserId = await AsyncStorage.getItem("@storage_UserId");
+    setUserId(parseInt(currentUserId));
+    const dateStr = getDateStr(new Date());
+
+    await deleteMySupplement(userId, routineId, dateStr);
+    onClickDelete();
+
+    console.warn("지우기!");
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      getSupplementDetail();
+      const takenDaysArray = daysStr.split(",").map((day) => {
+        return weekDays[parseInt(day) - 1];
+      });
+
+      setTakenDaysStr(getDaysName(takenDaysArray));
+    }, [supplementId, daysStr])
+  );
 
   return (
     <View style={styles.outerContainer}>
-      <PillCard height={85} width={"90%"} bgColor={"white"}>
+      <PillCard height={100} width={"90%"} bgColor={"white"}>
         <Pressable
           android_ripple={{ color: "#4E736F" }}
           style={styles.cardContainer}
@@ -62,12 +95,15 @@ export default function RoutineItemDetail({
         >
           <View style={styles.routineContainer}>
             <View style={styles.imageContainer}>
-              <Image source={{ uri: image }} style={styles.pillImage} />
+              <Image
+                source={{ uri: supplementDetail.image }}
+                style={styles.pillImage}
+              />
             </View>
             <View style={styles.pillDetailContainer}>
               <View>
-                <Text style={styles.brand}>{brand}</Text>
-                <Text style={styles.name}>{name}</Text>
+                <Text style={styles.brand}>{supplementDetail.brand}</Text>
+                <Text style={styles.name}>{supplementDetail.name}</Text>
               </View>
               <View style={styles.dayTimeContainer}>
                 <Text style={styles.days}>{takenDaysStr}</Text>
@@ -77,9 +113,11 @@ export default function RoutineItemDetail({
               </View>
             </View>
             <View style={styles.rightSideContainer}>
-              <FontAwesome name="trash-o" size={22} color="#B7B7B7" />
+              <Pressable onPress={deleteMyRoutineSupplement}>
+                <FontAwesome name="trash-o" size={22} color="#B7B7B7" />
+              </Pressable>
               <View style={styles.cntContainer}>
-                <Text style={styles.cnt}>{cnt}정</Text>
+                <Text style={styles.cnt}>{tablets}정</Text>
               </View>
             </View>
           </View>
@@ -151,7 +189,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   name: {
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: "bold",
   },
   cntContainer: {

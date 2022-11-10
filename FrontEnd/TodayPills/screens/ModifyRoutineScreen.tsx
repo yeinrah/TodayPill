@@ -24,7 +24,13 @@ import { useFocusEffect, useRoute } from "@react-navigation/native";
 
 export default function ModifyRoutineScreen({ navigation, route }: any) {
   // RootStackScreenProps<"MyPills">
-
+  const prevRoutineDetail = {
+    tablets: route.params?.tablets,
+    days: route.params?.days,
+    time: route.params?.time,
+    pushAlarm: route.params?.pushAlarm,
+    routineId: route.params?.routineId,
+  };
   return (
     <BackgroundScreen>
       <Card>
@@ -43,6 +49,7 @@ export default function ModifyRoutineScreen({ navigation, route }: any) {
               navigation={navigation}
               pillId={route.params?.pillId}
               updateOrNot={route.params?.update}
+              prevRoutineDetail={prevRoutineDetail}
             />
           </View>
         </View>
