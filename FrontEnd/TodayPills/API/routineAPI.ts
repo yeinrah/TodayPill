@@ -1,20 +1,6 @@
 import apiInstance from "./index";
 const api = apiInstance();
 
-// const HealthScreeningCheck = async (
-//   birthday: string,
-//   email: string,
-//   phoneNumber: string,
-//   userName: string
-// ) => {
-//   console.log(birthday, email, phoneNumber, userName);
-//   await api.post("/user/healthcheckdata", {
-//     birthday: birthday,
-//     email: email,
-//     phoneNumber,
-//     userName,
-//   });
-// };
 // const updateUsername = async (userId: number, name: string) => {
 //   console.warn("업데이트  닉네임!!!!!!!!!!!!!");
 //   await api.put("/user/user/updateName", {
@@ -41,6 +27,24 @@ const api = apiInstance();
 const fetchAllRoutineSupplements = async (userId: number) => {
   const result = await api.get(`/mypage/${userId}/mysupplement`);
   return result.data;
+};
+
+const addMyRoutineSupplement = async (
+  userId: number,
+  supplementId: number,
+  day: string,
+  pushAlarm: boolean,
+  tablets: number,
+  time: string
+) => {
+  console.log(supplementId, day, pushAlarm, tablets, time);
+  await api.post(`/mypage/${userId}/mysupplement`, {
+    supplementId,
+    day,
+    pushAlarm,
+    tablets,
+    time,
+  });
 };
 
 export { fetchAllRoutineSupplements };

@@ -12,29 +12,30 @@ const weekDays = ["월", "화", "수", "목", "금", "토", "일"];
 export default function WeekDayList(props: any) {
   const daysSet = new Set();
   const [selectedDays, setSelectedDays] = useState(daysSet);
-  // const [selectedDays, setSelectedDays] = useState([]);
-  const [submittedDays, setSubmittedDays] = useState([]);
 
   const [isSelectCompleted, setIsSelectCompleted] = useState(false);
-  // if (isSelectCompleted) {
-  //   setSubmittedDays([...selectedDays]);
-  // }
-
-  console.log(submittedDays, "submitted");
-  console.log(selectedDays, "selected");
+  // isSelectCompleted ? props.getSubmitted(true) : props.getSubmitted(false);
 
   const submitDays = [...selectedDays].sort();
+  const submitDaysNames = submitDays.map(
+    (eachDayId: number) => weekDays[eachDayId - 1]
+  );
+  let finalSubmitDaysNames: string = submitDaysNames.join(", ");
+  if (submitDaysNames.length === 7) {
+    finalSubmitDaysNames = "매일";
+  } else if (finalSubmitDaysNames === "월, 화, 수, 목, 금") {
+    finalSubmitDaysNames = "주중";
+  } else if (finalSubmitDaysNames === "토, 일") {
+    finalSubmitDaysNames = "주말";
+  }
+
   props.addRoutineDaysHandler(submitDays.join(", "));
+  // props.onChangeDaysName(finalSubmitDaysNames);
+
   const daySelectHandler = (dayId: number) => {
     setSelectedDays((selectedDays) => selectedDays.add(dayId));
-    // setSelectedDays((selectedDays) => [...selectedDays, dayId]);
-    // setSubmittedDays([...selectedDays]);
-    // setSubmittedDays(submitDays);
+    // props.getSubmitted(false);
     setIsSelectCompleted(false);
-    // props.addRoutineDaysHandler(submitDays.join(", "));
-
-    // setSelectedDays([]);
-    // setSelectedDays((selectedDays) => selectedDays.push(dayId));
   };
 
   const deleteDayHandler = (dayId: number) => {
@@ -42,8 +43,6 @@ export default function WeekDayList(props: any) {
       selectedDays.delete(dayId);
       return selectedDays;
     });
-    // props.addRoutineDaysHandler(submitDays.join(", "));
-    // setSubmittedDays(submitDays);
   };
   useFocusEffect(
     useCallback(() => {
@@ -52,10 +51,17 @@ export default function WeekDayList(props: any) {
     }, [])
   );
 
+  props.onChangeDaysName(finalSubmitDaysNames);
+
   const daySelectCompleteHandler = () => {
-    console.warn("요일 수정 완료");
     setIsSelectCompleted(true);
+    props.getSubmitted(true);
   };
+
+  const submitChangeHandler = () => {
+    props.getSubmitted(false);
+  };
+
   return (
     <View style={styles.outerContainer}>
       <View style={styles.dayListContainer}>
@@ -66,12 +72,13 @@ export default function WeekDayList(props: any) {
             dayId={idx + 1}
             daySelectHandler={daySelectHandler}
             deleteDayHandler={deleteDayHandler}
+            submitChangeHandler={submitChangeHandler}
             isDaysSelectCompleted={isSelectCompleted}
           />
         ))}
       </View>
       <View style={styles.btn}>
-        <Text>{submitDays.join(", ")}</Text>
+        {/* <Text>{submitDays.join(", ")}</Text> */}
         <Pressable
           onPress={daySelectCompleteHandler}
           // style={styles.btnContainer}

@@ -26,6 +26,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { fetchSupplementDetail } from "../../../API/supplementAPI";
 import { fetchAllRoutineSupplements } from "../../../API/routineAPI";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import PushNotifications from "./PushNotifications";
 // import Notifications from "../../../utils/Notifications";
 
 export default function ModifyRoutineItem({
@@ -45,7 +46,8 @@ export default function ModifyRoutineItem({
   };
   const [routineItem, setRoutineItem] = useState(firstRoutine);
   const [selectedRoutineDays, setSelectedRoutineDays] = useState("");
-  const [hour, setHour] = useState(1);
+  const [takenDaysName, setTakenDaysName] = useState("");
+  const [isDaySubmitted, setIsDaySubmitted] = useState(false);
 
   const [supplementDetail, setSupplementDetail] = useState({
     name: "",
@@ -56,7 +58,7 @@ export default function ModifyRoutineItem({
     requiredCount: "",
   });
   const [pillCnt, setPillCnt] = useState(routineItem.cnt);
-  const [isEnabled, setIsEnabled] = useState(false);
+  const [isAlarmEnabled, setIsAlarmEnabled] = useState(false);
 
   const [takenTime, setTakenTime] = useState("");
   const [isAM, setIsAM] = useState(true);
@@ -78,6 +80,7 @@ export default function ModifyRoutineItem({
     const eachSupplementDetail = await fetchSupplementDetail(pillId);
     // if (eachSupplementDetail.bestTime.slice(0,2))
     timeConvert(eachSupplementDetail.bestTime);
+    // setPillCnt(eachSupplementDetail.requiredCount);
     // setTakenTime(eachSupplementDetail.bestTime);
 
     setSupplementDetail(eachSupplementDetail);
@@ -91,8 +94,13 @@ export default function ModifyRoutineItem({
     setDatePickerVisible(false);
   };
 
+  const onChangeDaysName = (changedName: string) => {
+    setTakenDaysName(changedName);
+    // setIsDaySubmitted(false);
+  };
+
   const handleConfirm = (date: Date) => {
-    console.warn("A date has been picked: ", date);
+    // console.warn("A date has been picked: ", date);
     let hour = date.getHours();
     let minute = date.getMinutes().toString();
     if (hour > 12) {
@@ -123,20 +131,12 @@ export default function ModifyRoutineItem({
     } else {
       setIsAM(true);
     }
-    console.warn(hour, minute);
     setTakenTime(`${hour}:${minute}`);
-    // return `${hour}: ${minute}`;
-    // setTakenTime(`${hour}: ${minute}`);
+
+    if (updateOrNot === "false") {
+      console.log(updateOrNot, "수정이면 true, 처음 등록하는 거면 false");
+    }
   };
-  // console.log(timeConvert("10:00"));
-  // timeConvert(supplementDetail.bestTime);
-
-  if (updateOrNot === "false") {
-    // timeConvert(supplementDetail.bestTime);
-
-    console.log(updateOrNot);
-  }
-
   // useCallback(() => {
   //   if (!updateOrNot) {
   //     console.log(updateOrNot);
@@ -156,94 +156,12 @@ export default function ModifyRoutineItem({
     }, [pillId])
   );
 
-  // -----------------------------
-  // -----------------------------
-  // -----------------------------
-  // -----------------------------
-  // -----------------------------
-  // -----------------------------
-  // -----------------------------
-  // -----------------------------
-
-  const alarmToggleSwitch = () => {
-    setIsEnabled((previousState) => !previousState);
-  };
-
-  useEffect(() => {
-    if (isEnabled) {
-      const today = Date.now();
-      const date = new Date(today);
-      const target = new Date("Wed Nov 02 2022 13:03:30 GMT+0900 (KST)");
-      const timer = Math.floor((target.getTime() - date.getTime()) / 1000);
-      console.log(timer);
-      Notifications.scheduleNotificationAsync({
-        content: {
-          title: "오늘의 영양제",
-          body: '"킬레이트 마그네슘"을 드실 시간이에요!',
-        },
-        trigger: {
-          seconds: timer,
-        },
-      });
-
-      // const myDate = new Date(Date.now() + 5 * 1000);
-      // Notifications.scheduledLocalNotifications(
-      //   "1",
-      //   "1",
-      //   myDate,
-      //   "영양제 먹어요!",
-      //   "마그네슘"
-      // );
-    }
-  }, [isEnabled]);
-
   const decreaseHandler = () => {
     setPillCnt((pillCnt) => (pillCnt > 1 ? pillCnt - 1 : 1));
   };
   const increaseHandler = () => {
     setPillCnt((pillCnt) => (pillCnt < 20 ? pillCnt + 1 : 20));
   };
-
-  // const renderContent = () => (
-  //   <View
-  //     style={{
-  //       backgroundColor: "white",
-  //       padding: 16,
-  //       height: 450,
-  //     }}
-  //   >
-  //     <Text>Swipe down to close</Text>
-  //   </View>
-  // );
-  // ref
-  const sheetRef = useRef<BottomSheet>(null);
-
-  // variables
-  const snapPoints = useMemo(() => ["20%", "50%", "100%"], []);
-
-  // callbacks
-  const handleSheetChange = useCallback((index) => {
-    // console.warn("handleSheetChange", index);
-  }, []);
-  const handleSnapPress = useCallback((index) => {
-    sheetRef.current?.snapToIndex(index);
-  }, []);
-  const handleClosePress = useCallback(() => {
-    sheetRef.current?.close();
-  }, []);
-
-  const chooseDayHandler = () => {
-    // 선택한 요일들 인덱스로 array 만들어서 보내기
-    handleClosePress();
-  };
-
-  console.log(selectedRoutineDays, "올라온 날들");
-  // -------------------------------------------------
-  // -------------------------------------------------
-  // -------------------------------------------------
-  // -------------------------------------------------
-  // -------------------------------------------------
-  // -------------------------------------------------
 
   return (
     <ScrollView style={styles.outerContainer}>
@@ -287,17 +205,24 @@ export default function ModifyRoutineItem({
               <View style={styles.dayOuterContainer}>
                 <View style={styles.dayAlarmContainer}>
                   <Text style={styles.name}>섭취 요일</Text>
-                  <Text style={styles.name}>{selectedRoutineDays}</Text>
 
-                  <Text style={styles.dayAndTimeName}>매일</Text>
+                  {/* <Text style={styles.dayAndTimeName}>{takenDaysName}</Text> */}
+                  {isDaySubmitted ? (
+                    <Text style={styles.dayAndTimeName}>{takenDaysName}</Text>
+                  ) : null}
                 </View>
+
                 <Text style={styles.dayExplText}>
                   아래 요일을 클릭하여 섭취 요일을 선택해주세요.
                 </Text>
               </View>
 
               <View style={styles.dayListContainer}>
-                <WeekDayList addRoutineDaysHandler={setSelectedRoutineDays} />
+                <WeekDayList
+                  addRoutineDaysHandler={setSelectedRoutineDays}
+                  onChangeDaysName={onChangeDaysName}
+                  getSubmitted={setIsDaySubmitted}
+                />
               </View>
             </View>
 
@@ -339,28 +264,7 @@ export default function ModifyRoutineItem({
       </View>
 
       <View>
-        <PillCard height={130} width={"90%"} bgColor={"#edfbf9"}>
-          <View style={styles.takenTimeInnerContainer}>
-            <View style={styles.switchAlarmContainer}>
-              <Text style={styles.pushAlarmName}>푸시 알람</Text>
-              <Switch
-                // style={{ height: "50%" }}
-                style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] }}
-                trackColor={{ false: "#767577", true: accent }}
-                thumbColor={isEnabled ? "white" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={alarmToggleSwitch}
-                value={isEnabled}
-              />
-            </View>
-            <View style={styles.alarmExplanation}>
-              <Text style={styles.alarmExplText}>
-                푸시 알람을 켜두시면 등록하신 시간에 맞춰 알림을 받을 수 있어요
-                !
-              </Text>
-            </View>
-          </View>
-        </PillCard>
+        <PushNotifications addAlarmHandler={setIsAlarmEnabled} />
         <View>
           <View style={styles.chooseBtn}>
             <CustomBtn
@@ -410,6 +314,9 @@ const styles = StyleSheet.create({
   nameContainer: {
     flex: 1,
   },
+  takenTimeInnerContainer: {
+    flex: 1,
+  },
   cntContainer: {
     flex: 1,
     flexDirection: "row",
@@ -450,35 +357,6 @@ const styles = StyleSheet.create({
     fontWeight: "900",
     color: "rgba(0, 0, 0, 0.5)",
     paddingHorizontal: 25,
-  },
-
-  takenTimeInnerContainer: {
-    flex: 1,
-    // backgroundColor: "red",
-  },
-  switchAlarmContainer: {
-    flex: 1,
-    flexDirection: "row",
-
-    paddingHorizontal: 20,
-    // backgroundColor: "red",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  pushAlarmName: {
-    // marginVertical: 7,
-    fontSize: 21,
-    fontWeight: "bold",
-  },
-  alarmExplanation: {
-    flex: 1,
-    paddingHorizontal: 20,
-    // paddingBottom: 30,
-    alignItems: "center",
-  },
-  alarmExplText: {
-    fontSize: 13,
-    color: "#FF78A3",
   },
   dayExplText: {
     fontSize: 10,

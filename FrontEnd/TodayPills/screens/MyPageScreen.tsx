@@ -150,6 +150,7 @@ export default function MyPageScreen({ navigation }: any) {
 const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
+    marginTop: 20,
     // backgroundColor: "red",
     // alignItems: "center",
     // justifyContent: "center",
@@ -166,7 +167,7 @@ const styles = StyleSheet.create({
     // borderTopWidth: 2,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 10,
+    // marginTop: 10,
     padding: 20,
   },
   nameContainer: {
