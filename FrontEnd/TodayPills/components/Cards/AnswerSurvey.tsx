@@ -8,13 +8,15 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 
 const AnswerSurvey = ({
   selectedItem,
   setSelectedItem,
   nowStage,
   surveyData,
+  multiSelectedHandler,
 }) => {
   const [multiSelceted, setMultiSelected] = useState("");
   return (
@@ -24,28 +26,34 @@ const AnswerSurvey = ({
           return (
             <View style={styles.itemcontainer} key={index}>
               <View style={styles.itemoutercontainer}>
-                {nowStage !== 9 && (
-                  <Pressable
-                    android_ripple={{ color: "#4E736F" }}
-                    style={
-                      selectedItem === index
-                        ? styles.iteminnercontainerClicked
-                        : styles.iteminnercontainer
-                    }
-                    onPress={() => setSelectedItem(index)}
-                  >
-                    <View style={styles.itemflex}>
-                      <Text style={styles.itemtitle}>{item}</Text>
-                      <AntDesign
-                        name="checkcircleo"
-                        size={24}
-                        color="black"
-                        style={styles.icon1}
-                      />
-                    </View>
-                  </Pressable>
-                )}
-                {nowStage === 9 && (
+                {nowStage !== 9 &&
+                  nowStage !== 2 &&
+                  nowStage !== 11 &&
+                  nowStage !== 12 && (
+                    <Pressable
+                      android_ripple={{ color: "#4E736F" }}
+                      style={
+                        selectedItem === index
+                          ? styles.iteminnercontainerClicked
+                          : styles.iteminnercontainer
+                      }
+                      onPress={() => setSelectedItem(index)}
+                    >
+                      <View style={styles.itemflex}>
+                        <Text style={styles.itemtitle}>{item}</Text>
+                        <AntDesign
+                          name="checkcircleo"
+                          size={24}
+                          color="black"
+                          style={styles.icon1}
+                        />
+                      </View>
+                    </Pressable>
+                  )}
+                {(nowStage === 9 ||
+                  nowStage === 2 ||
+                  nowStage === 11 ||
+                  nowStage === 12) && (
                   <Pressable
                     android_ripple={{ color: "#4E736F" }}
                     style={

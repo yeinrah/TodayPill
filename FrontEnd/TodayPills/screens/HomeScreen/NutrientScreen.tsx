@@ -70,6 +70,8 @@ const NutrientScreen = ({ navigation, route }: any) => {
                   supplementName={pill.supplementName}
                   like={pill.like}
                   note={pill.note}
+                  additionalEfficacy={pill.additionalEfficacy}
+                  ingredients={pill.ingredients}
                 />
               ))
             }

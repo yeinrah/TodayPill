@@ -91,7 +91,16 @@ const PersonalRecommendationScreen = ({ navigation }: any) => {
             </View>
             <View style={styles.listGroup}>
               {myNutrient.map((item, index) => (
-                <Text key={index} style={styles.listText}>
+                <Text
+                  key={index}
+                  style={styles.listText}
+                  onPress={async () => {
+                    await AsyncStorage.setItem("@storage_nowNutrient", item);
+                    navigation.navigate("NutrientDetailScreen", {
+                      nutrient: [item],
+                    });
+                  }}
+                >
                   {"\u2022" + item}
                 </Text>
               ))}
@@ -125,6 +134,7 @@ const styles = StyleSheet.create({
   textGroup: {
     alignItems: "center",
     marginTop: 30,
+    marginLeft: 30,
   },
   pillDetail: {
     width: 200,
@@ -139,7 +149,7 @@ const styles = StyleSheet.create({
   },
   pillBox: { alignItems: "center" },
   listGroup: { marginLeft: 25, marginTop: 30 },
-  listText: { marginBottom: 10 },
+  listText: { marginBottom: 15 },
   shape: {
     height: 70,
   },

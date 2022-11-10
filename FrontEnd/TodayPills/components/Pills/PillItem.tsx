@@ -1,4 +1,4 @@
-import { StyleSheet, View, Image, Text, Pressable } from "react-native";
+import { StyleSheet, View, Image, Text, Pressable, ToastAndroid } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useState, useEffect, useCallback } from "react";
 import { dislike, fetchLikeUsers, like } from "../../API/likeAPI";
@@ -48,6 +48,7 @@ const PillItem = (props: PillProps) => {
     await like(userId, supplementId);
     setIsLiked(true);
     props.onPressChange();
+    ToastAndroid.show("해당 상품이 나의 Pick에 추가됐습니다.", 3)
     // setIsLikeChange(true);
   };
 
@@ -58,6 +59,7 @@ const PillItem = (props: PillProps) => {
     setIsLiked(false);
 
     props.onPressChange();
+    ToastAndroid.show("해당 상품이 나의 Pick에서 제외됐습니다.", 3)
     // setIsLikeChange(false);
   };
   // console.log(props.image);
