@@ -16,7 +16,7 @@ const NutrientScreen = ({ navigation, route }: any) => {
     const currentUserId = await AsyncStorage.getItem("@storage_UserId");
     setUserId(parseInt(currentUserId));
     const allSupplements = await fetchAllSupplements();
-    const supplements = allSupplements.filter(i => i.category === nutrient);
+    const supplements = allSupplements.filter((i) => i.category === nutrient);
     setPills(supplements);
   };
 
@@ -35,7 +35,12 @@ const NutrientScreen = ({ navigation, route }: any) => {
             <Pressable
               android_ripple={{ color: "#4E736F" }}
               style={styles.buttonInnerContainer}
-              onPress={() => console.log("hi")}
+              onPress={async () => {
+                await AsyncStorage.setItem("@storage_nowNutrient", nutrient);
+                navigation.navigate("NutrientDetailScreen", {
+                  nutrient: [nutrient],
+                });
+              }}
             >
               <Text style={styles.title}>영양제 추천받기</Text>
             </Pressable>
