@@ -64,12 +64,13 @@ const DetailedPillCard = (props: any) => {
           <View style={styles.textcontainer}>
             <Text style={styles.brandname}>{props.brand}</Text>
             <Text style={styles.pillname}>{props.supplementName}</Text>
-            {/* 수정하기!!! */}
-            <Text style={styles.feature}>{props.note}</Text>
-            <Text style={styles.feature}>정보 추가해야함...</Text>
+            <View style={styles.flexrow}>
+              <Text style={styles.feature}>{props.note}</Text>
+              <Text style={styles.feature}>정보 추가해야함...</Text>
+            </View>
             <View style={styles.alertcontainer}>
               <Ionicons name="warning" size={10} color="#FFCE31" />
-              <Text style={styles.blackalert}>주의&nbsp;</Text>
+              <Text style={styles.blackalert}>주의 &nbsp;</Text>
               <Text style={styles.greyalert}>
                 고용량 포함, 장기 복용시 전문가와 상의
               </Text>
@@ -142,6 +143,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 2,
   },
+  flexrow: {
+    flexDirection: "row",
+  },
   feature: {
     alignSelf: "flex-start",
     height: 16,
@@ -150,6 +154,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: "#C4F1EA",
     marginBottom: 3,
+    marginRight: 3,
     paddingHorizontal: 6,
     paddingTop: 1,
   },
