@@ -70,7 +70,7 @@ const DetailedPillCard = (props: any) => {
             </View>
             <View style={styles.alertcontainer}>
               <Ionicons name="warning" size={10} color="#FFCE31" />
-              <Text style={styles.blackalert}>주의 &nbsp;</Text>
+              <Text style={styles.blackalert}>주의&nbsp;</Text>
               <Text style={styles.greyalert}>
                 고용량 포함, 장기 복용시 전문가와 상의
               </Text>

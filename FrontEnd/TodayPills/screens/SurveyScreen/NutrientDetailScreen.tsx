@@ -69,7 +69,7 @@ const NutrientDetailScreen = ({ navigation, route }: any) => {
               <Text style={[styles.recommendtext, styles.boldtext]}>
                 {nutrientName}
               </Text>
-              <Text style={styles.recommendtext}>을 추천받으시겠어요?</Text>
+              <Text style={styles.recommendtext}>을(를) 추천받으시겠어요?</Text>
             </View>
             <View style={styles.buttonOuterContainer}>
               <Pressable
