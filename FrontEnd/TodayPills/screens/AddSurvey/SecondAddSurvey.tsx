@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, Pressable, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  ScrollView,
+  ToastAndroid,
+} from "react-native";
 import BackgroundScreen from "../BackgroundScreen";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
@@ -9,7 +16,7 @@ import SurveyQuestion from "../../components/Data/SurveyAdditionalEfficiency";
 import SurveyFormula from "../../components/Data/SurveyFormula";
 
 const SecondAddSurvey = ({ navigation }: any) => {
-  const [selectedItem, setSelectedItem] = useState(1);
+  const [selectedItem, setSelectedItem] = useState<any>(1);
   const [nowStage, setNowStage] = useState(0);
   const [answerSheet, setAnswerSheet] = useState<any>({
     lowerPriceLimit: 0,
@@ -19,13 +26,23 @@ const SecondAddSurvey = ({ navigation }: any) => {
     sustainedRelease: false,
   });
   const surveyData = [
-    ["lowerPriceLimit", "원하는 최소 가격을 알려주세요", "이 가격은 넘자"],
-    ["upperPriceLimit", "원하는 최대 가격을 알려주세요", "이 가격은 넘지말자"],
+    ["lowerPriceLimit", "원하는 가격을 알려주세요", "최소,최대가격 설정!"],
     [
       "additionalEfficacy",
       "추가로 원하는 효과가 있나요?",
       "선택해주세요",
-      ["스트레스 완화", "기억력 증진", "혈액순환", "에너지 충전", "근육통"],
+      [
+        "스트레스 완화",
+        "기억력 증진",
+        "혈액 순환",
+        "에너지 증진",
+        "근육통 완화",
+        "면역 증진",
+        "신경통 완화",
+        "관절 건강",
+        "다이어트",
+        "질 건강",
+      ],
     ],
     [
       "formula",
@@ -78,6 +95,7 @@ const SecondAddSurvey = ({ navigation }: any) => {
               android_ripple={{ color: "#4E736F" }}
               style={styles.buttonInnerContainer}
               onPress={async () => {
+                console.log(answerSheet);
                 let uid = await AsyncStorage.getItem("@storage_UserId");
                 let uemail = await AsyncStorage.getItem("@storage_UserEmail");
                 let nowSelectedNutrient = await AsyncStorage.getItem(
@@ -85,23 +103,46 @@ const SecondAddSurvey = ({ navigation }: any) => {
                 );
                 setNowStage(nowStage + 1);
                 let answer: boolean | number;
-                if (nowStage === 0 || nowStage === 1) {
-                  answer = Number(selectedItem);
-                } else if (nowStage === 2) {
+                if (nowStage === 0) {
+                  console.warn("adas");
+                  // let price = selectedItem.split(" ");
+                  // answer = price;
+                  answer = selectedItem.split(" ");
+                } else if (nowStage === 1) {
                   answer = SurveyQuestion.get(selectedItem);
-                } else if (nowStage === 3) {
+                } else if (nowStage === 2) {
                   answer = SurveyFormula.get(selectedItem);
                 } else if (surveyData[nowStage][3]) {
                   selectedItem == 0 ? (answer = true) : (answer = false);
                 } else answer = selectedItem;
-                setAnswerSheet({
-                  userId: uid,
-                  email: uemail,
-                  category: nowSelectedNutrient,
-                  ...answerSheet,
-                  [`${surveyData[nowStage][0]}`]: answer,
-                });
-                setSelectedItem(1);
+                if (nowStage !== 0) {
+                  setAnswerSheet({
+                    userId: uid,
+                    email: uemail,
+                    category: nowSelectedNutrient,
+                    ...answerSheet,
+                    [`${surveyData[nowStage][0]}`]: answer,
+                  });
+                } else {
+                  if (!answer[0] || !answer[1]) {
+                    setNowStage(nowStage);
+                    ToastAndroid.show(
+                      "가격을 입력해주세요",
+                      ToastAndroid.SHORT
+                    );
+                  }
+                  setAnswerSheet({
+                    userId: uid,
+                    email: uemail,
+                    category: nowSelectedNutrient,
+                    ...answerSheet,
+                    lowerPriceLimit: Number(answer[0]),
+                    upperPriceLimit: Number(answer[1]),
+                    // [`${surveyData[nowStage][0]}`]: answer,
+                  });
+                }
+                if (nowStage === 0 || nowStage === 1) setSelectedItem(0);
+                else setSelectedItem(1);
               }}
             >
               <Text style={styles.title}>다 음</Text>

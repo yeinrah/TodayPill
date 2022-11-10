@@ -57,7 +57,7 @@ const PillResultScreen = ({ navigation, route }: any) => {
         </View>
         <View>
           {/* <DetailedPillCard /> */}
-          {route.params.answerSheet[0].data &&
+          {route.params.answerSheet[0] &&
             route.params.answerSheet[0].data.map((item, index) => {
               console.log(item);
               return (
@@ -115,7 +115,8 @@ const styles = StyleSheet.create({
   },
   btn: {
     alignItems: "center",
-    marginTop: 50,
+    marginTop: 20,
+    marginBottom: 30,
   },
 });
 

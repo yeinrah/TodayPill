@@ -56,6 +56,7 @@ const KakaoScreen = ({ navigation }: any) => {
       console.log(value.name);
       const userInfo = await getUserInfoByEmail(value.email);
       await AsyncStorage.setItem("@storage_UserId", String(userInfo.userId));
+      await AsyncStorage.setItem("@storage_UserGender", userInfo.gender);
       await AsyncStorage.setItem("@storage_UserEmail", value.email);
       await AsyncStorage.setItem("@storage_UserNickName", value.name);
       // console.log(response);

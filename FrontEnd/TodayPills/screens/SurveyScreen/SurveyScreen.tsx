@@ -1,10 +1,18 @@
-import { StyleSheet, Text, View, Pressable, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  ScrollView,
+  ToastAndroid,
+} from "react-native";
 import BackgroundScreen from "../BackgroundScreen";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import AnswerSurvey from "../../components/Cards/AnswerSurvey";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
 
 const SurveyScreen = ({ navigation }: any) => {
   const [selectedItem, setSelectedItem] = useState(1);
@@ -72,7 +80,7 @@ const SurveyScreen = ({ navigation }: any) => {
       "선호하는 영양제 브랜드가 있나요?",
       "알려주세요",
       [
-        "없음",
+        "해당없음",
         "solgar",
         "california gold nutrition",
         "natural factors",
@@ -92,17 +100,34 @@ const SurveyScreen = ({ navigation }: any) => {
     let nowGender = await AsyncStorage.getItem("@storage_UserGender");
     if (nowGender === "남성") {
       setNowStage(1);
+    } else {
+      setSelectedItem(1);
     }
   };
-  useEffect(() => {
-    checkGender();
-  }, []);
-  useEffect(() => {
-    if (nowStage === surveyData.length - 1) {
-      console.log(answerSheet);
-      navigation.navigate("SurveyLoadingScreen", { answerSheet: answerSheet });
-    }
-  }, [answerSheet]);
+  // useEffect(() => {
+  //   checkGender();
+  // }, []);
+  useFocusEffect(
+    useCallback(() => {
+      checkGender();
+    }, [])
+  );
+  useFocusEffect(
+    useCallback(() => {
+      if (nowStage === surveyData.length - 1) {
+        console.log(answerSheet);
+        navigation.navigate("SurveyLoadingScreen", {
+          answerSheet: answerSheet,
+        });
+      }
+    }, [answerSheet])
+  );
+  // useEffect(() => {
+  //   if (nowStage === surveyData.length - 1) {
+  //     console.log(answerSheet);
+  //     navigation.navigate("SurveyLoadingScreen", { answerSheet: answerSheet });
+  //   }
+  // }, [answerSheet]);
   return (
     <BackgroundScreen>
       <View style={styles.container}>
@@ -142,11 +167,8 @@ const SurveyScreen = ({ navigation }: any) => {
                 setNowStage(nowStage + 1);
                 let answer: boolean | number | string = "";
                 //균형잡힌 식사 관련 질문
-                if (nowStage === 8) {
-                  if (selectedItem === 0) {
-                    console.log("균형 잡힌 식사를 합니다.");
-                    setNowStage(nowStage + 2);
-                  } else console.log("균형 잡히지 않은 식사를 합니다.");
+                if (nowStage === 8 && selectedItem === 0) {
+                  setNowStage(nowStage + 2);
                 }
                 //복수선택
                 if (
@@ -156,6 +178,10 @@ const SurveyScreen = ({ navigation }: any) => {
                   nowStage === 12
                 ) {
                   answer = selectedItem;
+                  if (answer === 1) {
+                    setNowStage(nowStage);
+                    ToastAndroid.show("선택 해주세요", ToastAndroid.SHORT);
+                  }
                   console.log(answer);
                 } else if (surveyData[nowStage][3]) {
                   selectedItem == 0 ? (answer = true) : (answer = false);
@@ -169,7 +195,8 @@ const SurveyScreen = ({ navigation }: any) => {
                   ...answerSheet,
                   [`${surveyData[nowStage][0]}`]: answer,
                 });
-                setSelectedItem(1);
+                if (nowStage == 6) setSelectedItem(0);
+                else setSelectedItem(1);
               }}
             >
               <Text style={styles.title}>다 음</Text>
