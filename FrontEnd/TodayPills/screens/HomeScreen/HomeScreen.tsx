@@ -16,19 +16,21 @@ export default function HomeScreen({ navigation }: any) {
           <ScrollView>
             <MainPill />
             <MainNutrient navigation={navigation} />
-            <CustomBtn
-              buttonColor={accent}
-              title={"모든 영양제 보기"}
-              fontSize={20}
-              titleColor={"#fff"}
-              buttonWidth={"90%"}
-              onPress={() =>
-                navigation.navigate("AllSupplementsScreen", {
-                  // userId 바꾸기!
-                  // userId: 1,
-                })
-              }
-            />
+            <View style={styles.buttoncontainer}>
+              <CustomBtn
+                buttonColor={accent}
+                title={"모든 영양제 보기"}
+                fontSize={20}
+                titleColor={"#fff"}
+                buttonWidth={"90%"}
+                onPress={() =>
+                  navigation.navigate("AllSupplementsScreen", {
+                    // userId 바꾸기!
+                    // userId: 1,
+                  })
+                }
+              />
+            </View>
           </ScrollView>
         </View>
       </Card>
@@ -39,5 +41,10 @@ export default function HomeScreen({ navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  buttoncontainer: {
+    width: "100%",
+    alignItems: "center",
+    marginBottom: 10,
   },
 });

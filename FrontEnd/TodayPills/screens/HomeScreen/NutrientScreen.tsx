@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View, Pressable, ScrollView } from "react-native";
+import { StyleSheet, Text, View, Pressable, ScrollView, Image } from "react-native";
 import DetailedPillCard from "../../components/Cards/DetailedPillCard";
 import Card from "../../components/UI/Card";
 import BackgroundScreen from "../BackgroundScreen";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fetchAllSupplements } from "../../API/supplementAPI";
 import { useFocusEffect } from "@react-navigation/native";
@@ -11,6 +11,7 @@ const NutrientScreen = ({ navigation, route }: any) => {
   const { nutId, nutrient } = route.params;
   const [userId, setUserId] = useState(0);
   const [pills, setPills] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getAllSupplements = async () => {
     const currentUserId = await AsyncStorage.getItem("@storage_UserId");
@@ -25,6 +26,12 @@ const NutrientScreen = ({ navigation, route }: any) => {
       getAllSupplements();
     }, [userId])
   );
+
+  useEffect(() => {
+    if (pills.length > 0) {
+      setIsLoading(false);
+    }
+  }, [pills]);
 
   return (
     <BackgroundScreen>
@@ -46,18 +53,26 @@ const NutrientScreen = ({ navigation, route }: any) => {
             </Pressable>
           </View>
           <ScrollView>
-            {pills.map((pill, idx) => (
-              <DetailedPillCard
-                key={idx}
-                userId={userId}
-                supplementId={pill.supplementId}
-                image={pill.image}
-                brand={pill.brand}
-                supplementName={pill.supplementName}
-                like={pill.like}
-                note={pill.note}
-              />
-            ))}
+            {isLoading ?
+              <View style={styles.loadingspinnercontainer}>
+                <Image
+                  source={require("../../assets/images/loadingspinner.gif")}
+                  style={styles.loadingspinner}
+                />
+              </View> :
+              pills.map((pill, idx) => (
+                <DetailedPillCard
+                  key={idx}
+                  userId={userId}
+                  supplementId={pill.supplementId}
+                  image={pill.image}
+                  brand={pill.brand}
+                  supplementName={pill.supplementName}
+                  like={pill.like}
+                  note={pill.note}
+                />
+              ))
+            }
             <View style={styles.height} />
           </ScrollView>
         </View>
@@ -91,8 +106,18 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "white",
   },
+  loadingspinnercontainer: {
+    width: "100%",
+    height: 450,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  loadingspinner: {
+    width: 150,
+    height: 150,
+  },
   height: {
-    height: 25,
+    height: 120,
   },
 });
 
