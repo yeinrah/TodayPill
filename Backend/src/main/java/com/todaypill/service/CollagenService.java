@@ -81,12 +81,13 @@ public class CollagenService {
 				sustainedRelease = true;
 			String pillSize = "";
 			String bestTime = "22:00";
+			String caution = "밤 10시 ~ 새벽 2시 이전에 섭취하면 제일 좋아요!";
 			Supplement supplement = Supplement.builder().category(category).supplementName(supplementName).price(price)
 					.brand(brand).image(image).ingredients(ingredients).bioavailability(bioavailability)
 					.laxative(laxative).kidneyDisease(kidneyDisease).consumerLabScore(consumerLabScore)
 					.additionalEfficacy(additionalEfficacy).note(note).amount(amount).requiredCount(requiredCount)
 					.formula(formula).like(like).sustainedRelease(sustainedRelease).pillSize(pillSize)
-					.bestTime(bestTime).build();
+					.bestTime(bestTime).caution(caution).build();
 			supplementRepository.save(supplement);
 		}
 	}

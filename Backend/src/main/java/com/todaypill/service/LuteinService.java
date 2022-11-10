@@ -93,12 +93,13 @@ public class LuteinService {
 				sustainedRelease = true;
 			String pillSize = "";
 			String bestTime = "19:00";
+			String caution = "장기 복용할 경우 흡연자는 폐암 확률이 높아져요!";
 			Supplement supplement = Supplement.builder().category(category).supplementName(supplementName).price(price)
 					.brand(brand).image(image).ingredients(ingredients).bioavailability(bioavailability)
 					.laxative(laxative).kidneyDisease(kidneyDisease).consumerLabScore(consumerLabScore)
 					.additionalEfficacy(additionalEfficacy).note(note).amount(amount).requiredCount(requiredCount)
 					.formula(formula).like(like).sustainedRelease(sustainedRelease).pillSize(pillSize)
-					.bestTime(bestTime).build();
+					.bestTime(bestTime).caution(caution).build();
 			supplementRepository.save(supplement);
 		}
 	}

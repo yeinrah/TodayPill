@@ -176,12 +176,13 @@ public class MagnesiumService {
 				sustainedRelease = true;
 			String pillSize = "";
 			String bestTime = "22:00";
+			String caution = "";
 			Supplement supplement = Supplement.builder().category(category).supplementName(supplementName).price(price)
 					.brand(brand).image(image).ingredients(ingredients).bioavailability(bioavailability)
 					.laxative(laxative).kidneyDisease(kidneyDisease).consumerLabScore(consumerLabScore)
 					.additionalEfficacy(additionalEfficacy).note(note).amount(amount).requiredCount(requiredCount)
 					.formula(formula).like(like).sustainedRelease(sustainedRelease).pillSize(pillSize)
-					.bestTime(bestTime).build();
+					.bestTime(bestTime).caution(caution).build();
 			supplementRepository.save(supplement);
 		}
 	}

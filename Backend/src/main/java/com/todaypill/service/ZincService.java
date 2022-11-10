@@ -117,12 +117,13 @@ public class ZincService {
 				sustainedRelease = true;
 			String pillSize = "";
 			String bestTime = "19:00";
+			String caution = "철분과 함께 먹으면 흡수율이 저해돼요!";
 			Supplement supplement = Supplement.builder().category(category).supplementName(supplementName).price(price)
 					.brand(brand).image(image).ingredients(ingredients).bioavailability(bioavailability)
 					.laxative(laxative).kidneyDisease(kidneyDisease).consumerLabScore(consumerLabScore)
 					.additionalEfficacy(additionalEfficacy).note(note).amount(amount).requiredCount(requiredCount)
 					.formula(formula).like(like).sustainedRelease(sustainedRelease).pillSize(pillSize)
-					.bestTime(bestTime).build();
+					.bestTime(bestTime).caution(caution).build();
 			supplementRepository.save(supplement);
 		}
 	}
