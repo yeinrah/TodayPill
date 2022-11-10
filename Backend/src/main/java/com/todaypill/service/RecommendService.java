@@ -9,12 +9,16 @@ import com.todaypill.repository.SupplementRepository;
 import com.todaypill.repository.UserRepository;
 import com.todaypill.request.UserSecondSurveyReq;
 import com.todaypill.response.SupplementAndScoreRes;
+
+import net.bytebuddy.utility.privilege.GetSystemPropertyAction;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import springfox.documentation.swagger2.mappers.ModelMapper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -47,13 +51,13 @@ public class RecommendService {
             List<SupplementAndScoreRes> supplementAndScoreRes = new ArrayList<>();
             List<Supplement> supplementList = (List<Supplement>)supplementRepository.findAll();
             //List<Supplement> supplementList = (List<Supplement>) mapper.map(supplementRepository.findAll(), Supplement.class);
-
-
+            double cnt = 0.0001;
             for (Supplement supplement :supplementList)    {
                 double score = 0;
                 Integer labScore = 0;
                 String additionalEfficacy = "";
-                if (userSecondSurveyReq.getLowerPriceLimit() < supplement.getPrice() && userSecondSurveyReq.getUpperPriceLimit() > supplement.getPrice()) {
+                if (userSecondSurveyReq.getLowerPriceLimit() < supplement.getPrice() && userSecondSurveyReq.getUpperPriceLimit() > supplement.getPrice() 
+                	&& supplement.getCategory().contains(userSecondSurveyReq.getCategory())) {
                 	
                     score = (commonQuestion.getPreferred_brand().equals(supplement.getBrand()) ? 3 : 0)
                             + supplement.getBioavailability()
@@ -62,9 +66,10 @@ public class RecommendService {
                             + (supplement.getConsumerLabScore() == null ? labScore : supplement.getConsumerLabScore())
                             + (supplement.getAdditionalEfficacy() != null && supplement.getAdditionalEfficacy().contains(userSecondSurveyReq.getAdditionalEfficacy()) ? 3 : 0)
                             + (commonQuestion.is_ok_big_pill() && supplement.getRequiredCount().contains("1") ? 3 : -3)
-    //                        + (!userInfoRes.getCommonQuestion().isOkBigPill() ? supplement.getPillSize() : 0)
+//                            + (commonQuestion.is_ok_big_pill() ? supplement.getPillSize() : 0)
                             + (userSecondSurveyReq.getFormula().equals(supplement.getFormula()) ? 3 : 0)
-                            + (userSecondSurveyReq.getSustainedRelease() && supplement.getSustainedRelease() ? 3 : 0);
+                            + (userSecondSurveyReq.getSustainedRelease() && supplement.getSustainedRelease() ? 3 : 0)
+                    		+ (supplement.getBrand().contains(commonQuestion.getPreferred_brand()) ? 10 : 0);
                     //}
                 }
                 supplementAndScoreRes.add(new SupplementAndScoreRes(supplement.getSupplementId(),supplement.getCategory()
@@ -73,11 +78,24 @@ public class RecommendService {
                         , supplement.getConsumerLabScore(), supplement.getAdditionalEfficacy(), supplement.getNote(),supplement.getAmount()
                         , supplement.getRequiredCount(), supplement.getFormula(), supplement.getLike(),supplement.getSustainedRelease()
                         ,supplement.getPillSize(),supplement.getBestTime(), score));
-
+                cnt+=0.0001;
+                score+=cnt;
+//                System.out.println(score);
             }
-            supplementAndScoreRes.sort((o1, o2) -> (int) (o2.getScore()  - o1.getScore()));
-
-            return supplementAndScoreRes;
+            supplementAndScoreRes.sort((o1, o2) -> {
+//            	if(o1.getScore() == o2.getScore()) return 1;
+//            	System.out.println((int)(o2.getScore() - o1.getScore()));
+//            	return (int) (o2.getScore()  - o1.getScore());});
+            	
+            	int a =o2.getScore().intValue();
+            	int b = o1.getScore().intValue();
+            return a-b;
+            });
+            List<SupplementAndScoreRes> list = new ArrayList();
+            for(int i=0; i<7;i++) {
+            	list.add(supplementAndScoreRes.get(i));
+            }
+            return list;
     }
 //    userInfoRes.getCommonQuestion() userInfoRes.getCommonQuestion() = new userInfoRes.getCommonQuestion()(1L, "kmj9247@naver.com", "woman"
 //            , 26, 52F, false, false, false, "sometimes", "lackFish"

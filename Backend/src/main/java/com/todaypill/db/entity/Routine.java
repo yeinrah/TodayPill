@@ -43,4 +43,7 @@ public class Routine {
 		
 		@Column(name = "deleted_since")
 		private String deletedSince;
+		
+		@Column(name = "push_alarm")
+		private Boolean pushAlarm;
 }

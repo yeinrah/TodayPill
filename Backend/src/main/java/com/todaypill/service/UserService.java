@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.todaypill.db.entity.CommonQuestion;
 import com.todaypill.db.entity.Like;
+import com.todaypill.db.entity.Propolis;
 import com.todaypill.db.entity.Supplement;
 import com.todaypill.db.entity.User;
 import com.todaypill.repository.CommonQuestionRepository;
@@ -136,13 +137,43 @@ public class UserService {
 		int collagen=0;
 		int Fe=0;
 		int profolis=0;
+		String eatData = "생선, 육류, 채소, 과일";
 		//밥 잘 먹고 있는지 -> boolean이면 뭘잘먹고있는지를 판단하기 힘듦
 		if(userFirstSurveyReq.isBalanced_meal()) {}
 		//이게 밥잘먹고있는지에 대한 string 받는곳
-		if(userFirstSurveyReq.getLack().contains("")) {}
+		if(userFirstSurveyReq.getLack().contains("생선")) {
+			eatData = eatData.replace("생선", "");
+		}
+		if(userFirstSurveyReq.getLack().contains("육류")) {
+			eatData = eatData.replace("육류", "");
+		}
+		if(userFirstSurveyReq.getLack().contains("채소")) {
+			eatData = eatData.replace("채소", "");
+		}
+		if(userFirstSurveyReq.getLack().contains("과일")) {
+			eatData = eatData.replace("과일", "");
+		}
+		//잘 먹고 있는 음식을 제외하고 부족한 데이터에서 걸리면 해당 영양소를 ++
+		if(eatData.contains("생선")) {
+			omega3+= 3;
+		}
+		if(eatData.contains("육류")) {
+			Fe+= 2;
+			Zn+= 2;
+			magnesium+=2;
+		}
+		if(eatData.contains("채소")) {
+			vitaminB+=2;
+			vitaminC+=2;
+		}
+		if(eatData.contains("과일")) {
+			vitaminC+=2;	
+		}
 		
 		//큰 약 잘 먹는지 -> 2차 설문용
-		if(userFirstSurveyReq.is_ok_big_pill()) {}
+		if(userFirstSurveyReq.is_ok_big_pill()) {
+			//여기는 뭐 별 상관 없을듯 그냥 값만 넘겨주면 됨
+		}
 		//변비가 있으면 -> 유산균 더하기
 		if(userFirstSurveyReq.isConstipation()) {
 			lactobacillus +=2;
@@ -175,12 +206,32 @@ public class UserService {
 		//무슨 알러지든 간에 항산화제인 비타민 C는 도움이 된다.
 		if(userFirstSurveyReq.getAllergy().contains("")) {
 			vitaminC+=2;
+			lactobacillus+=2;
+		}
+		if(userFirstSurveyReq.getAllergy().contains("꽃")) {
+			profolis-=10;
+		}
+		if(userFirstSurveyReq.getAllergy().contains("고양이")) {
+			profolis+=2;
+			lactobacillus+=2;
+		}
+		if(userFirstSurveyReq.getAllergy().contains("비염")) {
+			vitaminD +=2;
+			profolis +=2;
 		}
 		
 		//선호하는 브랜드명 -> 2차설문용
 		if(userFirstSurveyReq.getPreferred_brand().contains("")) {}
 		//고민거리도 뭐 받아서 해주면 될듯(버튼으로 체크하는 형식) 피로감, 눈건강, 피부건강 등 이거는 사용자가 원하는 것이기 때문에 높은 +
-		if(userFirstSurveyReq.getProblem().contains("")) {}
+		if(userFirstSurveyReq.getProblem().contains("피로감")) {
+			vitaminB += 10;
+		}
+		if(userFirstSurveyReq.getProblem().contains("눈건강")) {
+			lutain += 10;
+		}
+		if(userFirstSurveyReq.getProblem().contains("피부건강")) {
+			collagen += 10;
+		}
 		//햇빛 많이쬐면 쬔 만큼 비타민D 변수 조절
 		if(userFirstSurveyReq.getOutdoor_activity()==1)vitaminD+=2;
 		else if(userFirstSurveyReq.getOutdoor_activity()==2)vitaminD+=1.5;

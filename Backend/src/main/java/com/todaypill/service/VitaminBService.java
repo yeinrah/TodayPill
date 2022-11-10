@@ -62,13 +62,13 @@ public class VitaminBService {
 					|| ingredients.contains("thiamine nitrate")) {
 				cnt++;
 				bioavailability += -5;
-				set.add("vitality");
+				set.add("energy_boost");
 			}
 			if (ingredients.contains("티아민 피로인산") || ingredients.contains("TPP")
 					|| ingredients.contains("thiamine pyrophosphate")) {
 				cnt++;
 				bioavailability += 5;
-				set.add("energy_production");
+				set.add("energy_boost");
 			}
 			if (ingredients.contains("벤포티아민") || ingredients.contains("benfotiamine")) {
 				cnt++;
@@ -92,7 +92,7 @@ public class VitaminBService {
 			if (ingredients.contains("리보플라빈포스페이트") || ingredients.contains("riboflavine-5-phosphate")) {
 				cnt++;
 				bioavailability += 1;
-				set.add("Hair_loss");
+				set.add("hair_loss");
 			}
 			if (ingredients.contains("판토텐산") || ingredients.contains("pantothenic acid")
 					|| ingredients.contains("설페이트")) {
@@ -102,7 +102,7 @@ public class VitaminBService {
 			if (ingredients.contains("판테틴") || ingredients.contains("pantethine")) {
 				cnt++;
 				bioavailability += 1;
-				set.add("Stress_control");
+				set.add("stress_relief");
 			}
 			if (ingredients.contains("피리독신 염산염") || ingredients.contains("pyridoxine HCI")) {
 				cnt++;
@@ -121,16 +121,16 @@ public class VitaminBService {
 					|| ingredients.contains("5-MTHF")) {
 				cnt++;
 				bioavailability += 1;
-				set.add("Depression");
+				set.add("depression");
 			}
 			if (ingredients.contains("시아노코발라민") || ingredients.contains("cyanocobalamin")) {
 				cnt++;
-				set.add("blood");
+				set.add("blood_circulation");
 			}
 			if (ingredients.contains("히드록소코발라민") || ingredients.contains("hydroxocobalamin")) {
 				cnt++;
 				bioavailability += 1;
-				set.add("Cancer");
+				set.add("cancer");
 			}
 			if (ingredients.contains("메틸코발라민") || ingredients.contains("methylcobalamin")) {
 				cnt++;
@@ -140,7 +140,7 @@ public class VitaminBService {
 			if (ingredients.contains("아데노실코발라민") || ingredients.contains("adenocylcobalamin")) {
 				cnt++;
 				bioavailability += 1;
-				set.add("brain_cells");
+				set.add("homocysteine_control");
 			}
 
 			if (cnt != 0) {

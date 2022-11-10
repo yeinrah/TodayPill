@@ -107,6 +107,7 @@ public class MyPageService {
 		originalRoutine.setTime(routine.getTime());
 		originalRoutine.setDay(routine.getDay());
 		originalRoutine.setTablets(routine.getTablets());
+		originalRoutine.setPushAlarm(routine.getPushAlarm());
 		routineRepository.save(originalRoutine);
 	}
 }
