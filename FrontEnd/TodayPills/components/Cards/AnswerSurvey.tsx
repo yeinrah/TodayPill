@@ -16,9 +16,20 @@ const AnswerSurvey = ({
   setSelectedItem,
   nowStage,
   surveyData,
-  multiSelectedHandler,
 }) => {
   const [multiSelceted, setMultiSelected] = useState("");
+  const [optionClear, setOptionClear] = useState(false);
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  useFocusEffect(
+    useCallback(() => {
+      if (nowStage !== 1) {
+        setOptionClear(false);
+        setMultiSelected("");
+        setSelectedItem("");
+      } else setSelectedItem(1);
+    }, [nowStage])
+  );
   return (
     <>
       {surveyData[nowStage][3] &&
@@ -26,10 +37,10 @@ const AnswerSurvey = ({
           return (
             <View style={styles.itemcontainer} key={index}>
               <View style={styles.itemoutercontainer}>
-                {nowStage !== 9 &&
-                  nowStage !== 2 &&
-                  nowStage !== 11 &&
-                  nowStage !== 12 && (
+                {surveyData[nowStage][0] !== "allergy" &&
+                  surveyData[nowStage][0] !== "lack" &&
+                  surveyData[nowStage][0] !== "preferred_brand" &&
+                  surveyData[nowStage][0] !== "problem" && (
                     <Pressable
                       android_ripple={{ color: "#4E736F" }}
                       style={
@@ -50,24 +61,48 @@ const AnswerSurvey = ({
                       </View>
                     </Pressable>
                   )}
-                {(nowStage === 9 ||
-                  nowStage === 2 ||
-                  nowStage === 11 ||
-                  nowStage === 12) && (
+                {(surveyData[nowStage][0] !== "allergy" ||
+                  surveyData[nowStage][0] !== "lack" ||
+                  surveyData[nowStage][0] !== "preferred_brand" ||
+                  surveyData[nowStage][0] !== "problem") && (
                   <Pressable
                     android_ripple={{ color: "#4E736F" }}
                     style={
-                      multiSelceted.indexOf(item) >= 0
+                      (multiSelceted.indexOf(item) >= 0 && !optionClear) ||
+                      (index == 0 && optionClear)
                         ? styles.iteminnercontainerClicked
                         : styles.iteminnercontainer
                     }
                     onPress={() => {
                       console.log(multiSelceted);
-                      if (multiSelceted.indexOf(item) >= 0) {
+                      // if (index === 0 && item !== "해당없음") {
+                      //   setMultiSelected("");
+                      //   setSelectedItem("");
+                      //   setOptionClear(false);
+                      // }
+                      if (item == "해당없음") {
+                        if (multiSelceted.indexOf(item) >= 0) {
+                          setMultiSelected("");
+                          setSelectedItem("");
+                          setOptionClear(false);
+                        } else {
+                          setMultiSelected("해당없음");
+                          setSelectedItem("해당없음");
+                          setOptionClear(true);
+                        }
+                      } else if (multiSelceted.indexOf(item) >= 0) {
                         setMultiSelected(multiSelceted.replace(item, ""));
                         setSelectedItem(multiSelceted.replace(item, ""));
                       } else {
-                        setMultiSelected(multiSelceted + item);
+                        setOptionClear(false);
+                        if (multiSelceted.indexOf("해당없음") >= 0) {
+                          setMultiSelected(
+                            multiSelceted.replace("해당없음", "") + item
+                          );
+                          setSelectedItem(
+                            multiSelceted.replace("해당없음", "") + item
+                          );
+                        } else setMultiSelected(multiSelceted + item);
                         setSelectedItem(multiSelceted + item);
                       }
                     }}
@@ -89,14 +124,32 @@ const AnswerSurvey = ({
         })}
       {!surveyData[nowStage][3] && (
         <View style={styles.textInputView}>
-          <TextInput
-            style={styles.textInput}
-            placeholder="입력"
-            onChangeText={(text) => {
-              setSelectedItem(text);
-            }}
-            value={selectedItem}
-          />
+          <View style={styles.priceView}>
+            <TextInput
+              style={styles.textInput}
+              placeholder="최소가격"
+              onChangeText={(min) => {
+                setMinPrice(min);
+                setSelectedItem(min + " " + maxPrice);
+              }}
+              value={minPrice}
+            />
+            <Text style={styles.price}>원</Text>
+          </View>
+          <Text style={styles.textInput}>~</Text>
+          <View style={styles.priceView}>
+            <TextInput
+              style={styles.textInput}
+              placeholder="최대가격"
+              onChangeText={(max) => {
+                // setSelectedItem(max);
+                setMaxPrice(max);
+                setSelectedItem(minPrice + " " + max);
+              }}
+              value={maxPrice}
+            />
+            <Text style={styles.price}>원</Text>
+          </View>
         </View>
       )}
     </>
@@ -185,10 +238,14 @@ const styles = StyleSheet.create({
   },
   textInputView: {
     alignItems: "center",
-    marginTop: 100,
+    marginTop: 40,
   },
   textInput: {
-    fontSize: 50,
+    fontSize: 40,
+  },
+  price: { marginTop: 8, marginLeft: 5, fontSize: 30 },
+  priceView: {
+    flexDirection: "row",
   },
 });
 export default AnswerSurvey;

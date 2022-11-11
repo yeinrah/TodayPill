@@ -1,14 +1,24 @@
-import { StyleSheet, Text, View, Pressable, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  ScrollView,
+  ToastAndroid,
+} from "react-native";
 import BackgroundScreen from "../BackgroundScreen";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import AnswerSurvey from "../../components/Cards/AnswerSurvey";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
+import LoadingSpinner from "../../components/UI/LoadingSpinner";
 
 const SurveyScreen = ({ navigation }: any) => {
   const [selectedItem, setSelectedItem] = useState(1);
   const [nowStage, setNowStage] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   const [answerSheet, setAnswerSheet] = useState<any>({
     smoking: false,
     pregnant: false,
@@ -72,7 +82,7 @@ const SurveyScreen = ({ navigation }: any) => {
       "선호하는 영양제 브랜드가 있나요?",
       "알려주세요",
       [
-        "없음",
+        "해당없음",
         "solgar",
         "california gold nutrition",
         "natural factors",
@@ -92,90 +102,114 @@ const SurveyScreen = ({ navigation }: any) => {
     let nowGender = await AsyncStorage.getItem("@storage_UserGender");
     if (nowGender === "남성") {
       setNowStage(1);
+    } else {
+      setSelectedItem(1);
     }
   };
-  useEffect(() => {
-    checkGender();
-  }, []);
-  useEffect(() => {
-    if (nowStage === surveyData.length - 1) {
-      console.log(answerSheet);
-      navigation.navigate("SurveyLoadingScreen", { answerSheet: answerSheet });
-    }
-  }, [answerSheet]);
+  // useEffect(() => {
+  //   checkGender();
+  // }, []);
+  useFocusEffect(
+    useCallback(() => {
+      checkGender();
+    }, [])
+  );
+  useFocusEffect(
+    useCallback(() => {
+      if (nowStage === surveyData.length - 1) {
+        console.log(answerSheet);
+        navigation.navigate("SurveyLoadingScreen", {
+          answerSheet: answerSheet,
+        });
+      }
+    }, [answerSheet])
+  );
+  // useEffect(() => {
+  //   if (nowStage === surveyData.length - 1) {
+  //     console.log(answerSheet);
+  //     navigation.navigate("SurveyLoadingScreen", { answerSheet: answerSheet });
+  //   }
+  // }, [answerSheet]);
   return (
     <BackgroundScreen>
       <View style={styles.container}>
-        <Ionicons
-          name="arrow-back"
-          size={48}
-          color="black"
-          style={styles.icon}
-          onPress={() => {
-            navigation.goBack();
-          }}
-        />
-        <View style={styles.textcontainer}>
-          <Text style={[styles.text, styles.largetext]}>
-            {surveyData[nowStage][1]}
-          </Text>
-          <Text style={[styles.text, styles.smalltext]}>
-            {surveyData[nowStage][2]}
-          </Text>
-        </View>
-        <ScrollView>
-          <AnswerSurvey
-            selectedItem={selectedItem}
-            setSelectedItem={setSelectedItem}
-            nowStage={nowStage}
-            surveyData={surveyData}
-          />
-        </ScrollView>
-        <View style={styles.buttoncontainer}>
-          <View style={styles.buttonOuterContainer}>
-            <Pressable
-              android_ripple={{ color: "#4E736F" }}
-              style={styles.buttonInnerContainer}
-              onPress={async () => {
-                let uid = "";
-                uid = await AsyncStorage.getItem("@storage_UserId");
-                setNowStage(nowStage + 1);
-                let answer: boolean | number | string = "";
-                //균형잡힌 식사 관련 질문
-                if (nowStage === 8) {
-                  if (selectedItem === 0) {
-                    console.log("균형 잡힌 식사를 합니다.");
-                    setNowStage(nowStage + 2);
-                  } else console.log("균형 잡히지 않은 식사를 합니다.");
-                }
-                //복수선택
-                if (
-                  nowStage === 9 ||
-                  nowStage === 2 ||
-                  nowStage === 11 ||
-                  nowStage === 12
-                ) {
-                  answer = selectedItem;
-                  console.log(answer);
-                } else if (surveyData[nowStage][3]) {
-                  selectedItem == 0 ? (answer = true) : (answer = false);
-                  if (nowStage === 7) {
-                    answer = selectedItem;
-                  }
-                } else answer = selectedItem;
-
-                setAnswerSheet({
-                  userId: uid,
-                  ...answerSheet,
-                  [`${surveyData[nowStage][0]}`]: answer,
-                });
-                setSelectedItem(1);
+        {isLoading && <LoadingSpinner />}
+        {!isLoading && (
+          <>
+            <Ionicons
+              name="arrow-back"
+              size={48}
+              color="black"
+              style={styles.icon}
+              onPress={() => {
+                navigation.goBack();
               }}
-            >
-              <Text style={styles.title}>다 음</Text>
-            </Pressable>
-          </View>
-        </View>
+            />
+            <View style={styles.textcontainer}>
+              <Text style={[styles.text, styles.largetext]}>
+                {surveyData[nowStage][1]}
+              </Text>
+              <Text style={[styles.text, styles.smalltext]}>
+                {surveyData[nowStage][2]}
+              </Text>
+            </View>
+            <ScrollView>
+              <AnswerSurvey
+                selectedItem={selectedItem}
+                setSelectedItem={setSelectedItem}
+                nowStage={nowStage}
+                surveyData={surveyData}
+              />
+            </ScrollView>
+            <View style={styles.buttoncontainer}>
+              <View style={styles.buttonOuterContainer}>
+                <Pressable
+                  android_ripple={{ color: "#4E736F" }}
+                  style={styles.buttonInnerContainer}
+                  onPress={async () => {
+                    let uid = "";
+                    uid = await AsyncStorage.getItem("@storage_UserId");
+                    setNowStage(nowStage + 1);
+                    let answer: boolean | number | string = "";
+                    //균형잡힌 식사 관련 질문
+                    if (nowStage === 8 && selectedItem === 0) {
+                      setNowStage(nowStage + 2);
+                    }
+                    //복수선택
+                    if (
+                      nowStage === 9 ||
+                      nowStage === 2 ||
+                      nowStage === 11 ||
+                      nowStage === 12
+                    ) {
+                      answer = selectedItem;
+                      if (answer === 1) {
+                        setNowStage(nowStage);
+                        ToastAndroid.show("선택 해주세요", ToastAndroid.SHORT);
+                      }
+                      console.log(answer);
+                    } else if (surveyData[nowStage][3]) {
+                      selectedItem == 0 ? (answer = true) : (answer = false);
+                      if (nowStage === 7) {
+                        answer = selectedItem;
+                      }
+                    } else answer = selectedItem;
+                    if (nowStage === surveyData.length - 2) setIsLoading(true);
+                    setAnswerSheet({
+                      userId: uid,
+                      ...answerSheet,
+                      [`${surveyData[nowStage][0]}`]: answer,
+                    });
+                    if (nowStage == 6) setSelectedItem(0);
+                    else setSelectedItem(1);
+                  }}
+                >
+                  <Text style={styles.title}>다 음</Text>
+                </Pressable>
+              </View>
+            </View>
+          </>
+        )}
       </View>
     </BackgroundScreen>
   );
