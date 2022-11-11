@@ -13,10 +13,12 @@ import { useCallback, useEffect, useState } from "react";
 import AnswerSurvey from "../../components/Cards/AnswerSurvey";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
+import LoadingSpinner from "../../components/UI/LoadingSpinner";
 
 const SurveyScreen = ({ navigation }: any) => {
   const [selectedItem, setSelectedItem] = useState(1);
   const [nowStage, setNowStage] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   const [answerSheet, setAnswerSheet] = useState<any>({
     smoking: false,
     pregnant: false,
@@ -131,78 +133,83 @@ const SurveyScreen = ({ navigation }: any) => {
   return (
     <BackgroundScreen>
       <View style={styles.container}>
-        <Ionicons
-          name="arrow-back"
-          size={48}
-          color="black"
-          style={styles.icon}
-          onPress={() => {
-            navigation.goBack();
-          }}
-        />
-        <View style={styles.textcontainer}>
-          <Text style={[styles.text, styles.largetext]}>
-            {surveyData[nowStage][1]}
-          </Text>
-          <Text style={[styles.text, styles.smalltext]}>
-            {surveyData[nowStage][2]}
-          </Text>
-        </View>
-        <ScrollView>
-          <AnswerSurvey
-            selectedItem={selectedItem}
-            setSelectedItem={setSelectedItem}
-            nowStage={nowStage}
-            surveyData={surveyData}
-          />
-        </ScrollView>
-        <View style={styles.buttoncontainer}>
-          <View style={styles.buttonOuterContainer}>
-            <Pressable
-              android_ripple={{ color: "#4E736F" }}
-              style={styles.buttonInnerContainer}
-              onPress={async () => {
-                let uid = "";
-                uid = await AsyncStorage.getItem("@storage_UserId");
-                setNowStage(nowStage + 1);
-                let answer: boolean | number | string = "";
-                //균형잡힌 식사 관련 질문
-                if (nowStage === 8 && selectedItem === 0) {
-                  setNowStage(nowStage + 2);
-                }
-                //복수선택
-                if (
-                  nowStage === 9 ||
-                  nowStage === 2 ||
-                  nowStage === 11 ||
-                  nowStage === 12
-                ) {
-                  answer = selectedItem;
-                  if (answer === 1) {
-                    setNowStage(nowStage);
-                    ToastAndroid.show("선택 해주세요", ToastAndroid.SHORT);
-                  }
-                  console.log(answer);
-                } else if (surveyData[nowStage][3]) {
-                  selectedItem == 0 ? (answer = true) : (answer = false);
-                  if (nowStage === 7) {
-                    answer = selectedItem;
-                  }
-                } else answer = selectedItem;
-
-                setAnswerSheet({
-                  userId: uid,
-                  ...answerSheet,
-                  [`${surveyData[nowStage][0]}`]: answer,
-                });
-                if (nowStage == 6) setSelectedItem(0);
-                else setSelectedItem(1);
+        {isLoading && <LoadingSpinner />}
+        {!isLoading && (
+          <>
+            <Ionicons
+              name="arrow-back"
+              size={48}
+              color="black"
+              style={styles.icon}
+              onPress={() => {
+                navigation.goBack();
               }}
-            >
-              <Text style={styles.title}>다 음</Text>
-            </Pressable>
-          </View>
-        </View>
+            />
+            <View style={styles.textcontainer}>
+              <Text style={[styles.text, styles.largetext]}>
+                {surveyData[nowStage][1]}
+              </Text>
+              <Text style={[styles.text, styles.smalltext]}>
+                {surveyData[nowStage][2]}
+              </Text>
+            </View>
+            <ScrollView>
+              <AnswerSurvey
+                selectedItem={selectedItem}
+                setSelectedItem={setSelectedItem}
+                nowStage={nowStage}
+                surveyData={surveyData}
+              />
+            </ScrollView>
+            <View style={styles.buttoncontainer}>
+              <View style={styles.buttonOuterContainer}>
+                <Pressable
+                  android_ripple={{ color: "#4E736F" }}
+                  style={styles.buttonInnerContainer}
+                  onPress={async () => {
+                    let uid = "";
+                    uid = await AsyncStorage.getItem("@storage_UserId");
+                    setNowStage(nowStage + 1);
+                    let answer: boolean | number | string = "";
+                    //균형잡힌 식사 관련 질문
+                    if (nowStage === 8 && selectedItem === 0) {
+                      setNowStage(nowStage + 2);
+                    }
+                    //복수선택
+                    if (
+                      nowStage === 9 ||
+                      nowStage === 2 ||
+                      nowStage === 11 ||
+                      nowStage === 12
+                    ) {
+                      answer = selectedItem;
+                      if (answer === 1) {
+                        setNowStage(nowStage);
+                        ToastAndroid.show("선택 해주세요", ToastAndroid.SHORT);
+                      }
+                      console.log(answer);
+                    } else if (surveyData[nowStage][3]) {
+                      selectedItem == 0 ? (answer = true) : (answer = false);
+                      if (nowStage === 7) {
+                        answer = selectedItem;
+                      }
+                    } else answer = selectedItem;
+                    if (nowStage === surveyData.length - 2) setIsLoading(true);
+                    setAnswerSheet({
+                      userId: uid,
+                      ...answerSheet,
+                      [`${surveyData[nowStage][0]}`]: answer,
+                    });
+                    if (nowStage == 6) setSelectedItem(0);
+                    else setSelectedItem(1);
+                  }}
+                >
+                  <Text style={styles.title}>다 음</Text>
+                </Pressable>
+              </View>
+            </View>
+          </>
+        )}
       </View>
     </BackgroundScreen>
   );
