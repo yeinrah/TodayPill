@@ -1,7 +1,10 @@
 import { StyleSheet, View, Text } from "react-native";
 import { Calendar, LocaleConfig, Agenda } from "react-native-calendars";
 import { accent, primary, secondary } from "../../constants/Colors";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { fetchEachMonthRoutines } from "../../API/calendarAPI";
 
 export interface CalendarViewProps {
   onChangeDate: (date: string) => void;
@@ -13,6 +16,19 @@ export default function CalendarView({
   todayString,
 }: CalendarViewProps) {
   // console.log(todayString);
+  const [userId, setUserId] = useState(0);
+  const [currentMonth, setCurrentMonth] = useState(0);
+  const colors = [
+    "nn",
+    "blue",
+    "green",
+    "yellow",
+    "red",
+    "orange",
+    "#5f9ea0",
+    "#ffa500",
+    "#f0e68c",
+  ];
 
   const customTheme = {
     "stylesheet.calendar.header": {
@@ -90,30 +106,30 @@ export default function CalendarView({
   LocaleConfig.defaultLocale = "kr";
 
   const [daySelected, setDaySelected] = useState(todayString);
-  const [taken, setTaken] = useState([]);
+  const [taken, setTaken] = useState({});
   const dayPressHandler = (day: any) => {
     console.log("selected day", day);
     onChangeDate(day.dateString);
     setDaySelected(day.dateString);
   };
   const [items, setItems] = useState({});
-  const running = { key: "running", color: "blue" };
-  const cycling = { key: "cycling", color: "green" };
-  const walking = { key: "walking", color: "orange" };
-  const todayDot = { key: "today", color: primary };
-  // const g = { key: "g", color: "black" };
-  // const k = { key: "k", color: "red" };
+  const a = { color: "blue" };
+  const b = { key: "b", color: "green" };
+  const c = { key: "c", color: "orange" };
+  const d = { key: "d", color: primary };
+  const e = { key: "e", color: "black" };
+  const f = { key: "f", color: "red" };
 
   const marked = useMemo(
     () => ({
       "2022-10-01": {
-        dots: [running, walking],
+        dots: [a, b],
       },
       "2022-10-02": {
-        dots: [running, walking, cycling],
+        dots: [a, c, d, e],
       },
       [todayString]: {
-        dots: [todayDot],
+        dots: [a],
       },
       [daySelected]: {
         selected: true,
@@ -134,6 +150,33 @@ export default function CalendarView({
   //   "2022-10-12": { selected: true },
   //   todayString: { selected: true },
   // };
+
+  const getMonthRoutines = async () => {
+    const currentUserId = await AsyncStorage.getItem("@storage_UserId");
+    setUserId(parseInt(currentUserId));
+    const eachMonthRoutines = await fetchEachMonthRoutines(
+      userId,
+      currentMonth
+    );
+    console.warn(eachMonthRoutines);
+    const allEachMonthRoutines = {};
+    eachMonthRoutines.map((each: any) => {
+      // allEachMonthRoutines[each.date] = {
+      //   dots: 
+      // }
+      // setTaken((prevTaken) => {
+      //   return
+      // })
+    });
+    // if (eachSupplementDetail.bestTime.slice(0,2))
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      getMonthRoutines();
+      console.warn(currentMonth, "지금 몇달");
+    }, [userId, currentMonth])
+  );
   return (
     <View style={styles.calendarContainer}>
       <Calendar
@@ -153,6 +196,10 @@ export default function CalendarView({
         theme={customTheme}
         markingType="multi-dot"
         onDayPress={dayPressHandler}
+        onMonthChange={(monthData) => {
+          // console.log("month changed", monthData);
+          setCurrentMonth(monthData.month);
+        }}
         monthFormat={"yyyy년 MM월"}
         markedDates={marked}
       />

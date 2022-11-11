@@ -1,47 +1,99 @@
 import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { accent, primary, secondary } from "../../../constants/Colors";
 import PillCard from "../../UI/PillCard";
+import { useFocusEffect } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { fetchSupplementDetail } from "../../../API/supplementAPI";
+import { checkMyRoutine, deleteMyRoutineCheck } from "../../../API/calendarAPI";
 
 export interface RoutineProps {
   key: number;
   time: string;
-  image: string;
-  brand: string;
-  name: string;
+  routineId: number;
+  pillId: number;
+  // image: string;
+  // brand: string;
+  // name: string;
   cnt: number;
+  selectedDate: string;
+  changeCheckHandler: () => void;
 }
 
 export default function RoutineItem({
   time,
-  image,
-  brand,
-  name,
+  // image,
+  // brand,
+  // name,
+  routineId,
+  pillId,
   cnt,
+  selectedDate,
+  changeCheckHandler,
 }: RoutineProps) {
   const [isChecked, setIsChecked] = useState(false);
+  const [detailInfo, setDetailInfo] = useState({
+    brand: "",
+    name: "",
+    image: "",
+  });
+
+  const [userId, setUserId] = useState(0);
   // const [pillRoutine, setPillRoutine] = useState(dummyRoutine);
-  const deleteCheckHandler = () => {
+  const [calendarId, setCalendarId] = useState(0);
+
+  const deleteCheckHandler = async () => {
     setIsChecked(false);
+    await deleteMyRoutineCheck(calendarId);
+    console.warn("캘린더 삭제");
+    changeCheckHandler();
   };
-  const checkHandler = () => {
+  const checkHandler = async () => {
     setIsChecked(true);
+    const calendarTempId: number = await checkMyRoutine(
+      routineId,
+      selectedDate,
+      userId
+    );
+    console.warn(calendarTempId, "캘린더 아이디");
+    setCalendarId(calendarTempId);
+    changeCheckHandler();
   };
+
+  const getPillDetail = async () => {
+    const currentUserId = await AsyncStorage.getItem("@storage_UserId");
+    setUserId(parseInt(currentUserId));
+    const eachPillDetail = await fetchSupplementDetail(pillId);
+    setDetailInfo({
+      brand: eachPillDetail.brand,
+      name: eachPillDetail.name,
+      image: eachPillDetail.image,
+    });
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      getPillDetail();
+    }, [userId])
+  );
   return (
     <View style={styles.outerContainer}>
       <View>
         <Text style={styles.time}>{time}</Text>
       </View>
 
-      <PillCard height={75} width={"90%"} bgColor={"#edfbf9"}>
+      <PillCard height={100} width={"90%"} bgColor={"white"}>
         <View style={styles.routineContainer}>
           <View style={styles.imageContainer}>
-            <Image source={{ uri: image }} style={styles.pillImage} />
+            <Image
+              source={{ uri: detailInfo.image }}
+              style={styles.pillImage}
+            />
           </View>
           <View style={styles.pillDetailContainer}>
-            <Text style={styles.brand}>{brand}</Text>
-            <Text style={styles.name}>{name}</Text>
+            <Text style={styles.brand}>{detailInfo.brand}</Text>
+            <Text style={styles.name}>{detailInfo.name}</Text>
             <Text style={styles.cnt}>{cnt}정</Text>
           </View>
           <View style={styles.check}>
