@@ -68,7 +68,7 @@ export default function CalendarScreen({
               />
             </View>
           </View>
-          <View>
+          <View style={{ marginBottom: 15 }}>
             <DayPillSchedule selectedDate={selectedDate} />
           </View>
         </ScrollView>

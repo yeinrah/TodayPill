@@ -34,7 +34,10 @@ const deleteMySupplement = async (
   routineId: number,
   dateStr: string
 ) => {
-  await api.patch(`/mypage/${userId}/mysupplement/${routineId}`, dateStr);
+  // await api.patch(`/mypage/${userId}/mysupplement/${routineId}`, dateStr);
+  await api.patch(`/mypage/${userId}/mysupplement/${routineId}`, {
+    deletedSince: dateStr,
+  });
 };
 
 const addMyRoutineSupplement = async (
