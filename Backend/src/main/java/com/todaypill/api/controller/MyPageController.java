@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todaypill.db.entity.Like;
 import com.todaypill.db.entity.Routine;
 import com.todaypill.db.entity.User;
+import com.todaypill.request.DeleteRoutineReq;
 import com.todaypill.request.RoutineReq;
 import com.todaypill.service.MyPageService;
 
@@ -68,7 +68,8 @@ public class MyPageController {
 
 	@PatchMapping("/{userId}/mysupplement/{routineId}")
 	@ApiOperation(value = "유저가 복용하는 영양제 데이터를 삭제(deleteSince 날짜 추가)한다.", notes = "routine id, 삭제일자 String 필요")
-	public ResponseEntity<?> updateRoutineVisibility(@PathVariable int routineId, @RequestBody String deletedSince) {
+	public ResponseEntity<?> updateRoutineVisibility(@PathVariable int routineId, @RequestBody DeleteRoutineReq deleteRoutineReq) {
+		String deletedSince = deleteRoutineReq.getDeletedSince();
 		myPageService.updateRoutineVisibility(routineId, deletedSince);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
