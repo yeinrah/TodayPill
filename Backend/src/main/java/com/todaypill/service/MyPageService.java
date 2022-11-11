@@ -1,6 +1,7 @@
 package com.todaypill.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,6 +73,11 @@ public class MyPageService {
 	public List<Calendar> getCalendarDayList(int userId, String date) {
 		List<Calendar> list = calendarRepository.findAllByDate(userId, date);
 		return list;
+	}
+	
+	@Transactional
+	public Optional<Calendar> getCalendar(int calendarId) {
+		return calendarRepository.findById(calendarId);
 	}
 	
 	@Transactional

@@ -2,6 +2,7 @@ package com.todaypill.api.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -53,13 +54,20 @@ public class CalendarController {
 		return new ResponseEntity<>(map, HttpStatus.OK);
 	}
 
+	@GetMapping("/{calendarId}")
+	@ApiOperation(value = "복용 데이터를 조회한다.", notes = "calendarId 필요")
+	public ResponseEntity<?> getCalendar(@PathVariable int calendarId) {
+		Optional<Calendar> calendar = myPageService.getCalendar(calendarId);
+		return new ResponseEntity<>(calendar, HttpStatus.OK);
+	}
+	
 	@PatchMapping("/{userId}/{date}")
 	@ApiOperation(value = "복용 데이터를 기록한다.", notes = "user id, date(String) 필요")
 	public ResponseEntity<?> insertCalendar(@RequestBody CalendarReq calendarReq) {
 		Calendar calendar = Calendar.builder().routineId(calendarReq.getRoutineId()).userId(calendarReq.getUserId())
 				.date(calendarReq.getDate()).taken(true).build();
 		myPageService.insertCalendar(calendar);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(calendar.getCalendarId(), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{calendarId}")
