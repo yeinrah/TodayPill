@@ -53,29 +53,29 @@ public class ProbioticsService {
 			Set<String> set = new LinkedHashSet<String>();
 
 			if (ingredients.contains("람노서스") || ingredients.contains("rhamnosus")) {
-				set.add("immune");
-				set.add("diet");
-				set.add("vaginal");
+				set.add("면역 증진");
+				set.add("다이어트");
+				set.add("질 건강");
 			}
 			if (ingredients.contains("애시도필러스") || ingredients.contains("acidophilus")) {
-				set.add("immune");
+				set.add("면역 증진");
 			}
 			if (ingredients.contains("플란타럼") || ingredients.contains("plantarum")) {
-				set.add("diet");
+				set.add("다이어트");
 			}
 			if (ingredients.contains("카제이") || ingredients.contains("casei")) {
-				set.add("diet");
-				set.add("vaginal");
+				set.add("다이어트");
+				set.add("질 건강");
 			}
 			if (ingredients.contains("퍼멘텀") || ingredients.contains("페르멘텀") || ingredients.contains("fermentum")) {
-				set.add("immune");
-				set.add("vaginal");
+				set.add("면역 증진");
+				set.add("질 건강");
 			}
 			if (ingredients.contains("커베터스") || ingredients.contains("curvatus")) {
-				set.add("diet");
+				set.add("다이어트");
 			}
 			if (ingredients.contains("락티스") || ingredients.contains("lactis")) {
-				set.add("skincare");
+				set.add("피부 케어");
 			}
 
 			if (cnt != 0) {
@@ -85,6 +85,8 @@ public class ProbioticsService {
 			}
 
 			Integer consumerLabScore = 0;
+			if (brand.contains("Dr. Ohhira's") && brand.contains("Dr. Ohhira's Probiotics"))
+				consumerLabScore = -10;
 
 			for (String s : set) {
 				sb.append(s);
@@ -112,12 +114,13 @@ public class ProbioticsService {
 				sustainedRelease = true;
 			String pillSize = "";
 			String bestTime = "08:00";
+			String caution = "항생제를 복용하시면 2시간 정도 시간 간격을 두세요!";
 			Supplement supplement = Supplement.builder().category(category).supplementName(supplementName).price(price)
 					.brand(brand).image(image).ingredients(ingredients).bioavailability(bioavailability)
 					.laxative(laxative).kidneyDisease(kidneyDisease).consumerLabScore(consumerLabScore)
 					.additionalEfficacy(additionalEfficacy).note(note).amount(amount).requiredCount(requiredCount)
 					.formula(formula).like(like).sustainedRelease(sustainedRelease).pillSize(pillSize)
-					.bestTime(bestTime).build();
+					.bestTime(bestTime).caution(caution).build();
 			supplementRepository.save(supplement);
 		}
 	}

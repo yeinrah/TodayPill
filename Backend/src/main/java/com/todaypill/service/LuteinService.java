@@ -56,12 +56,12 @@ public class LuteinService {
 			if (ingredients.contains("지아잔틴") || supplementName.contains("zeaxanthin") || supplementName.contains("제아잔틴")) {
 				cnt++;
 				bioavailability += 5;
-				sb.append("antioxidant");
+				sb.append("항산화");
 			}
 			if (ingredients.contains("아스타잔틴") || supplementName.contains("astaxanthin")) {
 				cnt++;
 				bioavailability += 3;
-				sb.append("antioxidant");
+				sb.append("항산화");
 			}
 			
 			if (cnt != 0) {
@@ -71,6 +71,8 @@ public class LuteinService {
 			}
 
 			Integer consumerLabScore = 0;
+			if (brand.contains("Doctor's Best") && brand.contains("Lutein with OptiLut"))
+				consumerLabScore = -10;
 
 			String additionalEfficacy = sb.toString();
 			String note = "저녁 식후 30분";
@@ -91,12 +93,13 @@ public class LuteinService {
 				sustainedRelease = true;
 			String pillSize = "";
 			String bestTime = "19:00";
+			String caution = "장기 복용할 경우 흡연자는 폐암 확률이 높아져요!";
 			Supplement supplement = Supplement.builder().category(category).supplementName(supplementName).price(price)
 					.brand(brand).image(image).ingredients(ingredients).bioavailability(bioavailability)
 					.laxative(laxative).kidneyDisease(kidneyDisease).consumerLabScore(consumerLabScore)
 					.additionalEfficacy(additionalEfficacy).note(note).amount(amount).requiredCount(requiredCount)
 					.formula(formula).like(like).sustainedRelease(sustainedRelease).pillSize(pillSize)
-					.bestTime(bestTime).build();
+					.bestTime(bestTime).caution(caution).build();
 			supplementRepository.save(supplement);
 		}
 	}

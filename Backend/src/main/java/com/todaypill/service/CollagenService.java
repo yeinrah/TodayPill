@@ -50,7 +50,7 @@ public class CollagenService {
 			StringBuilder sb = new StringBuilder();
 			
 			if (ingredients.contains("II") || supplementName.contains("관절") || supplementName.contains("조인트"))
-				sb.append("joint_health");
+				sb.append("관절 건강");
 			
 			if (cnt != 0) {
 				bioavailability = (double) Math.round(bioavailability / cnt * 10) / 10.0;
@@ -59,6 +59,8 @@ public class CollagenService {
 			}
 
 			Integer consumerLabScore = 0;
+			if (brand.contains("Bulletproof") && brand.contains("Chocolate Collagen Protein"))
+				consumerLabScore = -10;
 
 			String additionalEfficacy = sb.toString();
 			String note = "수면 1시간 전";
@@ -79,12 +81,13 @@ public class CollagenService {
 				sustainedRelease = true;
 			String pillSize = "";
 			String bestTime = "22:00";
+			String caution = "밤 10시 ~ 새벽 2시 이전에 섭취하면 제일 좋아요!";
 			Supplement supplement = Supplement.builder().category(category).supplementName(supplementName).price(price)
 					.brand(brand).image(image).ingredients(ingredients).bioavailability(bioavailability)
 					.laxative(laxative).kidneyDisease(kidneyDisease).consumerLabScore(consumerLabScore)
 					.additionalEfficacy(additionalEfficacy).note(note).amount(amount).requiredCount(requiredCount)
 					.formula(formula).like(like).sustainedRelease(sustainedRelease).pillSize(pillSize)
-					.bestTime(bestTime).build();
+					.bestTime(bestTime).caution(caution).build();
 			supplementRepository.save(supplement);
 		}
 	}

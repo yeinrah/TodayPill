@@ -33,7 +33,15 @@ public class VitaminDService {
 		// Integer kidneyDisease, Integer consumerLabScore, String additionalEfficacy,
 		// String note, Float amount, Float requiredCount, String formula, Integer like,
 		// Boolean sustainedRelease
-
+		
+		String[][] notApproved = {
+				{"Nature's Way","Calcium & Vitamin D3 - Citrus Flavored"},
+				{"Jarrow Formulas","BoneUp"},
+				{"Naturelo"," Bone Strength Plant Calcium Complex With Magnesium, C, D3, K2, & Zinc"},
+				{"Vitacost","Magnesium Citrate"},
+				{"Nature's Way","Calcium & Vitamin D3 - Citrus Flavored"},
+		};
+		
 		List<VitaminD> list = vitaminDRepository.findAll();
 		for (VitaminD m : list) {
 			String category = m.getCategory();
@@ -65,7 +73,10 @@ public class VitaminDService {
 			}
 
 			Integer consumerLabScore = 0;
-
+			for (int i = 0; i < notApproved.length; i++)
+				if (brand.contains(notApproved[i][0]) && brand.contains(notApproved[i][1]))
+					consumerLabScore = -10;
+			
 			for (String s : set) {
 				sb.append(s);
 				sb.append(", ");
@@ -92,12 +103,13 @@ public class VitaminDService {
 				sustainedRelease = true;
 			String pillSize = "";
 			String bestTime = "13:00";
+			String caution = "";
 			Supplement supplement = Supplement.builder().category(category).supplementName(supplementName).price(price)
 					.brand(brand).image(image).ingredients(ingredients).bioavailability(bioavailability)
 					.laxative(laxative).kidneyDisease(kidneyDisease).consumerLabScore(consumerLabScore)
 					.additionalEfficacy(additionalEfficacy).note(note).amount(amount).requiredCount(requiredCount)
 					.formula(formula).like(like).sustainedRelease(sustainedRelease).pillSize(pillSize)
-					.bestTime(bestTime).build();
+					.bestTime(bestTime).caution(caution).build();
 			supplementRepository.save(supplement);
 		}
 	}

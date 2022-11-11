@@ -77,7 +77,7 @@ public class RecommendService {
                         , supplement.getIngredients(), supplement.getBioavailability(), supplement.getLaxative(), supplement.getKidneyDisease()
                         , supplement.getConsumerLabScore(), supplement.getAdditionalEfficacy(), supplement.getNote(),supplement.getAmount()
                         , supplement.getRequiredCount(), supplement.getFormula(), supplement.getLike(),supplement.getSustainedRelease()
-                        ,supplement.getPillSize(),supplement.getBestTime(), score));
+                        ,supplement.getPillSize(),supplement.getBestTime(), supplement.getCaution(), score));
                 cnt+=0.0001;
                 score+=cnt;
 //                System.out.println(score);

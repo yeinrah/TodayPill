@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todaypill.db.entity.Like;
@@ -39,7 +40,7 @@ public class MyPageController {
 
 	@GetMapping("/{userId}")
 	@ApiOperation(value = "유저의 마이페이지에 접근한다.", notes = "user id 필요")
-	public ResponseEntity<?> myPage(@PathVariable int userId) throws Exception {
+	public ResponseEntity<?> myPage(@PathVariable int userId) {
 		User user = myPageService.getUser(userId);
 		List<Like> list = myPageService.getLikeList(userId);
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -50,15 +51,14 @@ public class MyPageController {
 
 	@GetMapping("/{userId}/mysupplement")
 	@ApiOperation(value = "유저가 복용하는 영양제 데이터에 접근한다.", notes = "user id 필요")
-	public ResponseEntity<?> mySupplement(@PathVariable int userId) throws Exception {
+	public ResponseEntity<?> mySupplement(@PathVariable int userId) {
 		List<Routine> list = myPageService.getRoutineList(userId);
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 
 	@PostMapping("/{userId}/mysupplement")
 	@ApiOperation(value = "유저가 복용하는 영양제 데이터를 추가한다.", notes = "routine 필요")
-	public ResponseEntity<?> insertSupplement(@PathVariable int userId, @RequestBody RoutineReq routineReq)
-			throws Exception {
+	public ResponseEntity<?> insertSupplement(@PathVariable int userId, @RequestBody RoutineReq routineReq) {
 		Routine routine = Routine.builder().userId(userId).supplementId(routineReq.getSupplementId())
 				.time(routineReq.getTime()).day(routineReq.getDay()).tablets(routineReq.getTablets())
 				.pushAlarm(routineReq.getPushAlarm()).build();
@@ -68,8 +68,7 @@ public class MyPageController {
 
 	@PatchMapping("/{userId}/mysupplement/{routineId}")
 	@ApiOperation(value = "유저가 복용하는 영양제 데이터를 삭제(deleteSince 날짜 추가)한다.", notes = "routine id, 삭제일자 String 필요")
-	public ResponseEntity<?> updateRoutineVisibility(@PathVariable int routineId, @RequestBody String deletedSince)
-			throws Exception {
+	public ResponseEntity<?> updateRoutineVisibility(@PathVariable int routineId, @RequestParam String deletedSince) {
 		myPageService.updateRoutineVisibility(routineId, deletedSince);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
@@ -77,7 +76,7 @@ public class MyPageController {
 	@PutMapping("/{userId}/mysupplement/{routineId}")
 	@ApiOperation(value = "유저가 복용하는 영양제 데이터를 수정한다.", notes = "routine id 필요")
 	public ResponseEntity<?> updateSupplement(@PathVariable int userId, @PathVariable int routineId,
-			@RequestBody RoutineReq routineReq) throws Exception {
+			@RequestBody RoutineReq routineReq) {
 		Routine routine = Routine.builder().userId(userId).supplementId(routineReq.getSupplementId())
 				.time(routineReq.getTime()).day(routineReq.getDay()).tablets(routineReq.getTablets())
 				.pushAlarm(routineReq.getPushAlarm()).build();

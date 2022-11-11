@@ -77,4 +77,7 @@ public class Supplement {
 	
 	@Column(name = "best_time")
 	private String bestTime;
+	
+	@Column
+	private String caution;
 }

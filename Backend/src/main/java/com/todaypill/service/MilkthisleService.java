@@ -68,6 +68,10 @@ public class MilkthisleService {
 			}
 
 			Integer consumerLabScore = 0;
+			if (brand.contains("NOW") && brand.contains("Silymarin"))
+				consumerLabScore = -10;
+			if (brand.contains("Vitamin Shoppe") && brand.contains("Milk Thistle Extract"))
+				consumerLabScore = -10;
 
 			for (String s : set) {
 				sb.append(s);
@@ -95,12 +99,13 @@ public class MilkthisleService {
 				sustainedRelease = true;
 			String pillSize = "";
 			String bestTime = "13:00";
+			String caution = "복부팽만을 일으키면 섭취를 중단하고 의사와 상담하세요!";
 			Supplement supplement = Supplement.builder().category(category).supplementName(supplementName).price(price)
 					.brand(brand).image(image).ingredients(ingredients).bioavailability(bioavailability)
 					.laxative(laxative).kidneyDisease(kidneyDisease).consumerLabScore(consumerLabScore)
 					.additionalEfficacy(additionalEfficacy).note(note).amount(amount).requiredCount(requiredCount)
 					.formula(formula).like(like).sustainedRelease(sustainedRelease).pillSize(pillSize)
-					.bestTime(bestTime).build();
+					.bestTime(bestTime).caution(caution).build();
 			supplementRepository.save(supplement);
 		}
 	}
