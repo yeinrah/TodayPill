@@ -68,7 +68,7 @@ public class MyPageController {
 
 	@PatchMapping("/{userId}/mysupplement/{routineId}")
 	@ApiOperation(value = "유저가 복용하는 영양제 데이터를 삭제(deleteSince 날짜 추가)한다.", notes = "routine id, 삭제일자 String 필요")
-	public ResponseEntity<?> updateRoutineVisibility(@PathVariable int routineId, @RequestParam String deletedSince) {
+	public ResponseEntity<?> updateRoutineVisibility(@PathVariable int routineId, @RequestBody String deletedSince) {
 		myPageService.updateRoutineVisibility(routineId, deletedSince);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
