@@ -117,7 +117,6 @@ const SurveyScreen = ({ navigation }: any) => {
   useFocusEffect(
     useCallback(() => {
       if (nowStage === surveyData.length - 1) {
-        console.log(answerSheet);
         navigation.navigate("SurveyLoadingScreen", {
           answerSheet: answerSheet,
         });
@@ -187,7 +186,6 @@ const SurveyScreen = ({ navigation }: any) => {
                         setNowStage(nowStage);
                         ToastAndroid.show("선택 해주세요", ToastAndroid.SHORT);
                       }
-                      console.log(answer);
                     } else if (surveyData[nowStage][3]) {
                       selectedItem == 0 ? (answer = true) : (answer = false);
                       if (nowStage === 7) {

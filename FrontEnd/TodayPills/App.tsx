@@ -75,8 +75,6 @@ export default function App() {
         setUserInfo(userStorage);
         return true;
       }
-      console.log(userStorage, "name");
-      console.log(userInfo, "userInfo");
       return false;
     } catch (e) {
       console.log("error", e);
@@ -89,20 +87,6 @@ export default function App() {
       shouldSetBadge: false,
     }),
   });
-  // useEffect(() => {
-  //   console.log("main start");
-  //   loadData();
-  // }, []);
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     loadData();
-  //   }, [])
-  // );
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     console.log("???");
-  //   }, [])
-  // );
   if (!isLoadingComplete) {
     return null;
   } else {

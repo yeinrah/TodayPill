@@ -18,7 +18,6 @@ const SurveyDeepLoadingScreen = ({ navigation, route }: any) => {
   };
   useEffect(() => {
     getMyNowNutrient();
-    console.log(route.params.answerSheet);
     // afterSecondSurvey(route.params.answerSheet).then((res) =>
     //   console.log(res, "haha")
     // );

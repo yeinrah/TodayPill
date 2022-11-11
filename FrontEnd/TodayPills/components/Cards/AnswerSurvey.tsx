@@ -74,12 +74,6 @@ const AnswerSurvey = ({
                         : styles.iteminnercontainer
                     }
                     onPress={() => {
-                      console.log(multiSelceted);
-                      // if (index === 0 && item !== "해당없음") {
-                      //   setMultiSelected("");
-                      //   setSelectedItem("");
-                      //   setOptionClear(false);
-                      // }
                       if (item == "해당없음") {
                         if (multiSelceted.indexOf(item) >= 0) {
                           setMultiSelected("");

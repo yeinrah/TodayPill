@@ -7,7 +7,6 @@ const LoginSuccessScreen = ({ navigation }: any) => {
   const [name, setName] = useState("");
   const getMyName = async () => {
     const nowName = await AsyncStorage.getItem("@storage_UserNickName");
-    console.log(nowName);
     setName(nowName);
   };
   useEffect(() => {

@@ -42,26 +42,19 @@ const KakaoScreen = ({ navigation }: any) => {
     // console.log(code + "!!!!!!!!!!!!!!!!!!!!!!!!!");
     // console.log(options);
     try {
-      console.log(requestTokenUrl);
       const tokenResponse = await axios.post(requestTokenUrl, options);
       const ACCESS_TOKEN = tokenResponse.data.access_token;
-      console.log(ACCESS_TOKEN, "THIS IS ACCESS_TOKEN");
       await AsyncStorage.setItem("@storage_ACCESS_TOKEN", ACCESS_TOKEN);
       const body = {
         ACCESS_TOKEN,
       };
       const response = await axios.post(REDIRECT_URI, body);
       const value = response.data;
-      console.log(value, "haha");
-      console.log(value.name);
       const userInfo = await getUserInfoByEmail(value.email);
       await AsyncStorage.setItem("@storage_UserId", String(userInfo.userId));
       await AsyncStorage.setItem("@storage_UserGender", userInfo.gender);
       await AsyncStorage.setItem("@storage_UserEmail", value.email);
       await AsyncStorage.setItem("@storage_UserNickName", value.name);
-      // console.log(response);
-      // console.log(value, "this is value");
-      console.log(value.signup);
       if (!value.signup) {
         navigation.replace("MainScreen");
         return;
@@ -80,8 +73,6 @@ const KakaoScreen = ({ navigation }: any) => {
   const getCode = (target: string) => {
     const exp = "code=";
     const condition = target.indexOf(exp);
-    console.log(target);
-    console.log(condition);
     if (condition !== -1) {
       const requestCode = target.substring(condition + exp.length);
       requestToken(requestCode);
@@ -106,7 +97,6 @@ const KakaoScreen = ({ navigation }: any) => {
         //   getCode(data);
         // }}
         onShouldStartLoadWithRequest={(event) => {
-          console.log(event);
           const { url } = event;
           if (!url.includes("kakao.com")) {
             getCode(url);

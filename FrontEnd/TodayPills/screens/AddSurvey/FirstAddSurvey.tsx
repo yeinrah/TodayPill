@@ -20,7 +20,6 @@ const FirstAddSurvey = ({ navigation }: any) => {
   ];
   useEffect(() => {
     if (nowStage === surveyData.length - 1) {
-      console.log(answerSheet);
       navigation.navigate("SurveyLoadingScreen", { answerSheet: answerSheet });
     }
   }, [answerSheet]);
@@ -64,9 +63,8 @@ const FirstAddSurvey = ({ navigation }: any) => {
                 //균형잡힌 식사 관련 질문
                 if (nowStage === 8) {
                   if (selectedItem === 0) {
-                    console.log("균형 잡힌 식사를 합니다.");
                     setNowStage(nowStage + 2);
-                  } else console.log("균형 잡히지 않은 식사를 합니다.");
+                  }
                 }
                 if (nowStage === 9) {
                   answer = selectedItem;

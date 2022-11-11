@@ -42,8 +42,6 @@ export default function MyPageScreen({ navigation }: any) {
     const myEmail = await AsyncStorage.getItem("@storage_UserEmail");
     const myInfo: IUserInfo = await getUserInfoByEmail(myEmail);
     setMyInfo(myInfo);
-
-    console.log(myInfo);
   };
   const goMyPillsHandler = () => {
     navigation.navigate("MyPills", { userId: 1 });
@@ -115,7 +113,6 @@ export default function MyPageScreen({ navigation }: any) {
                 const token = await AsyncStorage.getItem(
                   "@storage_ACCESS_TOKEN"
                 );
-                console.log(token);
                 // kakaoLogout(token);
                 // await axios.post(
                 //   "https://kapi.kakao.com/v1/user/logout",

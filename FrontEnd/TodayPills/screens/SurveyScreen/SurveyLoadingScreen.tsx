@@ -5,9 +5,7 @@ import BackgroundScreen from "../BackgroundScreen";
 
 const SurveyLoadingScreen = ({ navigation, route }: any) => {
   useEffect(() => {
-    console.log("haha", route.params.answerSheet);
     let size = Object.keys(route.params.answerSheet).length;
-    console.log(size);
     if (size > 5) afterBasicSurvey(route.params.answerSheet);
     else afterScreeningCheck(route.params.answerSheet);
   }, []);

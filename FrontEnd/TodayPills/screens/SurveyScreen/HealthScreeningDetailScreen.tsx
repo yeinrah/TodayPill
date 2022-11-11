@@ -62,7 +62,6 @@ const HealthScreeningDetailScreen = ({ navigation }) => {
                   style={styles.inputText}
                   placeholder="19960621"
                   onChangeText={(text) => {
-                    console.log(text);
                     setBirth(text);
                   }}
                 />
@@ -73,7 +72,6 @@ const HealthScreeningDetailScreen = ({ navigation }) => {
                   style={styles.inputText}
                   placeholder="01038819667(-제외)"
                   onChangeText={(text) => {
-                    console.log(text);
                     setPhone(text);
                   }}
                 />

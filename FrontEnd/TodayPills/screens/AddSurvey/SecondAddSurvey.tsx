@@ -57,7 +57,6 @@ const SecondAddSurvey = ({ navigation }: any) => {
   ];
   useEffect(() => {
     if (nowStage === surveyData.length - 1) {
-      console.log(answerSheet);
       navigation.navigate("SurveyDeepLoadingScreen", {
         answerSheet: answerSheet,
       });

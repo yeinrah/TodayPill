@@ -27,7 +27,6 @@ export default function RecomItem({ nutName, id }: RecomItemProps) {
     <View style={styles.outerContainer}>
       <Pressable
         onPress={async () => {
-          console.log(nutName);
           await AsyncStorage.setItem("@storage_nowNutrient", nutName);
           navigation.navigate("NutrientDetailScreen", {
             nutrient: [nutName],
