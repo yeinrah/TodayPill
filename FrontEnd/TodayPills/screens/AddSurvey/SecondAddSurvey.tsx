@@ -110,10 +110,10 @@ const SecondAddSurvey = ({ navigation }: any) => {
                     setNowStage(nowStage + 1);
                     let answer: boolean | number;
                     if (nowStage === 0) {
-                      console.warn("adas");
                       // let price = selectedItem.split(" ");
                       // answer = price;
                       answer = selectedItem.split(" ");
+                      console.warn(answer);
                     } else if (nowStage === 1) {
                       answer = SurveyQuestion.get(selectedItem);
                     } else if (nowStage === 2) {
@@ -133,8 +133,17 @@ const SecondAddSurvey = ({ navigation }: any) => {
                     } else {
                       if (!answer[0] || !answer[1]) {
                         setNowStage(nowStage);
+                        console.log(answer[0], answer[1]);
                         ToastAndroid.show(
                           "가격을 입력해주세요",
+                          ToastAndroid.SHORT
+                        );
+                      }
+                      if (Number(answer[0]) > Number(answer[1])) {
+                        setNowStage(nowStage);
+                        console.log(answer[0], answer[1]);
+                        ToastAndroid.show(
+                          "최소 가격이 더 큽니다.",
                           ToastAndroid.SHORT
                         );
                       }
@@ -148,7 +157,7 @@ const SecondAddSurvey = ({ navigation }: any) => {
                         // [`${surveyData[nowStage][0]}`]: answer,
                       });
                     }
-                    if (nowStage === 0 || nowStage === 1) setSelectedItem(0);
+                    if (nowStage === 0 || nowStage === 1) setSelectedItem("");
                     else setSelectedItem(1);
                   }}
                 >
