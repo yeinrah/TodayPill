@@ -97,12 +97,14 @@ public class MyPageService {
 	}
 	
 	@Transactional
-	public void updateRoutine(int routineId, Routine routine) {
+	public void updateRoutine(int routineId, Routine routine, String deletedSince) {
 		Routine originalRoutine = routineRepository.findOneByRoutineId(routineId);
-		originalRoutine.setTime(routine.getTime());
-		originalRoutine.setDay(routine.getDay());
-		originalRoutine.setTablets(routine.getTablets());
-		originalRoutine.setPushAlarm(routine.getPushAlarm());
+		originalRoutine.setDeletedSince(deletedSince);
+//		originalRoutine.setTime(routine.getTime());
+//		originalRoutine.setDay(routine.getDay());
+//		originalRoutine.setTablets(routine.getTablets());
+//		originalRoutine.setPushAlarm(routine.getPushAlarm());
 		routineRepository.save(originalRoutine);
+		routineRepository.save(routine);
 	}
 }

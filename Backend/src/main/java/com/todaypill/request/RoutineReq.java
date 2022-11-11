@@ -31,4 +31,8 @@ public class RoutineReq {
 	@ApiModelProperty(name = "푸시알람", example = "False")
 	@NotNull(message = "true / false 를 입력하세요.")
 	private Boolean pushAlarm;
+	
+	@ApiModelProperty(name = "추가일자", example = "2022-11-11")
+	@NotNull(message = "추가일자를 입력하세요.")
+	private String addedSince;
 }

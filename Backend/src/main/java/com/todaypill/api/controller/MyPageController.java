@@ -61,7 +61,7 @@ public class MyPageController {
 	public ResponseEntity<?> insertSupplement(@PathVariable int userId, @RequestBody RoutineReq routineReq) {
 		Routine routine = Routine.builder().userId(userId).supplementId(routineReq.getSupplementId())
 				.time(routineReq.getTime()).day(routineReq.getDay()).tablets(routineReq.getTablets())
-				.pushAlarm(routineReq.getPushAlarm()).build();
+				.pushAlarm(routineReq.getPushAlarm()).addedSince(routineReq.getAddedSince()).build();
 		myPageService.insertRoutine(routine);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
@@ -78,10 +78,11 @@ public class MyPageController {
 	@ApiOperation(value = "유저가 복용하는 영양제 데이터를 수정한다.", notes = "routine id 필요")
 	public ResponseEntity<?> updateSupplement(@PathVariable int userId, @PathVariable int routineId,
 			@RequestBody RoutineReq routineReq) {
+		String deletedSince = routineReq.getAddedSince();
 		Routine routine = Routine.builder().userId(userId).supplementId(routineReq.getSupplementId())
 				.time(routineReq.getTime()).day(routineReq.getDay()).tablets(routineReq.getTablets())
-				.pushAlarm(routineReq.getPushAlarm()).build();
-		myPageService.updateRoutine(routineId, routine);
+				.pushAlarm(routineReq.getPushAlarm()).addedSince(routineReq.getAddedSince()).build();
+		myPageService.updateRoutine(routineId, routine, deletedSince);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }
