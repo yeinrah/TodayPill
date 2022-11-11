@@ -1,6 +1,6 @@
 package com.todaypill.api.controller;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.todaypill.db.entity.Calendar;
 import com.todaypill.db.entity.Routine;
 import com.todaypill.request.CalendarReq;
+import com.todaypill.response.CalendarRes;
 import com.todaypill.service.MyPageService;
 
 import io.swagger.annotations.ApiOperation;
@@ -46,12 +47,30 @@ public class CalendarController {
 	@GetMapping("/{userId}/{date}/{day}")
 	@ApiOperation(value = "특정 일자 캘린더에 접근한다.", notes = "user id, date, day(String, 요일 숫자) 필요")
 	public ResponseEntity<?> myDate(@PathVariable int userId, @PathVariable String date, @PathVariable String day) {
+		List<CalendarRes> resultList = new ArrayList<CalendarRes>();
 		List<Routine> routineList = myPageService.getRoutineListByDay(userId, day);
 		List<Calendar> calendarList = myPageService.getCalendarDayList(userId, date);
-		HashMap<String, Object> map = new HashMap<>();
-		map.put("routineList", routineList);
-		map.put("calendarList", calendarList);
-		return new ResponseEntity<>(map, HttpStatus.OK);
+		for (Routine r : routineList) {
+			CalendarRes res = new CalendarRes();
+			res.setRoutineId(r.getRoutineId());
+			res.setUserId(r.getUserId());
+			res.setSupplementId(r.getSupplementId());
+			res.setTime(r.getTime());
+			res.setDay(r.getDay());
+			res.setTablets(r.getTablets());
+			res.setAddedSince(r.getAddedSince());
+			res.setDeletedSince(r.getDeletedSince());
+			res.setPushAlarm(r.getPushAlarm());
+			
+			int routineId = r.getRoutineId();
+			Boolean taken = false;
+			for (Calendar c : calendarList)
+				if (c.getRoutineId() == routineId)
+					taken = true;
+			res.setTaken(taken);
+			resultList.add(res);
+		}
+		return new ResponseEntity<>(resultList, HttpStatus.OK);
 	}
 
 	@GetMapping("/{calendarId}")
