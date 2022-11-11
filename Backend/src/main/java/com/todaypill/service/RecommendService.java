@@ -56,8 +56,7 @@ public class RecommendService {
                 double score = 0;
                 Integer labScore = 0;
                 String additionalEfficacy = "";
-                if (userSecondSurveyReq.getLowerPriceLimit() < supplement.getPrice() && userSecondSurveyReq.getUpperPriceLimit() > supplement.getPrice() 
-                	&& supplement.getCategory().contains(userSecondSurveyReq.getCategory())) {
+                if ( supplement.getCategory().contains(userSecondSurveyReq.getCategory())) {
                 	
                     score = (commonQuestion.getPreferred_brand().equals(supplement.getBrand()) ? 3 : 0)
                             + supplement.getBioavailability()
@@ -69,7 +68,8 @@ public class RecommendService {
 //                            + (commonQuestion.is_ok_big_pill() ? supplement.getPillSize() : 0)
                             + (userSecondSurveyReq.getFormula().equals(supplement.getFormula()) ? 3 : 0)
                             + (userSecondSurveyReq.getSustainedRelease() && supplement.getSustainedRelease() ? 3 : 0)
-                    		+ (supplement.getBrand().contains(commonQuestion.getPreferred_brand()) ? 10 : 0);
+                    		+ (supplement.getBrand().contains(commonQuestion.getPreferred_brand()) ? 10 : 0)
+                    		+	(userSecondSurveyReq.getLowerPriceLimit() < supplement.getPrice() && userSecondSurveyReq.getUpperPriceLimit() > supplement.getPrice() ? 10 : 0);
                     //}
                 }
                 supplementAndScoreRes.add(new SupplementAndScoreRes(supplement.getSupplementId(),supplement.getCategory()
