@@ -14,6 +14,7 @@ import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { HealthScreeningCheck } from "../../API/userAPI";
 import LoadingSpinner from "../../components/UI/LoadingSpinner";
+import BackgroundScreen2 from "../BackgroundScreen2";
 const HealthScreeningDetailScreen = ({ navigation }) => {
   const [name, setName] = useState("");
   const [birth, setBirth] = useState("");
@@ -23,7 +24,7 @@ const HealthScreeningDetailScreen = ({ navigation }) => {
     <>
       {isLoading && <LoadingSpinner />}
       {!isLoading && (
-        <BackgroundScreen>
+        <BackgroundScreen2>
           <ScrollView style={styles.container}>
             <Ionicons
               name="arrow-back"
@@ -113,7 +114,7 @@ const HealthScreeningDetailScreen = ({ navigation }) => {
               />
             </View>
           </ScrollView>
-        </BackgroundScreen>
+        </BackgroundScreen2>
       )}
     </>
   );

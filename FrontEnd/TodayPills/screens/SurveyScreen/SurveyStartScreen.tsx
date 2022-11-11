@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import BackgroundScreen from "../BackgroundScreen";
+import BackgroundScreen2 from "../BackgroundScreen2";
 
 const SurveyStartScreen = ({ navigation }: any) => {
   const [name, setName] = useState("");
@@ -13,7 +14,7 @@ const SurveyStartScreen = ({ navigation }: any) => {
     getMyName();
   }, []);
   return (
-    <BackgroundScreen>
+    <BackgroundScreen2>
       <View style={styles.container}>
         <View style={styles.textcontainer}>
           <View style={styles.flexrow}>
@@ -38,7 +39,7 @@ const SurveyStartScreen = ({ navigation }: any) => {
           </Pressable>
         </View>
       </View>
-    </BackgroundScreen>
+    </BackgroundScreen2>
   );
 };
 
@@ -65,7 +66,8 @@ const styles = StyleSheet.create({
     color: "black",
   },
   whitetext: {
-    color: "white",
+    // color: "white",
+    color: "#4E736F",
   },
   buttonOuterContainer: {
     borderRadius: 20,

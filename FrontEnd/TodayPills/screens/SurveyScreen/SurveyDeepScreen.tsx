@@ -3,12 +3,13 @@ import BackgroundScreen from "../BackgroundScreen";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { useState } from "react";
+import BackgroundScreen2 from "../BackgroundScreen2";
 
 const SurveyDeepScreen = ({ navigation }: any) => {
   const [selectedItem, setSelectedItem] = useState(0);
 
   return (
-    <BackgroundScreen>
+    <BackgroundScreen2>
       <View style={styles.container}>
         <Ionicons
           name="arrow-back"
@@ -87,7 +88,7 @@ const SurveyDeepScreen = ({ navigation }: any) => {
           </View>
         </View>
       </View>
-    </BackgroundScreen>
+    </BackgroundScreen2>
   );
 };
 

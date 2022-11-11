@@ -15,6 +15,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import SurveyQuestion from "../../components/Data/SurveyAdditionalEfficiency";
 import SurveyFormula from "../../components/Data/SurveyFormula";
 import LoadingSpinner from "../../components/UI/LoadingSpinner";
+import BackgroundScreen2 from "../BackgroundScreen2";
 
 const SecondAddSurvey = ({ navigation }: any) => {
   const [selectedItem, setSelectedItem] = useState<any>(1);
@@ -63,7 +64,7 @@ const SecondAddSurvey = ({ navigation }: any) => {
     }
   }, [answerSheet]);
   return (
-    <BackgroundScreen>
+    <BackgroundScreen2>
       <View style={styles.container}>
         {isLoading && <LoadingSpinner />}
         {!isLoading && (
@@ -168,7 +169,7 @@ const SecondAddSurvey = ({ navigation }: any) => {
           </>
         )}
       </View>
-    </BackgroundScreen>
+    </BackgroundScreen2>
   );
 };
 const styles = StyleSheet.create({

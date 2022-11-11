@@ -11,6 +11,7 @@ import { useCallback, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import NutrientDescription from "../../components/Data/NutrientDescription";
 import { useFocusEffect } from "@react-navigation/native";
+import BackgroundScreen2 from "../BackgroundScreen2";
 
 const NutrientDetailScreen = ({ navigation, route }: any) => {
   const [myName, setMyName] = useState<string>();
@@ -32,7 +33,7 @@ const NutrientDetailScreen = ({ navigation, route }: any) => {
     }, [])
   );
   return (
-    <BackgroundScreen>
+    <BackgroundScreen2>
       <View style={styles.container}>
         <Ionicons
           name="arrow-back"
@@ -93,7 +94,7 @@ const NutrientDetailScreen = ({ navigation, route }: any) => {
           </View>
         </View>
       </View>
-    </BackgroundScreen>
+    </BackgroundScreen2>
   );
 };
 

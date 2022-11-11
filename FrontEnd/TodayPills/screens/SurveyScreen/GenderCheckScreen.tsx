@@ -5,12 +5,13 @@ import { AntDesign } from "@expo/vector-icons";
 import { useState } from "react";
 import { changeGender } from "../../API/userAPI";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import BackgroundScreen2 from "../BackgroundScreen2";
 
 const GenderCheckScreen = ({ navigation }: any) => {
   const [selectedItem, setSelectedItem] = useState(0);
   const [nowGender, setNowGender] = useState("");
   return (
-    <BackgroundScreen>
+    <BackgroundScreen2>
       <View style={styles.container}>
         <Ionicons
           name="arrow-back"
@@ -103,7 +104,7 @@ const GenderCheckScreen = ({ navigation }: any) => {
           </View>
         </View>
       </View>
-    </BackgroundScreen>
+    </BackgroundScreen2>
   );
 };
 

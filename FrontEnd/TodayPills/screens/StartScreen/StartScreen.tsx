@@ -3,11 +3,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import BackgroundScreen from "../BackgroundScreen";
 import { useState } from "react";
 import CustomBtn from "../../components/UI/CustomBtn";
+import BackgroundScreen2 from "../BackgroundScreen2";
 
 const StartScreen = ({ navigation }: any) => {
   const [clikedStart, setClickedStart] = useState(false);
   return (
-    <BackgroundScreen>
+    <BackgroundScreen2>
       <View style={styles.container}>
         <Text style={styles.subTitle}>내게 맞는 영양제 추천</Text>
         <View style={styles.mainTitle}>
@@ -67,7 +68,7 @@ const StartScreen = ({ navigation }: any) => {
           </View>
         )}
       </View>
-    </BackgroundScreen>
+    </BackgroundScreen2>
   );
 };
 

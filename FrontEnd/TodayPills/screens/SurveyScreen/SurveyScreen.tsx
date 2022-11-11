@@ -14,6 +14,7 @@ import AnswerSurvey from "../../components/Cards/AnswerSurvey";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import LoadingSpinner from "../../components/UI/LoadingSpinner";
+import BackgroundScreen2 from "../BackgroundScreen2";
 
 const SurveyScreen = ({ navigation }: any) => {
   const [selectedItem, setSelectedItem] = useState(1);
@@ -130,7 +131,7 @@ const SurveyScreen = ({ navigation }: any) => {
   //   }
   // }, [answerSheet]);
   return (
-    <BackgroundScreen>
+    <BackgroundScreen2>
       <View style={styles.container}>
         {isLoading && <LoadingSpinner />}
         {!isLoading && (
@@ -209,7 +210,7 @@ const SurveyScreen = ({ navigation }: any) => {
           </>
         )}
       </View>
-    </BackgroundScreen>
+    </BackgroundScreen2>
   );
 };
 
