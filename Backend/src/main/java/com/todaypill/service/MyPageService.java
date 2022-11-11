@@ -13,7 +13,6 @@ import com.todaypill.db.entity.User;
 import com.todaypill.repository.CalendarRepository;
 import com.todaypill.repository.LikeRepository;
 import com.todaypill.repository.RoutineRepository;
-import com.todaypill.repository.SupplementRepository;
 import com.todaypill.repository.UserRepository;
 
 @Service
@@ -31,18 +30,12 @@ public class MyPageService {
 	@Autowired
 	private CalendarRepository calendarRepository;
 
-	@Autowired
-	private SupplementRepository supplementRepository;
-
 	public MyPageService(UserRepository userRepository, LikeRepository likeRepository,
-			RoutineRepository routineRepository, CalendarRepository calendarRepository,
-			SupplementRepository supplementRepository) {
+			RoutineRepository routineRepository, CalendarRepository calendarRepository) {
 		super();
 		this.userRepository = userRepository;
 		this.likeRepository = likeRepository;
 		this.routineRepository = routineRepository;
-		this.calendarRepository = calendarRepository;
-		this.supplementRepository = supplementRepository;
 	}
 
 	@Transactional
@@ -98,7 +91,9 @@ public class MyPageService {
 
 	@Transactional
 	public void updateRoutineVisibility(int routineId, String deletedSince) {
-		routineRepository.updateRoutineVisibility(routineId, deletedSince);
+		Routine originalRoutine = routineRepository.findOneByRoutineId(routineId);
+		originalRoutine.setDeletedSince(deletedSince);
+		routineRepository.save(originalRoutine);
 	}
 	
 	@Transactional
