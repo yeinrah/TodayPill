@@ -48,7 +48,7 @@ public class CalendarController {
 	@ApiOperation(value = "특정 일자 캘린더에 접근한다.", notes = "user id, date, day(String, 요일 숫자) 필요")
 	public ResponseEntity<?> myDate(@PathVariable int userId, @PathVariable String date, @PathVariable String day) {
 		List<CalendarRes> resultList = new ArrayList<CalendarRes>();
-		List<Routine> routineList = myPageService.getRoutineListByDay(userId, day);
+		List<Routine> routineList = myPageService.getRoutineListByDay(userId, day, date);
 		List<Calendar> calendarList = myPageService.getCalendarDayList(userId, date);
 		for (Routine r : routineList) {
 			CalendarRes res = new CalendarRes();

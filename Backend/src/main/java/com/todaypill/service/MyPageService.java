@@ -58,8 +58,8 @@ public class MyPageService {
 	}
 	
 	@Transactional
-	public List<Routine> getRoutineListByDay(int userId, String day) {
-		List<Routine> list = routineRepository.findAllByUserIdAndDay(userId, day);
+	public List<Routine> getRoutineListByDay(int userId, String day, String date) {
+		List<Routine> list = routineRepository.findAllByUserIdAndDay(userId, day, date);
 		return list;
 	}
 	
