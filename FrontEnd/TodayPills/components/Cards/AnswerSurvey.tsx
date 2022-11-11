@@ -121,7 +121,7 @@ const AnswerSurvey = ({
           <View style={styles.priceView}>
             <TextInput
               style={styles.textInput}
-              placeholder="최소가격"
+              placeholder="최소"
               onChangeText={(min) => {
                 setMinPrice(min);
                 setSelectedItem(min + " " + maxPrice);
@@ -134,7 +134,7 @@ const AnswerSurvey = ({
           <View style={styles.priceView}>
             <TextInput
               style={styles.textInput}
-              placeholder="최대가격"
+              placeholder="최대"
               onChangeText={(max) => {
                 // setSelectedItem(max);
                 setMaxPrice(max);
@@ -234,12 +234,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 40,
   },
-  textInput: {
-    fontSize: 40,
-  },
+  textInput: { fontSize: 40 },
   price: { marginTop: 8, marginLeft: 5, fontSize: 30 },
   priceView: {
+    alignItems: "center",
     flexDirection: "row",
+    paddingTop: 0,
+    paddingBottom: 0,
   },
 });
 export default AnswerSurvey;

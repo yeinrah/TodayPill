@@ -182,7 +182,7 @@ const SurveyScreen = ({ navigation }: any) => {
                       nowStage === 12
                     ) {
                       answer = selectedItem;
-                      if (answer === 1) {
+                      if (answer === 1 || !answer) {
                         setNowStage(nowStage);
                         ToastAndroid.show("선택 해주세요", ToastAndroid.SHORT);
                       }
