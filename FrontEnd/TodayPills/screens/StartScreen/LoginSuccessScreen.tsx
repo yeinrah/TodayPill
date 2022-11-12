@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 import { Image, StyleSheet, Text, View, Pressable } from "react-native";
 import BackgroundScreen from "../BackgroundScreen";
+import BackgroundScreen2 from "../BackgroundScreen2";
 
 const LoginSuccessScreen = ({ navigation }: any) => {
   const [name, setName] = useState("");
@@ -13,7 +14,7 @@ const LoginSuccessScreen = ({ navigation }: any) => {
     getMyName();
   }, []);
   return (
-    <BackgroundScreen>
+    <BackgroundScreen2>
       <View style={styles.container}>
         <View style={styles.imagecontainer}>
           <Image
@@ -45,7 +46,7 @@ const LoginSuccessScreen = ({ navigation }: any) => {
           </Pressable>
         </View>
       </View>
-    </BackgroundScreen>
+    </BackgroundScreen2>
   );
 };
 

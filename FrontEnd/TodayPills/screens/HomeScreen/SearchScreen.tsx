@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, View, Text } from "react-native";
-import BackgroundScreen from "../BackgroundScreen";
+import BackgroundScreen2 from "../BackgroundScreen2";
 import Card from "../../components/UI/Card";
 import SearchBar from "../../components/TopBar/SearchBar";
 import DetailedPillCard from "../../components/Cards/DetailedPillCard";
@@ -40,7 +40,7 @@ export default function SearchScreen({ navigation, route }: any) {
   );
 
   return (
-    <BackgroundScreen>
+    <BackgroundScreen2>
       <Card>
         <View style={styles.container}>
           <SearchBar navigation={navigation} word={route.params.word} />
@@ -61,7 +61,7 @@ export default function SearchScreen({ navigation, route }: any) {
           </ScrollView>
         </View>
       </Card>
-    </BackgroundScreen>
+    </BackgroundScreen2>
   );
 }
 

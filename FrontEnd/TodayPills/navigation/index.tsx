@@ -58,6 +58,7 @@ import GenderCheckScreen from "../screens/SurveyScreen/GenderCheckScreen";
 import FirstAddSurvey from "../screens/AddSurvey/FirstAddSurvey";
 import AllSupplementsScreen from "../screens/HomeScreen/AllSupplementsScreen";
 import SecondAddSurvey from "../screens/AddSurvey/SecondAddSurvey";
+import ChatScreen from "../screens/ChatScreen/ChatScreen";
 interface Inavigation {
   colorScheme: ColorSchemeName;
   LoginCheck: () => {};
@@ -358,10 +359,10 @@ function MaterialBottomTabNavigator({ navigation }: any) {
         }}
       /> */}
       <BottomTab.Screen
-        name="Recommendation"
-        component={RecommendationScreen}
+        name="ChatScreen"
+        component={ChatScreen}
         options={{
-          tabBarLabel: "추천",
+          tabBarLabel: "채팅",
           tabBarIcon: ({ color }) => (
             // <FontAwesome5 name="pills" size={22} color={color} />
             <MaterialCommunityIcons name="pill" size={26} color={color} />

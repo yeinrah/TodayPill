@@ -3,13 +3,13 @@ import { StyleSheet, Text, View } from "react-native";
 // import EditScreenInfo from "../components/EditScreenInfo";
 // import { Text, View } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
-import BackgroundScreen from "./BackgroundScreen";
+import BackgroundScreen2 from "./BackgroundScreen2";
 
 export default function RecommendationScreen({
   navigation,
 }: RootTabScreenProps<"Recommendation">) {
   return (
-    <BackgroundScreen>
+    <BackgroundScreen2>
       <View style={styles.container}>
         <Text style={styles.title}>영양제 추천</Text>
         {/* <View
@@ -19,7 +19,7 @@ export default function RecommendationScreen({
         /> */}
         {/* <EditScreenInfo path="/screens/HomeScreen.tsx" /> */}
       </View>
-    </BackgroundScreen>
+    </BackgroundScreen2>
   );
 }
 

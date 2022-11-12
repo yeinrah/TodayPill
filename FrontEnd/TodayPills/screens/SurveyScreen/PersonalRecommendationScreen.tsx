@@ -14,6 +14,7 @@ import CustomBtn from "../../components/UI/CustomBtn";
 import { accent } from "../../constants/Colors";
 import BackgroundScreen from "../BackgroundScreen";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import BackgroundScreen2 from "../BackgroundScreen2";
 
 const PersonalRecommendationScreen = ({ navigation }: any) => {
   const [myNutrient, setMyNutrient] = useState([
@@ -42,7 +43,7 @@ const PersonalRecommendationScreen = ({ navigation }: any) => {
     getMyName();
   }, []);
   return (
-    <BackgroundScreen>
+    <BackgroundScreen2>
       <ScrollView>
         <View style={styles.textContainer}>
           <Text>
@@ -118,7 +119,7 @@ const PersonalRecommendationScreen = ({ navigation }: any) => {
           />
         </View>
       </ScrollView>
-    </BackgroundScreen>
+    </BackgroundScreen2>
   );
 };
 const styles = StyleSheet.create({

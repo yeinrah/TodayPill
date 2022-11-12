@@ -5,7 +5,7 @@ import DayPillSchedule from "../components/Calendar/Routine/DayPillSchedule";
 import Card from "../components/UI/Card";
 import { RootTabScreenProps } from "../types";
 import { useState, useCallback } from "react";
-import BackgroundScreen from "./BackgroundScreen";
+import BackgroundScreen2 from "./BackgroundScreen2";
 import LoadingSpinner from "../components/UI/LoadingSpinner";
 import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -46,7 +46,7 @@ export default function CalendarScreen({
   //   return <LoadingSpinner />;
   // }
   return (
-    <BackgroundScreen>
+    <BackgroundScreen2>
       <Card>
         <ScrollView style={styles.scrollView}>
           <View style={styles.titleContainer}>
@@ -68,13 +68,13 @@ export default function CalendarScreen({
               />
             </View>
           </View>
-          <View>
+          <View style={{ marginBottom: 15 }}>
             <DayPillSchedule selectedDate={selectedDate} />
           </View>
         </ScrollView>
       </Card>
       {/* <View style={styles.titleContainer}></View> */}
-    </BackgroundScreen>
+    </BackgroundScreen2>
   );
 }
 

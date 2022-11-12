@@ -24,7 +24,7 @@ import CustomModal from "../components/UI/CustomModal";
 import { accent, primary, secondary } from "../constants/Colors";
 
 import { IUserInfo, RootTabScreenProps } from "../types";
-import BackgroundScreen from "./BackgroundScreen";
+import BackgroundScreen2 from "./BackgroundScreen2";
 
 export default function MyPageScreen({ navigation }: any) {
   // RootTabScreenProps<"MyPage">
@@ -53,7 +53,7 @@ export default function MyPageScreen({ navigation }: any) {
     // getMyNowNutrient();
   }, [isChangeName]);
   return (
-    <BackgroundScreen>
+    <BackgroundScreen2>
       <Card>
         <ScrollView style={styles.scrollView}>
           <View style={styles.myInfoContainer}>
@@ -140,7 +140,7 @@ export default function MyPageScreen({ navigation }: any) {
           /> */}
         {/* <EditScreenInfo path="/screens/HomeScreen.tsx" /> */}
       </Card>
-    </BackgroundScreen>
+    </BackgroundScreen2>
   );
 }
 

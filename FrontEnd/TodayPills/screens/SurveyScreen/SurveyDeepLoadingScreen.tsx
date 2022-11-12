@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { afterSecondSurvey } from "../../API/userAPI";
 import BackgroundScreen from "../BackgroundScreen";
+import BackgroundScreen2 from "../BackgroundScreen2";
 
 const SurveyDeepLoadingScreen = ({ navigation, route }: any) => {
   const [nowMyNutrient, setNowMyNutrient] = useState("");
@@ -24,7 +25,7 @@ const SurveyDeepLoadingScreen = ({ navigation, route }: any) => {
     getResult();
   }, []);
   return (
-    <BackgroundScreen>
+    <BackgroundScreen2>
       <View style={styles.container}>
         <View style={styles.textcontainer}>
           <Text style={[styles.text, styles.greetingtext, styles.blacktext]}>
@@ -34,7 +35,7 @@ const SurveyDeepLoadingScreen = ({ navigation, route }: any) => {
         <View style={styles.imagecontainer}>
           <Image
             style={styles.image}
-            source={require("../../assets/images/youngyang/normal.png")}
+            source={require("../../assets/images/surveyResult.png")}
           />
         </View>
         <View style={styles.buttonOuterContainer}>
@@ -51,7 +52,7 @@ const SurveyDeepLoadingScreen = ({ navigation, route }: any) => {
           </Pressable>
         </View>
       </View>
-    </BackgroundScreen>
+    </BackgroundScreen2>
   );
 };
 const styles = StyleSheet.create({
@@ -63,10 +64,12 @@ const styles = StyleSheet.create({
   imagecontainer: {
     width: 100,
     height: 150,
+    alignItems: "center",
+    justifyContent: "center",
   },
   image: {
-    width: "100%",
-    height: "100%",
+    width: 600,
+    height: 600,
     resizeMode: "contain",
   },
   textcontainer: {

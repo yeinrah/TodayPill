@@ -7,6 +7,7 @@ import DetailedPillCard from "../../components/Cards/DetailedPillCard";
 import CustomBtn from "../../components/UI/CustomBtn";
 import { accent } from "../../constants/Colors";
 import BackgroundScreen from "../BackgroundScreen";
+import BackgroundScreen2 from "../BackgroundScreen2";
 
 const PillResultScreen = ({ navigation, route }: any) => {
   const [myName, setMyName] = useState("");
@@ -38,7 +39,7 @@ const PillResultScreen = ({ navigation, route }: any) => {
     // getResult();
   }, []);
   return (
-    <BackgroundScreen>
+    <BackgroundScreen2>
       <ScrollView style={styles.container}>
         <Ionicons
           name="arrow-back"
@@ -95,7 +96,7 @@ const PillResultScreen = ({ navigation, route }: any) => {
           />
         </View>
       </ScrollView>
-    </BackgroundScreen>
+    </BackgroundScreen2>
   );
 };
 const styles = StyleSheet.create({

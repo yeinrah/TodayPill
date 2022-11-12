@@ -59,6 +59,7 @@ export type RootTabParamList = {
   Calendar: undefined;
   MyPage: undefined;
   Start: undefined;
+  ChatScreen: undefined;
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =

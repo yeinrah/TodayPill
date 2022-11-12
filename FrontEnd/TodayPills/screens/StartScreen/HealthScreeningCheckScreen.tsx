@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import BackgroundScreen from "../BackgroundScreen";
+import BackgroundScreen2 from "../BackgroundScreen2";
 
 const HealthScreeningCheckScreen = ({ navigation }: any) => {
   return (
-    <BackgroundScreen>
+    <BackgroundScreen2>
       <View style={styles.container}>
         <View style={styles.textcontainer}>
           <Text style={[styles.text, styles.greytext]}>건강 검진 결과를</Text>
@@ -40,7 +41,7 @@ const HealthScreeningCheckScreen = ({ navigation }: any) => {
           </View>
         </View>
       </View>
-    </BackgroundScreen>
+    </BackgroundScreen2>
   );
 };
 
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   whitetext: {
-    color: "white",
+    // color: "white",
     fontSize: 24,
   },
   questioncontainer: {

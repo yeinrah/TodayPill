@@ -12,7 +12,7 @@ import {
 // import { Text, View } from "../components/Themed";
 
 import { RootStackScreenProps } from "../types";
-import BackgroundScreen from "./BackgroundScreen";
+import BackgroundScreen2 from "./BackgroundScreen2";
 import Card from "../components/UI/Card";
 import GoBackBtn from "../components/UI/GoBackBtn";
 import { useState, useCallback } from "react";
@@ -32,7 +32,7 @@ export default function ModifyRoutineScreen({ navigation, route }: any) {
     routineId: route.params?.routineId,
   };
   return (
-    <BackgroundScreen>
+    <BackgroundScreen2>
       <Card>
         <View style={styles.container}>
           <View style={styles.backBtn}>
@@ -54,7 +54,7 @@ export default function ModifyRoutineScreen({ navigation, route }: any) {
           </View>
         </View>
       </Card>
-    </BackgroundScreen>
+    </BackgroundScreen2>
   );
 }
 

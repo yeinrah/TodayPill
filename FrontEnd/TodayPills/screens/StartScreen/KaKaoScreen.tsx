@@ -5,6 +5,7 @@ import WebView from "react-native-webview";
 import BackgroundScreen from "../BackgroundScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getUserInfoByEmail } from "../../API/userAPI";
+import BackgroundScreen2 from "../BackgroundScreen2";
 
 const REST_API_KEY = "acdc3561e2faeeafdcf245c2d609bd5d";
 let access_token: string;
@@ -79,7 +80,7 @@ const KakaoScreen = ({ navigation }: any) => {
     }
   };
   return (
-    <BackgroundScreen>
+    <BackgroundScreen2>
       <WebView
         style={{ flex: 1 }}
         source={{
@@ -107,7 +108,7 @@ const KakaoScreen = ({ navigation }: any) => {
           // return true;
         }}
       />
-    </BackgroundScreen>
+    </BackgroundScreen2>
   );
 };
 export default KakaoScreen;
