@@ -10,14 +10,14 @@ import { IBackground, RootTabScreenProps } from "../types";
 
 export default function BackgroundScreen2({ children }: IBackground) {
   return (
-    <LinearGradient
-      colors={[primary, secondary]}
-      // colors={["#E2C3DC", "#CEEAE6"]}
-      // start={{ x: 0.0, y: 0.25 }}
-      // end={{ x: 0.5, y: 1.0 }}
-      // locations={[0, 0.5, 0.6]}
-      style={styles.rootScreen}
-    >
+    // <LinearGradient
+    //   colors={[primary, secondary]}
+    //   // colors={["#E2C3DC", "#CEEAE6"]}
+    //   // start={{ x: 0.0, y: 0.25 }}
+    //   // end={{ x: 0.5, y: 1.0 }}
+    //   // locations={[0, 0.5, 0.6]}
+    //   style={styles.rootScreen}
+    // >
       <ImageBackground
         source={require("../assets/images/background3.png")}
         resizeMode="cover"
@@ -28,7 +28,7 @@ export default function BackgroundScreen2({ children }: IBackground) {
           <View style={styles.imageContainer}>
             <Image
               style={styles.image}
-              source={require("../assets/images/logo2.png")}
+              source={require("../assets/images/logo3.png")}
             />
           </View>
           {/* <Text style={styles.logoColor1}>
@@ -39,7 +39,7 @@ export default function BackgroundScreen2({ children }: IBackground) {
         <View style={styles.children}>{children}</View>
         {/* </Card> */}
       </ImageBackground>
-    </LinearGradient>
+    // </LinearGradient>
   );
 }
 

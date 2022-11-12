@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Pressable, ScrollView, Image } from "react-native";
 import DetailedPillCard from "../../components/Cards/DetailedPillCard";
 import Card from "../../components/UI/Card";
-import BackgroundScreen from "../BackgroundScreen";
+import BackgroundScreen2 from "../BackgroundScreen2";
 import { useCallback, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fetchAllSupplements } from "../../API/supplementAPI";
@@ -34,7 +34,7 @@ const NutrientScreen = ({ navigation, route }: any) => {
   }, [pills]);
 
   return (
-    <BackgroundScreen>
+    <BackgroundScreen2>
       <Card>
         <View>
           <Text style={styles.text}>{nutrient}</Text>
@@ -79,7 +79,7 @@ const NutrientScreen = ({ navigation, route }: any) => {
           </ScrollView>
         </View>
       </Card>
-    </BackgroundScreen>
+    </BackgroundScreen2>
   );
 };
 
