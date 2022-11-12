@@ -48,7 +48,7 @@ const MainPill = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>가장 인기있는 영양제</Text>
+      <Text style={{...styles.text, fontFamily: "웰컴체_Bold"}}>가장 인기있는 영양제</Text>
 
       <View style={styles.outerContainer}>
         <ScrollView style={styles.cardsContainer} horizontal={true}>
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 17,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     marginLeft: 5,
     marginBottom: 10,
   },

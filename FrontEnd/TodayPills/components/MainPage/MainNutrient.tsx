@@ -53,7 +53,7 @@ const MainNutrient = ({ navigation }: any) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>인기 성분</Text>
+      <Text style={{...styles.text, fontFamily: "웰컴체_Bold"}}>인기 성분</Text>
       <View style={styles.cardscontainer}>
         {mainNutrients.map((mainNutrient, idx) => (
           <Pressable
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 17,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     marginLeft: 5,
     marginBottom: 10,
   },
