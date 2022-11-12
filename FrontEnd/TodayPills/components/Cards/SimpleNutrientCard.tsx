@@ -18,7 +18,7 @@ const SimpleNutrientCard = (props: NutrientProps) => {
       <View style={styles.imagecontainer}>
         <Image source={props.image} style={styles.image} />
       </View>
-      <Text style={styles.text}>{props.nutrient}</Text>
+      <Text style={{...styles.text, fontFamily: "웰컴체_Regular"}}>{props.nutrient}</Text>
     </View>
   );
 };
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 15,
-    fontWeight: "bold",
+    // fontWeight: "bold",
   },
 });
 
