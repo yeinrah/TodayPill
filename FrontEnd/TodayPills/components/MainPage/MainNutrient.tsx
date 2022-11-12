@@ -5,71 +5,55 @@ import SimpleNutrientCard from "../Cards/SimpleNutrientCard";
 const MainNutrient = ({ navigation }: any) => {
   const [mainNutrients, setMainNutrients] = useState([
     {
-      nutId: 2,
-      image: require("../../assets/images/nutrients/sample1.png"),
-      nutrient: "비타민 C",
-    },
-    {
-      nutId: 6,
-      image: require("../../assets/images/nutrients/sample2.png"),
-      nutrient: "오메가3",
-    },
-    {
-      nutId: 10,
-      image: require("../../assets/images/nutrients/sample3.png"),
-      nutrient: "유산균",
-    },
-    {
-      nutId: 5,
-      image: require("../../assets/images/nutrients/sample4.png"),
-      nutrient: "마그네슘",
-    },
-    {
       nutId: 4,
-      image: require("../../assets/images/nutrients/sample6.png"),
+      image: require("../../assets/images/nutrients/종합비타민.png"),
       nutrient: "종합비타민",
     },
     {
-      nutId: 3,
-      image: require("../../assets/images/nutrients/sample5.png"),
-      nutrient: "비타민 D",
-    },
-    {
-      nutId: 8,
-      image: require("../../assets/images/nutrients/sample6.png"),
-      nutrient: "루테인",
+      nutId: 10,
+      image: require("../../assets/images/nutrients/유산균.png"),
+      nutrient: "유산균",
     },
     {
       nutId: 12,
-      image: require("../../assets/images/nutrients/sample6.png"),
+      image: require("../../assets/images/nutrients/철분.png"),
       nutrient: "철분",
     },
     {
-      nutId: 11,
-      image: require("../../assets/images/nutrients/sample6.png"),
-      nutrient: "콜라겐",
+      nutId: 5,
+      image: require("../../assets/images/nutrients/마그네슘.png"),
+      nutrient: "마그네슘",
     },
-    // {
-    //   image: require("../../assets/images/nutrients/sample6.png"),
-    //   nutrient: "프로폴리스",
-    // },
-    // {
-    //   image: require("../../assets/images/nutrients/sample6.png"),
-    //   nutrient: "밀크시슬",
-    // },
-    // {
-    //   image: require("../../assets/images/nutrients/sample6.png"),
-    //   nutrient: "비타민 B",
-    // },
-    // {
-    //   image: require("../../assets/images/nutrients/sample6.png"),
-    //   nutrient: "아연",
-    // },
+    {
+      nutId: 1,
+      image: require("../../assets/images/nutrients/비타민B.png"),
+      nutrient: "비타민 B",
+    },
+    {
+      nutId: 6,
+      image: require("../../assets/images/nutrients/오메가3.png"),
+      nutrient: "오메가3",
+    },
+    {
+      nutId: 3,
+      image: require("../../assets/images/nutrients/비타민D.png"),
+      nutrient: "비타민 D",
+    },
+    {
+      nutId: 9,
+      image: require("../../assets/images/nutrients/아연.png"),
+      nutrient: "아연",
+    },
+    {
+      nutId: 2,
+      image: require("../../assets/images/nutrients/비타민C.png"),
+      nutrient: "비타민 C",
+    },
   ]);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>인기 성분</Text>
+      <Text style={{...styles.text, fontFamily: "웰컴체_Bold"}}>인기 성분</Text>
       <View style={styles.cardscontainer}>
         {mainNutrients.map((mainNutrient, idx) => (
           <Pressable
@@ -101,7 +85,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 17,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     marginLeft: 5,
     marginBottom: 10,
   },
