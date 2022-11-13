@@ -46,7 +46,8 @@ const addMyRoutineSupplement = async (
   day: string,
   pushAlarm: boolean,
   tablets: number,
-  time: string
+  time: string,
+  dateStr: string
 ) => {
   // console.log(supplementId, day, pushAlarm, tablets, time);
   await api.post(`/mypage/${userId}/mysupplement`, {
@@ -55,6 +56,7 @@ const addMyRoutineSupplement = async (
     pushAlarm,
     tablets,
     time,
+    addedSince: dateStr,
   });
 };
 const updateMyRoutineSupplement = async (
@@ -64,7 +66,8 @@ const updateMyRoutineSupplement = async (
   day: string,
   pushAlarm: boolean,
   tablets: number,
-  time: string
+  time: string,
+  dateStr: string
 ) => {
   console.warn(
     "루틴 복약 수정",
@@ -73,7 +76,8 @@ const updateMyRoutineSupplement = async (
     day,
     pushAlarm,
     tablets,
-    time
+    time,
+    dateStr
   );
   await api.put(`/mypage/${userId}/mysupplement/${routineId}`, {
     supplementId,
@@ -81,6 +85,7 @@ const updateMyRoutineSupplement = async (
     pushAlarm,
     tablets,
     time,
+    addedSince: dateStr,
   });
 };
 

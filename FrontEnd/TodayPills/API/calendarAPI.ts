@@ -7,7 +7,7 @@ const fetchEachMyRoutine = async (
   day: number
 ) => {
   const result = await api.get(`/calendar/${userId}/${date}/${day}`);
-  // console.warn(result.data, "각각의 루틴 가져오기");
+  console.warn(result.data, "각각의 루틴 가져오기");
   return result.data;
 };
 
@@ -30,7 +30,7 @@ const deleteMyRoutineCheck = async (calendarId: number) => {
 
 const fetchEachMonthRoutines = async (userId: number, month: number) => {
   const result = await api.get(`/calendar/${userId}/${month}`);
-  console.warn(result.data, month, "복용 내역 가져오기");
+  // console.warn(result.data, month, "복용 내역 가져오기");
   return result.data;
 };
 // const addMyRoutineSupplement = async (
