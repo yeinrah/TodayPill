@@ -94,11 +94,9 @@ export default function DayPillSchedule({ selectedDate }: PillScheduleProps) {
     setDayId(days.indexOf(dayOfWeek));
     const eachMyRoutine = await fetchEachMyRoutine(userId, selectedDate, dayId);
     // setPillRoutineCheck(eachMyRoutine.calendarList);
-    const visibleRoutineList = eachMyRoutine.routineList.filter(
-      (eachRoutine: any) => {
-        return !eachRoutine.deletedSince;
-      }
-    );
+    const visibleRoutineList = eachMyRoutine.filter((eachRoutine: any) => {
+      return !eachRoutine.deletedSince;
+    });
     setPillRoutine(visibleRoutineList);
     // setSupplementDetail(eachSupplementDetail);
   };
@@ -111,6 +109,10 @@ export default function DayPillSchedule({ selectedDate }: PillScheduleProps) {
       getMyEachRoutine();
     }, [userId, isCheckedChange, selectedDate, dayId, dayStrOfWeek])
   );
+
+  // [{"addedSince": "2022-11-11", "day": "1, 2, 3, 4, 5", "deletedSince": null,
+  //  "pushAlarm": false, "routineId": 10, "supplementId": 1, "tablets": 2, "taken": false, "time": "08:30", "userId": 2}]
+
   return (
     <View style={styles.container}>
       <View style={styles.eachDateContainer}>

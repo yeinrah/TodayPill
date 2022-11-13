@@ -5,6 +5,7 @@ import { useState, useMemo, useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fetchEachMonthRoutines } from "../../API/calendarAPI";
+import { randomColors } from "../Data/RandomColorsArray";
 
 export interface CalendarViewProps {
   onChangeDate: (date: string) => void;
@@ -15,27 +16,26 @@ export default function CalendarView({
   onChangeDate,
   todayString,
 }: CalendarViewProps) {
-  // console.log(todayString);
-  console.log(new Date().getMonth());
   const [userId, setUserId] = useState(0);
   const [currentMonth, setCurrentMonth] = useState(
-    parseInt(todayString.substring(5, 7))
+    // parseInt(todayString.substring(5, 7))
+    new Date().getMonth() + 1
   );
 
-  const [markList, setMarkList] = useState({});
+  const [takenList, setTakenList] = useState({});
 
-  const colors = [
-    "nn",
-    "blue",
-    "green",
-    "yellow",
-    "red",
-    "orange",
-    "#5f9ea0",
-    "#ffa500",
-    "#f0e68c",
-    "black",
-  ];
+  // const colors = [
+  //   "nn",
+  //   "blue",
+  //   "green",
+  //   "yellow",
+  //   "red",
+  //   "orange",
+  //   "#5f9ea0",
+  //   "#ffa500",
+  //   "#f0e68c",
+  //   "black",
+  // ];
 
   const customTheme = {
     "stylesheet.calendar.header": {
@@ -111,7 +111,6 @@ export default function CalendarView({
     dayNamesShort: ["일", "월", "화", "수", "목", "금", "토"],
   };
   LocaleConfig.defaultLocale = "kr";
-
   const [daySelected, setDaySelected] = useState(todayString);
   const [taken, setTaken] = useState({});
   const [items, setItems] = useState({});
@@ -120,23 +119,16 @@ export default function CalendarView({
     onChangeDate(day.dateString);
     setDaySelected(day.dateString);
   };
-  const a = { color: "blue" };
-  const b = { key: "b", color: "green" };
-  const c = { key: "c", color: "orange" };
-  const d = { key: "d", color: primary };
-  const e = { key: "e", color: "black" };
+
   const f = { key: "f", color: "red" };
 
   const marked = useMemo(
     () => ({
-      // "2022-10-01": {
-      //   dots: [a, b],
-      // },
       // "2022-10-02": {
       //   dots: [a, c, d, e],
       // },
 
-      ...markList,
+      ...takenList,
       [todayString]: {
         dots: [{ key: "today", color: accent }],
       },
@@ -152,7 +144,7 @@ export default function CalendarView({
       //   selectedTextColor: "white",
       // },
     }),
-    [daySelected, taken]
+    [daySelected, taken, takenList]
   );
   // const marked = {
   //   "2022-10-10": { marked: true },
@@ -195,7 +187,7 @@ export default function CalendarView({
     //         }
     //         now = Moment(now).add(1, 'days').format('YYYY-MM-DD');
     //     }
-    //     setMarkList(result);
+    //     setTakenList(result);
     // }
 
     // "2022-10-02": {
@@ -209,11 +201,11 @@ export default function CalendarView({
       if (Object.keys(temp).includes(each.date)) {
         temp[each.date].push({
           key: each.routineId,
-          color: colors[each.routineId],
+          color: randomColors[each.routineId],
         });
       } else {
         temp[each.date] = [
-          { key: each.routineId, color: colors[each.routineId] },
+          { key: each.routineId, color: randomColors[each.routineId] },
         ];
       }
 
@@ -235,7 +227,7 @@ export default function CalendarView({
     // console.warn(temp, "임시!!!!!");
     // if (eachSupplementDetail.bestTime.slice(0,2))
     console.log(allEachMonthRoutines);
-    setMarkList(allEachMonthRoutines);
+    setTakenList(allEachMonthRoutines);
   };
 
   useFocusEffect(
