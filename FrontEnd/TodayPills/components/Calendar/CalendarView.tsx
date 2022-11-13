@@ -16,8 +16,14 @@ export default function CalendarView({
   todayString,
 }: CalendarViewProps) {
   // console.log(todayString);
+  console.log(new Date().getMonth());
   const [userId, setUserId] = useState(0);
-  const [currentMonth, setCurrentMonth] = useState(0);
+  const [currentMonth, setCurrentMonth] = useState(
+    parseInt(todayString.substring(5, 7))
+  );
+
+  const [markList, setMarkList] = useState({});
+
   const colors = [
     "nn",
     "blue",
@@ -28,6 +34,7 @@ export default function CalendarView({
     "#5f9ea0",
     "#ffa500",
     "#f0e68c",
+    "black",
   ];
 
   const customTheme = {
@@ -107,12 +114,12 @@ export default function CalendarView({
 
   const [daySelected, setDaySelected] = useState(todayString);
   const [taken, setTaken] = useState({});
+  const [items, setItems] = useState({});
   const dayPressHandler = (day: any) => {
     console.log("selected day", day);
     onChangeDate(day.dateString);
     setDaySelected(day.dateString);
   };
-  const [items, setItems] = useState({});
   const a = { color: "blue" };
   const b = { key: "b", color: "green" };
   const c = { key: "c", color: "orange" };
@@ -122,14 +129,16 @@ export default function CalendarView({
 
   const marked = useMemo(
     () => ({
-      "2022-10-01": {
-        dots: [a, b],
-      },
-      "2022-10-02": {
-        dots: [a, c, d, e],
-      },
+      // "2022-10-01": {
+      //   dots: [a, b],
+      // },
+      // "2022-10-02": {
+      //   dots: [a, c, d, e],
+      // },
+
+      ...markList,
       [todayString]: {
-        dots: [a],
+        dots: [{ key: "today", color: accent }],
       },
       [daySelected]: {
         selected: true,
@@ -151,31 +160,91 @@ export default function CalendarView({
   //   todayString: { selected: true },
   // };
 
+  // const getMonthRoutines = async (selectedMonth: string) => {
   const getMonthRoutines = async () => {
     const currentUserId = await AsyncStorage.getItem("@storage_UserId");
     setUserId(parseInt(currentUserId));
     const eachMonthRoutines = await fetchEachMonthRoutines(
       userId,
+      // selectedMonth
       currentMonth
     );
-    console.warn(eachMonthRoutines);
-    const allEachMonthRoutines = {};
-    eachMonthRoutines.map((each: any) => {
+    console.warn(eachMonthRoutines, "복용내역 fetch");
+    markEachMonthCalendar(eachMonthRoutines, currentMonth);
+  };
+
+  const markEachMonthCalendar = (res: Array<object>, selectedMonth: number) => {
+    // [{"calendarId": 7, "date": "2022-11-11", "routineId": 3, "taken": true, "userId": 2},
+    // {"calendarId": 8, "date": "2022-11-11", "routineId": 9, "taken": true, "userId": 2},
+    // {"calendarId": 9, "date": "2022-11-09", "routineId": 8, "taken": true, "userId": 2}]
+
+    // let now = start;
+    // if(res){
+    //     while(Moment(now).isBefore(end)){
+    //         let today = [];
+    //         res.map(item=>{
+    //             if(today.length<4 && Moment(now).isBetween(Moment(item.alarmDayStart).subtract(1, 'days').format('YYYY-MM-DD'), Moment(item.alarmDayEnd).add(1, 'days').format('YYYY-MM-DD'))){
+    //                 if(Moment(now).isBefore(nowDate)){
+    //                     today.push({key:item.alarmId, color:futureColor});
+    //                 }else{
+    //                     today.push({key:item.alarmId, color:beforeColor});
+    //                 }
+    //             }
+    //         if(today.length>0){
+    //             result[now]={dots:today};
+    //         }
+    //         now = Moment(now).add(1, 'days').format('YYYY-MM-DD');
+    //     }
+    //     setMarkList(result);
+    // }
+
+    // "2022-10-02": {
+    //   dots: [a, c, d, e],
+    // },
+
+    //         });
+    let temp = {};
+    let allEachMonthRoutines = {};
+    res.map((each: any) => {
+      if (Object.keys(temp).includes(each.date)) {
+        temp[each.date].push({
+          key: each.routineId,
+          color: colors[each.routineId],
+        });
+      } else {
+        temp[each.date] = [
+          { key: each.routineId, color: colors[each.routineId] },
+        ];
+      }
+
+      // for (const eachDate in temp) {
+      //   allEachMonthRoutines[eachDate] = { dots: temp[eachDate] };
+      // }
+      Object.entries(temp).map(
+        (eachDateArray) =>
+          (allEachMonthRoutines[eachDateArray[0]] = { dots: eachDateArray[1] })
+      );
+      // result[now]={dots:today};
       // allEachMonthRoutines[each.date] = {
-      //   dots: 
+      //   dots:
       // }
       // setTaken((prevTaken) => {
       //   return
       // })
     });
+    // console.warn(temp, "임시!!!!!");
     // if (eachSupplementDetail.bestTime.slice(0,2))
+    console.log(allEachMonthRoutines);
+    setMarkList(allEachMonthRoutines);
   };
 
   useFocusEffect(
     useCallback(() => {
+      // getMonthRoutines(todayString.substring(5, 7));
       getMonthRoutines();
-      console.warn(currentMonth, "지금 몇달");
+      // console.warn(currentMonth, "지금 몇달");
     }, [userId, currentMonth])
+    // }, [userId, todayString])
   );
   return (
     <View style={styles.calendarContainer}>
@@ -197,8 +266,8 @@ export default function CalendarView({
         markingType="multi-dot"
         onDayPress={dayPressHandler}
         onMonthChange={(monthData) => {
-          // console.log("month changed", monthData);
           setCurrentMonth(monthData.month);
+          // getMonthRoutines(monthData.month.toString());
         }}
         monthFormat={"yyyy년 MM월"}
         markedDates={marked}
