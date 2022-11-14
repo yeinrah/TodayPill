@@ -10,8 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -82,7 +82,7 @@ public class CalendarController {
 		return new ResponseEntity<>(calendar, HttpStatus.OK);
 	}
 	
-	@PatchMapping("/{userId}/{date}")
+	@PostMapping("/{userId}/{date}")
 	@ApiOperation(value = "복용 데이터를 기록한다.", notes = "user id, date(String) 필요")
 	public ResponseEntity<?> insertCalendar(@RequestBody CalendarReq calendarReq) {
 		Calendar calendar = Calendar.builder().routineId(calendarReq.getRoutineId()).userId(calendarReq.getUserId())
