@@ -19,7 +19,7 @@ const ChatScreen = () => {
     console.log(userData);
   }, [userData]);
   const connect = () => {
-    let Sock = new SockJS("http://k7a706.p.ssafy.io:8080/wss");
+    let Sock = new SockJS("http://10.0.2.2:8080/ws");
     stompClient = over(Sock);
     stompClient.connect({}, onConnected, onError);
   };
@@ -50,9 +50,6 @@ const ChatScreen = () => {
         }
         break;
       case "MESSAGE":
-        console.log("zzzzzzzzzzzzzz");
-        console.log(publicChats, "1");
-        console.log(payloadData, "2");
         publicChats.push(payloadData);
         setPublicChats([...publicChats]);
         break;
@@ -89,30 +86,29 @@ const ChatScreen = () => {
         message: userData.message,
         status: "MESSAGE",
       };
-      console.log(chatMessage.message);
       console.log(chatMessage);
       stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
       setUserData({ ...userData, message: "" });
     }
   };
 
-  // const sendPrivateValue = () => {
-  //   if (stompClient) {
-  //     var chatMessage = {
-  //       senderName: userData.username,
-  //       receiverName: tab,
-  //       message: userData.message,
-  //       status: "MESSAGE",
-  //     };
+  const sendPrivateValue = () => {
+    if (stompClient) {
+      var chatMessage = {
+        senderName: userData.username,
+        receiverName: tab,
+        message: userData.message,
+        status: "MESSAGE",
+      };
 
-  //     if (userData.username !== tab) {
-  //       privateChats.get(tab).push(chatMessage);
-  //       setPrivateChats(new Map(privateChats));
-  //     }
-  //     stompClient.send("/app/private-message", {}, JSON.stringify(chatMessage));
-  //     setUserData({ ...userData, message: "" });
-  //   }
-  // };
+      if (userData.username !== tab) {
+        privateChats.get(tab).push(chatMessage);
+        setPrivateChats(new Map(privateChats));
+      }
+      stompClient.send("/app/private-message", {}, JSON.stringify(chatMessage));
+      setUserData({ ...userData, message: "" });
+    }
+  };
 
   const handleUsername = (event) => {
     const { value } = event.target;
@@ -134,15 +130,8 @@ const ChatScreen = () => {
         <>
           <View>
             {publicChats.map((chat, index) => {
-              return (
-                <>
-                  <Text key={index}>
-                    {chat.senderName + " : " + chat.message}
-                  </Text>
-                </>
-              );
+              return <Text>{chat}</Text>;
             })}
-            <Button title="send!!" onPress={sendValue} />
           </View>
         </>
       )}

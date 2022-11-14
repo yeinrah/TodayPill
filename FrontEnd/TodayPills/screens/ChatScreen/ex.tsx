@@ -22,29 +22,15 @@ const ChatScreen = () => {
     //     },
     //   },
     // ]);
-    ws.current = new WebSocket(`ws://k7a706.p.ssafy.io/`);
-    console.log(ws.current);
-    ws.current.onopen = () => {
-      console.log("connected!");
-    };
-    ws.current.onmessage = (e) => {
-      console.log(e.data);
-    };
-    ws.current.onerror = (e) => {
-      console.log(e.message);
-    };
-    ws.current.onclose = (e) => {
-      console.log(e.code, e.reason);
-    };
-    return () => {
-      ws.current.close();
-    };
   }, []);
+
   const onSend = useCallback((messages = []) => {
     // console.log('previousMessages: ',previousMessages)
     console.log("messages: ", messages);
     ws.current.onopen();
-    setMessages((previousMessages) => GiftedChat.append(previousMessages, messages));
+    setMessages((previousMessages) =>
+      GiftedChat.append(previousMessages, messages)
+    );
   }, []);
   return (
     <BackgroundScreen>
