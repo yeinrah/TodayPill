@@ -5,17 +5,10 @@ import { GiftedChat } from 'react-native-gifted-chat';
 import { over } from 'stompjs';
 import SockJS from 'sockjs-client';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Ionicons } from '@expo/vector-icons';
 var stompClient = null;
-const arrr = [
-  {
-    _id: '1',
-    text: 'hahaha',
-    user: { _id: 1 },
-    createdAt: new Date(),
-    username: 'haha',
-  },
-];
-const ChatScreen = () => {
+
+const ChatScreenDetail = ({ navigation, route }: any) => {
   const [publicChats, setPublicChats] = useState([]);
   const [messages, setMessages] = useState([]);
   const [tab, setTab] = useState('CHATROOM');
@@ -34,25 +27,34 @@ const ChatScreen = () => {
     });
   };
   useEffect(() => {
-    loadUserNickName();
+    // loadUserNickName();
+    registerUser();
   }, []);
   const connect = () => {
     let Sock = new SockJS('http://k7a706.p.ssafy.io:8080/wss');
     stompClient = over(Sock);
     stompClient.connect({}, onConnected, onError);
   };
-  const onConnected = () => {
+  const onConnected = async () => {
+    let userName = await AsyncStorage.getItem('@storage_UserNickName');
     console.log('연결시도!!');
-    setUserData({ ...userData, connected: true });
-    stompClient.subscribe('/chatroom/vitaminB', onMessageReceived);
-    userJoin();
+    setUserData({ ...userData, connected: true, username: userName });
+    stompClient.subscribe(
+      `/chatroom/${route.params?.nutrient}`,
+      onMessageReceived
+    );
+    userJoin(userName);
   };
-  const userJoin = () => {
+  const userJoin = (userName) => {
     var chatMessage = {
-      senderName: userData.username,
+      senderName: userName,
       status: 'JOIN',
     };
-    stompClient.send('/app/messageVitaminB', {}, JSON.stringify(chatMessage));
+    stompClient.send(
+      `/app/message${route.params?.nutrient}`,
+      {},
+      JSON.stringify(chatMessage)
+    );
   };
   const onMessageReceived = async (payload) => {
     // _id: Math.random(),
@@ -118,7 +120,11 @@ const ChatScreen = () => {
       console.log(chatMessage);
       console.warn(chatMessage);
       // console.log(publicChats);
-      stompClient.send('/app/messageVitaminB', {}, JSON.stringify(chatMessage));
+      stompClient.send(
+        `/app/message${route.params?.nutrient}`,
+        {},
+        JSON.stringify(chatMessage)
+      );
       setUserData({ ...userData, message: '' });
     }
   };
@@ -140,13 +146,15 @@ const ChatScreen = () => {
   };
   return (
     <BackgroundScreen>
-      {!userData.connected ? (
-        <>
-          <Text>haha</Text>
-          <TextInput />
-          <Button title="확인" onPress={registerUser}></Button>
-        </>
-      ) : (
+      <>
+        <Ionicons
+          name="arrow-back"
+          size={48}
+          color="black"
+          onPress={() => {
+            navigation.goBack();
+          }}
+        />
         <GiftedChat
           placeholder={'메세지를 입력하세요...'}
           alwaysShowSend={true}
@@ -161,11 +169,11 @@ const ChatScreen = () => {
             _id: 1,
           }}
         />
-      )}
+      </>
     </BackgroundScreen>
   );
 };
-export default ChatScreen;
+export default ChatScreenDetail;
 const styles = StyleSheet.create({
   container: {
     flex: 1,

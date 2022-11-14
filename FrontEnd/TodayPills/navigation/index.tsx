@@ -9,60 +9,62 @@ import {
   MaterialCommunityIcons,
   Entypo,
   Ionicons,
-} from "@expo/vector-icons";
+} from '@expo/vector-icons';
 // import { MaterialCommunityIcons } from "react-native-vector-icons.";
-import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 // import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
   NavigationContainer,
   DefaultTheme,
   DarkTheme,
   useFocusEffect,
-} from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import * as React from "react";
-import { ColorSchemeName, Pressable } from "react-native";
+} from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import * as React from 'react';
+import { ColorSchemeName, Pressable } from 'react-native';
 
 // import Colors from "../constants/Colors";
-import useColorScheme from "../hooks/useColorScheme";
-import CalendarScreen from "../screens/CalendarScreen";
-import HomeScreen from "../screens/HomeScreen/HomeScreen";
-import ModalScreen from "../screens/ModalScreen";
-import ModifyRoutineScreen from "../screens/ModifyRoutineScreen";
-import MyPageScreen from "../screens/MyPageScreen";
-import MyPillsScreen from "../screens/MyPillsScreen";
-import NotFoundScreen from "../screens/NotFoundScreen";
-import RecommendationScreen from "../screens/RecommendationScreen";
-import SearchScreen from "../screens/HomeScreen/SearchScreen";
-import KakaoScreen from "../screens/StartScreen/KaKaoScreen";
-import StartScreen from "../screens/StartScreen/StartScreen";
-import NutrientScreen from "../screens/HomeScreen/NutrientScreen";
+import useColorScheme from '../hooks/useColorScheme';
+import CalendarScreen from '../screens/CalendarScreen';
+import HomeScreen from '../screens/HomeScreen/HomeScreen';
+import ModalScreen from '../screens/ModalScreen';
+import ModifyRoutineScreen from '../screens/ModifyRoutineScreen';
+import MyPageScreen from '../screens/MyPageScreen';
+import MyPillsScreen from '../screens/MyPillsScreen';
+import NotFoundScreen from '../screens/NotFoundScreen';
+import RecommendationScreen from '../screens/RecommendationScreen';
+import SearchScreen from '../screens/HomeScreen/SearchScreen';
+import KakaoScreen from '../screens/StartScreen/KaKaoScreen';
+import StartScreen from '../screens/StartScreen/StartScreen';
+import NutrientScreen from '../screens/HomeScreen/NutrientScreen';
 import {
   RootStackParamList,
   RootTabParamList,
   RootTabScreenProps,
-} from "../types";
-import LinkingConfiguration from "./LinkingConfiguration";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import SurveyScreen from "../screens/SurveyScreen/SurveyScreen";
-import HealthScreeningCheckScreen from "../screens/StartScreen/HealthScreeningCheckScreen";
-import SurveyStartScreen from "../screens/SurveyScreen/SurveyStartScreen";
-import LoginSuccessScreen from "../screens/StartScreen/LoginSuccessScreen";
-import HealthScreeningDetail from "../screens/SurveyScreen/HealthScreeningDetailScreen";
-import HealthScreeningDetailScreen from "../screens/SurveyScreen/HealthScreeningDetailScreen";
-import SurveyLoadingScreen from "../screens/SurveyScreen/SurveyLoadingScreen";
-import PersonalRecommendationScreen from "../screens/SurveyScreen/PersonalRecommendationScreen";
-import NutrientDetailScreen from "../screens/SurveyScreen/NutrientDetailScreen";
-import SurveyDeepScreen from "../screens/SurveyScreen/SurveyDeepScreen";
-import SurveyDeepLoadingScreen from "../screens/SurveyScreen/SurveyDeepLoadingScreen";
-import PillResultScreen from "../screens/SurveyScreen/PillResultScreen";
-import GenderCheckScreen from "../screens/SurveyScreen/GenderCheckScreen";
-import FirstAddSurvey from "../screens/AddSurvey/FirstAddSurvey";
-import AllSupplementsScreen from "../screens/HomeScreen/AllSupplementsScreen";
-import SecondAddSurvey from "../screens/AddSurvey/SecondAddSurvey";
-import ChatScreen from "../screens/ChatScreen/ChatScreen";
-import AiHomeScreen from "../screens/AiScreen/AiHomeScreen";
-import AiQnaScreen from "../screens/AiScreen/AiQnaScreen";
+} from '../types';
+import LinkingConfiguration from './LinkingConfiguration';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import SurveyScreen from '../screens/SurveyScreen/SurveyScreen';
+import HealthScreeningCheckScreen from '../screens/StartScreen/HealthScreeningCheckScreen';
+import SurveyStartScreen from '../screens/SurveyScreen/SurveyStartScreen';
+import LoginSuccessScreen from '../screens/StartScreen/LoginSuccessScreen';
+import HealthScreeningDetail from '../screens/SurveyScreen/HealthScreeningDetailScreen';
+import HealthScreeningDetailScreen from '../screens/SurveyScreen/HealthScreeningDetailScreen';
+import SurveyLoadingScreen from '../screens/SurveyScreen/SurveyLoadingScreen';
+import PersonalRecommendationScreen from '../screens/SurveyScreen/PersonalRecommendationScreen';
+import NutrientDetailScreen from '../screens/SurveyScreen/NutrientDetailScreen';
+import SurveyDeepScreen from '../screens/SurveyScreen/SurveyDeepScreen';
+import SurveyDeepLoadingScreen from '../screens/SurveyScreen/SurveyDeepLoadingScreen';
+import PillResultScreen from '../screens/SurveyScreen/PillResultScreen';
+import GenderCheckScreen from '../screens/SurveyScreen/GenderCheckScreen';
+import FirstAddSurvey from '../screens/AddSurvey/FirstAddSurvey';
+import AllSupplementsScreen from '../screens/HomeScreen/AllSupplementsScreen';
+import SecondAddSurvey from '../screens/AddSurvey/SecondAddSurvey';
+import ChatScreen from '../screens/ChatScreen/ChatHomeScreen';
+import AiHomeScreen from '../screens/AiScreen/AiHomeScreen';
+import AiQnaScreen from '../screens/AiScreen/AiQnaScreen';
+import ChatScreenDetail from '../screens/ChatScreen/ChatScreenDetail';
+import ChatHomeScreen from '../screens/ChatScreen/ChatHomeScreen';
 interface Inavigation {
   colorScheme: ColorSchemeName;
   LoginCheck: () => {};
@@ -73,7 +75,7 @@ export default function Navigation({ colorScheme, LoginCheck }: Inavigation) {
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
-      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
     >
       <RootNavigator />
       <Stack.Navigator>
@@ -201,9 +203,9 @@ function RootNavigator() {
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
-        options={{ title: "Oops!" }}
+        options={{ title: 'Oops!' }}
       />
-      <Stack.Group screenOptions={{ presentation: "modal" }}>
+      <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>
     </>
@@ -219,7 +221,7 @@ function MyPageNav() {
     <Stack.Navigator
       initialRouteName="MyPage"
       screenOptions={{
-        headerTitleAlign: "center",
+        headerTitleAlign: 'center',
       }}
     >
       <Stack.Screen
@@ -250,7 +252,7 @@ function CalendarNav() {
     <Stack.Navigator
       initialRouteName="Calendar"
       screenOptions={{
-        headerTitleAlign: "center",
+        headerTitleAlign: 'center',
       }}
     >
       <Stack.Screen
@@ -318,11 +320,27 @@ function Ai() {
     </Stack.Navigator>
   );
 }
+function Chat() {
+  return (
+    <Stack.Navigator initialRouteName="AiHomeScreen">
+      <Stack.Screen
+        name="ChatHomeScreen"
+        component={ChatHomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ChatScreenDetail"
+        component={ChatScreenDetail}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+}
 function MaterialBottomTabNavigator({ navigation }: any) {
   const colorScheme = useColorScheme();
   const checkLogin = async () => {
-    if ((await AsyncStorage.getItem("@storage_UserId")) === null) {
-      navigation.replace("Start");
+    if ((await AsyncStorage.getItem('@storage_UserId')) === null) {
+      navigation.replace('Start');
     }
   };
   useFocusEffect(
@@ -335,7 +353,7 @@ function MaterialBottomTabNavigator({ navigation }: any) {
     <BottomTab.Navigator
       initialRouteName="Home"
       activeColor="#E881B1"
-      barStyle={{ backgroundColor: "white" }}
+      barStyle={{ backgroundColor: 'white' }}
       // barStyle={{ backgroundColor: "#E2C3DC" }}
       // screenOptions={{
       //   tabBarActiveTintColor: Colors[colorScheme].tint,
@@ -345,7 +363,7 @@ function MaterialBottomTabNavigator({ navigation }: any) {
         name="Home"
         component={Home}
         options={{
-          tabBarLabel: "홈",
+          tabBarLabel: '홈',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="home" color={color} size={26} />
           ),
@@ -385,9 +403,9 @@ function MaterialBottomTabNavigator({ navigation }: any) {
       /> */}
       <BottomTab.Screen
         name="ChatScreen"
-        component={ChatScreen}
+        component={Chat}
         options={{
-          tabBarLabel: "채팅",
+          tabBarLabel: '채팅',
           tabBarIcon: ({ color }) => (
             <Ionicons
               name="chatbubble-ellipses-sharp"
@@ -403,7 +421,7 @@ function MaterialBottomTabNavigator({ navigation }: any) {
         name="Ai"
         component={Ai}
         options={{
-          tabBarLabel: "AI분석",
+          tabBarLabel: 'AI분석',
           tabBarIcon: ({ color }) => (
             <Entypo name="bar-graph" size={26} color={color} />
           ),
@@ -413,7 +431,7 @@ function MaterialBottomTabNavigator({ navigation }: any) {
         name="Calendar"
         component={CalendarNav}
         options={{
-          tabBarLabel: "캘린더",
+          tabBarLabel: '캘린더',
           tabBarIcon: ({ color }) => (
             <FontAwesome5 name="calendar-alt" size={26} color={color} />
             // <MaterialCommunityIcons name="account" color={color} size={26} />
@@ -424,7 +442,7 @@ function MaterialBottomTabNavigator({ navigation }: any) {
         name="MyPage"
         component={MyPageNav}
         options={{
-          tabBarLabel: "마이페이지",
+          tabBarLabel: '마이페이지',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="account" color={color} size={26} />
           ),
@@ -622,7 +640,7 @@ function MaterialBottomTabNavigator({ navigation }: any) {
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
 function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>["name"];
+  name: React.ComponentProps<typeof FontAwesome>['name'];
   color: string;
 }) {
   return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
