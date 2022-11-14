@@ -164,7 +164,7 @@ export default function CalendarView({
       userId,
       currentMonth
     );
-    console.warn(eachMonthRoutines, "복용내역 fetch");
+    // console.warn(eachMonthRoutines, "복용내역 fetch");
     markEachMonthCalendar(eachMonthRoutines, currentMonth);
   };
 

@@ -11,23 +11,33 @@ import { useFocusEffect } from "@react-navigation/native";
 import { fetchSupplementDetail } from "../../../API/supplementAPI";
 import { fetchAllRoutineSupplements } from "../../../API/routineAPI";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { setNotification } from "../../functions/setNotification";
 // import Notifications from "../../../utils/Notifications";
 
 export interface PushProps {
   addAlarmHandler: (alarmOrNot: boolean) => void;
   isAlarm: boolean;
+  // pillName: string;
+  // pillCnt: number;
+  // isSubmitted: boolean;
+  // weekdays: Array<string>;
 }
 
 export default function PushNotifications({
   addAlarmHandler,
   isAlarm,
-}: PushProps) {
+}: // pillName,
+// pillCnt,
+// isSubmitted,
+// weekdays,
+PushProps) {
   // export default function PushNotifications({
   //   navigation,
   //   pillId,
   //   updateOrNot,
   // }: any) {
   const [userId, setUserId] = useState(0);
+  // weekdays = ["1", " 2", " 3", " 4"]
 
   // const [isAlarmEnabled, setIsAlarmEnabled] = useState(false);
 
@@ -62,6 +72,17 @@ export default function PushNotifications({
 
   const alarmToggleSwitch = () => {
     addAlarmHandler(!isAlarm);
+    // Notifications.scheduleNotificationAsync({
+    //   content: {
+    //     title: "오늘의 영양제",
+    //     body: '"킬레이트 마그네슘"을 드실 시간이에요!',
+    //     // body: `${pillName} ${pillCnt}정을 드실 시간입니다!`,
+    //   },
+    //   trigger: {
+    //     // seconds: timer,
+    //     seconds: 5,
+    //   },
+    // });
 
     // setIsAlarmEnabled((previousState) => {
     //   addAlarmHandler(!previousState);
@@ -70,39 +91,26 @@ export default function PushNotifications({
   };
   // useFocusEffect(
   //   useCallback(() => {
-  //     setIsAlarmEnabled(isAlarm);
-  //     console.log(isAlarm, "푸시알람");
-  //   }, [])
+  //     // if (isSubmitted && isAlarm) {
+  //       // const today = Date.now();
+  //       // const date = new Date(today);
+  //       // const target = new Date("Wed Nov 02 2022 13:03:30 GMT+0900 (KST)");
+  //       // const timer = Math.floor((target.getTime() - date.getTime()) / 1000);
+  //       // console.log(timer, "푸시알람시간", isAlarm);
+  //       Notifications.scheduleNotificationAsync({
+  //         content: {
+  //           title: "오늘의 영양제",
+  //           body: '"킬레이트 마그네슘"을 드실 시간이에요!',
+  //           // body: `${pillName} ${pillCnt}정을 드실 시간입니다!`,
+  //         },
+  //         trigger: {
+  //           // seconds: timer,
+  //           seconds: 5,
+  //         },
+  //       });
+  //     }
+  //   }, [isSubmitted])
   // );
-
-  useEffect(() => {
-    // if (isAlarmEnabled) {
-    if (isAlarm) {
-      const today = Date.now();
-      const date = new Date(today);
-      const target = new Date("Wed Nov 02 2022 13:03:30 GMT+0900 (KST)");
-      const timer = Math.floor((target.getTime() - date.getTime()) / 1000);
-      console.log(timer, "푸시알람시간", isAlarm);
-      Notifications.scheduleNotificationAsync({
-        content: {
-          title: "오늘의 영양제",
-          body: '"킬레이트 마그네슘"을 드실 시간이에요!',
-        },
-        trigger: {
-          seconds: timer,
-        },
-      });
-      // const myDate = new Date(Date.now() + 5 * 1000);
-      // Notifications.scheduledLocalNotifications(
-      //   "1",
-      //   "1",
-      //   myDate,
-      //   "영양제 먹어요!",
-      //   "마그네슘"
-      // );
-    }
-  }, [isAlarm]);
-  // }, [isAlarmEnabled]);
 
   return (
     <PillCard height={130} width={"90%"} bgColor={"#edfbf9"}>

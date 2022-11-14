@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import { fetchMyPicks } from "../../API/likeAPI";
 import { fetchAllSupplements } from "../../API/supplementAPI";
+import { boldWelcome, regularWelcome } from "../Data/fontFamilyObject";
 import PillItem, { PillProps } from "../Pills/PillItem";
 
 export default function MyPickPills() {
@@ -54,14 +55,24 @@ export default function MyPickPills() {
             style={styles.heart}
           />
         </View>
-        <Text style={styles.name}>나의 Pick</Text>
+        <Text
+          style={{
+            fontSize: 24,
+            // fontWeight: "900",
+            marginTop: 5,
+            ...boldWelcome,
+          }}
+        >
+          나의 Pick
+        </Text>
+        {/* <Text style={styles.name}>나의 Pick</Text> */}
       </View>
 
       <View style={styles.outerContainer}>
         <ScrollView style={styles.cardsContainer} horizontal={true}>
           {pickedPills.length === 0 ? (
             <View style={styles.textContainer}>
-              <Text style={styles.emptyText}>
+              <Text style={{ ...styles.emptyText, ...regularWelcome }}>
                 하트를 눌러 영양제를 찜해보세요!
               </Text>
             </View>

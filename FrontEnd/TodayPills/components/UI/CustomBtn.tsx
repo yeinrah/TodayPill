@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Pressable,
 } from "react-native";
+import { boldWelcome, regularWelcome } from "../Data/fontFamilyObject";
 
 // import { IBackground } from "../../types";
 
@@ -36,10 +37,13 @@ export default function CustomBtn(props: any) {
         onPress={props.onPress}
       >
         <Text
-          style={[
-            styles.title,
-            { color: props.titleColor, fontSize: props.fontSize },
-          ]}
+          style={{
+            ...styles.title,
+            color: props.titleColor,
+            fontSize: props.fontSize,
+            letterSpacing: 1,
+            ...regularWelcome,
+          }}
         >
           {props.title}
         </Text>
@@ -65,7 +69,7 @@ const styles = StyleSheet.create({
     // justifyContent: "center",
   },
   title: {
-    fontWeight: "bold",
+    // fontWeight: "bold",
     textAlign: "center",
   },
 });
