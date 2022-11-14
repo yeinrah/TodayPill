@@ -5,7 +5,9 @@ import { useState, useMemo, useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fetchEachMonthRoutines } from "../../API/calendarAPI";
-import { randomColors } from "../Data/RandomColorsArray";
+import { pillRoutineCheckChangeState } from "../../Recoil/atoms/calendar";
+import { useRecoilState } from "recoil";
+// import { randomColors } from "../Data/RandomColorsArray";
 
 export interface CalendarViewProps {
   onChangeDate: (date: string) => void;
@@ -16,6 +18,9 @@ export default function CalendarView({
   onChangeDate,
   todayString,
 }: CalendarViewProps) {
+  const [isCheckedChange, setIsCheckedChange] = useRecoilState(
+    pillRoutineCheckChangeState
+  );
   const [userId, setUserId] = useState(0);
   const [currentMonth, setCurrentMonth] = useState(
     // parseInt(todayString.substring(5, 7))
@@ -129,9 +134,9 @@ export default function CalendarView({
       // },
 
       ...takenList,
-      [todayString]: {
-        dots: [{ key: "today", color: accent }],
-      },
+      // [todayString]: {
+      //   dots: [{ key: "today", color: accent }],
+      // },
       [daySelected]: {
         selected: true,
         selectedColor: accent,
@@ -152,13 +157,11 @@ export default function CalendarView({
   //   todayString: { selected: true },
   // };
 
-  // const getMonthRoutines = async (selectedMonth: string) => {
   const getMonthRoutines = async () => {
     const currentUserId = await AsyncStorage.getItem("@storage_UserId");
     setUserId(parseInt(currentUserId));
     const eachMonthRoutines = await fetchEachMonthRoutines(
       userId,
-      // selectedMonth
       currentMonth
     );
     console.warn(eachMonthRoutines, "복용내역 fetch");
@@ -170,42 +173,23 @@ export default function CalendarView({
     // {"calendarId": 8, "date": "2022-11-11", "routineId": 9, "taken": true, "userId": 2},
     // {"calendarId": 9, "date": "2022-11-09", "routineId": 8, "taken": true, "userId": 2}]
 
-    // let now = start;
-    // if(res){
-    //     while(Moment(now).isBefore(end)){
-    //         let today = [];
-    //         res.map(item=>{
-    //             if(today.length<4 && Moment(now).isBetween(Moment(item.alarmDayStart).subtract(1, 'days').format('YYYY-MM-DD'), Moment(item.alarmDayEnd).add(1, 'days').format('YYYY-MM-DD'))){
-    //                 if(Moment(now).isBefore(nowDate)){
-    //                     today.push({key:item.alarmId, color:futureColor});
-    //                 }else{
-    //                     today.push({key:item.alarmId, color:beforeColor});
-    //                 }
-    //             }
-    //         if(today.length>0){
-    //             result[now]={dots:today};
-    //         }
-    //         now = Moment(now).add(1, 'days').format('YYYY-MM-DD');
-    //     }
-    //     setTakenList(result);
-    // }
-
-    // "2022-10-02": {
-    //   dots: [a, c, d, e],
-    // },
-
-    //         });
     let temp = {};
     let allEachMonthRoutines = {};
     res.map((each: any) => {
       if (Object.keys(temp).includes(each.date)) {
         temp[each.date].push({
           key: each.routineId,
-          color: randomColors[each.routineId],
+
+          // color: randomColors[each.routineId],
+          color: "#E43A89",
         });
       } else {
         temp[each.date] = [
-          { key: each.routineId, color: randomColors[each.routineId] },
+          {
+            key: each.routineId,
+            color: "#E43A89",
+            // color: randomColors[each.routineId]
+          },
         ];
       }
 
@@ -235,7 +219,7 @@ export default function CalendarView({
       // getMonthRoutines(todayString.substring(5, 7));
       getMonthRoutines();
       // console.warn(currentMonth, "지금 몇달");
-    }, [userId, currentMonth])
+    }, [userId, currentMonth, isCheckedChange])
     // }, [userId, todayString])
   );
   return (
