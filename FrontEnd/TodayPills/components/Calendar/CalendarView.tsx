@@ -5,6 +5,9 @@ import { useState, useMemo, useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fetchEachMonthRoutines } from "../../API/calendarAPI";
+import { pillRoutineCheckChangeState } from "../../Recoil/atoms/calendar";
+import { useRecoilState } from "recoil";
+// import { randomColors } from "../Data/RandomColorsArray";
 
 export interface CalendarViewProps {
   onChangeDate: (date: string) => void;
@@ -15,20 +18,29 @@ export default function CalendarView({
   onChangeDate,
   todayString,
 }: CalendarViewProps) {
-  // console.log(todayString);
+  const [isCheckedChange, setIsCheckedChange] = useRecoilState(
+    pillRoutineCheckChangeState
+  );
   const [userId, setUserId] = useState(0);
-  const [currentMonth, setCurrentMonth] = useState(0);
-  const colors = [
-    "nn",
-    "blue",
-    "green",
-    "yellow",
-    "red",
-    "orange",
-    "#5f9ea0",
-    "#ffa500",
-    "#f0e68c",
-  ];
+  const [currentMonth, setCurrentMonth] = useState(
+    // parseInt(todayString.substring(5, 7))
+    new Date().getMonth() + 1
+  );
+
+  const [takenList, setTakenList] = useState({});
+
+  // const colors = [
+  //   "nn",
+  //   "blue",
+  //   "green",
+  //   "yellow",
+  //   "red",
+  //   "orange",
+  //   "#5f9ea0",
+  //   "#ffa500",
+  //   "#f0e68c",
+  //   "black",
+  // ];
 
   const customTheme = {
     "stylesheet.calendar.header": {
@@ -104,33 +116,27 @@ export default function CalendarView({
     dayNamesShort: ["일", "월", "화", "수", "목", "금", "토"],
   };
   LocaleConfig.defaultLocale = "kr";
-
   const [daySelected, setDaySelected] = useState(todayString);
   const [taken, setTaken] = useState({});
+  const [items, setItems] = useState({});
   const dayPressHandler = (day: any) => {
     console.log("selected day", day);
     onChangeDate(day.dateString);
     setDaySelected(day.dateString);
   };
-  const [items, setItems] = useState({});
-  const a = { color: "blue" };
-  const b = { key: "b", color: "green" };
-  const c = { key: "c", color: "orange" };
-  const d = { key: "d", color: primary };
-  const e = { key: "e", color: "black" };
+
   const f = { key: "f", color: "red" };
 
   const marked = useMemo(
     () => ({
-      "2022-10-01": {
-        dots: [a, b],
-      },
-      "2022-10-02": {
-        dots: [a, c, d, e],
-      },
-      [todayString]: {
-        dots: [a],
-      },
+      // "2022-10-02": {
+      //   dots: [a, c, d, e],
+      // },
+
+      ...takenList,
+      // [todayString]: {
+      //   dots: [{ key: "today", color: accent }],
+      // },
       [daySelected]: {
         selected: true,
         selectedColor: accent,
@@ -143,7 +149,7 @@ export default function CalendarView({
       //   selectedTextColor: "white",
       // },
     }),
-    [daySelected, taken]
+    [daySelected, taken, takenList]
   );
   // const marked = {
   //   "2022-10-10": { marked: true },
@@ -158,24 +164,63 @@ export default function CalendarView({
       userId,
       currentMonth
     );
-    console.warn(eachMonthRoutines);
-    const allEachMonthRoutines = {};
-    eachMonthRoutines.map((each: any) => {
+    console.warn(eachMonthRoutines, "복용내역 fetch");
+    markEachMonthCalendar(eachMonthRoutines, currentMonth);
+  };
+
+  const markEachMonthCalendar = (res: Array<object>, selectedMonth: number) => {
+    // [{"calendarId": 7, "date": "2022-11-11", "routineId": 3, "taken": true, "userId": 2},
+    // {"calendarId": 8, "date": "2022-11-11", "routineId": 9, "taken": true, "userId": 2},
+    // {"calendarId": 9, "date": "2022-11-09", "routineId": 8, "taken": true, "userId": 2}]
+
+    let temp = {};
+    let allEachMonthRoutines = {};
+    res.map((each: any) => {
+      if (Object.keys(temp).includes(each.date)) {
+        temp[each.date].push({
+          key: each.routineId,
+
+          // color: randomColors[each.routineId],
+          color: "#E43A89",
+        });
+      } else {
+        temp[each.date] = [
+          {
+            key: each.routineId,
+            color: "#E43A89",
+            // color: randomColors[each.routineId]
+          },
+        ];
+      }
+
+      // for (const eachDate in temp) {
+      //   allEachMonthRoutines[eachDate] = { dots: temp[eachDate] };
+      // }
+      Object.entries(temp).map(
+        (eachDateArray) =>
+          (allEachMonthRoutines[eachDateArray[0]] = { dots: eachDateArray[1] })
+      );
+      // result[now]={dots:today};
       // allEachMonthRoutines[each.date] = {
-      //   dots: 
+      //   dots:
       // }
       // setTaken((prevTaken) => {
       //   return
       // })
     });
+    // console.warn(temp, "임시!!!!!");
     // if (eachSupplementDetail.bestTime.slice(0,2))
+    console.log(allEachMonthRoutines);
+    setTakenList(allEachMonthRoutines);
   };
 
   useFocusEffect(
     useCallback(() => {
+      // getMonthRoutines(todayString.substring(5, 7));
       getMonthRoutines();
-      console.warn(currentMonth, "지금 몇달");
-    }, [userId, currentMonth])
+      // console.warn(currentMonth, "지금 몇달");
+    }, [userId, currentMonth, isCheckedChange])
+    // }, [userId, todayString])
   );
   return (
     <View style={styles.calendarContainer}>
@@ -197,8 +242,8 @@ export default function CalendarView({
         markingType="multi-dot"
         onDayPress={dayPressHandler}
         onMonthChange={(monthData) => {
-          // console.log("month changed", monthData);
           setCurrentMonth(monthData.month);
+          // getMonthRoutines(monthData.month.toString());
         }}
         monthFormat={"yyyy년 MM월"}
         markedDates={marked}

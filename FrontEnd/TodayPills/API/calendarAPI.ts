@@ -16,7 +16,7 @@ const checkMyRoutine = async (
   dateStr: string,
   userId: number
 ) => {
-  const result = await api.patch(`/calendar/${userId}/${dateStr}`, {
+  const result = await api.post(`/calendar/${userId}/${dateStr}`, {
     date: dateStr,
     routineId,
     userId,
@@ -30,7 +30,7 @@ const deleteMyRoutineCheck = async (calendarId: number) => {
 
 const fetchEachMonthRoutines = async (userId: number, month: number) => {
   const result = await api.get(`/calendar/${userId}/${month}`);
-  console.warn(result.data, month, "복용 내역 가져오기");
+  // console.warn(result.data, month, "복용 내역 가져오기");
   return result.data;
 };
 // const addMyRoutineSupplement = async (

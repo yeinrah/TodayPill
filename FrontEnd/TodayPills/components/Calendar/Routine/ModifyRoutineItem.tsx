@@ -32,6 +32,7 @@ import {
 } from "../../../API/routineAPI";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import PushNotifications from "./PushNotifications";
+import { getDateStr } from "../../functions/getDateStr";
 // import Notifications from "../../../utils/Notifications";
 
 export default function ModifyRoutineItem({
@@ -67,7 +68,7 @@ export default function ModifyRoutineItem({
         "섭취 요일을 선택 후 완료 버튼을 클릭해주세요!"
       );
     }
-
+    const nowDateStr = getDateStr(new Date());
     let submitTakenTime = takenTime;
     if (!isAM) {
       const PMHour = parseInt(takenTime.slice(0, 2)) + 12;
@@ -90,7 +91,8 @@ export default function ModifyRoutineItem({
           selectedRoutineDays,
           isAlarmEnabled,
           pillCnt,
-          submitTakenTime
+          submitTakenTime,
+          nowDateStr
         )
       : await addMyRoutineSupplement(
           userId,
@@ -98,7 +100,8 @@ export default function ModifyRoutineItem({
           selectedRoutineDays,
           isAlarmEnabled,
           pillCnt,
-          submitTakenTime
+          submitTakenTime,
+          nowDateStr
         );
     navigation.navigate("MyPills", { userId });
     console.warn("제출함!!!!!!!!!!!!!!!!!!!!");

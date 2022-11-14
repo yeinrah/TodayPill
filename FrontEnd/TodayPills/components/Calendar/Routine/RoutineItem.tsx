@@ -7,6 +7,9 @@ import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fetchSupplementDetail } from "../../../API/supplementAPI";
 import { checkMyRoutine, deleteMyRoutineCheck } from "../../../API/calendarAPI";
+import LoadingSpinner from "../../UI/LoadingSpinner";
+import { useRecoilState } from "recoil";
+import { pillRoutineCheckChangeState } from "../../../Recoil/atoms/calendar";
 
 export interface RoutineProps {
   key: number;
@@ -18,7 +21,9 @@ export interface RoutineProps {
   // name: string;
   cnt: number;
   selectedDate: string;
-  changeCheckHandler: () => void;
+  taken: boolean;
+  calendarId: number;
+  // changeCheckHandler: () => void;
 }
 
 export default function RoutineItem({
@@ -30,9 +35,15 @@ export default function RoutineItem({
   pillId,
   cnt,
   selectedDate,
-  changeCheckHandler,
-}: RoutineProps) {
+  taken,
+  calendarId,
+}: // changeCheckHandler,
+RoutineProps) {
+  const [isCheckedChange, setIsCheckedChange] = useRecoilState(
+    pillRoutineCheckChangeState
+  );
   const [isChecked, setIsChecked] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [detailInfo, setDetailInfo] = useState({
     brand: "",
     name: "",
@@ -41,13 +52,14 @@ export default function RoutineItem({
 
   const [userId, setUserId] = useState(0);
   // const [pillRoutine, setPillRoutine] = useState(dummyRoutine);
-  const [calendarId, setCalendarId] = useState(0);
+  const [eachCalendarId, setEachCalendarId] = useState(calendarId);
 
   const deleteCheckHandler = async () => {
     setIsChecked(false);
-    await deleteMyRoutineCheck(calendarId);
-    console.warn("캘린더 삭제");
-    changeCheckHandler();
+    await deleteMyRoutineCheck(eachCalendarId);
+    console.warn(calendarId, "캘린더 삭제");
+    setIsCheckedChange(!isCheckedChange);
+    // changeCheckHandler();
   };
   const checkHandler = async () => {
     setIsChecked(true);
@@ -57,8 +69,9 @@ export default function RoutineItem({
       userId
     );
     console.warn(calendarTempId, "캘린더 아이디");
-    setCalendarId(calendarTempId);
-    changeCheckHandler();
+    setEachCalendarId(calendarTempId);
+    // changeCheckHandler();
+    setIsCheckedChange(!isCheckedChange);
   };
 
   const getPillDetail = async () => {
@@ -75,40 +88,49 @@ export default function RoutineItem({
   useFocusEffect(
     useCallback(() => {
       getPillDetail();
-    }, [userId])
+      setIsChecked(taken);
+      setIsLoading(false);
+      // console.warn(selectedDate, taken);
+    }, [userId, pillId, taken, calendarId])
   );
   return (
     <View style={styles.outerContainer}>
-      <View>
-        <Text style={styles.time}>{time}</Text>
-      </View>
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          <View>
+            <Text style={styles.time}>{time}</Text>
+          </View>
 
-      <PillCard height={100} width={"90%"} bgColor={"white"}>
-        <View style={styles.routineContainer}>
-          <View style={styles.imageContainer}>
-            <Image
-              source={{ uri: detailInfo.image }}
-              style={styles.pillImage}
-            />
-          </View>
-          <View style={styles.pillDetailContainer}>
-            <Text style={styles.brand}>{detailInfo.brand}</Text>
-            <Text style={styles.name}>{detailInfo.name}</Text>
-            <Text style={styles.cnt}>{cnt}정</Text>
-          </View>
-          <View style={styles.check}>
-            {isChecked ? (
-              <Pressable onPress={deleteCheckHandler}>
-                <AntDesign name="checkcircle" size={30} color={primary} />
-              </Pressable>
-            ) : (
-              <Pressable onPress={checkHandler}>
-                <AntDesign name="checkcircleo" size={30} color="#B7B7B7" />
-              </Pressable>
-            )}
-          </View>
-        </View>
-      </PillCard>
+          <PillCard height={100} width={"90%"} bgColor={"white"}>
+            <View style={styles.routineContainer}>
+              <View style={styles.imageContainer}>
+                <Image
+                  source={{ uri: detailInfo.image }}
+                  style={styles.pillImage}
+                />
+              </View>
+              <View style={styles.pillDetailContainer}>
+                <Text style={styles.brand}>{detailInfo.brand}</Text>
+                <Text style={styles.name}>{detailInfo.name}</Text>
+                <Text style={styles.cnt}>{cnt}정</Text>
+              </View>
+              <View style={styles.check}>
+                {isChecked ? (
+                  <Pressable onPress={deleteCheckHandler}>
+                    <AntDesign name="checkcircle" size={30} color={primary} />
+                  </Pressable>
+                ) : (
+                  <Pressable onPress={checkHandler}>
+                    <AntDesign name="checkcircleo" size={30} color="#B7B7B7" />
+                  </Pressable>
+                )}
+              </View>
+            </View>
+          </PillCard>
+        </>
+      )}
 
       {/* <Text style={styles.takenDate}></Text>
       <View style={styles.pillRoutineContainer}>
