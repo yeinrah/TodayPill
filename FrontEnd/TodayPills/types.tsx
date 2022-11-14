@@ -48,6 +48,8 @@ export type RootStackParamList = {
   FirstAddSurvey: undefined;
   AllSupplementsScreen: undefined;
   SecondAddSurvey: undefined;
+  AiHomeScreen: undefined;
+  AiQnaScreen: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
@@ -60,6 +62,7 @@ export type RootTabParamList = {
   MyPage: undefined;
   Start: undefined;
   ChatScreen: undefined;
+  Ai: undefined;
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =

@@ -33,6 +33,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import PushNotifications from "./PushNotifications";
 import { getDateStr } from "../../functions/getDateStr";
+import { setNotification } from "../../functions/setNotification";
 // import Notifications from "../../../utils/Notifications";
 
 export default function ModifyRoutineItem({
@@ -45,6 +46,7 @@ export default function ModifyRoutineItem({
   const [selectedRoutineDays, setSelectedRoutineDays] = useState("");
   const [takenDaysName, setTakenDaysName] = useState("");
   const [isDaySubmitted, setIsDaySubmitted] = useState(false);
+  const [isFinalSubmitted, setIsFinalSubmitted] = useState(false);
 
   const [supplementDetail, setSupplementDetail] = useState({
     name: "",
@@ -104,7 +106,35 @@ export default function ModifyRoutineItem({
           nowDateStr
         );
     navigation.navigate("MyPills", { userId });
-    console.warn("제출함!!!!!!!!!!!!!!!!!!!!");
+    setIsFinalSubmitted(true);
+
+    if (isAlarmEnabled) {
+      const tempAlarmDays = selectedRoutineDays.split(",");
+      if (tempAlarmDays.length === 7) {
+        setNotification(
+          pillId.toString(),
+          "영양제 섭취 알람",
+          `${supplementDetail.name} ${pillCnt}정을 드실 시간입니다!`,
+          0,
+          parseInt(submitTakenTime.substring(0, 2)),
+          parseInt(submitTakenTime.substring(3, 5))
+        );
+      } else {
+        tempAlarmDays.map((dayIdStr: string) => {
+          setNotification(
+            pillId.toString(),
+            "영양제 섭취 알람",
+            `${supplementDetail.name} ${pillCnt}정을 드실 시간입니다!`,
+            parseInt(dayIdStr),
+            parseInt(submitTakenTime.substring(0, 2)),
+            parseInt(submitTakenTime.substring(3, 5))
+          );
+        });
+      }
+      // console.warn(tempAlarmDays, "알람 설정");
+    }
+
+    // console.warn("제출함!!!!!!!!!!!!!!!!!!!!");
   };
 
   const getSupplementDetail = async () => {
@@ -314,6 +344,10 @@ export default function ModifyRoutineItem({
         <PushNotifications
           addAlarmHandler={setIsAlarmEnabled}
           isAlarm={isAlarmEnabled}
+          // pillName={supplementDetail.name}
+          // pillCnt={pillCnt}
+          // isSubmitted={isFinalSubmitted}
+          // weekdays={selectedRoutineDays.split(",")}
         />
         <View>
           <View style={styles.chooseBtn}>

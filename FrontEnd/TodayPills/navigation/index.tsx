@@ -3,7 +3,7 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import { FontAwesome, FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
+import { FontAwesome, FontAwesome5, MaterialCommunityIcons, Entypo } from "@expo/vector-icons";
 // import { MaterialCommunityIcons } from "react-native-vector-icons.";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 // import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -51,6 +51,8 @@ import FirstAddSurvey from "../screens/AddSurvey/FirstAddSurvey";
 import AllSupplementsScreen from "../screens/HomeScreen/AllSupplementsScreen";
 import SecondAddSurvey from "../screens/AddSurvey/SecondAddSurvey";
 import ChatScreen from "../screens/ChatScreen/ChatScreen";
+import AiHomeScreen from "../screens/AiScreen/AiHomeScreen";
+import AiQnaScreen from "../screens/AiScreen/AiQnaScreen";
 interface Inavigation {
   colorScheme: ColorSchemeName;
   LoginCheck: () => {};
@@ -238,6 +240,22 @@ function Home() {
     </Stack.Navigator>
   );
 }
+function Ai() {
+  return(
+    <Stack.Navigator initialRouteName="AiHomeScreen">
+      <Stack.Screen
+        name="AiHomeScreen"
+        component={AiHomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AiQnaScreen"
+        component={AiQnaScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  )
+}
 function MaterialBottomTabNavigator({ navigation }: any) {
   const colorScheme = useColorScheme();
   const checkLogin = async () => {
@@ -309,6 +327,16 @@ function MaterialBottomTabNavigator({ navigation }: any) {
           tabBarIcon: ({ color }) => (
             // <FontAwesome5 name="pills" size={22} color={color} />
             <MaterialCommunityIcons name="pill" size={26} color={color} />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="Ai"
+        component={Ai}
+        options={{
+          tabBarLabel: "AI분석",
+          tabBarIcon: ({ color }) => (
+            <Entypo name="bar-graph" size={26} color={color} />
           ),
         }}
       />

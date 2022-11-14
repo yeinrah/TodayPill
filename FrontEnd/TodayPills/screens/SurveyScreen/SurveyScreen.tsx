@@ -193,7 +193,8 @@ const SurveyScreen = ({ navigation }: any) => {
                         answer = selectedItem;
                       }
                     } else answer = selectedItem;
-                    if (nowStage === surveyData.length - 2) setIsLoading(true);
+                    if (nowStage === surveyData.length - 2 && answer !== 1)
+                      setIsLoading(true);
                     setAnswerSheet({
                       userId: uid,
                       ...answerSheet,

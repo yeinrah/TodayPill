@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { updateUsername } from "../../API/userAPI";
 import { accent, primary } from "../../constants/Colors";
+import { boldWelcome, regularWelcome } from "../Data/fontFamilyObject";
 import CustomBtn from "../UI/CustomBtn";
 import CustomModal from "../UI/CustomModal";
 
@@ -60,11 +61,13 @@ export default function UpdateNickname({ onChangeName }) {
         >
           <View style={styles.outerContainer}>
             <View style={styles.nameContainer}>
-              <Text style={styles.nickname}>닉네임 수정</Text>
+              <Text style={{ ...styles.nickname, ...boldWelcome }}>
+                닉네임 수정
+              </Text>
             </View>
             <View style={styles.inputContainer}>
               <TextInput
-                style={styles.input}
+                style={{ ...styles.input, ...boldWelcome }}
                 // caretHidden={true}
                 maxLength={10}
                 onChangeText={(updatedNickname) => setNickname(updatedNickname)}
@@ -78,14 +81,13 @@ export default function UpdateNickname({ onChangeName }) {
               <Pressable onPress={cancelHandler} style={styles.btn}>
                 {({ pressed }) => (
                   <Text
-                    style={[
-                      styles.confirmText,
-
-                      { color: pressed ? "black" : "# B7B7B7" },
-                    ]}
+                    style={{
+                      ...styles.confirmText,
+                      color: pressed ? "black" : "#B7B7B7",
+                      ...regularWelcome,
+                    }}
                   >
                     취소
-                    {/* {pressed ? 'Pressed!' : 'Press Me'} */}
                   </Text>
                 )}
               </Pressable>
@@ -95,10 +97,11 @@ export default function UpdateNickname({ onChangeName }) {
               >
                 {({ pressed }) => (
                   <Text
-                    style={[
-                      styles.confirmText,
-                      { color: pressed ? accent : primary },
-                    ]}
+                    style={{
+                      ...styles.confirmText,
+                      color: pressed ? accent : primary,
+                      ...regularWelcome,
+                    }}
                   >
                     완료
                     {/* {pressed ? 'Pressed!' : 'Press Me'} */}
@@ -127,10 +130,14 @@ export default function UpdateNickname({ onChangeName }) {
       >
         {({ pressed }) => (
           <Text
-            style={[
-              styles.confirmText,
-              { color: pressed ? "black" : "#B7B7B7" },
-            ]}
+            style={
+              {
+                ...styles.confirmText,
+                color: pressed ? "black" : "#B7B7B7",
+                ...regularWelcome,
+              }
+              // { color: pressed ? "black" : "#B7B7B7" },
+            }
           >
             수정
             {/* {pressed ? 'Pressed!' : 'Press Me'} */}
@@ -170,7 +177,7 @@ const styles = StyleSheet.create({
     // height: 40,
     width: "90%",
     fontSize: 18,
-    fontWeight: "bold",
+    // fontWeight: "bold",
 
     // marginTop: 30,
     paddingBottom: 3,
@@ -184,7 +191,7 @@ const styles = StyleSheet.create({
   },
   confirmText: {
     fontSize: 18,
-    fontWeight: "900",
+    // fontWeight: "900",
   },
   // modalContainer: {
   //   width: 0,
@@ -193,7 +200,7 @@ const styles = StyleSheet.create({
   nickname: {
     fontSize: 20,
     color: "#868686",
-    fontWeight: "900",
+    // fontWeight: "900",
   },
   btnContainer: {
     flex: 1,

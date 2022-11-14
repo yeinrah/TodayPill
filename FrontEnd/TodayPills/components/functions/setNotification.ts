@@ -6,22 +6,32 @@ import * as Notifications from "expo-notifications";
 // weekday(int) : 푸시 알림 요일(0: 매일, 1: 월요일, 2: 화요일, ..., 6 : 토요일, 7: 일요일)
 // hour(int) : 푸시 알림 시간(0, 1, 2, ..., 23)
 // minute(int) : 푸시 알림 분(0, 1, 2, ..., 59)
-export const setNotification = (identifier, title, body, weekday, hour, minute) => {
-    Notifications.scheduleNotificationAsync({
-        identifier: identifier,
-        content: {
-            title: title,
-            body: body,
-        },
-        trigger: weekday === 0 ? {
+export const setNotification = (
+  identifier: string,
+  title: string,
+  body: string,
+  weekday: number,
+  hour: number,
+  minute: number
+) => {
+  Notifications.scheduleNotificationAsync({
+    identifier: identifier,
+    content: {
+      title: title,
+      body: body,
+    },
+    trigger:
+      weekday === 0
+        ? {
             hour: hour,
             minute: minute,
             repeats: true,
-        } : {
-            weekday: weekday % 7 + 1,
+          }
+        : {
+            weekday: (weekday % 7) + 1,
             hour: hour,
             minute: minute,
             repeats: true,
-        },
-    });
+          },
+  });
 };
