@@ -34,6 +34,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import PushNotifications from "./PushNotifications";
 import { getDateStr } from "../../functions/getDateStr";
 import { setNotification } from "../../functions/setNotification";
+import { boldWelcome, regularWelcome } from "../../Data/fontFamilyObject";
 // import Notifications from "../../../utils/Notifications";
 
 export default function ModifyRoutineItem({
@@ -76,14 +77,6 @@ export default function ModifyRoutineItem({
       const PMHour = parseInt(takenTime.slice(0, 2)) + 12;
       submitTakenTime = `${PMHour}:${takenTime.slice(3, 5)}`;
     }
-    // console.log(
-    //   userId,
-    //   pillId,
-    //   selectedRoutineDays,
-    //   isAlarmEnabled,
-    //   pillCnt,
-    //   submitTakenTime
-    // );
 
     updateOrNot === "true"
       ? await updateMyRoutineSupplement(
@@ -131,7 +124,6 @@ export default function ModifyRoutineItem({
           );
         });
       }
-      // console.warn(tempAlarmDays, "알람 설정");
     }
 
     // console.warn("제출함!!!!!!!!!!!!!!!!!!!!");
@@ -242,7 +234,7 @@ export default function ModifyRoutineItem({
 
   return (
     <ScrollView style={styles.outerContainer}>
-      <PillCard height={400} width={"90%"} bgColor={"#edfbf9"}>
+      <PillCard height={400} width={"90%"} bgColor={"white"}>
         <View style={styles.cardInnerContainer}>
           <View style={styles.imageOuterContainer}>
             <View style={styles.imageContainer}>
@@ -254,18 +246,22 @@ export default function ModifyRoutineItem({
           </View>
           <View style={styles.pillDetailContainer}>
             <View style={styles.nameContainer}>
-              <Text style={styles.name}>제품명</Text>
+              <Text style={{ ...styles.name, ...regularWelcome }}>제품명</Text>
               {/* <Text style={styles.pillName}>{routineItem.pillName}</Text> */}
-              <Text style={styles.pillName}>{supplementDetail.name}</Text>
+              <Text style={{ ...styles.pillName, ...boldWelcome }}>
+                {supplementDetail.name}
+              </Text>
               <View style={styles.separator} />
             </View>
             <View style={styles.cntContainer}>
-              <Text style={styles.name}>섭취 개수</Text>
+              <Text style={{ ...styles.name, ...regularWelcome }}>
+                섭취 개수
+              </Text>
               <View style={styles.modifyCnt}>
                 <Pressable onPress={decreaseHandler}>
                   <Entypo name="circle-with-minus" size={27} color={accent} />
                 </Pressable>
-                <Text style={styles.cnt}>{pillCnt}</Text>
+                <Text style={{ ...styles.cnt, ...boldWelcome }}>{pillCnt}</Text>
                 <Pressable onPress={increaseHandler}>
                   <Entypo name="circle-with-plus" size={27} color={accent} />
                 </Pressable>
@@ -276,12 +272,14 @@ export default function ModifyRoutineItem({
       </PillCard>
 
       <View>
-        <PillCard height={200} width={"90%"} bgColor={"#edfbf9"}>
+        <PillCard height={200} width={"90%"} bgColor={"white"}>
           <View style={styles.takenTimeInnerContainer}>
             <View style={styles.dayAlarmOuterContainer}>
               <View style={styles.dayOuterContainer}>
                 <View style={styles.dayAlarmContainer}>
-                  <Text style={styles.name}>섭취 요일</Text>
+                  <Text style={{ ...styles.name, ...regularWelcome }}>
+                    섭취 요일
+                  </Text>
 
                   {/* <Text style={styles.dayAndTimeName}>{takenDaysName}</Text> */}
                   {isDaySubmitted ? (
@@ -289,7 +287,7 @@ export default function ModifyRoutineItem({
                   ) : null}
                 </View>
 
-                <Text style={styles.dayExplText}>
+                <Text style={{ ...styles.dayExplText, ...regularWelcome }}>
                   아래 요일을 클릭하여 섭취 요일을 선택해주세요.
                 </Text>
               </View>
@@ -307,10 +305,12 @@ export default function ModifyRoutineItem({
               <View style={[styles.separator, { width: "90%" }]} />
             </View>
             <View style={styles.dayAlarmSecondContainer}>
-              <Text style={styles.name}>섭취 시간</Text>
+              <Text style={{ ...styles.name, ...regularWelcome }}>
+                섭취 시간
+              </Text>
 
               <Pressable onPress={showDatePicker} style={styles.directionRow}>
-                <Text style={styles.dayAndTimeName}>
+                <Text style={{ ...styles.dayAndTimeName, ...boldWelcome }}>
                   {/* {supplementDetail.bestTime} {isAM ? "AM" : "PM"} */}
                   <Text
                     style={isAM ? { color: primary } : { color: "#309388" }}
@@ -400,6 +400,7 @@ const styles = StyleSheet.create({
   },
   takenTimeInnerContainer: {
     flex: 1,
+    padding: 8,
   },
   cntContainer: {
     flex: 1,
@@ -416,13 +417,14 @@ const styles = StyleSheet.create({
   },
 
   name: {
-    fontSize: 15,
+    fontSize: 16,
+    color: "#4d4a4a",
     // fontWeight: "bold",
   },
   pillName: {
     marginVertical: 7,
     fontSize: 17,
-    fontWeight: "bold",
+    // fontWeight: "bold",
   },
   separator: {
     // marginVertical: 10,
@@ -432,9 +434,9 @@ const styles = StyleSheet.create({
   },
   cnt: {
     fontSize: 24,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     paddingHorizontal: 10,
-    marginTop: -3,
+    // marginTop: -3,
   },
   time: {
     fontSize: 15,
@@ -443,9 +445,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
   },
   dayExplText: {
-    fontSize: 10,
+    fontSize: 12,
     color: "#FF78A3",
     paddingHorizontal: 15,
+    letterSpacing: 1,
   },
   dayAlarmOuterContainer: {
     flex: 6,
@@ -476,9 +479,10 @@ const styles = StyleSheet.create({
   directionRow: {
     // backgroundColor: "red",
     flexDirection: "row",
+    alignItems: "center",
   },
   dayAndTimeName: {
-    fontWeight: "900",
+    // fontWeight: "900",
     fontSize: 18,
   },
 

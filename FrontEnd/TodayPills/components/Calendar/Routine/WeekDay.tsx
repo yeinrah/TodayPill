@@ -4,6 +4,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useState, useCallback } from "react";
 import { primary } from "../../../constants/Colors";
 import { useFocusEffect } from "@react-navigation/native";
+import { boldWelcome } from "../../Data/fontFamilyObject";
 
 export interface WeekDayProps {
   day: string;
@@ -81,7 +82,7 @@ export default function WeekDay({
           { backgroundColor: isPressed ? primary : "#CCCCCC" },
         ]}
       >
-        <Text style={styles.text}>{day}</Text>
+        <Text style={{ ...styles.text, ...boldWelcome }}>{day}</Text>
       </View>
 
       {/* {({ pressed }) => (
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     // backgroundColor: primary,
     paddingHorizontal: 10,
-    paddingVertical: 7,
+    paddingVertical: 8,
     overflow: "hidden",
 
     // minHeight: 200,
@@ -113,6 +114,6 @@ const styles = StyleSheet.create({
   text: {
     color: "white",
     fontSize: 17,
-    fontWeight: "bold",
+    // fontWeight: "bold",
   },
 });

@@ -7,6 +7,7 @@ import { accent, primary, secondary } from "../../../constants/Colors";
 import CustomBtn from "../../UI/CustomBtn";
 import { useFocusEffect } from "@react-navigation/native";
 import { getDaysName } from "../../functions/getDaysName";
+import { boldWelcome } from "../../Data/fontFamilyObject";
 
 const weekDays = ["월", "화", "수", "목", "금", "토", "일"];
 
@@ -87,10 +88,11 @@ export default function WeekDayList(props: any) {
         >
           {({ pressed }) => (
             <Text
-              style={[
-                styles.confirmText,
-                { color: pressed ? "black" : accent },
-              ]}
+              style={{
+                ...styles.confirmText,
+                color: pressed ? "black" : accent,
+                ...boldWelcome,
+              }}
             >
               완료
               {/* {pressed ? 'Pressed!' : 'Press Me'} */}
@@ -131,6 +133,7 @@ const styles = StyleSheet.create({
 
   confirmText: {
     fontSize: 15,
-    fontWeight: "900",
+    letterSpacing: 1,
+    // fontWeight: "900",
   },
 });

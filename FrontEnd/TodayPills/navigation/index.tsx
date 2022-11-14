@@ -3,7 +3,13 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import { FontAwesome, FontAwesome5, MaterialCommunityIcons, Entypo } from "@expo/vector-icons";
+import {
+  FontAwesome,
+  FontAwesome5,
+  MaterialCommunityIcons,
+  Entypo,
+  Ionicons,
+} from "@expo/vector-icons";
 // import { MaterialCommunityIcons } from "react-native-vector-icons.";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 // import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -31,7 +37,11 @@ import SearchScreen from "../screens/HomeScreen/SearchScreen";
 import KakaoScreen from "../screens/StartScreen/KaKaoScreen";
 import StartScreen from "../screens/StartScreen/StartScreen";
 import NutrientScreen from "../screens/HomeScreen/NutrientScreen";
-import { RootStackParamList, RootTabParamList, RootTabScreenProps } from "../types";
+import {
+  RootStackParamList,
+  RootTabParamList,
+  RootTabScreenProps,
+} from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SurveyScreen from "../screens/SurveyScreen/SurveyScreen";
@@ -77,8 +87,16 @@ export default function Navigation({ colorScheme, LoginCheck }: Inavigation) {
           component={LoginSuccessScreen}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="Start" component={StartScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="KakaoScreen" component={KakaoScreen} options={{ headerShown: false }} />
+        <Stack.Screen
+          name="Start"
+          component={StartScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="KakaoScreen"
+          component={KakaoScreen}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="HealthScreeningCheckScreen"
           component={HealthScreeningCheckScreen}
@@ -160,15 +178,31 @@ const BottomTab = createMaterialBottomTabNavigator<RootTabParamList>();
 function RootNavigator() {
   return (
     <>
-      <Stack.Screen name="Root" component={StartScreen} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="Root"
+        component={StartScreen}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="Main"
         component={MaterialBottomTabNavigator}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="MyPills" component={MyPillsScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="Start" component={StartScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: "Oops!" }} />
+      <Stack.Screen
+        name="MyPills"
+        component={MyPillsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Start"
+        component={StartScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="NotFound"
+        component={NotFoundScreen}
+        options={{ title: "Oops!" }}
+      />
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>
@@ -188,9 +222,21 @@ function MyPageNav() {
         headerTitleAlign: "center",
       }}
     >
-      <Stack.Screen name="MyPills" component={MyPillsScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="MyPage" component={MyPageScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="Search" component={SearchScreen} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="MyPills"
+        component={MyPillsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="MyPage"
+        component={MyPageScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Search"
+        component={SearchScreen}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="ModifyRoutine"
         component={ModifyRoutineScreen}
@@ -207,8 +253,16 @@ function CalendarNav() {
         headerTitleAlign: "center",
       }}
     >
-      <Stack.Screen name="MyPills" component={MyPillsScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="Calendar" component={CalendarScreen} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="MyPills"
+        component={MyPillsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Calendar"
+        component={CalendarScreen}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="ModifyRoutine"
         component={ModifyRoutineScreen}
@@ -225,8 +279,16 @@ function CalendarNav() {
 function Home() {
   return (
     <Stack.Navigator initialRouteName="HomeScreen">
-      <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="SearchScreen" component={SearchScreen} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SearchScreen"
+        component={SearchScreen}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="NutrientScreen"
         component={NutrientScreen}
@@ -241,7 +303,7 @@ function Home() {
   );
 }
 function Ai() {
-  return(
+  return (
     <Stack.Navigator initialRouteName="AiHomeScreen">
       <Stack.Screen
         name="AiHomeScreen"
@@ -254,7 +316,7 @@ function Ai() {
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
-  )
+  );
 }
 function MaterialBottomTabNavigator({ navigation }: any) {
   const colorScheme = useColorScheme();
@@ -284,7 +346,9 @@ function MaterialBottomTabNavigator({ navigation }: any) {
         component={Home}
         options={{
           tabBarLabel: "홈",
-          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="home" color={color} size={26} />,
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="home" color={color} size={26} />
+          ),
         }}
 
         // options={({ navigation }: RootTabScreenProps<"Home">) => ({
@@ -325,8 +389,13 @@ function MaterialBottomTabNavigator({ navigation }: any) {
         options={{
           tabBarLabel: "채팅",
           tabBarIcon: ({ color }) => (
-            // <FontAwesome5 name="pills" size={22} color={color} />
-            <MaterialCommunityIcons name="pill" size={26} color={color} />
+            <Ionicons
+              name="chatbubble-ellipses-sharp"
+              size={22}
+              color={color}
+            />
+
+            // <MaterialCommunityIcons name="pill" size={26} color={color} />
           ),
         }}
       />

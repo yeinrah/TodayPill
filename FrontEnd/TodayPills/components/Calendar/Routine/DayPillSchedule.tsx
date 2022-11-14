@@ -11,6 +11,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fetchEachMyRoutine } from "../../../API/calendarAPI";
 import { useRecoilState } from "recoil";
 import { pillRoutineCheckChangeState } from "../../../Recoil/atoms/calendar";
+import { boldWelcome } from "../../Data/fontFamilyObject";
 
 export interface PillScheduleProps {
   selectedDate: string;
@@ -105,7 +106,9 @@ export default function DayPillSchedule({ selectedDate }: PillScheduleProps) {
     <View style={styles.container}>
       <View style={styles.eachDateContainer}>
         <View style={styles.takenDateContainer}>
-          <Text style={styles.takenDate}>{dayString}</Text>
+          <Text style={{ ...styles.takenDate, ...boldWelcome }}>
+            {dayString}
+          </Text>
         </View>
         <Pressable onPress={addRoutineHandler}>
           <MaterialCommunityIcons
@@ -154,15 +157,16 @@ const styles = StyleSheet.create({
   takenDateContainer: {
     marginHorizontal: 20,
     paddingHorizontal: 20,
-    paddingVertical: 7,
+    paddingVertical: 10,
     borderRadius: 30,
     // backgroundColor: "#FFEFFC",
     backgroundColor: accent,
   },
   takenDate: {
     fontSize: 24,
-    fontWeight: "900",
+    // fontWeight: "900",
     color: "white",
+    letterSpacing: 1,
     // color: accent,
     // paddingHorizontal: 25,
   },

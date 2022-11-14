@@ -13,6 +13,7 @@ import { getDaysName } from "../../functions/getDaysName";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getDateStr } from "../../functions/getDateStr";
 import { deleteMySupplement } from "../../../API/routineAPI";
+import { boldWelcome, regularWelcome } from "../../Data/fontFamilyObject";
 
 export interface RoutineDetailProps {
   key: number;
@@ -102,13 +103,27 @@ export default function RoutineItemDetail({
             </View>
             <View style={styles.pillDetailContainer}>
               <View>
-                <Text style={styles.brand}>{supplementDetail.brand}</Text>
-                <Text style={styles.name}>{supplementDetail.name}</Text>
+                <Text style={{ ...styles.brand, ...boldWelcome }}>
+                  {supplementDetail.brand}
+                </Text>
+                <Text
+                  style={{
+                    ...styles.name,
+                    ...boldWelcome,
+                    fontSize: supplementDetail.name.length > 22 ? 11 : 13,
+                  }}
+                >
+                  {supplementDetail.name}
+                </Text>
               </View>
               <View style={styles.dayTimeContainer}>
-                <Text style={styles.days}>{takenDaysStr}</Text>
+                <Text style={{ ...styles.days, ...regularWelcome }}>
+                  {takenDaysStr}
+                </Text>
                 <View style={styles.timeContainer}>
-                  <Text style={styles.time}>{time}</Text>
+                  <Text style={{ ...styles.time, ...regularWelcome }}>
+                    {time}
+                  </Text>
                 </View>
               </View>
             </View>
@@ -117,7 +132,9 @@ export default function RoutineItemDetail({
                 <FontAwesome name="trash-o" size={22} color="#B7B7B7" />
               </Pressable>
               <View style={styles.cntContainer}>
-                <Text style={styles.cnt}>{tablets}정</Text>
+                <Text style={{ ...styles.cnt, ...regularWelcome }}>
+                  {tablets}정
+                </Text>
               </View>
             </View>
           </View>
@@ -185,12 +202,15 @@ const styles = StyleSheet.create({
 
   brand: {
     color: "#B7B7B7",
-    fontSize: 8,
-    fontWeight: "bold",
+    fontSize: 10,
+    // fontWeight: "bold",
   },
   name: {
-    fontSize: 10,
-    fontWeight: "bold",
+    // fontSize: 13,
+    letterSpacing: 0.5,
+    marginTop: 5,
+
+    // fontWeight: "bold",
   },
   cntContainer: {
     paddingHorizontal: 5,
@@ -201,8 +221,9 @@ const styles = StyleSheet.create({
   cnt: {
     color: "white",
     fontSize: 12,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     paddingHorizontal: 3,
+    paddingVertical: 1,
   },
   dayTimeContainer: {
     flexDirection: "row",
@@ -214,7 +235,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 2,
     fontSize: 11,
-    fontWeight: "900",
+    // fontWeight: "900",
     color: "rgba(0, 0, 0, 0.5)",
     // paddingHorizontal: 25,
   },

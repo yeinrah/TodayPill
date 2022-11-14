@@ -21,6 +21,7 @@ import { Ionicons } from "@expo/vector-icons";
 import RoutineDetailList from "../components/Calendar/Routine/RoutineDetailList";
 import ModifyRoutineItem from "../components/Calendar/Routine/ModifyRoutineItem";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
+import { boldWelcome } from "../components/Data/fontFamilyObject";
 
 export default function ModifyRoutineScreen({ navigation, route }: any) {
   // RootStackScreenProps<"MyPills">
@@ -41,7 +42,9 @@ export default function ModifyRoutineScreen({ navigation, route }: any) {
           <View style={styles.myPillsContainer}>
             <View style={styles.titleContainer}>
               <View>
-                <Text style={styles.text}>영양제 섭취 수정</Text>
+                <Text style={{ ...styles.text, ...boldWelcome }}>
+                  영양제 섭취 수정
+                </Text>
                 {/* <Text style={styles.text}>{pillId}</Text> */}
               </View>
             </View>
@@ -78,6 +81,6 @@ const styles = StyleSheet.create({
 
   text: {
     fontSize: 25,
-    fontWeight: "bold",
+    // fontWeight: "bold",
   },
 });
