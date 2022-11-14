@@ -16,7 +16,7 @@ const checkMyRoutine = async (
   dateStr: string,
   userId: number
 ) => {
-  const result = await api.patch(`/calendar/${userId}/${dateStr}`, {
+  const result = await api.post(`/calendar/${userId}/${dateStr}`, {
     date: dateStr,
     routineId,
     userId,
