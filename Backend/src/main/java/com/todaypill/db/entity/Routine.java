@@ -41,6 +41,9 @@ public class Routine {
 		@Column(name = "tablets")
 		private int tablets;
 		
+		@Column(name = "added_since")
+		private String addedSince;
+		
 		@Column(name = "deleted_since")
 		private String deletedSince;
 		

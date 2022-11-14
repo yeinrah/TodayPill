@@ -1,6 +1,7 @@
 package com.todaypill.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,8 +58,8 @@ public class MyPageService {
 	}
 	
 	@Transactional
-	public List<Routine> getRoutineListByDay(int userId, String day) {
-		List<Routine> list = routineRepository.findAllByUserIdAndDay(userId, day);
+	public List<Routine> getRoutineListByDay(int userId, String day, String date) {
+		List<Routine> list = routineRepository.findAllByUserIdAndDay(userId, day, date);
 		return list;
 	}
 	
@@ -72,6 +73,11 @@ public class MyPageService {
 	public List<Calendar> getCalendarDayList(int userId, String date) {
 		List<Calendar> list = calendarRepository.findAllByDate(userId, date);
 		return list;
+	}
+	
+	@Transactional
+	public Optional<Calendar> getCalendar(int calendarId) {
+		return calendarRepository.findById(calendarId);
 	}
 	
 	@Transactional
@@ -97,12 +103,14 @@ public class MyPageService {
 	}
 	
 	@Transactional
-	public void updateRoutine(int routineId, Routine routine) {
+	public void updateRoutine(int routineId, Routine routine, String deletedSince) {
 		Routine originalRoutine = routineRepository.findOneByRoutineId(routineId);
-		originalRoutine.setTime(routine.getTime());
-		originalRoutine.setDay(routine.getDay());
-		originalRoutine.setTablets(routine.getTablets());
-		originalRoutine.setPushAlarm(routine.getPushAlarm());
+		originalRoutine.setDeletedSince(deletedSince);
+//		originalRoutine.setTime(routine.getTime());
+//		originalRoutine.setDay(routine.getDay());
+//		originalRoutine.setTablets(routine.getTablets());
+//		originalRoutine.setPushAlarm(routine.getPushAlarm());
 		routineRepository.save(originalRoutine);
+		routineRepository.save(routine);
 	}
 }
