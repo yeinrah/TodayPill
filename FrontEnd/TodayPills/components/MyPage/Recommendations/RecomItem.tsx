@@ -13,6 +13,7 @@ import {
 import pillIcons from "../../Data/pillIcons";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { boldWelcome } from "../../Data/fontFamilyObject";
 
 export interface RecomItemProps {
   nutName: string;
@@ -41,7 +42,9 @@ export default function RecomItem({ nutName, id }: RecomItemProps) {
             style={styles.icon}
           />
           <View style={styles.textContainer}>
-            <Text style={styles.nutrition}>{nutName}</Text>
+            <Text style={{ ...styles.nutrition, ...boldWelcome }}>
+              {nutName}
+            </Text>
           </View>
         </View>
       </Pressable>
@@ -69,7 +72,7 @@ const styles = StyleSheet.create({
   },
   nutrition: {
     fontSize: 15,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     marginLeft: 10,
     // color: "white",
   },

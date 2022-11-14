@@ -42,11 +42,11 @@ const ChatScreen = () => {
   const onConnected = () => {
     console.log("연결시도!!");
     setUserData({ ...userData, connected: true });
-    stompClient.subscribe("/chatroom/vitaminB", onMessageReceived);
-    // stompClient.subscribe(
-    //   "/user/" + userData.username + "/private",
-    //   onPrivateMessage
-    // );
+    stompClient.subscribe("/chatroom/public", onMessageReceived);
+    stompClient.subscribe(
+      "/user/" + userData.username + "/private",
+      onPrivateMessage
+    );
     userJoin();
   };
   const userJoin = () => {

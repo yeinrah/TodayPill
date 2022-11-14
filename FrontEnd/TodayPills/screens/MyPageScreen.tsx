@@ -25,6 +25,10 @@ import { accent, primary, secondary } from "../constants/Colors";
 
 import { IUserInfo, RootTabScreenProps } from "../types";
 import BackgroundScreen2 from "./BackgroundScreen2";
+import {
+  boldWelcome,
+  regularWelcome,
+} from "../components/Data/fontFamilyObject";
 
 export default function MyPageScreen({ navigation }: any) {
   // RootTabScreenProps<"MyPage">
@@ -58,17 +62,22 @@ export default function MyPageScreen({ navigation }: any) {
         <ScrollView style={styles.scrollView}>
           <View style={styles.myInfoContainer}>
             <View style={styles.nameContainer}>
-              <Text style={styles.name}>
-                {myName} <Text style={{ fontWeight: "500" }}>님</Text>
+              <Text style={{ fontSize: 27, ...boldWelcome }}>
+                {myName}{" "}
+                <Text style={{ fontSize: 23, ...regularWelcome }}>님</Text>
               </Text>
 
               <UpdateNickname onChangeName={setIsChangeName} />
             </View>
 
             <View style={styles.ageContainer}>
-              <Text style={styles.age}>{myInfo.age}대</Text>
+              <Text style={{ ...styles.age, ...regularWelcome }}>
+                {myInfo.age}대
+              </Text>
               {/* gender 받아오는거!!! */}
-              <Text style={styles.age}>{myInfo.gender}</Text>
+              <Text style={{ ...styles.age, ...regularWelcome }}>
+                {myInfo.gender}
+              </Text>
             </View>
           </View>
           <View style={styles.nutrBtnContainer}>
@@ -129,7 +138,15 @@ export default function MyPageScreen({ navigation }: any) {
                 navigation.replace("Start");
               }}
             >
-              <Text style={styles.logout}>로그아웃</Text>
+              <Text
+                style={{
+                  ...styles.logout,
+                  ...regularWelcome,
+                  letterSpacing: 1,
+                }}
+              >
+                로그아웃
+              </Text>
             </Pressable>
           </View>
         </ScrollView>
@@ -176,6 +193,7 @@ const styles = StyleSheet.create({
   ageContainer: {
     width: "100%",
     flexDirection: "row",
+    marginTop: 5,
     // padding: 10,
   },
   nutrBtnContainer: {
@@ -225,7 +243,7 @@ const styles = StyleSheet.create({
 
   age: {
     fontSize: 15,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     color: "#B7B7B7",
     marginLeft: 5,
   },
@@ -241,8 +259,8 @@ const styles = StyleSheet.create({
     opacity: 0.15,
   },
   logout: {
-    fontSize: 17,
-    fontWeight: "bold",
+    fontSize: 13,
+    // fontWeight: "bold",
     marginVertical: 13,
     color: "#FF78A3",
   },

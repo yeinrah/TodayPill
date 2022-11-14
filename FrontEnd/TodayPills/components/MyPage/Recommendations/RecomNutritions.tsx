@@ -12,6 +12,7 @@ import {
   Image,
 } from "react-native";
 import { getUserInfoByEmail } from "../../../API/userAPI";
+import { boldWelcome } from "../../Data/fontFamilyObject";
 import PillItem, { PillProps } from "../../Pills/PillItem";
 import RecomItem from "./RecomItem";
 
@@ -45,7 +46,7 @@ export default function RecomNutritions() {
           style={styles.pill}
         />
 
-        <Text style={styles.name}>추천 영양성분</Text>
+        <Text style={{ ...styles.name, ...boldWelcome }}>추천 영양성분</Text>
       </View>
 
       <View>
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 24,
-    fontWeight: "900",
+    // fontWeight: "900",
     marginTop: 5,
   },
   myPickContainer: {
