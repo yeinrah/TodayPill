@@ -9,39 +9,18 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { fetchAllRoutineSupplements } from "../../../API/routineAPI";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fetchEachMyRoutine } from "../../../API/calendarAPI";
+import { useRecoilState } from "recoil";
+import { pillRoutineCheckChangeState } from "../../../Recoil/atoms/calendar";
 
 export interface PillScheduleProps {
   selectedDate: string;
 }
 
-const dummyRoutine = [
-  {
-    time: "07:30",
-    brand: "나우푸드",
-    pillName: "칼슘&마그네슘",
-    imgUrl:
-      "https://contents.lotteon.com/itemimage/LO/14/19/59/10/62/_1/41/95/91/06/3/LO1419591062_1419591063_1.jpg",
-    cnt: 1,
-  },
-  {
-    time: "11:30",
-    brand: "고려은단",
-    pillName: "비타민 C",
-    imgUrl: "https://dimg.donga.com/wps/NEWS/IMAGE/2014/09/27/66754815.1.jpg",
-    cnt: 1,
-  },
-  {
-    time: "17:30",
-    brand: "나우푸드",
-    pillName: "오메가 3",
-    imgUrl:
-      "https://contents.lotteon.com/itemimage/LO/14/19/59/10/62/_1/41/95/91/06/3/LO1419591062_1419591063_1.jpg",
-    cnt: 1,
-  },
-];
-
 const days = ["no", "월", "화", "수", "목", "금", "토", "일"];
 export default function DayPillSchedule({ selectedDate }: PillScheduleProps) {
+  const [isCheckedChange, setIsCheckedChange] = useRecoilState(
+    pillRoutineCheckChangeState
+  );
   const navigation = useNavigation<any>();
   // console.log(selectedDate, "캘린더 날짜");
   const [userId, setUserId] = useState(0);
@@ -49,7 +28,7 @@ export default function DayPillSchedule({ selectedDate }: PillScheduleProps) {
   const [dayStrOfWeek, setDayStrOfWeek] = useState("");
   const [pillRoutine, setPillRoutine] = useState([]);
   const [pillRoutineCheck, setPillRoutineCheck] = useState([]);
-  const [isCheckedChange, setIsCheckedChange] = useState(false);
+  // const [isCheckedChange, setIsCheckedChange] = useState(false);
   const dayString = `${deleteZero(selectedDate.slice(5, 7))}월 ${deleteZero(
     selectedDate.slice(8, 10)
   )}일 ${dayStrOfWeek}요일`;
@@ -78,9 +57,9 @@ export default function DayPillSchedule({ selectedDate }: PillScheduleProps) {
   //   },
   // ];
 
-  const changeCheckHandler = () => {
-    setIsCheckedChange((isChanged) => !isChanged);
-  };
+  // const changeCheckHandler = () => {
+  //   setIsCheckedChange((isChanged) => !isChanged);
+  // };
   const addRoutineHandler = () => {
     // 밑에 userId 변경!!
     navigation.navigate("MyPills", { userId: userId });
@@ -92,25 +71,36 @@ export default function DayPillSchedule({ selectedDate }: PillScheduleProps) {
     const dayOfWeek = getDayOfWeek(selectedDate);
     setDayStrOfWeek(dayOfWeek);
     setDayId(days.indexOf(dayOfWeek));
-    const eachMyRoutine = await fetchEachMyRoutine(userId, selectedDate, dayId);
-    // setPillRoutineCheck(eachMyRoutine.calendarList);
-    const visibleRoutineList = eachMyRoutine.routineList.filter(
-      (eachRoutine: any) => {
-        return !eachRoutine.deletedSince;
-      }
+    const eachMyRoutine = await fetchEachMyRoutine(
+      userId,
+      selectedDate,
+      days.indexOf(dayOfWeek)
     );
-    setPillRoutine(visibleRoutineList);
+    setPillRoutine(eachMyRoutine);
+
+    // setPillRoutineCheck(eachMyRoutine.calendarList);
+
+    // const visibleRoutineList = eachMyRoutine.filter((eachRoutine: any) => {
+    //   return !eachRoutine.deletedSince;
+    // });
+    // setPillRoutine(visibleRoutineList);
     // setSupplementDetail(eachSupplementDetail);
   };
+
   useFocusEffect(
     useCallback(() => {
       const dayOfWeek = getDayOfWeek(selectedDate);
-      setDayStrOfWeek(dayOfWeek);
-      setDayId(days.indexOf(dayOfWeek));
+      // setDayStrOfWeek(dayOfWeek);
+      // setDayId(days.indexOf(dayOfWeek));
 
       getMyEachRoutine();
-    }, [userId, isCheckedChange, selectedDate, dayId, dayStrOfWeek])
+      // }, [userId, isCheckedChange, selectedDate, dayId, dayStrOfWeek])
+    }, [userId, selectedDate, isCheckedChange])
   );
+
+  // [{"addedSince": "2022-11-11", "day": "1, 2, 3, 4, 5", "deletedSince": null,
+  //  "pushAlarm": false, "routineId": 10, "supplementId": 1, "tablets": 2, "taken": false, "time": "08:30", "userId": 2}]
+
   return (
     <View style={styles.container}>
       <View style={styles.eachDateContainer}>
@@ -134,7 +124,9 @@ export default function DayPillSchedule({ selectedDate }: PillScheduleProps) {
             pillId={rout.supplementId}
             selectedDate={selectedDate}
             cnt={rout.tablets}
-            changeCheckHandler={changeCheckHandler}
+            taken={rout.taken}
+            calendarId={rout.calendarId}
+            // changeCheckHandler={changeCheckHandler}
           />
         ))}
       </View>
