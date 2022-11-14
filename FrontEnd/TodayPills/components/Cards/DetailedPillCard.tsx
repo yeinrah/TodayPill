@@ -94,7 +94,7 @@ const DetailedPillCard = (props: any) => {
               onPress={() => {naverSearch()}}
             >
               <Image
-                source={require("../../assets/images/naver.png")}
+                source={require("../../assets/images/naver2.png")}
                 style={styles.naverbutton}
               />
             </Pressable>
@@ -216,12 +216,14 @@ const styles = StyleSheet.create({
   },
   navercontainer: {
     marginTop: 10,
-    width: 30,
+    paddingRight: 10,
+    width: 50,
     height: 30,
   },
   naverbutton: {
     width: "100%",
     height: "100%",
+    resizeMode: "contain",
   },
   heartcontainer: {
     alignItems: "center",

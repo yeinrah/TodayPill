@@ -129,6 +129,13 @@ export default function SearchScreen({ navigation, route }: any) {
                   style={styles.loadingspinner}
                 />
               </View> :
+              failedSearch ?
+              <View style={styles.imagecontainer}>
+                <Image
+                  source={require("../../assets/images/noResult.png")}
+                  style={styles.image}
+                />
+              </View> :
               searchResults.slice((page - 1) * 20, page * 20).map((each, idx) => (
                 <DetailedPillCard
                   key={each.supplementId}
@@ -190,6 +197,14 @@ const styles = StyleSheet.create({
   loadingspinner: {
     width: 200,
     height: 200,
+  },
+  imagecontainer: {
+    width: "100%",
+    height: 400,
+  },
+  image: {
+    width: "100%",
+    height: "100%",
   },
   height: {
     height: 25,
