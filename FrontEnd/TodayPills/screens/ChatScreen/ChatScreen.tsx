@@ -26,7 +26,7 @@ const ChatScreen = () => {
   const onConnected = () => {
     console.log("연결시도!!");
     setUserData({ ...userData, connected: true });
-    stompClient.subscribe("/chatroom/public/1", onMessageReceived);
+    stompClient.subscribe("/chatroom/vitaminB", onMessageReceived);
     stompClient.subscribe(
       "/user/" + userData.username + "/private",
       onPrivateMessage

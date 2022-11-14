@@ -15,13 +15,13 @@ public class ChatController {
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
 
-    @MessageMapping("/message")
+    @MessageMapping("/messageVitaminB")
     @SendTo("/chatroom/vitaminB")
     public Message receiveMessageVitaminB(@Payload Message message){
         return message;
     }
 
-    @MessageMapping("/message")
+    @MessageMapping("/messageVitaminC")
     @SendTo("/chatroom/vitaminC")
     public Message receiveMessageVitaminC(@Payload Message message){
         return message;
