@@ -18,21 +18,29 @@ export default function SearchScreen({ navigation, route }: any) {
   const [page, setPage] = useState(1);
   const filterSupplements = async (word) => {
     setIsLoading(true);
-    const supplements = await fetchAllSupplements();
-    const filteredSupplements = supplements.filter((supplement) =>
-    supplement.supplementName.includes(word)
-    );
-    // console.warn(filteredSupplements.length);
-    if (filteredSupplements.length > 0) {
-      setFailedSearch(false);
-      await setSearchResults(filteredSupplements);
-      await setIsLoading(false);
-      ToastAndroid.show(`${filteredSupplements.length}건이 검색됐습니다.`, 3);
+    if (word) {
+      const supplements = await fetchAllSupplements();
+      const filteredSupplements = supplements.filter((supplement) =>
+      supplement.supplementName.toLowerCase().includes(word.toLowerCase())
+      );
+      // console.warn(filteredSupplements.length);
+      if (filteredSupplements.length > 0) {
+        setFailedSearch(false);
+        await setSearchResults(filteredSupplements);
+        await setIsLoading(false);
+        await setPage(1);
+        ToastAndroid.show(`${filteredSupplements.length}건이 검색됐습니다.`, 3);
+      } else {
+        setFailedSearch(true);
+        setSearchResults(filteredSupplements);
+        setIsLoading(false);
+        setPage(1);
+        ToastAndroid.show("검색에 실패했습니다.", 3);
+      }
     } else {
       setFailedSearch(true);
-      setSearchResults(filteredSupplements);
       setIsLoading(false);
-      ToastAndroid.show("검색에 실패했습니다.", 3);
+      setPage(1);
     }
   };
   const getUserId = async () => {
@@ -144,6 +152,7 @@ export default function SearchScreen({ navigation, route }: any) {
                   image={each.image}
                   brand={each.brand}
                   supplementName={each.supplementName}
+                  caution={each.caution}
                   // onPressDislike={dislikeHandler}
                 />
               ))
@@ -200,11 +209,13 @@ const styles = StyleSheet.create({
   },
   imagecontainer: {
     width: "100%",
-    height: 400,
+    height: 500,
+    alignItems: "center",
   },
   image: {
-    width: "100%",
-    height: "100%",
+    width: "140%",
+    height: 500,
+    resizeMode: "contain"
   },
   height: {
     height: 25,

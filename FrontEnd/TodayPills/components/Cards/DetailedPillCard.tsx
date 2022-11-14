@@ -81,10 +81,10 @@ const DetailedPillCard = (props: any) => {
               }
             </View>
             <View style={styles.alertcontainer}>
-              <Ionicons name="warning" size={11} color="#FFCE31" />
+              <Ionicons name="warning" size={11} color="#FFCE31" style={{marginTop: 2}} />
               <Text style={styles.blackalert}>주의&nbsp;</Text>
               <Text style={styles.greyalert}>
-                고용량 포함, 장기 복용시 전문가와 상의
+                {props.caution}
               </Text>
             </View>
           </View>
@@ -127,6 +127,7 @@ const styles = StyleSheet.create({
   outerContainer: {
     // marginTop: 13,
     // height: 140,
+    position: "relative",
   },
 
   cardContainer: {
@@ -154,18 +155,18 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   textcontainer: {
-    width: "60%",
+    width: "80%",
     marginTop: 5,
     paddingRight: 50,
     // flexWrap: "wrap",
   },
   brandname: {
-    fontSize: 8,
+    fontSize: 12,
     color: "#B7B7B7",
     marginTop: -5,
   },
   pillname: {
-    fontSize: 11,
+    fontSize: 13,
     fontWeight: "bold",
     marginBottom: 2,
   },
@@ -176,7 +177,7 @@ const styles = StyleSheet.create({
   feature: {
     alignSelf: "flex-start",
     height: 16,
-    fontSize: 10,
+    fontSize: 12,
     fontWeight: "bold",
     borderRadius: 20,
     marginBottom: 3,
@@ -192,14 +193,15 @@ const styles = StyleSheet.create({
   },
   alertcontainer: {
     flexDirection: "row",
+    width: "80%",
   },
   blackalert: {
     color: "black",
-    fontSize: 9,
+    fontSize: 11,
   },
   greyalert: {
     color: "#B7B7B7",
-    fontSize: 9,
+    fontSize: 11,
   },
   buttoncontainer: {
     height: "100%",
@@ -215,8 +217,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   navercontainer: {
-    marginTop: 10,
-    paddingRight: 10,
+    position: "absolute",
+    top: 10, 
+    right: 30,
     width: 50,
     height: 30,
   },
@@ -227,6 +230,9 @@ const styles = StyleSheet.create({
   },
   heartcontainer: {
     alignItems: "center",
+    position: "absolute",
+    bottom: 5,
+    right: 35,
   },
   heartbutton: {
     width: 40,
