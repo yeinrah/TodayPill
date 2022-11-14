@@ -53,7 +53,7 @@ const SecondAddSurvey = ({ navigation }: any) => {
       "선택해주세요",
       ["캡슐형", "츄어블", "액체형", "파우더형"],
     ],
-    ["sustainedRelease", "서방형제재를 원하세요?", "알려주세요", ["YSE", "NO"]],
+    ["sustainedRelease", "서방형제재를 원하세요?", "알려주세요", ["YES", "NO"]],
     [],
   ];
   useEffect(() => {
