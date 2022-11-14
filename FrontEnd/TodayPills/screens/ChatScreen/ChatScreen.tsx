@@ -38,7 +38,7 @@ const ChatScreen = () => {
       senderName: userData.username,
       status: "JOIN",
     };
-    stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
+    stompClient.send("/app/messageVitaminB", {}, JSON.stringify(chatMessage));
   };
   const onMessageReceived = (payload) => {
     var payloadData = JSON.parse(payload.body);
@@ -91,7 +91,7 @@ const ChatScreen = () => {
       };
       console.log(chatMessage.message);
       console.log(chatMessage);
-      stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
+      stompClient.send("/app/messageVitaminB", {}, JSON.stringify(chatMessage));
       setUserData({ ...userData, message: "" });
     }
   };
