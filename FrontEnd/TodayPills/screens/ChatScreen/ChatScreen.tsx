@@ -1,23 +1,39 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Button, Text, TextInput, View } from "react-native";
+import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 import BackgroundScreen from "../BackgroundScreen";
 import { GiftedChat } from "react-native-gifted-chat";
 import { over } from "stompjs";
 import SockJS from "sockjs-client";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 var stompClient = null;
 const ChatScreen = () => {
-  const [privateChats, setPrivateChats] = useState(new Map());
+  // const [privateChats, setPrivateChats] = useState(new Map());
   const [publicChats, setPublicChats] = useState([]);
+  const [messages, setMessages] = useState([]);
   const [tab, setTab] = useState("CHATROOM");
   const [userData, setUserData] = useState({
     username: "wjdtj",
-    receivername: "wjdtj",
+    // receivername: "wjdtj",
     connected: false,
     message: "hello",
   });
+  const loadUserNickName = async () => {
+    let name = await AsyncStorage.getItem("@storage_UserNickName");
+    setUserData({
+      username: name,
+      connected: false,
+      message: "hello",
+    });
+  };
+  // const saveUserInfo = async () => {
+  //   loadUserNickName();
+  // };
+  // useEffect(() => {
+  //   console.log(userData);
+  // }, [userData]);
   useEffect(() => {
-    console.log(userData);
-  }, [userData]);
+    loadUserNickName();
+  }, []);
   const connect = () => {
     let Sock = new SockJS("http://k7a706.p.ssafy.io:8080/wss");
     stompClient = over(Sock);
@@ -26,11 +42,11 @@ const ChatScreen = () => {
   const onConnected = () => {
     console.log("연결시도!!");
     setUserData({ ...userData, connected: true });
-    stompClient.subscribe("/chatroom/public", onMessageReceived);
-    stompClient.subscribe(
-      "/user/" + userData.username + "/private",
-      onPrivateMessage
-    );
+    stompClient.subscribe("/chatroom/vitaminB", onMessageReceived);
+    // stompClient.subscribe(
+    //   "/user/" + userData.username + "/private",
+    //   onPrivateMessage
+    // );
     userJoin();
   };
   const userJoin = () => {
@@ -38,16 +54,16 @@ const ChatScreen = () => {
       senderName: userData.username,
       status: "JOIN",
     };
-    stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
+    stompClient.send("/app/messageVitaminB", {}, JSON.stringify(chatMessage));
   };
   const onMessageReceived = (payload) => {
     var payloadData = JSON.parse(payload.body);
     switch (payloadData.status) {
       case "JOIN":
-        if (!privateChats.get(payloadData.senderName)) {
-          privateChats.set(payloadData.senderName, []);
-          setPrivateChats(new Map(privateChats));
-        }
+        // if (!privateChats.get(payloadData.senderName)) {
+        //   privateChats.set(payloadData.senderName, []);
+        //   setPrivateChats(new Map(privateChats));
+        // }
         break;
       case "MESSAGE":
         console.log("zzzzzzzzzzzzzz");
@@ -59,19 +75,19 @@ const ChatScreen = () => {
     }
   };
 
-  const onPrivateMessage = (payload) => {
-    console.log(payload);
-    var payloadData = JSON.parse(payload.body);
-    if (privateChats.get(payloadData.senderName)) {
-      privateChats.get(payloadData.senderName).push(payloadData);
-      setPrivateChats(new Map(privateChats));
-    } else {
-      let list = [];
-      list.push(payloadData);
-      privateChats.set(payloadData.senderName, list);
-      setPrivateChats(new Map(privateChats));
-    }
-  };
+  // const onPrivateMessage = (payload) => {
+  //   console.log(payload);
+  //   var payloadData = JSON.parse(payload.body);
+  //   if (privateChats.get(payloadData.senderName)) {
+  //     privateChats.get(payloadData.senderName).push(payloadData);
+  //     setPrivateChats(new Map(privateChats));
+  //   } else {
+  //     let list = [];
+  //     list.push(payloadData);
+  //     privateChats.set(payloadData.senderName, list);
+  //     setPrivateChats(new Map(privateChats));
+  //   }
+  // };
 
   const onError = (err) => {
     console.log("실패!!");
@@ -82,7 +98,7 @@ const ChatScreen = () => {
     const { value } = event.target;
     setUserData({ ...userData, message: value });
   };
-  const sendValue = () => {
+  const sendValue = async () => {
     if (stompClient) {
       var chatMessage = {
         senderName: userData.username,
@@ -91,7 +107,7 @@ const ChatScreen = () => {
       };
       console.log(chatMessage.message);
       console.log(chatMessage);
-      stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
+      stompClient.send("/app/messageVitaminB", {}, JSON.stringify(chatMessage));
       setUserData({ ...userData, message: "" });
     }
   };
@@ -118,7 +134,16 @@ const ChatScreen = () => {
     const { value } = event.target;
     setUserData({ ...userData, username: value });
   };
-
+  const onSend = useCallback((messages = []) => {
+    // console.log('previousMessages: ',previousMessages)
+    // console.log("messages: ", messages);
+    // ws.current.onopen();
+    console.log(messages, "zasdasd");
+    console.log(publicChats, "zzz!!");
+    setMessages((previousMessages) =>
+      GiftedChat.append(previousMessages, messages)
+    );
+  }, []);
   const registerUser = () => {
     connect();
   };
@@ -131,22 +156,62 @@ const ChatScreen = () => {
           <Button title="확인" onPress={registerUser}></Button>
         </>
       ) : (
-        <>
-          <View>
-            {publicChats.map((chat, index) => {
-              return (
-                <>
-                  <Text key={index}>
-                    {chat.senderName + " : " + chat.message}
-                  </Text>
-                </>
-              );
-            })}
-            <Button title="send!!" onPress={sendValue} />
-          </View>
-        </>
+        <GiftedChat
+          placeholder={"메세지를 입력하세요..."}
+          alwaysShowSend={true}
+          renderUsernameOnMessage={true}
+          messages={messages}
+          textInputProps={{ keyboardAppearance: "dark", autoCorrect: false }}
+          onSend={(messages) => onSend(messages)}
+          user={{
+            _id: 1,
+          }}
+        />
+        // <View style={styles.container}>
+        //   <View style={styles.textLine}>
+        //     {publicChats.map((chat, index) => {
+        //       return (
+        //         <>
+        //           <Text key={index}>
+        //             {chat.senderName + " : " + chat.message}
+        //           </Text>
+        //         </>
+        //       );
+        //     })}
+        //   </View>
+        //   {/* <Button title="send!!" onPress={sendValue} /> */}
+        //   {/* <View style={styles.box}> */}
+        //   <View style={styles.textBox}>
+        //     <TextInput style={styles.textInput}></TextInput>
+        //     <View style={styles.textBtn}>
+        //       <Button title="send" onPress={sendValue} />
+        //     </View>
+        //   </View>
+        //   {/* </View> */}
+        // </View>
       )}
     </BackgroundScreen>
   );
 };
 export default ChatScreen;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  textLine: {
+    flex: 1,
+  },
+  textInput: {
+    backgroundColor: "white",
+    width: "85%",
+  },
+  textBox: {
+    flexDirection: "row",
+  },
+  textBtn: {
+    width: "15%",
+  },
+  // box: {
+  //   flexDirection: "column-reverse",
+  // },
+});

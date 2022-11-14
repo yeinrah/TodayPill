@@ -170,7 +170,7 @@ const SurveyScreen = ({ navigation }: any) => {
                     let uid = "";
                     uid = await AsyncStorage.getItem("@storage_UserId");
                     setNowStage(nowStage + 1);
-                    let answer: boolean | number | string = "";
+                    let answer: boolean | number | string;
                     //균형잡힌 식사 관련 질문
                     if (nowStage === 8 && selectedItem === 0) {
                       setNowStage(nowStage + 2);
@@ -193,7 +193,10 @@ const SurveyScreen = ({ navigation }: any) => {
                         answer = selectedItem;
                       }
                     } else answer = selectedItem;
-                    if (nowStage === surveyData.length - 2) setIsLoading(true);
+                    if (nowStage === surveyData.length - 2 && answer !== 1) {
+                      console.log(answer);
+                      setIsLoading(true);
+                    }
                     setAnswerSheet({
                       userId: uid,
                       ...answerSheet,
