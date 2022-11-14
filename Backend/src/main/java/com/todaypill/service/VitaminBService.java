@@ -187,7 +187,7 @@ public class VitaminBService {
 				sustainedRelease = true;
 			String pillSize = "";
 			String bestTime = "13:00";
-			String caution = "";
+			String caution = "임산부는 엽산(B9) 고용량 섭취에 주의하세요!";
 			Supplement supplement = Supplement.builder().category(category).supplementName(supplementName).price(price)
 					.brand(brand).image(image).ingredients(ingredients).bioavailability(bioavailability)
 					.laxative(laxative).kidneyDisease(kidneyDisease).consumerLabScore(consumerLabScore)

@@ -193,7 +193,7 @@ public class MultivitaminService {
 				sustainedRelease = true;
 			String pillSize = "";
 			String bestTime = "13:00";
-			String caution = "";
+			String caution = "위장장애 발생시 식사와 함께 섭취하는 걸 추천드려요!";
 			Supplement supplement = Supplement.builder().category(category).supplementName(supplementName).price(price)
 					.brand(brand).image(image).ingredients(ingredients).bioavailability(bioavailability)
 					.laxative(laxative).kidneyDisease(kidneyDisease).consumerLabScore(consumerLabScore)

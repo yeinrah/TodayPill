@@ -86,7 +86,7 @@ public class VitaminCService {
 				sustainedRelease = true;
 			String pillSize = "";
 			String bestTime = "13:00";
-			String caution = "";
+			String caution = "과다 복용할 경우 수분을 잘 섭취하는게 중요해요!";
 			Supplement supplement = Supplement.builder().category(category).supplementName(supplementName).price(price)
 					.brand(brand).image(image).ingredients(ingredients).bioavailability(bioavailability)
 					.laxative(laxative).kidneyDisease(kidneyDisease).consumerLabScore(consumerLabScore)

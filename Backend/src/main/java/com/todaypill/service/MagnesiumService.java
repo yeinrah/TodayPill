@@ -176,7 +176,7 @@ public class MagnesiumService {
 				sustainedRelease = true;
 			String pillSize = "";
 			String bestTime = "22:00";
-			String caution = "";
+			String caution = "설사 등 위장장애 발생시 킬레이트 형태를 복용하는 걸 추천드려요!";
 			Supplement supplement = Supplement.builder().category(category).supplementName(supplementName).price(price)
 					.brand(brand).image(image).ingredients(ingredients).bioavailability(bioavailability)
 					.laxative(laxative).kidneyDisease(kidneyDisease).consumerLabScore(consumerLabScore)

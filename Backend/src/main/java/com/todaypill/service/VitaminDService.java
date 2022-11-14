@@ -103,7 +103,7 @@ public class VitaminDService {
 				sustainedRelease = true;
 			String pillSize = "";
 			String bestTime = "13:00";
-			String caution = "";
+			String caution = "일일 섭취량은 4000IU 미만으로 권장드려요!";
 			Supplement supplement = Supplement.builder().category(category).supplementName(supplementName).price(price)
 					.brand(brand).image(image).ingredients(ingredients).bioavailability(bioavailability)
 					.laxative(laxative).kidneyDisease(kidneyDisease).consumerLabScore(consumerLabScore)

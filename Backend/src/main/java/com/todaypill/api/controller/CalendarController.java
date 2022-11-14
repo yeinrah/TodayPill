@@ -64,9 +64,11 @@ public class CalendarController {
 			
 			int routineId = r.getRoutineId();
 			Boolean taken = false;
-			for (Calendar c : calendarList)
+			for (Calendar c : calendarList) {
 				if (c.getRoutineId() == routineId)
 					taken = true;
+				res.setCalendarId(c.getCalendarId());
+			}
 			res.setTaken(taken);
 			resultList.add(res);
 		}
