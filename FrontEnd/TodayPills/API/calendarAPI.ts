@@ -7,7 +7,7 @@ const fetchEachMyRoutine = async (
   day: number
 ) => {
   const result = await api.get(`/calendar/${userId}/${date}/${day}`);
-  console.warn(result.data, "각각의 루틴 가져오기");
+  // console.warn(result.data, "각각의 루틴 가져오기");
   return result.data;
 };
 

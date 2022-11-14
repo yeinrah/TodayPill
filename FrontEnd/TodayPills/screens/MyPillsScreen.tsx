@@ -29,7 +29,7 @@ export default function MyPillsScreen({ navigation }: any) {
     setUserId(parseInt(currentUserId));
   };
   const addRoutinePillHandler = () => {
-    navigation.navigate("Search", { userId });
+    navigation.navigate("Search", { userId: userId });
   };
 
   useFocusEffect(

@@ -12,10 +12,8 @@ import { useCallback, useEffect, useState } from "react";
 import StartScreen from "./screens/StartScreen/StartScreen";
 import { useFocusEffect } from "@react-navigation/native";
 import * as Notifications from "expo-notifications";
-// import ReactNativeRecoilPersist, {
-//   ReactNativeRecoilPersistGate,
-// } from "react-native-recoil-persist";
-// import { RecoilRoot } from "recoil";
+
+import { RecoilRoot } from "recoil";
 
 //  ------------- 스플래시 애니메이션 추가
 
@@ -107,27 +105,25 @@ export default function App() {
     return null;
   } else {
     return (
-      // <RecoilRoot>
-      //   <ReactNativeRecoilPersistGate store={ReactNativeRecoilPersist}>
-      //     <SafeAreaProvider>
-      //       <Navigation colorScheme={colorScheme} LoginCheck={loadData} />
-      //       {userInfo && (
-      //         <>
-      //           <StatusBar />
-      //         </>
-      //       )}
-      //     </SafeAreaProvider>
-      //   </ReactNativeRecoilPersistGate>
-      // </RecoilRoot>
+      <RecoilRoot>
+        <SafeAreaProvider>
+          <Navigation colorScheme={colorScheme} LoginCheck={loadData} />
+          {userInfo && (
+            <>
+              <StatusBar />
+            </>
+          )}
+        </SafeAreaProvider>
+      </RecoilRoot>
 
-      <SafeAreaProvider>
-        <Navigation colorScheme={colorScheme} LoginCheck={loadData} />
-        {userInfo && (
-          <>
-            <StatusBar />
-          </>
-        )}
-      </SafeAreaProvider>
+      // <SafeAreaProvider>
+      //   <Navigation colorScheme={colorScheme} LoginCheck={loadData} />
+      //   {userInfo && (
+      //     <>
+      //       <StatusBar />
+      //     </>
+      //   )}
+      // </SafeAreaProvider>
     );
   }
 }
