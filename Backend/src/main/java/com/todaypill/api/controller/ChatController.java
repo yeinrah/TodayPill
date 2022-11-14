@@ -16,15 +16,20 @@ public class ChatController {
     private SimpMessagingTemplate simpMessagingTemplate;
 
     @MessageMapping("/message")
-    @SendTo("/chatroom/public")
-    public Message receiveMessage(@Payload Message message){
+    @SendTo("/chatroom/vitaminB")
+    public Message receiveMessageVitaminB(@Payload Message message){
         return message;
     }
 
-    @MessageMapping("/private-message")
-    public Message recMessage(@Payload Message message){
-        simpMessagingTemplate.convertAndSendToUser(message.getReceiverName(),"/private",message);
-        System.out.println(message.toString());
+    @MessageMapping("/message")
+    @SendTo("/chatroom/vitaminC")
+    public Message receiveMessageVitaminC(@Payload Message message){
         return message;
     }
+//    @MessageMapping("/private-message")
+//    public Message recMessage(@Payload Message message){
+//        simpMessagingTemplate.convertAndSendToUser(message.getReceiverName(),"/private",message);
+//        System.out.println(message.toString());
+//        return message;
+//    }
 }
