@@ -79,7 +79,9 @@ export default function DayPillSchedule({ selectedDate }: PillScheduleProps) {
       selectedDate,
       days.indexOf(dayOfWeek)
     );
-    console.warn(eachMyRoutine);
+    // const visibleRoutineList = eachMyRoutine.filter((eachRoutine: any) => {
+    //   return !eachRoutine.deletedSince;
+    // });
     eachMyRoutine.sort((a: any, b: any) => {
       if (strTimeToNum(a.time) > strTimeToNum(b.time)) return 1;
       if (strTimeToNum(a.time) === strTimeToNum(b.time)) return 0;
@@ -87,14 +89,6 @@ export default function DayPillSchedule({ selectedDate }: PillScheduleProps) {
     });
 
     setPillRoutine(eachMyRoutine);
-
-    // setPillRoutineCheck(eachMyRoutine.calendarList);
-
-    // const visibleRoutineList = eachMyRoutine.filter((eachRoutine: any) => {
-    //   return !eachRoutine.deletedSince;
-    // });
-    // setPillRoutine(visibleRoutineList);
-    // setSupplementDetail(eachSupplementDetail);
   };
 
   useFocusEffect(

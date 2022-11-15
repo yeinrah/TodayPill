@@ -178,7 +178,6 @@ export default function ModifyRoutineItem({
   const showDatePicker = () => {
     setDatePickerVisible(true);
   };
-
   const hideDatePicker = () => {
     setDatePickerVisible(false);
   };
@@ -192,13 +191,9 @@ export default function ModifyRoutineItem({
     // console.warn("A date has been picked: ", date);
     let hour = date.getHours();
     let minute = date.getMinutes().toString();
+    setIsAMorPM(hour);
     if (hour > 12) {
       hour -= 12;
-      setIsAM(false);
-    } else if (hour == 12) {
-      setIsAM(false);
-    } else {
-      setIsAM(true);
     }
     let hourString = hour.toString();
 
@@ -214,39 +209,35 @@ export default function ModifyRoutineItem({
     hideDatePicker();
   };
 
-  const timeConvert = (timeString: string) => {
-    let hour = parseInt(timeString.slice(0, 2));
-
-    const minute = timeString.slice(3, 5);
-
+  const setIsAMorPM = (hour: number) => {
     if (hour > 12) {
-      hour -= 12;
       setIsAM(false);
     } else if (hour == 12) {
       setIsAM(false);
     } else {
       setIsAM(true);
     }
+  };
+  const timeConvert = (timeString: string) => {
+    let hour = parseInt(timeString.slice(0, 2));
+    const minute = timeString.slice(3, 5);
+
+    setIsAMorPM(hour);
+    if (hour > 12) {
+      hour -= 12;
+    }
+
     let hourStr = hour.toString();
     if (hourStr.length === 1) {
       hourStr = "0" + hourStr;
     }
     return `${hourStr}:${minute}`;
-    // setTakenTime(`${hour}:${minute}`);
   };
-  // useCallback(() => {
-  //   if (!updateOrNot) {
-  //     console.log(updateOrNot);
-
-  //     timeConvert(supplementDetail.bestTime);
-  //   }
-  // }, []);
 
   useFocusEffect(
     useCallback(() => {
       // getMyAllRoutineSupplements();
       getSupplementDetailAndAllRoutine();
-      // getMyAllRoutineSupplements();
 
       // if (updateOrNot === "true") {
       //   setPillCnt(prevRoutineDetail.tablets);
