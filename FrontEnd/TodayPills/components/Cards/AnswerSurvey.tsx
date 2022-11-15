@@ -23,7 +23,7 @@ const AnswerSurvey = ({
   const [maxPrice, setMaxPrice] = useState("");
   useFocusEffect(
     useCallback(() => {
-      if (surveyData[nowStage][3]) {
+      if (surveyData[nowStage][3] && surveyData[nowStage][3].length > 2) {
         setOptionClear(false);
         setMultiSelected("");
         setSelectedItem("");
