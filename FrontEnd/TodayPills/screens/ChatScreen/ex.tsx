@@ -26,8 +26,8 @@ const ChatScreen = () => {
 
   const onSend = useCallback((messages = []) => {
     // console.log('previousMessages: ',previousMessages)
-    console.log("messages: ", messages);
-    ws.current.onopen();
+    // console.log("messages: ", messages);
+    // ws.current.onopen();
     setMessages((previousMessages) =>
       GiftedChat.append(previousMessages, messages)
     );
