@@ -10,7 +10,7 @@ import {
   Button,
   Alert,
 } from "react-native";
-
+import { useRecoilState } from "recoil";
 import { useState, useRef, useMemo, useCallback, useEffect } from "react";
 import { accent, primary, secondary } from "../../../constants/Colors";
 import PillCard from "../../UI/PillCard";
@@ -35,6 +35,9 @@ import PushNotifications from "./PushNotifications";
 import { getDateStr } from "../../functions/getDateStr";
 import { setNotification } from "../../functions/setNotification";
 import { boldWelcome, regularWelcome } from "../../Data/fontFamilyObject";
+import { takenWeekDaysState } from "../../../Recoil/atoms/calendar";
+import { getDaysName } from "../../functions/getDaysName";
+import LoadingSpinner from "../../UI/LoadingSpinner";
 // import Notifications from "../../../utils/Notifications";
 
 export default function ModifyRoutineItem({
@@ -44,7 +47,8 @@ export default function ModifyRoutineItem({
   prevRoutineDetail,
 }: any) {
   const [userId, setUserId] = useState(0);
-  const [selectedRoutineDays, setSelectedRoutineDays] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  // const [selectedRoutineDays, setSelectedRoutineDays] = useState("");
   const [takenDaysName, setTakenDaysName] = useState("");
   const [isDaySubmitted, setIsDaySubmitted] = useState(false);
   const [allMyRoutineList, setAllMyRoutineList] = useState([]);
@@ -60,17 +64,15 @@ export default function ModifyRoutineItem({
   });
   const [pillCnt, setPillCnt] = useState(1);
   const [isAlarmEnabled, setIsAlarmEnabled] = useState(false);
+  const [takenWeekDays, setTakenWeekDays] = useRecoilState(takenWeekDaysState);
   const [takenTime, setTakenTime] = useState("");
   const [isAM, setIsAM] = useState(true);
 
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
 
   const submitModifyRoutineHandler = async () => {
-    if (!isDaySubmitted) {
-      return Alert.alert(
-        "섭취 요일",
-        "섭취 요일을 선택 후 완료 버튼을 클릭해주세요!"
-      );
+    if (takenDaysName === "") {
+      return Alert.alert("섭취 요일", "섭취 요일을 선택해주세요!");
     }
 
     const nowDateStr = getDateStr(new Date());
@@ -81,11 +83,12 @@ export default function ModifyRoutineItem({
     }
 
     if (updateOrNot === "true") {
+      console.warn("제출할때 요일들", takenWeekDays.toString);
       await updateMyRoutineSupplement(
         userId,
         prevRoutineDetail.routineId,
         pillId,
-        selectedRoutineDays,
+        takenWeekDays.toString(),
         isAlarmEnabled,
         pillCnt,
         submitTakenTime,
@@ -107,11 +110,11 @@ export default function ModifyRoutineItem({
         );
         return navigation.navigate("MyPills", { userId });
       }
-
+      console.warn("제출할때 요일들", takenWeekDays.toString);
       await addMyRoutineSupplement(
         userId,
         pillId,
-        selectedRoutineDays,
+        takenWeekDays.toString(),
         isAlarmEnabled,
         pillCnt,
         submitTakenTime,
@@ -123,8 +126,9 @@ export default function ModifyRoutineItem({
     setIsFinalSubmitted(true);
 
     if (isAlarmEnabled) {
-      const tempAlarmDays = selectedRoutineDays.split(",");
-      if (tempAlarmDays.length === 7) {
+      // const tempAlarmDays = selectedRoutineDays.split(",");
+
+      if (takenWeekDays.length === 7) {
         setNotification(
           pillId.toString(),
           "영양제 섭취 알람",
@@ -134,12 +138,12 @@ export default function ModifyRoutineItem({
           parseInt(submitTakenTime.substring(3, 5))
         );
       } else {
-        tempAlarmDays.map((dayIdStr: string) => {
+        takenWeekDays.map((dayId: number) => {
           setNotification(
             pillId.toString(),
             "영양제 섭취 알람",
             `${supplementDetail.name} ${pillCnt}정을 드실 시간입니다!`,
-            parseInt(dayIdStr),
+            dayId,
             parseInt(submitTakenTime.substring(0, 2)),
             parseInt(submitTakenTime.substring(3, 5))
           );
@@ -233,16 +237,22 @@ export default function ModifyRoutineItem({
     }
     return `${hourStr}:${minute}`;
   };
-
+  const weekDays = ["월", "화", "수", "목", "금", "토", "일"];
   useFocusEffect(
     useCallback(() => {
       // getMyAllRoutineSupplements();
       getSupplementDetailAndAllRoutine();
+      if (updateOrNot === "true") {
+        console.warn("요일들", prevRoutineDetail.days);
+        const takenDaysArray = prevRoutineDetail.days
+          .split(",")
+          .map((day: string) => {
+            return weekDays[parseInt(day) - 1];
+          });
+        setTakenDaysName(getDaysName(takenDaysArray));
+      }
+      setIsLoading(false);
 
-      // if (updateOrNot === "true") {
-      //   setPillCnt(prevRoutineDetail.tablets);
-      //   setTakenTime(timeConvert(prevRoutineDetail.time));
-      // }
       // return () => {
 
       // };
@@ -257,136 +267,157 @@ export default function ModifyRoutineItem({
   };
 
   return (
-    <ScrollView style={styles.outerContainer}>
-      <PillCard height={400} width={"90%"} bgColor={"white"}>
-        <View style={styles.cardInnerContainer}>
-          <View style={styles.imageOuterContainer}>
-            <View style={styles.imageContainer}>
-              <Image
-                source={{ uri: supplementDetail.image }}
-                style={styles.pillImage}
-              />
-            </View>
-          </View>
-          <View style={styles.pillDetailContainer}>
-            <View style={styles.nameContainer}>
-              <Text style={{ ...styles.name, ...regularWelcome }}>제품명</Text>
-              {/* <Text style={styles.pillName}>{routineItem.pillName}</Text> */}
-              <Text style={{ ...styles.pillName, ...boldWelcome }}>
-                {supplementDetail.name}
-              </Text>
-              <View style={styles.separator} />
-            </View>
-            <View style={styles.cntContainer}>
-              <Text style={{ ...styles.name, ...regularWelcome }}>
-                섭취 개수
-              </Text>
-              <View style={styles.modifyCnt}>
-                <Pressable onPress={decreaseHandler}>
-                  <Entypo name="circle-with-minus" size={27} color={accent} />
-                </Pressable>
-                <Text style={{ ...styles.cnt, ...boldWelcome }}>{pillCnt}</Text>
-                <Pressable onPress={increaseHandler}>
-                  <Entypo name="circle-with-plus" size={27} color={accent} />
-                </Pressable>
+    <>
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <ScrollView style={styles.outerContainer}>
+          <PillCard height={400} width={"90%"} bgColor={"white"}>
+            <View style={styles.cardInnerContainer}>
+              <View style={styles.imageOuterContainer}>
+                <View style={styles.imageContainer}>
+                  <Image
+                    source={{ uri: supplementDetail.image }}
+                    style={styles.pillImage}
+                  />
+                </View>
+              </View>
+              <View style={styles.pillDetailContainer}>
+                <View style={styles.nameContainer}>
+                  <Text style={{ ...styles.name, ...regularWelcome }}>
+                    제품명
+                  </Text>
+                  {/* <Text style={styles.pillName}>{routineItem.pillName}</Text> */}
+                  <Text style={{ ...styles.pillName, ...boldWelcome }}>
+                    {supplementDetail.name}
+                  </Text>
+                  <View style={styles.separator} />
+                </View>
+                <View style={styles.cntContainer}>
+                  <Text style={{ ...styles.name, ...regularWelcome }}>
+                    섭취 개수
+                  </Text>
+                  <View style={styles.modifyCnt}>
+                    <Pressable onPress={decreaseHandler}>
+                      <Entypo
+                        name="circle-with-minus"
+                        size={27}
+                        color={accent}
+                      />
+                    </Pressable>
+                    <Text style={{ ...styles.cnt, ...boldWelcome }}>
+                      {pillCnt}
+                    </Text>
+                    <Pressable onPress={increaseHandler}>
+                      <Entypo
+                        name="circle-with-plus"
+                        size={27}
+                        color={accent}
+                      />
+                    </Pressable>
+                  </View>
+                </View>
               </View>
             </View>
-          </View>
-        </View>
-      </PillCard>
+          </PillCard>
 
-      <View>
-        <PillCard height={200} width={"90%"} bgColor={"white"}>
-          <View style={styles.takenTimeInnerContainer}>
-            <View style={styles.dayAlarmOuterContainer}>
-              <View style={styles.dayOuterContainer}>
-                <View style={styles.dayAlarmContainer}>
-                  <Text style={{ ...styles.name, ...regularWelcome }}>
-                    섭취 요일
-                  </Text>
+          <View>
+            <PillCard height={200} width={"90%"} bgColor={"white"}>
+              <View style={styles.takenTimeInnerContainer}>
+                <View style={styles.dayAlarmOuterContainer}>
+                  <View style={styles.dayOuterContainer}>
+                    <View style={styles.dayAlarmContainer}>
+                      <Text style={{ ...styles.name, ...regularWelcome }}>
+                        섭취 요일
+                      </Text>
 
-                  {/* <Text style={styles.dayAndTimeName}>{takenDaysName}</Text> */}
-                  {isDaySubmitted ? (
-                    <Text style={styles.dayAndTimeName}>{takenDaysName}</Text>
-                  ) : null}
+                      <Text style={styles.dayAndTimeName}>{takenDaysName}</Text>
+                    </View>
+
+                    <Text style={{ ...styles.dayExplText, ...regularWelcome }}>
+                      아래 요일을 클릭하여 섭취 요일을 선택해주세요.
+                    </Text>
+                  </View>
+
+                  <View style={styles.dayListContainer}>
+                    <WeekDayList
+                      // addRoutineDaysHandler={setSelectedRoutineDays}
+                      onChangeDaysName={onChangeDaysName}
+                      prevRoutineDetail={prevRoutineDetail}
+                      // getSubmitted={setIsDaySubmitted}
+                      updateOrNot={updateOrNot}
+                      pillId={pillId}
+                    />
+                  </View>
                 </View>
 
-                <Text style={{ ...styles.dayExplText, ...regularWelcome }}>
-                  아래 요일을 클릭하여 섭취 요일을 선택해주세요.
-                </Text>
-              </View>
+                <View style={{ alignItems: "center" }}>
+                  <View style={[styles.separator, { width: "90%" }]} />
+                </View>
+                <View style={styles.dayAlarmSecondContainer}>
+                  <Text style={{ ...styles.name, ...regularWelcome }}>
+                    섭취 시간
+                  </Text>
 
-              <View style={styles.dayListContainer}>
-                <WeekDayList
-                  addRoutineDaysHandler={setSelectedRoutineDays}
-                  onChangeDaysName={onChangeDaysName}
-                  getSubmitted={setIsDaySubmitted}
-                />
-              </View>
-            </View>
-
-            <View style={{ alignItems: "center" }}>
-              <View style={[styles.separator, { width: "90%" }]} />
-            </View>
-            <View style={styles.dayAlarmSecondContainer}>
-              <Text style={{ ...styles.name, ...regularWelcome }}>
-                섭취 시간
-              </Text>
-
-              <Pressable onPress={showDatePicker} style={styles.directionRow}>
-                <Text style={{ ...styles.dayAndTimeName, ...boldWelcome }}>
-                  {/* {supplementDetail.bestTime} {isAM ? "AM" : "PM"} */}
-                  <Text
-                    style={isAM ? { color: primary } : { color: "#309388" }}
+                  <Pressable
+                    onPress={showDatePicker}
+                    style={styles.directionRow}
                   >
-                    {isAM ? "AM" : "PM"}
-                  </Text>{" "}
-                  {takenTime}
-                  {/* dayTimePicker 쓰기 */}
-                </Text>
-                <DateTimePickerModal
-                  // is24Hour={true}
-                  positiveButtonLabel="확인"
-                  negativeButtonLabel="취소"
-                  // positiveButtonLabel="Negative"
-                  isVisible={isDatePickerVisible}
-                  mode="time"
-                  // display="clock"
-                  onConfirm={handleTimeConfirm}
-                  onCancel={hideDatePicker}
+                    <Text style={{ ...styles.dayAndTimeName, ...boldWelcome }}>
+                      {/* {supplementDetail.bestTime} {isAM ? "AM" : "PM"} */}
+                      <Text
+                        style={isAM ? { color: primary } : { color: "#309388" }}
+                      >
+                        {isAM ? "AM" : "PM"}
+                      </Text>{" "}
+                      {takenTime}
+                      {/* dayTimePicker 쓰기 */}
+                    </Text>
+                    <DateTimePickerModal
+                      // is24Hour={true}
+                      positiveButtonLabel="확인"
+                      negativeButtonLabel="취소"
+                      // positiveButtonLabel="Negative"
+                      isVisible={isDatePickerVisible}
+                      mode="time"
+                      // display="clock"
+                      onConfirm={handleTimeConfirm}
+                      onCancel={hideDatePicker}
 
-                  // isDarkModeEnabled={true}
+                      // isDarkModeEnabled={true}
+                    />
+                    <AntDesign name="right" size={24} color="black" />
+                  </Pressable>
+                </View>
+              </View>
+            </PillCard>
+          </View>
+
+          <View>
+            <PushNotifications
+              addAlarmHandler={setIsAlarmEnabled}
+              isAlarm={isAlarmEnabled}
+              // pillName={supplementDetail.name}
+              // pillCnt={pillCnt}
+              // isSubmitted={isFinalSubmitted}
+              // weekdays={selectedRoutineDays.split(",")}
+            />
+            <View>
+              <View style={styles.chooseBtn}>
+                <CustomBtn
+                  buttonColor={accent}
+                  title={"수정 완료"}
+                  titleColor={"#fff"}
+                  buttonWidth={"90%"}
+                  fontSize={20}
+                  onPress={submitModifyRoutineHandler}
                 />
-                <AntDesign name="right" size={24} color="black" />
-              </Pressable>
+              </View>
             </View>
           </View>
-        </PillCard>
-      </View>
-
-      <View>
-        <PushNotifications
-          addAlarmHandler={setIsAlarmEnabled}
-          isAlarm={isAlarmEnabled}
-          // pillName={supplementDetail.name}
-          // pillCnt={pillCnt}
-          // isSubmitted={isFinalSubmitted}
-          // weekdays={selectedRoutineDays.split(",")}
-        />
-        <View>
-          <View style={styles.chooseBtn}>
-            <CustomBtn
-              buttonColor={accent}
-              title={"수정 완료"}
-              titleColor={"#fff"}
-              buttonWidth={"90%"}
-              fontSize={20}
-              onPress={submitModifyRoutineHandler}
-            />
-          </View>
-        </View>
-      </View>
-    </ScrollView>
+        </ScrollView>
+      )}
+    </>
   );
 }
 

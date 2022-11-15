@@ -1,6 +1,6 @@
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
+import { useRecoilState } from "recoil";
 import { useState, useCallback } from "react";
 import WeekDay from "./WeekDay";
 import { accent, primary, secondary } from "../../../constants/Colors";
@@ -8,20 +8,27 @@ import CustomBtn from "../../UI/CustomBtn";
 import { useFocusEffect } from "@react-navigation/native";
 import { getDaysName } from "../../functions/getDaysName";
 import { boldWelcome } from "../../Data/fontFamilyObject";
+import { takenWeekDaysState } from "../../../Recoil/atoms/calendar";
+import LoadingSpinner from "../../UI/LoadingSpinner";
 
 const weekDays = ["월", "화", "수", "목", "금", "토", "일"];
 
 export default function WeekDayList(props: any) {
   const daysSet = new Set();
+  const [isLoading, setIsLoading] = useState(true);
+  const [isDayLoading, setIsDayLoading] = useState(true);
+  const [takenWeekDays, setTakenWeekDays] = useRecoilState(takenWeekDaysState);
   const [selectedDays, setSelectedDays] = useState(daysSet);
+  const [daysNames, setDaysNames] = useState("");
 
   const [isSelectCompleted, setIsSelectCompleted] = useState(false);
   // isSelectCompleted ? props.getSubmitted(true) : props.getSubmitted(false);
 
-  const submitDays = [...selectedDays].sort();
-  const submitDaysNames = submitDays.map(
+  // const submitDays = [...selectedDays].sort();
+  const submitDaysNames = takenWeekDays.map(
     (eachDayId: number) => weekDays[eachDayId - 1]
   );
+  // const finalSubmitDaysNames = getDaysName(submitDaysNames);
   const finalSubmitDaysNames = getDaysName(submitDaysNames);
   // let finalSubmitDaysNames: string = submitDaysNames.join(", ");
   // if (submitDaysNames.length === 7) {
@@ -32,75 +39,78 @@ export default function WeekDayList(props: any) {
   //   finalSubmitDaysNames = "주말";
   // }
 
-  props.addRoutineDaysHandler(submitDays.join(", "));
   // props.onChangeDaysName(finalSubmitDaysNames);
 
-  const daySelectHandler = (dayId: number) => {
-    setSelectedDays((selectedDays) => selectedDays.add(dayId));
-    // props.getSubmitted(false);
-    setIsSelectCompleted(false);
-  };
+  // const daySelectHandler = (dayId: number) => {
+  //   setSelectedDays((selectedDays) => selectedDays.add(dayId));
+  //   // props.getSubmitted(false);
+  //   setIsSelectCompleted(false);
+  // };
 
-  const deleteDayHandler = (dayId: number) => {
-    setSelectedDays((selectedDays) => {
-      selectedDays.delete(dayId);
-      return selectedDays;
-    });
-  };
+  // const deleteDayHandler = (dayId: number) => {
+  //   setSelectedDays((selectedDays) => {
+  //     selectedDays.delete(dayId);
+  //     return selectedDays;
+  //   });
+  // };
   useFocusEffect(
     useCallback(() => {
-      // return () => {
-      // };
-    }, [])
+      if (props.updateOrNot === "false") {
+        setTakenWeekDays([1, 2, 3, 4, 5, 6, 7]);
+      } else {
+        const takenWeekDayIdsStr = props.prevRoutineDetail.days;
+        console.warn(takenWeekDayIdsStr, "스트링");
+        if (takenWeekDayIdsStr) {
+          const takenDaysNumberArray = takenWeekDayIdsStr
+            .split(",")
+            .map((eachDayIdStr: string) => {
+              return parseInt(eachDayIdStr);
+            });
+          console.warn(takenDaysNumberArray);
+          setTakenWeekDays(takenDaysNumberArray);
+          setIsDayLoading(false);
+        }
+      }
+      setIsLoading(false);
+      // return () => {};
+    }, [props.pillId])
   );
 
   props.onChangeDaysName(finalSubmitDaysNames);
 
-  const daySelectCompleteHandler = () => {
-    setIsSelectCompleted(true);
-    props.getSubmitted(true);
-  };
+  // const daySelectCompleteHandler = () => {
+  //   setIsSelectCompleted(true);
+  //   props.getSubmitted(true);
+  // };
 
-  const submitChangeHandler = () => {
-    props.getSubmitted(false);
-  };
+  // const submitChangeHandler = () => {
+  //   props.getSubmitted(false);
+  // };
 
   return (
-    <View style={styles.outerContainer}>
-      <View style={styles.dayListContainer}>
-        {weekDays.map((day, idx) => (
-          <WeekDay
-            key={idx}
-            day={day}
-            dayId={idx + 1}
-            daySelectHandler={daySelectHandler}
-            deleteDayHandler={deleteDayHandler}
-            submitChangeHandler={submitChangeHandler}
-            isDaysSelectCompleted={isSelectCompleted}
-          />
-        ))}
-      </View>
-      <View style={styles.btn}>
-        {/* <Text>{submitDays.join(", ")}</Text> */}
-        <Pressable
-          onPress={daySelectCompleteHandler}
-          // style={styles.btnContainer}
-        >
-          {({ pressed }) => (
-            <Text
-              style={{
-                ...styles.confirmText,
-                color: pressed ? "black" : accent,
-                ...boldWelcome,
-              }}
-            >
-              완료
-              {/* {pressed ? 'Pressed!' : 'Press Me'} */}
-            </Text>
-          )}
-        </Pressable>
-      </View>
-    </View>
+    <>
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <View style={styles.outerContainer}>
+          <View style={styles.dayListContainer}>
+            {weekDays.map((day, idx) => (
+              <WeekDay
+                key={idx}
+                day={day}
+                dayId={idx + 1}
+                isDayLoading={isDayLoading}
+                // selectedDayIdsArray={takenWeekDays}
+                // daySelectHandler={daySelectHandler}
+                // deleteDayHandler={deleteDayHandler}
+                // submitChangeHandler={submitChangeHandler}
+                // isDaysSelectCompleted={isSelectCompleted}
+              />
+            ))}
+          </View>
+        </View>
+      )}
+    </>
   );
 }
 
@@ -137,3 +147,48 @@ const styles = StyleSheet.create({
     // fontWeight: "900",
   },
 });
+
+// return (
+//   <>
+//     {isLoading ? (
+//       <LoadingSpinner />
+//     ) : (
+//       <View style={styles.outerContainer}>
+//         <View style={styles.dayListContainer}>
+//           {weekDays.map((day, idx) => (
+//             <WeekDay
+//               key={idx}
+//               day={day}
+//               dayId={idx + 1}
+//               // selectedDayIdsArray={takenWeekDays}
+//               // daySelectHandler={daySelectHandler}
+//               // deleteDayHandler={deleteDayHandler}
+//               // submitChangeHandler={submitChangeHandler}
+//               // isDaysSelectCompleted={isSelectCompleted}
+//             />
+//           ))}
+//         </View>
+//         <View style={styles.btn}>
+//           {/* <Text>{submitDays.join(", ")}</Text> */}
+//           <Pressable
+//             onPress={daySelectCompleteHandler}
+//             // style={styles.btnContainer}
+//           >
+//             {({ pressed }) => (
+//               <Text
+//                 style={{
+//                   ...styles.confirmText,
+//                   color: pressed ? "black" : accent,
+//                   ...boldWelcome,
+//                 }}
+//               >
+//                 완료
+//                 {/* {pressed ? 'Pressed!' : 'Press Me'} */}
+//               </Text>
+//             )}
+//           </Pressable>
+//         </View>
+//       </View>
+//     )}
+//   </>
+// );

@@ -53,7 +53,7 @@ export default function RoutineItemDetail({
       pillId: supplementId,
       update: "true",
       tablets,
-      // days: supplementDetailItem.day 이거 state으로 저장해서 보내기,
+      days: daysStr,
       time,
       pushAlarm,
       routineId,
