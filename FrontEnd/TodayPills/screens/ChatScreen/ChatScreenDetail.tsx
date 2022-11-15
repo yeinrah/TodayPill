@@ -37,7 +37,7 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
   useFocusEffect(
     useCallback(() => {
       registerUser();
-      // setPublicChats(getSpecificRoomChat(route.params?.nutrient)[0]);
+      setPublicChats(getSpecificRoomChat(route.params?.nutrient)[0]);
     }, [])
   );
   const connect = () => {
@@ -126,7 +126,7 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
       var chatMessage = {
         _id: messages[0]._id,
         text: messages[0].text,
-        user: { _id: id },
+        user: { _id: id, name: userData.username },
         createdAt: new Date(),
         senderName: userData.username,
         userName: userData.username,
