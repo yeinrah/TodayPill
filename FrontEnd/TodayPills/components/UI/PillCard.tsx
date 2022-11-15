@@ -32,8 +32,9 @@ const styles = StyleSheet.create({
     borderColor: "#edfbf9",
     elevation: 4,
     // height: 75,
-    marginHorizontal: 20,
+    // marginHorizontal: 20,
     marginVertical: 10,
     borderRadius: 10,
+    alignSelf: "center",
   },
 });

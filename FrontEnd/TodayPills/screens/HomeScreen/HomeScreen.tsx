@@ -12,7 +12,7 @@ export default function HomeScreen({ navigation }: any) {
     <BackgroundScreen2>
       <Card>
         <View style={styles.container}>
-          <SearchBar navigation={navigation} />
+          <SearchBar navigation={navigation} isMain={true} />
           <ScrollView>
             <MainPill />
             <MainNutrient navigation={navigation} />
