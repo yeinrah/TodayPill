@@ -14,6 +14,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getDateStr } from "../../functions/getDateStr";
 import { deleteMySupplement } from "../../../API/routineAPI";
 import { boldWelcome, regularWelcome } from "../../Data/fontFamilyObject";
+import LoadingSpinner from "../../UI/LoadingSpinner";
 
 export interface RoutineDetailProps {
   key: number;
@@ -59,6 +60,11 @@ export default function RoutineItemDetail({
     });
   };
 
+  // let shownTime = time;
+  // if ((time = "13:0")) {
+  //   shownTime = "13:00";
+  // }
+
   const getSupplementDetail = async () => {
     const supplementDetailItem: any = await fetchSupplementDetail(supplementId);
     setSupplementDetail(supplementDetailItem);
@@ -87,65 +93,72 @@ export default function RoutineItemDetail({
   );
 
   return (
-    <View style={styles.outerContainer}>
-      <PillCard height={100} width={"90%"} bgColor={"white"}>
-        <Pressable
-          android_ripple={{ color: "#4E736F" }}
-          style={styles.cardContainer}
-          onPress={modifyRoutineHandler}
-        >
-          <View style={styles.routineContainer}>
-            <View style={styles.imageContainer}>
-              <Image
-                source={{ uri: supplementDetail.image }}
-                style={styles.pillImage}
-              />
-            </View>
-            <View style={styles.pillDetailContainer}>
-              <View>
-                <Text style={{ ...styles.brand, ...boldWelcome }}>
-                  {supplementDetail.brand}
-                </Text>
-                <Text
-                  style={{
-                    ...styles.name,
-                    ...boldWelcome,
-                    fontSize: supplementDetail.name.length > 22 ? 11 : 13,
-                  }}
-                >
-                  {supplementDetail.name}
-                </Text>
-              </View>
-              <View style={styles.dayTimeContainer}>
-                <Text style={{ ...styles.days, ...regularWelcome }}>
-                  {takenDaysStr}
-                </Text>
-                <View style={styles.timeContainer}>
-                  <Text style={{ ...styles.time, ...regularWelcome }}>
-                    {time}
-                  </Text>
+    <>
+      {supplementDetail.name ? (
+        <View style={styles.outerContainer}>
+          <PillCard height={100} width={"90%"} bgColor={"white"}>
+            <Pressable
+              android_ripple={{ color: "#4E736F" }}
+              style={styles.cardContainer}
+              onPress={modifyRoutineHandler}
+            >
+              <View style={styles.routineContainer}>
+                <View style={styles.imageContainer}>
+                  <Image
+                    source={{ uri: supplementDetail.image }}
+                    style={styles.pillImage}
+                  />
+                </View>
+                <View style={styles.pillDetailContainer}>
+                  <View>
+                    <Text style={{ ...styles.brand, ...boldWelcome }}>
+                      {supplementDetail.brand}
+                    </Text>
+                    <Text
+                      style={{
+                        ...styles.name,
+                        ...boldWelcome,
+                        fontSize: supplementDetail.name.length > 22 ? 11 : 13,
+                      }}
+                    >
+                      {supplementDetail.name}
+                    </Text>
+                  </View>
+                  <View style={styles.dayTimeContainer}>
+                    <Text style={{ ...styles.days, ...regularWelcome }}>
+                      {takenDaysStr}
+                    </Text>
+                    <View style={styles.timeContainer}>
+                      <Text style={{ ...styles.time, ...regularWelcome }}>
+                        {time}
+                        {/* {shownTime} */}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+                <View style={styles.rightSideContainer}>
+                  <Pressable onPress={deleteMyRoutineSupplement}>
+                    <FontAwesome name="trash-o" size={22} color="#B7B7B7" />
+                  </Pressable>
+                  <View style={styles.cntContainer}>
+                    <Text style={{ ...styles.cnt, ...regularWelcome }}>
+                      {tablets}정
+                    </Text>
+                  </View>
                 </View>
               </View>
-            </View>
-            <View style={styles.rightSideContainer}>
-              <Pressable onPress={deleteMyRoutineSupplement}>
-                <FontAwesome name="trash-o" size={22} color="#B7B7B7" />
-              </Pressable>
-              <View style={styles.cntContainer}>
-                <Text style={{ ...styles.cnt, ...regularWelcome }}>
-                  {tablets}정
-                </Text>
-              </View>
-            </View>
-          </View>
-        </Pressable>
-      </PillCard>
+            </Pressable>
+          </PillCard>
 
-      {/* <Text style={styles.takenDate}></Text>
+          {/* <Text style={styles.takenDate}></Text>
       <View style={styles.pillRoutineContainer}>
      
       </View> */}
-    </View>
+        </View>
+      ) : (
+        <LoadingSpinner />
+      )}
+    </>
   );
 }
 

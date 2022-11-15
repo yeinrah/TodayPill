@@ -47,6 +47,7 @@ export default function ModifyRoutineItem({
   const [selectedRoutineDays, setSelectedRoutineDays] = useState("");
   const [takenDaysName, setTakenDaysName] = useState("");
   const [isDaySubmitted, setIsDaySubmitted] = useState(false);
+  const [allMyRoutineList, setAllMyRoutineList] = useState([]);
   const [isFinalSubmitted, setIsFinalSubmitted] = useState(false);
 
   const [supplementDetail, setSupplementDetail] = useState({
@@ -71,6 +72,7 @@ export default function ModifyRoutineItem({
         "섭취 요일을 선택 후 완료 버튼을 클릭해주세요!"
       );
     }
+
     const nowDateStr = getDateStr(new Date());
     let submitTakenTime = takenTime;
     if (!isAM) {
@@ -78,26 +80,45 @@ export default function ModifyRoutineItem({
       submitTakenTime = `${PMHour}:${takenTime.slice(3, 5)}`;
     }
 
-    updateOrNot === "true"
-      ? await updateMyRoutineSupplement(
-          userId,
-          prevRoutineDetail.routineId,
-          pillId,
-          selectedRoutineDays,
-          isAlarmEnabled,
-          pillCnt,
-          submitTakenTime,
-          nowDateStr
-        )
-      : await addMyRoutineSupplement(
-          userId,
-          pillId,
-          selectedRoutineDays,
-          isAlarmEnabled,
-          pillCnt,
-          submitTakenTime,
-          nowDateStr
+    if (updateOrNot === "true") {
+      await updateMyRoutineSupplement(
+        userId,
+        prevRoutineDetail.routineId,
+        pillId,
+        selectedRoutineDays,
+        isAlarmEnabled,
+        pillCnt,
+        submitTakenTime,
+        nowDateStr
+      );
+    } else {
+      let isExist = false;
+
+      allMyRoutineList.map((eachRoutine: any) => {
+        if (eachRoutine.supplementId == pillId) {
+          isExist = true;
+          return;
+        }
+      });
+      if (isExist) {
+        Alert.alert(
+          "중복 등록",
+          "이미 등록된 영양제입니다! \n같은 영양제는 한 번만 등록할 수 있습니다."
         );
+        return navigation.navigate("MyPills", { userId });
+      }
+
+      await addMyRoutineSupplement(
+        userId,
+        pillId,
+        selectedRoutineDays,
+        isAlarmEnabled,
+        pillCnt,
+        submitTakenTime,
+        nowDateStr
+      );
+    }
+
     navigation.navigate("MyPills", { userId });
     setIsFinalSubmitted(true);
 
@@ -129,7 +150,7 @@ export default function ModifyRoutineItem({
     // console.warn("제출함!!!!!!!!!!!!!!!!!!!!");
   };
 
-  const getSupplementDetail = async () => {
+  const getSupplementDetailAndAllRoutine = async () => {
     const currentUserId = await AsyncStorage.getItem("@storage_UserId");
     setUserId(parseInt(currentUserId));
     const eachSupplementDetail = await fetchSupplementDetail(pillId);
@@ -143,9 +164,15 @@ export default function ModifyRoutineItem({
       setPillCnt(prevRoutineDetail.tablets);
       setTakenTime(timeConvert(prevRoutineDetail.time));
     }
-    // setTakenTime(eachSupplementDetail.bestTime);
-
     setSupplementDetail(eachSupplementDetail);
+
+    const allMyRoutines = await fetchAllRoutineSupplements(
+      parseInt(currentUserId)
+    );
+    const visibleRoutineList = allMyRoutines.filter((eachRoutine: any) => {
+      return !eachRoutine.deletedSince;
+    });
+    setAllMyRoutineList(visibleRoutineList);
   };
 
   const showDatePicker = () => {
@@ -176,6 +203,7 @@ export default function ModifyRoutineItem({
     let hourString = hour.toString();
 
     if (minute.length === 1) {
+      console.warn(minute);
       minute = "0" + minute;
     }
     if (hourString.length === 1) {
@@ -199,7 +227,11 @@ export default function ModifyRoutineItem({
     } else {
       setIsAM(true);
     }
-    return `${hour}:${minute}`;
+    let hourStr = hour.toString();
+    if (hourStr.length === 1) {
+      hourStr = "0" + hourStr;
+    }
+    return `${hourStr}:${minute}`;
     // setTakenTime(`${hour}:${minute}`);
   };
   // useCallback(() => {
@@ -213,7 +245,8 @@ export default function ModifyRoutineItem({
   useFocusEffect(
     useCallback(() => {
       // getMyAllRoutineSupplements();
-      getSupplementDetail();
+      getSupplementDetailAndAllRoutine();
+      // getMyAllRoutineSupplements();
 
       // if (updateOrNot === "true") {
       //   setPillCnt(prevRoutineDetail.tablets);

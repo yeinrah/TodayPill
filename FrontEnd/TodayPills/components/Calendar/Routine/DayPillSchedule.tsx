@@ -12,6 +12,7 @@ import { fetchEachMyRoutine } from "../../../API/calendarAPI";
 import { useRecoilState } from "recoil";
 import { pillRoutineCheckChangeState } from "../../../Recoil/atoms/calendar";
 import { boldWelcome } from "../../Data/fontFamilyObject";
+import { strTimeToNum } from "../../functions/strTimeToNum";
 
 export interface PillScheduleProps {
   selectedDate: string;
@@ -65,6 +66,7 @@ export default function DayPillSchedule({ selectedDate }: PillScheduleProps) {
     // 밑에 userId 변경!!
     navigation.navigate("MyPills", { userId: userId });
   };
+
   const getMyEachRoutine = async () => {
     const currentUserId = await AsyncStorage.getItem("@storage_UserId");
     setUserId(parseInt(currentUserId));
@@ -77,6 +79,13 @@ export default function DayPillSchedule({ selectedDate }: PillScheduleProps) {
       selectedDate,
       days.indexOf(dayOfWeek)
     );
+    console.warn(eachMyRoutine);
+    eachMyRoutine.sort((a: any, b: any) => {
+      if (strTimeToNum(a.time) > strTimeToNum(b.time)) return 1;
+      if (strTimeToNum(a.time) === strTimeToNum(b.time)) return 0;
+      if (strTimeToNum(a.time) < strTimeToNum(b.time)) return -1;
+    });
+
     setPillRoutine(eachMyRoutine);
 
     // setPillRoutineCheck(eachMyRoutine.calendarList);
