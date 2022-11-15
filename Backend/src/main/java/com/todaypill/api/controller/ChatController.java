@@ -26,7 +26,7 @@ import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RestController
-@RequestMapping
+@RequestMapping("/api")
 public class ChatController {
 
     @Autowired
@@ -54,7 +54,8 @@ public class ChatController {
 		if(message.getStatus()==Status.JOIN) ;
 		else if(message.getStatus()==Status.LEAVE);
 		else
-		chatService.recordChat(message.get_id(),"비타민 B", message.getSenderName(), message.getText());
+		chatService.recordChat(message.get_id(),message.getText(), message.getSenderName(), message.getCreatedAt()
+				, message.getStatus(), message.getUser(), "vitaminB");
         return message;
     }
 
@@ -64,7 +65,8 @@ public class ChatController {
 		if(message.getStatus()==Status.JOIN) ;
 		else if(message.getStatus()==Status.LEAVE);
 		else
-		chatService.recordChat(message.get_id(),"비타민 C", message.getSenderName(), message.getText());
+			chatService.recordChat(message.get_id(),message.getText(), message.getSenderName(), message.getCreatedAt()
+					, message.getStatus(), message.getUser(), "vitaminC");
         return message;
     }
     @MessageMapping("/vitaminD")
@@ -73,7 +75,8 @@ public class ChatController {
 		if(message.getStatus()==Status.JOIN) ;
 		else if(message.getStatus()==Status.LEAVE);
 		else
-		chatService.recordChat(message.get_id(),"비타민 D", message.getSenderName(), message.getText());
+			chatService.recordChat(message.get_id(),message.getText(), message.getSenderName(), message.getCreatedAt()
+					, message.getStatus(), message.getUser(), "vitaminD");
     	return message;
     }
     @MessageMapping("/multivitamin")
@@ -82,7 +85,8 @@ public class ChatController {
 		if(message.getStatus()==Status.JOIN) ;
 		else if(message.getStatus()==Status.LEAVE);
 		else
-		chatService.recordChat(message.get_id(),"종합비타민", message.getSenderName(), message.getText());
+			chatService.recordChat(message.get_id(),message.getText(), message.getSenderName(), message.getCreatedAt()
+					, message.getStatus(), message.getUser(), "multivitamin");
     	return message;
     }
     @MessageMapping("/magnesium")
@@ -91,7 +95,8 @@ public class ChatController {
 		if(message.getStatus()==Status.JOIN) ;
 		else if(message.getStatus()==Status.LEAVE);
 		else
-		chatService.recordChat(message.get_id(),"마그네슘", message.getSenderName(), message.getText());
+			chatService.recordChat(message.get_id(),message.getText(), message.getSenderName(), message.getCreatedAt()
+					, message.getStatus(), message.getUser(), "magnesium");
     	return message;
     }
     @MessageMapping("/omega3")
@@ -100,7 +105,8 @@ public class ChatController {
 		if(message.getStatus()==Status.JOIN) ;
 		else if(message.getStatus()==Status.LEAVE);
 		else
-		chatService.recordChat(message.get_id(),"오메가3", message.getSenderName(), message.getText());
+			chatService.recordChat(message.get_id(),message.getText(), message.getSenderName(), message.getCreatedAt()
+					, message.getStatus(), message.getUser(), "omega3");
     	return message;
     }
     @MessageMapping("/milkthistle")
@@ -109,7 +115,8 @@ public class ChatController {
 		if(message.getStatus()==Status.JOIN) ;
 		else if(message.getStatus()==Status.LEAVE);
 		else
-		chatService.recordChat(message.get_id(),"밀크시슬3", message.getSenderName(), message.getText());
+			chatService.recordChat(message.get_id(),message.getText(), message.getSenderName(), message.getCreatedAt()
+					, message.getStatus(), message.getUser(), "milkthistle");
     	return message;
     }
     @MessageMapping("/lutein")
@@ -118,7 +125,8 @@ public class ChatController {
 		if(message.getStatus()==Status.JOIN) ;
 		else if(message.getStatus()==Status.LEAVE);
 		else
-		chatService.recordChat(message.get_id(),"루테인", message.getSenderName(), message.getText());
+			chatService.recordChat(message.get_id(),message.getText(), message.getSenderName(), message.getCreatedAt()
+					, message.getStatus(), message.getUser(), "lutein");
     	return message;
     }
     @MessageMapping("/zinc")
@@ -127,7 +135,8 @@ public class ChatController {
 		if(message.getStatus()==Status.JOIN) ;
 		else if(message.getStatus()==Status.LEAVE);
 		else
-		chatService.recordChat(message.get_id(),"아연", message.getSenderName(), message.getText());
+			chatService.recordChat(message.get_id(),message.getText(), message.getSenderName(), message.getCreatedAt()
+					, message.getStatus(), message.getUser(), "zinc");
     	return message;
     }
     @MessageMapping("/lactobacillus")
@@ -136,7 +145,8 @@ public class ChatController {
 		if(message.getStatus()==Status.JOIN) ;
 		else if(message.getStatus()==Status.LEAVE);
 		else
-		chatService.recordChat(message.get_id(),"유산균", message.getSenderName(), message.getText());
+			chatService.recordChat(message.get_id(),message.getText(), message.getSenderName(), message.getCreatedAt()
+					, message.getStatus(), message.getUser(), "lactobacillus");
     	return message;
     }
     @MessageMapping("/collagen")
@@ -145,7 +155,8 @@ public class ChatController {
 		if(message.getStatus()==Status.JOIN) ;
 		else if(message.getStatus()==Status.LEAVE);
 		else
-		chatService.recordChat(message.get_id(),"콜라겐", message.getSenderName(), message.getText());
+			chatService.recordChat(message.get_id(),message.getText(), message.getSenderName(), message.getCreatedAt()
+					, message.getStatus(), message.getUser(), "collagen");
     	return message;
     }
     @MessageMapping("/fe")
@@ -154,7 +165,8 @@ public class ChatController {
 		if(message.getStatus()==Status.JOIN) ;
 		else if(message.getStatus()==Status.LEAVE);
 		else
-		chatService.recordChat(message.get_id(),"철분", message.getSenderName(), message.getText());
+			chatService.recordChat(message.get_id(),message.getText(), message.getSenderName(), message.getCreatedAt()
+					, message.getStatus(), message.getUser(), "fe");
     	return message;
     }
     @MessageMapping("/profolis")
@@ -163,7 +175,8 @@ public class ChatController {
 		if(message.getStatus()==Status.JOIN) ;
 		else if(message.getStatus()==Status.LEAVE);
 		else
-		chatService.recordChat(message.get_id(),"프로폴리스", message.getSenderName(), message.getText());
+			chatService.recordChat(message.get_id(),message.getText(), message.getSenderName(), message.getCreatedAt()
+					, message.getStatus(), message.getUser(), "profolis");
     	return message;
     }
 //    @MessageMapping("/private-message")

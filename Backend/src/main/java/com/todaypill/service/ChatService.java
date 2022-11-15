@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.todaypill.chat.model.Status;
+import com.todaypill.chat.model.User;
 import com.todaypill.db.entity.ChattingRoom;
 import com.todaypill.repository.ChatRepository;
 
@@ -23,18 +25,10 @@ public class ChatService {
 	}
 	
 	@Transactional
-	public void recordChat(String _id, String roomName, String nickname, String chat) throws Exception {
-		LocalDateTime now = LocalDateTime.now();
-		int year = now.getYear();
-		int month = now.getMonthValue();
-		int day = now.getDayOfMonth();
-		int hour = now.getHour();
-		int minute = now.getMinute();
-		int second = now.getSecond();
-		
-		ChattingRoom chattingRoom = ChattingRoom.builder()._id(_id).
-				roomName(roomName).nickname(nickname).chat(chat).
-				time(year+"-"+month+"-"+day+":"+hour+":"+minute+":"+second).report(0).build();
+	public void recordChat(String _id, String text, String senderName, String createdAt, Status status, User user, String roomName) throws Exception {
+
+		ChattingRoom chattingRoom = ChattingRoom.builder()._id(_id).text(text).senderName(senderName)
+				.createdAt(createdAt).status(status).user(user).roomName(roomName).build();
 		chatRepository.save(chattingRoom);
 		
 	}

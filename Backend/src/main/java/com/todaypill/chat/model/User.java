@@ -11,4 +11,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class User {
 	private Integer _id;
+	private String name;
 }

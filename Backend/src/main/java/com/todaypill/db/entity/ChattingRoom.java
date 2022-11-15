@@ -7,6 +7,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.todaypill.chat.model.Status;
+import com.todaypill.chat.model.User;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,28 +22,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChattingRoom {
-		@Id
-		@GeneratedValue(strategy = GenerationType.IDENTITY)
-		@Column(name = "record_chat")
-		private int recordChat;
-		
-		@Column(name = "_id")
-		private String _id;
-		
-		@Column(name = "room_name")
-		private String roomName;
-		
-		@Column(name = "nickname")
-		private String nickname;
-		
-		@Column(name = "chat")
-		private String chat;
-
-		@Column(name = "time")
-		private String time;
-		
-		@Column(name = "report")
-		private Integer report;
-		
-		
+	
+	@Column(name = "_id")
+	private String _id;
+	@Column(name = "text")
+	private String text;
+	@Column(name = "senderName")
+    private String senderName;
+	@Column(name = "createdAt")
+    private String createdAt;
+	@Column(name = "status")
+    private Status status;
+	@Column(name = "user")
+    private User user;
+	@Column(name = "room_name")
+	private String roomName;
 }
