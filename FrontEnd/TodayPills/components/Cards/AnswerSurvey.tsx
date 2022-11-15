@@ -23,7 +23,7 @@ const AnswerSurvey = ({
   const [maxPrice, setMaxPrice] = useState("");
   useFocusEffect(
     useCallback(() => {
-      if (nowStage !== 1) {
+      if (surveyData[nowStage][3]) {
         setOptionClear(false);
         setMultiSelected("");
         setSelectedItem("");
@@ -40,7 +40,9 @@ const AnswerSurvey = ({
                 {surveyData[nowStage][0] !== "allergy" &&
                   surveyData[nowStage][0] !== "lack" &&
                   surveyData[nowStage][0] !== "preferred_brand" &&
-                  surveyData[nowStage][0] !== "problem" && (
+                  surveyData[nowStage][0] !== "problem" &&
+                  surveyData[nowStage][0] !== "additionalEfficacy" &&
+                  surveyData[nowStage][0] !== "formula" && (
                     <Pressable
                       android_ripple={{ color: "#4E736F" }}
                       style={
@@ -64,7 +66,9 @@ const AnswerSurvey = ({
                 {(surveyData[nowStage][0] !== "allergy" ||
                   surveyData[nowStage][0] !== "lack" ||
                   surveyData[nowStage][0] !== "preferred_brand" ||
-                  surveyData[nowStage][0] !== "problem") && (
+                  surveyData[nowStage][0] !== "problem" ||
+                  surveyData[nowStage][0] !== "additionalEfficacy" ||
+                  surveyData[nowStage][0] !== "formula") && (
                   <Pressable
                     android_ripple={{ color: "#4E736F" }}
                     style={
@@ -74,6 +78,7 @@ const AnswerSurvey = ({
                         : styles.iteminnercontainer
                     }
                     onPress={() => {
+                      console.log(multiSelceted);
                       if (item == "해당없음") {
                         if (multiSelceted.indexOf(item) >= 0) {
                           setMultiSelected("");
