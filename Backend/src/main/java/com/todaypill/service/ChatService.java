@@ -41,7 +41,7 @@ public class ChatService {
 		
 
 		List<ChattingRoom> list = chatRepository.selectAllChat(roomName);
-		List<Message> mList = new ArrayList(); 
+		List<Message> mList = new ArrayList();
 		for(int i=0; i<list.size();i++) {
 			User user = new User(list.get(i).getUserId(), list.get(i).getName());
 			Message msg = new Message(list.get(i).get_id(), list.get(i).getText(),

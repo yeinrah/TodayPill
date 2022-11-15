@@ -11,7 +11,7 @@ import com.todaypill.db.entity.ChattingRoom;
 @Repository
 public interface ChatRepository extends JpaRepository<ChattingRoom, Integer>{
 
-	@Query(value = "select * from `chatting_room` where room_name=?1", nativeQuery = true)
+	@Query(value = "select * from `chatting_room` where room_name=?1 order by chat_id desc limit 100", nativeQuery = true)
 	List<ChattingRoom> selectAllChat(String roomName);
 	
 }
