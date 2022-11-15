@@ -72,13 +72,13 @@ const AnswerSurvey = ({
                   <Pressable
                     android_ripple={{ color: "#4E736F" }}
                     style={
-                      (multiSelceted.indexOf(item) >= 0 && !optionClear) ||
+                      (multiSelceted.indexOf(item.replace(" ", "")) >= 0 &&
+                        !optionClear) ||
                       (index == 0 && optionClear)
                         ? styles.iteminnercontainerClicked
                         : styles.iteminnercontainer
                     }
                     onPress={() => {
-                      console.log(multiSelceted);
                       if (item == "해당없음") {
                         if (multiSelceted.indexOf(item) >= 0) {
                           setMultiSelected("");
@@ -89,21 +89,35 @@ const AnswerSurvey = ({
                           setSelectedItem("해당없음");
                           setOptionClear(true);
                         }
-                      } else if (multiSelceted.indexOf(item) >= 0) {
-                        setMultiSelected(multiSelceted.replace(item, ""));
-                        setSelectedItem(multiSelceted.replace(item, ""));
+                      } else if (
+                        multiSelceted.indexOf(item.replace(" ", "")) >= 0
+                      ) {
+                        setMultiSelected(
+                          multiSelceted.replace(item.replace(" ", ""), "")
+                        );
+                        setSelectedItem(
+                          multiSelceted.replace(item.replace(" ", ""), "")
+                        );
                       } else {
                         setOptionClear(false);
                         if (multiSelceted.indexOf("해당없음") >= 0) {
                           setMultiSelected(
-                            multiSelceted.replace("해당없음", "") + item
+                            multiSelceted.replace("해당없음", "") +
+                              item.replace(" ", "")
                           );
                           setSelectedItem(
-                            multiSelceted.replace("해당없음", "") + item
+                            multiSelceted.replace("해당없음", "") +
+                              item.replace(" ", "")
                           );
-                        } else setMultiSelected(multiSelceted + item);
-                        setSelectedItem(multiSelceted + item);
+                        } else
+                          setMultiSelected(
+                            multiSelceted + " " + item.replace(" ", "")
+                          );
+                        setSelectedItem(
+                          multiSelceted + " " + item.replace(" ", "")
+                        );
                       }
+                      console.log(multiSelceted);
                     }}
                   >
                     <View style={styles.itemflex}>

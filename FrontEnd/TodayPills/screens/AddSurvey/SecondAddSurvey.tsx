@@ -110,7 +110,7 @@ const SecondAddSurvey = ({ navigation }: any) => {
                       "@storage_nowNutrient"
                     );
                     setNowStage(nowStage + 1);
-                    let answer: boolean | number;
+                    let answer: boolean | number | string;
                     if (nowStage === 0) {
                       // let price = selectedItem.split(" ");
                       // answer = price;
@@ -118,8 +118,8 @@ const SecondAddSurvey = ({ navigation }: any) => {
                     } else if (nowStage === 1 || nowStage === 2) {
                       // answer = SurveyQuestion.get(selectedItem);
                       answer = selectedItem;
-                      console.log(answer);
-                      if (!answer) {
+                      console.log(answer, "what!!!");
+                      if (!answer || answer === " ") {
                         setNowStage(nowStage);
                         ToastAndroid.show("선택 해주세요", ToastAndroid.SHORT);
                         return;
