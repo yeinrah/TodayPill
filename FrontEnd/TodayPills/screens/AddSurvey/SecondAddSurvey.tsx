@@ -117,8 +117,18 @@ const SecondAddSurvey = ({ navigation }: any) => {
                       console.warn(answer);
                     } else if (nowStage === 1) {
                       answer = SurveyQuestion.get(selectedItem);
+                      if (!answer) {
+                        setNowStage(nowStage);
+                        ToastAndroid.show("선택 해주세요", ToastAndroid.SHORT);
+                        return;
+                      }
                     } else if (nowStage === 2) {
                       answer = SurveyFormula.get(selectedItem);
+                      if (!answer) {
+                        setNowStage(nowStage);
+                        ToastAndroid.show("선택 해주세요", ToastAndroid.SHORT);
+                        return;
+                      }
                     } else if (surveyData[nowStage][3]) {
                       selectedItem == 0 ? (answer = true) : (answer = false);
                     } else answer = selectedItem;
