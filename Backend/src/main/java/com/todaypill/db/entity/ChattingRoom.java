@@ -24,6 +24,9 @@ public class ChattingRoom {
 		@Column(name = "record_chat")
 		private int recordChat;
 		
+		@Column(name = "_id")
+		private String _id;
+		
 		@Column(name = "room_name")
 		private String roomName;
 		

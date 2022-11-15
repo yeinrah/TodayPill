@@ -23,7 +23,7 @@ public class ChatService {
 	}
 	
 	@Transactional
-	public void recordChat( String roomName, String nickname, String chat) throws Exception {
+	public void recordChat(String _id, String roomName, String nickname, String chat) throws Exception {
 		LocalDateTime now = LocalDateTime.now();
 		int year = now.getYear();
 		int month = now.getMonthValue();
@@ -32,7 +32,7 @@ public class ChatService {
 		int minute = now.getMinute();
 		int second = now.getSecond();
 		
-		ChattingRoom chattingRoom = ChattingRoom.builder().
+		ChattingRoom chattingRoom = ChattingRoom.builder()._id(_id).
 				roomName(roomName).nickname(nickname).chat(chat).
 				time(year+"-"+month+"-"+day+":"+hour+":"+minute+":"+second).report(0).build();
 		chatRepository.save(chattingRoom);

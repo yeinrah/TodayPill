@@ -40,9 +40,9 @@ public class ChatController {
 		this.chatService = chatService;
 	}
     
-	@GetMapping("/getMessage/{roomName}")
+	@GetMapping("/getText/{roomName}")
 	@ApiOperation(value = "영양제 이름에 해당하는 채팅 방의 채팅 내용을 가져온다.", notes = "roomName 필요")
-	public ResponseEntity<?> getMessage(@PathVariable String roomName) throws Exception {
+	public ResponseEntity<?> getText(@PathVariable String roomName) throws Exception {
 		List<ChattingRoom> list = chatService.selectAllChat(roomName);
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
@@ -50,80 +50,80 @@ public class ChatController {
 	@MessageMapping("/vitaminB")
     @SendTo("/chatroom/vitaminB")
     public Message receiveMessageVitaminB(@Payload Message message) throws Exception{
-		chatService.recordChat("비타민 B", message.getSenderName(), message.getMessage());
+		chatService.recordChat(message.get_id(),"비타민 B", message.getSenderName(), message.getText());
         return message;
     }
 
     @MessageMapping("/vitaminC")
     @SendTo("/chatroom/vitaminC")
     public Message receiveMessageVitaminC(@Payload Message message) throws Exception{
-		chatService.recordChat("비타민 C", message.getSenderName(), message.getMessage());
+		chatService.recordChat(message.get_id(),"비타민 C", message.getSenderName(), message.getText());
         return message;
     }
     @MessageMapping("/vitaminD")
     @SendTo("/chatroom/vitaminD")
     public Message receiveMessageVitaminD(@Payload Message message) throws Exception{
-		chatService.recordChat("비타민 D", message.getSenderName(), message.getMessage());
+		chatService.recordChat(message.get_id(),"비타민 D", message.getSenderName(), message.getText());
     	return message;
     }
     @MessageMapping("/multivitamin")
     @SendTo("/chatroom/multivitamin")
     public Message receiveMessageMultivitamin(@Payload Message message) throws Exception{
-		chatService.recordChat("종합비타민", message.getSenderName(), message.getMessage());
+		chatService.recordChat(message.get_id(),"종합비타민", message.getSenderName(), message.getText());
     	return message;
     }
     @MessageMapping("/magnesium")
     @SendTo("/chatroom/magnesium")
     public Message receiveMessageMagnesium(@Payload Message message) throws Exception{
-		chatService.recordChat("마그네슘", message.getSenderName(), message.getMessage());
+		chatService.recordChat(message.get_id(),"마그네슘", message.getSenderName(), message.getText());
     	return message;
     }
     @MessageMapping("/omega3")
     @SendTo("/chatroom/omega3")
     public Message receiveMessageOmega3(@Payload Message message) throws Exception{
-		chatService.recordChat("오메가3", message.getSenderName(), message.getMessage());
+		chatService.recordChat(message.get_id(),"오메가3", message.getSenderName(), message.getText());
     	return message;
     }
     @MessageMapping("/milkthistle")
     @SendTo("/chatroom/milkthistle")
     public Message receiveMessageMilkthistle(@Payload Message message)throws Exception{
-		chatService.recordChat("밀크시슬3", message.getSenderName(), message.getMessage());
+		chatService.recordChat(message.get_id(),"밀크시슬3", message.getSenderName(), message.getText());
     	return message;
     }
     @MessageMapping("/lutein")
     @SendTo("/chatroom/lutein")
     public Message receiveMessageLutein(@Payload Message message) throws Exception{
-		chatService.recordChat("루테인", message.getSenderName(), message.getMessage());
+		chatService.recordChat(message.get_id(),"루테인", message.getSenderName(), message.getText());
     	return message;
     }
     @MessageMapping("/zinc")
     @SendTo("/chatroom/zinc")
     public Message receiveMessageZinc(@Payload Message message) throws Exception{
-		chatService.recordChat("아연", message.getSenderName(), message.getMessage());
+		chatService.recordChat(message.get_id(),"아연", message.getSenderName(), message.getText());
     	return message;
     }
     @MessageMapping("/lactobacillus")
     @SendTo("/chatroom/lactobacillus")
     public Message receiveMessageLactobacillus(@Payload Message message) throws Exception{
-		chatService.recordChat("유산균", message.getSenderName(), message.getMessage());
+		chatService.recordChat(message.get_id(),"유산균", message.getSenderName(), message.getText());
     	return message;
     }
     @MessageMapping("/collagen")
     @SendTo("/chatroom/collagen")
     public Message receiveMessageCollagen(@Payload Message message) throws Exception{
-		chatService.recordChat("콜라겐", message.getSenderName(), message.getMessage());
+		chatService.recordChat(message.get_id(),"콜라겐", message.getSenderName(), message.getText());
     	return message;
     }
     @MessageMapping("/fe")
     @SendTo("/chatroom/fe")
     public Message receiveMessageFe(@Payload Message message) throws Exception{
-		chatService.recordChat("철분", message.getSenderName(), message.getMessage());
+		chatService.recordChat(message.get_id(),"철분", message.getSenderName(), message.getText());
     	return message;
     }
     @MessageMapping("/profolis")
     @SendTo("/chatroom/profolis")
     public Message receiveMessageProfolis(@Payload Message message) throws Exception{
-		chatService.recordChat("프로폴리스", message.getSenderName(), message.getMessage());
+		chatService.recordChat(message.get_id(),"프로폴리스", message.getSenderName(), message.getText());
     	return message;
     }
 //    @MessageMapping("/private-message")
