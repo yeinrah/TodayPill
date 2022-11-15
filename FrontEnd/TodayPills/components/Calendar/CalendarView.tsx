@@ -247,6 +247,7 @@ export default function CalendarView({
         }}
         monthFormat={"yyyy년 MM월"}
         markedDates={marked}
+        // maxDate={'2022-05-30'}
       />
       {/* <Agenda
         items={items}

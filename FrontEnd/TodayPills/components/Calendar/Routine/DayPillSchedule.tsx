@@ -12,6 +12,8 @@ import { fetchEachMyRoutine } from "../../../API/calendarAPI";
 import { useRecoilState } from "recoil";
 import { pillRoutineCheckChangeState } from "../../../Recoil/atoms/calendar";
 import { boldWelcome } from "../../Data/fontFamilyObject";
+import { strTimeToNum } from "../../functions/strTimeToNum";
+import LoadingSpinner from "../../UI/LoadingSpinner";
 
 export interface PillScheduleProps {
   selectedDate: string;
@@ -19,6 +21,7 @@ export interface PillScheduleProps {
 
 const days = ["no", "월", "화", "수", "목", "금", "토", "일"];
 export default function DayPillSchedule({ selectedDate }: PillScheduleProps) {
+  const [isLoading, setIsLoading] = useState(true);
   const [isCheckedChange, setIsCheckedChange] = useRecoilState(
     pillRoutineCheckChangeState
   );
@@ -65,6 +68,7 @@ export default function DayPillSchedule({ selectedDate }: PillScheduleProps) {
     // 밑에 userId 변경!!
     navigation.navigate("MyPills", { userId: userId });
   };
+
   const getMyEachRoutine = async () => {
     const currentUserId = await AsyncStorage.getItem("@storage_UserId");
     setUserId(parseInt(currentUserId));
@@ -77,15 +81,16 @@ export default function DayPillSchedule({ selectedDate }: PillScheduleProps) {
       selectedDate,
       days.indexOf(dayOfWeek)
     );
-    setPillRoutine(eachMyRoutine);
-
-    // setPillRoutineCheck(eachMyRoutine.calendarList);
-
     // const visibleRoutineList = eachMyRoutine.filter((eachRoutine: any) => {
     //   return !eachRoutine.deletedSince;
     // });
-    // setPillRoutine(visibleRoutineList);
-    // setSupplementDetail(eachSupplementDetail);
+    eachMyRoutine.sort((a: any, b: any) => {
+      if (strTimeToNum(a.time) > strTimeToNum(b.time)) return 1;
+      if (strTimeToNum(a.time) === strTimeToNum(b.time)) return 0;
+      if (strTimeToNum(a.time) < strTimeToNum(b.time)) return -1;
+    });
+
+    setPillRoutine(eachMyRoutine);
   };
 
   useFocusEffect(
@@ -95,6 +100,7 @@ export default function DayPillSchedule({ selectedDate }: PillScheduleProps) {
       // setDayId(days.indexOf(dayOfWeek));
 
       getMyEachRoutine();
+      setIsLoading(false);
       // }, [userId, isCheckedChange, selectedDate, dayId, dayStrOfWeek])
     }, [userId, selectedDate, isCheckedChange])
   );
@@ -103,37 +109,43 @@ export default function DayPillSchedule({ selectedDate }: PillScheduleProps) {
   //  "pushAlarm": false, "routineId": 10, "supplementId": 1, "tablets": 2, "taken": false, "time": "08:30", "userId": 2}]
 
   return (
-    <View style={styles.container}>
-      <View style={styles.eachDateContainer}>
-        <View style={styles.takenDateContainer}>
-          <Text style={{ ...styles.takenDate, ...boldWelcome }}>
-            {dayString}
-          </Text>
+    <>
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <View style={styles.container}>
+          <View style={styles.eachDateContainer}>
+            <View style={styles.takenDateContainer}>
+              <Text style={{ ...styles.takenDate, ...boldWelcome }}>
+                {dayString}
+              </Text>
+            </View>
+            <Pressable onPress={addRoutineHandler}>
+              <MaterialCommunityIcons
+                name="pencil-circle"
+                size={35}
+                color={primary}
+              />
+            </Pressable>
+          </View>
+          <View style={styles.pillRoutineContainer}>
+            {pillRoutine.map((rout, idx) => (
+              <RoutineItem
+                key={idx}
+                time={rout.time}
+                routineId={rout.routineId}
+                pillId={rout.supplementId}
+                selectedDate={selectedDate}
+                cnt={rout.tablets}
+                taken={rout.taken}
+                calendarId={rout.calendarId}
+                // changeCheckHandler={changeCheckHandler}
+              />
+            ))}
+          </View>
         </View>
-        <Pressable onPress={addRoutineHandler}>
-          <MaterialCommunityIcons
-            name="pencil-circle"
-            size={35}
-            color={primary}
-          />
-        </Pressable>
-      </View>
-      <View style={styles.pillRoutineContainer}>
-        {pillRoutine.map((rout, idx) => (
-          <RoutineItem
-            key={idx}
-            time={rout.time}
-            routineId={rout.routineId}
-            pillId={rout.supplementId}
-            selectedDate={selectedDate}
-            cnt={rout.tablets}
-            taken={rout.taken}
-            calendarId={rout.calendarId}
-            // changeCheckHandler={changeCheckHandler}
-          />
-        ))}
-      </View>
-    </View>
+      )}
+    </>
   );
 }
 

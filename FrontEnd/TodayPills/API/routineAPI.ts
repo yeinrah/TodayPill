@@ -69,16 +69,16 @@ const updateMyRoutineSupplement = async (
   time: string,
   dateStr: string
 ) => {
-  console.warn(
-    "루틴 복약 수정",
-    supplementId,
-    routineId,
-    day,
-    pushAlarm,
-    tablets,
-    time,
-    dateStr
-  );
+  // console.warn(
+  //   "루틴 복약 수정",
+  //   supplementId,
+  //   routineId,
+  //   day,
+  //   pushAlarm,
+  //   tablets,
+  //   time,
+  //   dateStr
+  // );
   await api.put(`/mypage/${userId}/mysupplement/${routineId}`, {
     supplementId,
     day,

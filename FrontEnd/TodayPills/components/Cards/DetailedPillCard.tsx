@@ -1,4 +1,12 @@
-import { StyleSheet, View, Image, Text, Pressable, ToastAndroid, Linking } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Image,
+  Text,
+  Pressable,
+  ToastAndroid,
+  Linking,
+} from "react-native";
 import { useState, useCallback } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { fetchLikeUsers, like, dislike } from "../../API/likeAPI";
@@ -28,17 +36,19 @@ const DetailedPillCard = (props: any) => {
   const likeHandler = async () => {
     await like(props.userId, props.supplementId);
     setIsLiked(true);
-    ToastAndroid.show("해당 상품이 나의 Pick에 추가됐습니다.", 3)
+    ToastAndroid.show("해당 상품이 나의 Pick에 추가됐습니다.", 3);
   };
 
   const dislikeHandler = async () => {
     await dislike(props.userId, props.supplementId);
     setIsLiked(false);
-    ToastAndroid.show("해당 상품이 나의 Pick에서 제외됐습니다.", 3)
+    ToastAndroid.show("해당 상품이 나의 Pick에서 제외됐습니다.", 3);
   };
 
   const naverSearch = () => {
-    Linking.openURL(`https://msearch.shopping.naver.com/search/all?query=${props.supplementName}&frm=NVSHSRC&vertical=home&fs=true`);
+    Linking.openURL(
+      `https://msearch.shopping.naver.com/search/all?query=${props.supplementName}&frm=NVSHSRC&vertical=home&fs=true`
+    );
   };
 
   useFocusEffect(
@@ -65,20 +75,23 @@ const DetailedPillCard = (props: any) => {
             <Text style={styles.brandname}>{props.brand}</Text>
             <Text style={styles.pillname}>{props.supplementName}</Text>
             <View style={styles.featurecontainer}>
-              {props.additionalEfficacy ?
-                props.additionalEfficacy.split(", ").filter((efficacy, idx) => idx < 4).map((efficacy, idx) => (
-                  <Text
-                    key={idx}
-                    style={[styles.feature, styles.mintfeature]}
-                  >
-                    {efficacy}
-                  </Text>
-                )) :
-                props.note ?
-                  <Text style={[styles.feature, styles.pinkfeature]}>
-                    {props.note}
-                  </Text> : null
-              }
+              {props.additionalEfficacy ? (
+                props.additionalEfficacy
+                  .split(", ")
+                  .filter((efficacy, idx) => idx < 4)
+                  .map((efficacy, idx) => (
+                    <Text
+                      key={idx}
+                      style={[styles.feature, styles.mintfeature]}
+                    >
+                      {efficacy}
+                    </Text>
+                  ))
+              ) : props.note ? (
+                <Text style={[styles.feature, styles.pinkfeature]}>
+                  {props.note}
+                </Text>
+              ) : null}
             </View>
             <View style={styles.alertcontainer}>
               <Ionicons name="warning" size={11} color="#FFCE31" />
@@ -91,7 +104,9 @@ const DetailedPillCard = (props: any) => {
           <View style={styles.buttoncontainer}>
             <Pressable
               style={styles.navercontainer}
-              onPress={() => {naverSearch()}}
+              onPress={() => {
+                naverSearch();
+              }}
             >
               <Image
                 source={require("../../assets/images/naver2.png")}
