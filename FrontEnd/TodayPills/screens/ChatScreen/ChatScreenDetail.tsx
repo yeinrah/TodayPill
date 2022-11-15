@@ -6,6 +6,8 @@ import { over } from "stompjs";
 import SockJS from "sockjs-client";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Ionicons } from "@expo/vector-icons";
+import { getSpecificRoomChat } from "../../API/chatAPI";
+import { useFocusEffect } from "@react-navigation/native";
 var stompClient = null;
 
 const ChatScreenDetail = ({ navigation, route }: any) => {
@@ -28,10 +30,16 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
       message: "hello",
     });
   };
-  useEffect(() => {
-    // loadUserNickName();
-    registerUser();
-  }, []);
+  // useEffect(() => {
+  //   // loadUserNickName();
+  //   registerUser();
+  // }, []);
+  useFocusEffect(
+    useCallback(() => {
+      registerUser();
+      // setPublicChats(getSpecificRoomChat(route.params?.nutrient)[0]);
+    }, [])
+  );
   const connect = () => {
     let Sock = new SockJS("http://k7a706.p.ssafy.io:8080/wss");
     stompClient = over(Sock);
@@ -81,7 +89,7 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
       status: payloadData.status,
       createdAt: payloadData.createdAt,
       _id: payloadData._id,
-      user: { _id: payloadData.user._id },
+      user: { _id: payloadData.user._id, name: payloadData.senderName },
     };
     // console.log(payloadData, 'this is payloadData');
     switch (payloadData.status) {
@@ -121,6 +129,7 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
         user: { _id: id },
         createdAt: new Date(),
         senderName: userData.username,
+        userName: userData.username,
         // message: messages[0].text,
         status: "MESSAGE",
       };
@@ -156,14 +165,17 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
   return (
     <BackgroundScreen>
       <>
-        <Ionicons
-          name="arrow-back"
-          size={48}
-          color="black"
-          onPress={() => {
-            navigation.goBack();
-          }}
-        />
+        <View style={styles.chatTitle}>
+          <Ionicons
+            name="arrow-back"
+            size={48}
+            color="black"
+            onPress={() => {
+              navigation.goBack();
+            }}
+          />
+          <Text>채팅방</Text>
+        </View>
         {userData.userId !== 0 && (
           <GiftedChat
             placeholder={"메세지를 입력하세요..."}
@@ -201,6 +213,10 @@ const styles = StyleSheet.create({
   },
   textBtn: {
     width: "15%",
+  },
+  chatTitle: {
+    flexDirection: "row",
+    width: 100,
   },
   // box: {
   //   flexDirection: "column-reverse",
