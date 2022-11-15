@@ -13,6 +13,7 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
   const [messages, setMessages] = useState([]);
   const [tab, setTab] = useState("CHATROOM");
   const [userData, setUserData] = useState({
+    userId: 0,
     username: "wjdtj",
     // receivername: "wjdtj",
     connected: false,
@@ -21,6 +22,7 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
   const loadUserNickName = async () => {
     let name = await AsyncStorage.getItem("@storage_UserNickName");
     setUserData({
+      ...userData,
       username: name,
       connected: false,
       message: "hello",
@@ -37,8 +39,14 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
   };
   const onConnected = async () => {
     let userName = await AsyncStorage.getItem("@storage_UserNickName");
+    let userId = Number(await AsyncStorage.getItem("@storage_UserId"));
     console.log("연결시도!!");
-    setUserData({ ...userData, connected: true, username: userName });
+    setUserData({
+      ...userData,
+      connected: true,
+      username: userName,
+      userId: userId,
+    });
     stompClient.subscribe(
       `/chatroom/${route.params?.nutrient}`,
       onMessageReceived
@@ -156,20 +164,22 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
             navigation.goBack();
           }}
         />
-        <GiftedChat
-          placeholder={"메세지를 입력하세요..."}
-          alwaysShowSend={true}
-          renderUsernameOnMessage={true}
-          messages={publicChats}
-          textInputProps={{ keyboardAppearance: "dark", autoCorrect: false }}
-          onSend={(messages) => {
-            return sendValue(messages);
-            // return onSend(messages);
-          }}
-          user={{
-            _id: 1,
-          }}
-        />
+        {userData.userId !== 0 && (
+          <GiftedChat
+            placeholder={"메세지를 입력하세요..."}
+            alwaysShowSend={true}
+            renderUsernameOnMessage={true}
+            messages={publicChats}
+            textInputProps={{ keyboardAppearance: "dark", autoCorrect: false }}
+            onSend={(messages) => {
+              return sendValue(messages);
+              // return onSend(messages);
+            }}
+            user={{
+              _id: userData.userId,
+            }}
+          />
+        )}
       </>
     </BackgroundScreen>
   );
