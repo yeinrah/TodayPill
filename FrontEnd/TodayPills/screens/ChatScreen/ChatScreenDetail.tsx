@@ -12,6 +12,7 @@ var stompClient = null;
 
 const ChatScreenDetail = ({ navigation, route }: any) => {
   const [publicChats, setPublicChats] = useState([]);
+  const [loadFlag, setLoadFlag] = useState(false);
   const [messages, setMessages] = useState([]);
   const [tab, setTab] = useState("CHATROOM");
   const [userData, setUserData] = useState({
@@ -34,12 +35,23 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
   //   // loadUserNickName();
   //   registerUser();
   // }, []);
+  const loadPrevData = async () => {
+    let chatData = await getSpecificRoomChat(route.params?.nutrient);
+    // publicChats.push(chatData[0]);
+    for (let chat of chatData) {
+      publicChats.push(chat);
+    }
+    // setPublicChats(...publicChats, chatData);
+  };
   useFocusEffect(
     useCallback(() => {
       registerUser();
-      setPublicChats(getSpecificRoomChat(route.params?.nutrient)[0]);
+      loadPrevData();
     }, [])
   );
+  useEffect(() => {
+    console.log(publicChats, "thissssss");
+  }, [publicChats]);
   const connect = () => {
     let Sock = new SockJS("http://k7a706.p.ssafy.io:8080/wss");
     stompClient = over(Sock);
@@ -189,6 +201,7 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
             }}
             user={{
               _id: userData.userId,
+              name: userData.username,
             }}
           />
         )}
