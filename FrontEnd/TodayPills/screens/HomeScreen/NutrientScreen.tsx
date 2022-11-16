@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable, ScrollView, Image, ToastAndroid } from "react-native";
+import { StyleSheet, Text, View, Pressable, Image, ToastAndroid, FlatList } from "react-native";
 import DetailedPillCard from "../../components/Cards/DetailedPillCard";
 import Card from "../../components/UI/Card";
 import BackgroundScreen2 from "../BackgroundScreen2";
@@ -6,7 +6,6 @@ import { useCallback, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fetchAllSupplements } from "../../API/supplementAPI";
 import { useFocusEffect } from "@react-navigation/native";
-import { AntDesign } from '@expo/vector-icons';
 
 const NutrientScreen = ({ navigation, route }: any) => {
   const { nutId, nutrient } = route.params;
@@ -20,7 +19,6 @@ const NutrientScreen = ({ navigation, route }: any) => {
     const allSupplements = await fetchAllSupplements();
     const supplements = allSupplements.filter((i) => i.category === nutrient);
     await setPills(supplements);
-    ToastAndroid.show(`${nutrient} 영양제가 ${supplements.length}개 있습니다.`, 3)
   };
 
   useFocusEffect(
@@ -32,13 +30,16 @@ const NutrientScreen = ({ navigation, route }: any) => {
   useEffect(() => {
     if (pills.length > 0) {
       setIsLoading(false);
+      if (isLoading) {
+        ToastAndroid.show(`${nutrient} 영양제가 ${pills.length}개 있습니다.`, 3)
+      }
     }
   }, [pills]);
 
   return (
     <BackgroundScreen2>
       <Card>
-        <View>
+        <View style={styles.container}>
           <Text style={styles.text}>{nutrient}</Text>
           <View style={styles.buttonOuterContainer}>
             <Pressable
@@ -54,7 +55,6 @@ const NutrientScreen = ({ navigation, route }: any) => {
               <Text style={styles.title}>영양제 추천받기</Text>
             </Pressable>
           </View>
-          <ScrollView>
             {isLoading ?
               <View style={styles.loadingspinnercontainer}>
                 <Image
@@ -62,23 +62,27 @@ const NutrientScreen = ({ navigation, route }: any) => {
                   style={styles.loadingspinner}
                 />
               </View> :
-              pills.map((pill, idx) => (
-                <DetailedPillCard
-                  key={idx}
-                  userId={userId}
-                  supplementId={pill.supplementId}
-                  image={pill.image}
-                  brand={pill.brand}
-                  supplementName={pill.supplementName}
-                  like={pill.like}
-                  note={pill.note}
-                  additionalEfficacy={pill.additionalEfficacy}
-                  ingredients={pill.ingredients}
-                />
-              ))
+              <FlatList
+                data={pills}
+                renderItem={({ item }) => {
+                  return (
+                    <DetailedPillCard
+                      key={item.supplementId}
+                      userId={userId}
+                      supplementId={item.supplementId}
+                      image={item.image}
+                      brand={item.brand}
+                      supplementName={item.supplementName}
+                      like={item.like}
+                      note={item.note}
+                      additionalEfficacy={item.additionalEfficacy}
+                      ingredients={item.ingredients}
+                      caution={item.caution}
+                    />
+                  )
+                }}
+              />
             }
-            <View style={styles.height} />
-          </ScrollView>
         </View>
       </Card>
     </BackgroundScreen2>
@@ -86,6 +90,9 @@ const NutrientScreen = ({ navigation, route }: any) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   text: {
     fontSize: 20,
     fontWeight: "bold",
@@ -112,13 +119,13 @@ const styles = StyleSheet.create({
   },
   loadingspinnercontainer: {
     width: "100%",
-    height: 450,
+    height: "80%",
     justifyContent: "center",
     alignItems: "center",
   },
   loadingspinner: {
-    width: 150,
-    height: 150,
+    width: 200,
+    height: 200,
   },
   height: {
     height: 120,
