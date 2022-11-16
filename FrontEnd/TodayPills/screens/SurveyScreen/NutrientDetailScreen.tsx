@@ -53,7 +53,7 @@ const NutrientDetailScreen = ({ navigation, route }: any) => {
         <View style={styles.aligncenter}>
           <View style={styles.descriptioncontainer}>
             <ImageBackground
-              source={require("../../assets/images/pillbag.png")}
+              source={require("../../assets/images/pinkPillBag.png")}
               style={styles.image}
             >
               <Text style={styles.descriptiontext}>
@@ -129,6 +129,7 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     alignItems: "center",
+    backgroundColor: "#e0e0e0",
   },
   descriptiontext: {
     fontSize: 20,

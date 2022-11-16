@@ -8,6 +8,7 @@ import CustomBtn from "../../components/UI/CustomBtn";
 import { accent } from "../../constants/Colors";
 import BackgroundScreen from "../BackgroundScreen";
 import BackgroundScreen2 from "../BackgroundScreen2";
+import BackgroundStartScreen from "../BackgroundStartScreen";
 
 const PillResultScreen = ({ navigation, route }: any) => {
   const [myName, setMyName] = useState("");
