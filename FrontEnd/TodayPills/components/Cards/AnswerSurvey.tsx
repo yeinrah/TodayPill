@@ -39,6 +39,9 @@ const AnswerSurvey = ({
               <View style={styles.itemoutercontainer}>
                 {surveyData[nowStage][0] !== "allergy" &&
                   surveyData[nowStage][0] !== "lack" &&
+                  surveyData[nowStage][0] !== "symptom" &&
+                  surveyData[nowStage][0] !== "disease" &&
+                  surveyData[nowStage][0] !== "medicine" &&
                   surveyData[nowStage][0] !== "preferred_brand" &&
                   surveyData[nowStage][0] !== "problem" &&
                   surveyData[nowStage][0] !== "additionalEfficacy" &&
@@ -65,6 +68,9 @@ const AnswerSurvey = ({
                   )}
                 {(surveyData[nowStage][0] !== "allergy" ||
                   surveyData[nowStage][0] !== "lack" ||
+                  surveyData[nowStage][0] !== "symptom" ||
+                  surveyData[nowStage][0] !== "disease" ||
+                  surveyData[nowStage][0] !== "medicine" ||
                   surveyData[nowStage][0] !== "preferred_brand" ||
                   surveyData[nowStage][0] !== "problem" ||
                   surveyData[nowStage][0] !== "additionalEfficacy" ||
@@ -117,7 +123,6 @@ const AnswerSurvey = ({
                           multiSelceted + " " + item.replace(" ", "")
                         );
                       }
-                      console.log(multiSelceted);
                     }}
                   >
                     <View style={styles.itemflex}>
