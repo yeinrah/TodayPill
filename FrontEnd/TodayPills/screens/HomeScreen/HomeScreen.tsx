@@ -12,25 +12,12 @@ export default function HomeScreen({ navigation }: any) {
     <BackgroundScreen2>
       <Card>
         <View style={styles.container}>
-          <SearchBar navigation={navigation} isMain={true} />
+          <View style={styles.searchBarContainer}>
+            <SearchBar navigation={navigation} isMain={true} />
+          </View>
           <ScrollView>
             <MainPill />
             <MainNutrient navigation={navigation} />
-            {/* <View style={styles.buttoncontainer}>
-              <CustomBtn
-                buttonColor={accent}
-                title={"모든 영양제 보기"}
-                fontSize={20}
-                titleColor={"#fff"}
-                buttonWidth={"90%"}
-                onPress={() =>
-                  navigation.navigate("AllSupplementsScreen", {
-                    // userId 바꾸기!
-                    // userId: 1,
-                  })
-                }
-              />
-            </View> */}
           </ScrollView>
         </View>
       </Card>
@@ -46,5 +33,8 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     marginBottom: 10,
+  },
+  searchBarContainer: {
+    alignItems: "center",
   },
 });

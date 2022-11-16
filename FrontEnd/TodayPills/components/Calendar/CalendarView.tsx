@@ -7,13 +7,15 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fetchEachMonthRoutines } from "../../API/calendarAPI";
 import { pillRoutineCheckChangeState } from "../../Recoil/atoms/calendar";
 import { useRecoilState } from "recoil";
+import { getDateStr } from "../functions/getDateStr";
 // import { randomColors } from "../Data/RandomColorsArray";
 
 export interface CalendarViewProps {
   onChangeDate: (date: string) => void;
   todayString: string;
 }
-
+// const todayStr = useMemo(() => getDateStr(new Date()), []);
+const todayStr = getDateStr(new Date());
 export default function CalendarView({
   onChangeDate,
   todayString,
@@ -26,22 +28,17 @@ export default function CalendarView({
     // parseInt(todayString.substring(5, 7))
     new Date().getMonth() + 1
   );
-
   const [takenList, setTakenList] = useState({});
 
-  // const colors = [
-  //   "nn",
-  //   "blue",
-  //   "green",
-  //   "yellow",
-  //   "red",
-  //   "orange",
-  //   "#5f9ea0",
-  //   "#ffa500",
-  //   "#f0e68c",
-  //   "black",
-  // ];
+  const [daySelected, setDaySelected] = useState(todayString);
+  const [currentClickedMonth, sestCurrentClickedMonth] = useState(
+    parseInt(todayString.substring(5, 7))
+  );
+  const [isRightArrowDisabled, setIsRightArrowDisabled] = useState(false);
+  const [isLeftArrowDisabled, setIsLeftArrowDisabled] = useState(false);
 
+  const [taken, setTaken] = useState({});
+  const [items, setItems] = useState({});
   const customTheme = {
     "stylesheet.calendar.header": {
       // headerContainer: {
@@ -69,13 +66,13 @@ export default function CalendarView({
     // textDisabledColor: '#d9e1e8',
     // dotColor: '#00adf5',
     // selectedDotColor: '#ffffff',
-    arrowColor: secondary,
+    arrowColor: "#E2C3DC",
     // disabledArrowColor: '#d9e1e8',
     // monthTextColor: accent,
     // indicatorColor: 'blue',
     // textDayFontFamily: 'monospace',
     // textMonthFontFamily: 'monospace',
-    // textDayHeaderFontFamily: 'monospace',
+    // textDayHeaderFontFamily: 'monospace',s
     // textDayFontWeight: '300',
     textMonthFontWeight: "bold",
     // textDayHeaderFontWeight: '300',
@@ -116,23 +113,16 @@ export default function CalendarView({
     dayNamesShort: ["일", "월", "화", "수", "목", "금", "토"],
   };
   LocaleConfig.defaultLocale = "kr";
-  const [daySelected, setDaySelected] = useState(todayString);
-  const [taken, setTaken] = useState({});
-  const [items, setItems] = useState({});
+
+  // -----------------------------------
   const dayPressHandler = (day: any) => {
     console.log("selected day", day);
     onChangeDate(day.dateString);
     setDaySelected(day.dateString);
   };
 
-  const f = { key: "f", color: "red" };
-
   const marked = useMemo(
     () => ({
-      // "2022-10-02": {
-      //   dots: [a, c, d, e],
-      // },
-
       ...takenList,
       // [todayString]: {
       //   dots: [{ key: "today", color: accent }],
@@ -149,7 +139,7 @@ export default function CalendarView({
       //   selectedTextColor: "white",
       // },
     }),
-    [daySelected, taken, takenList]
+    [daySelected, takenList]
   );
   // const marked = {
   //   "2022-10-10": { marked: true },
@@ -196,21 +186,12 @@ export default function CalendarView({
       // for (const eachDate in temp) {
       //   allEachMonthRoutines[eachDate] = { dots: temp[eachDate] };
       // }
-      Object.entries(temp).map(
-        (eachDateArray) =>
-          (allEachMonthRoutines[eachDateArray[0]] = { dots: eachDateArray[1] })
-      );
-      // result[now]={dots:today};
-      // allEachMonthRoutines[each.date] = {
-      //   dots:
-      // }
-      // setTaken((prevTaken) => {
-      //   return
-      // })
+      Object.entries(temp).map((eachDateArray: Array<any>) => {
+        allEachMonthRoutines[eachDateArray[0]] = {
+          dots: eachDateArray[1].slice(0, 5),
+        };
+      });
     });
-    // console.warn(temp, "임시!!!!!");
-    // if (eachSupplementDetail.bestTime.slice(0,2))
-    console.log(allEachMonthRoutines);
     setTakenList(allEachMonthRoutines);
   };
 
@@ -220,6 +201,18 @@ export default function CalendarView({
       getMonthRoutines();
       // console.warn(currentMonth, "지금 몇달");
     }, [userId, currentMonth, isCheckedChange])
+    // }, [userId, todayString])
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      currentMonth === 12
+        ? setIsRightArrowDisabled(true)
+        : setIsRightArrowDisabled(false);
+      currentMonth === 1
+        ? setIsLeftArrowDisabled(true)
+        : setIsLeftArrowDisabled(false);
+    }, [currentMonth])
     // }, [userId, todayString])
   );
   return (
@@ -247,7 +240,11 @@ export default function CalendarView({
         }}
         monthFormat={"yyyy년 MM월"}
         markedDates={marked}
-        // maxDate={'2022-05-30'}
+        maxDate={"2022-12-31"}
+        minDate={"2022-01-01"}
+        // enableSwipeMonths
+        disableArrowRight={isRightArrowDisabled}
+        disableArrowLeft={isLeftArrowDisabled}
       />
       {/* <Agenda
         items={items}

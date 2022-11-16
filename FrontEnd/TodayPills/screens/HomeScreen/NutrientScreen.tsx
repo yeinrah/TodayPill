@@ -1,4 +1,12 @@
-import { StyleSheet, Text, View, Pressable, Image, ToastAndroid, FlatList } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  Image,
+  ToastAndroid,
+  FlatList,
+} from "react-native";
 import DetailedPillCard from "../../components/Cards/DetailedPillCard";
 import Card from "../../components/UI/Card";
 import BackgroundScreen2 from "../BackgroundScreen2";
@@ -6,6 +14,7 @@ import { useCallback, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fetchAllSupplements } from "../../API/supplementAPI";
 import { useFocusEffect } from "@react-navigation/native";
+import { boldWelcome } from "../../components/Data/fontFamilyObject";
 
 const NutrientScreen = ({ navigation, route }: any) => {
   const { nutId, nutrient } = route.params;
@@ -31,7 +40,10 @@ const NutrientScreen = ({ navigation, route }: any) => {
     if (pills.length > 0) {
       setIsLoading(false);
       if (isLoading) {
-        ToastAndroid.show(`${nutrient} 영양제가 ${pills.length}개 있습니다.`, 3)
+        ToastAndroid.show(
+          `${nutrient} 영양제가 ${pills.length}개 있습니다.`,
+          3
+        );
       }
     }
   }, [pills]);
@@ -40,7 +52,9 @@ const NutrientScreen = ({ navigation, route }: any) => {
     <BackgroundScreen2>
       <Card>
         <View style={styles.container}>
-          <Text style={styles.text}>{nutrient}</Text>
+          <Text style={{ ...styles.text, ...boldWelcome, letterSpacing: 1 }}>
+            {nutrient}
+          </Text>
           <View style={styles.buttonOuterContainer}>
             <Pressable
               android_ripple={{ color: "#4E736F" }}
@@ -52,37 +66,42 @@ const NutrientScreen = ({ navigation, route }: any) => {
                 });
               }}
             >
-              <Text style={styles.title}>영양제 추천받기</Text>
+              <Text
+                style={{ ...styles.title, ...boldWelcome, letterSpacing: 1 }}
+              >
+                영양제 추천받기
+              </Text>
             </Pressable>
           </View>
-            {isLoading ?
-              <View style={styles.loadingspinnercontainer}>
-                <Image
-                  source={require("../../assets/images/loadingspinner.gif")}
-                  style={styles.loadingspinner}
-                />
-              </View> :
-              <FlatList
-                data={pills}
-                renderItem={({ item }) => {
-                  return (
-                    <DetailedPillCard
-                      key={item.supplementId}
-                      userId={userId}
-                      supplementId={item.supplementId}
-                      image={item.image}
-                      brand={item.brand}
-                      supplementName={item.supplementName}
-                      like={item.like}
-                      note={item.note}
-                      additionalEfficacy={item.additionalEfficacy}
-                      ingredients={item.ingredients}
-                      caution={item.caution}
-                    />
-                  )
-                }}
+          {isLoading ? (
+            <View style={styles.loadingspinnercontainer}>
+              <Image
+                source={require("../../assets/images/loadingspinner.gif")}
+                style={styles.loadingspinner}
               />
-            }
+            </View>
+          ) : (
+            <FlatList
+              data={pills}
+              renderItem={({ item }) => {
+                return (
+                  <DetailedPillCard
+                    key={item.supplementId}
+                    userId={userId}
+                    supplementId={item.supplementId}
+                    image={item.image}
+                    brand={item.brand}
+                    supplementName={item.supplementName}
+                    like={item.like}
+                    note={item.note}
+                    additionalEfficacy={item.additionalEfficacy}
+                    ingredients={item.ingredients}
+                    caution={item.caution}
+                  />
+                );
+              }}
+            />
+          )}
         </View>
       </Card>
     </BackgroundScreen2>
@@ -95,13 +114,13 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     marginLeft: 20,
     marginTop: 30,
   },
   buttonOuterContainer: {
     borderRadius: 10,
-    width: "30%",
+    width: "35%",
     marginLeft: 20,
     overflow: "hidden",
     marginVertical: 10,
@@ -113,7 +132,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 15,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     textAlign: "center",
     color: "white",
   },

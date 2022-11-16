@@ -1,9 +1,17 @@
-import { StyleSheet, View, Image, Text, Pressable, ToastAndroid } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Image,
+  Text,
+  Pressable,
+  ToastAndroid,
+} from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useState, useEffect, useCallback } from "react";
 import { dislike, fetchLikeUsers, like } from "../../API/likeAPI";
 import { useFocusEffect } from "@react-navigation/native";
 import { cutLongTitle } from "../functions/CutLongTitle";
+import { boldWelcome, regularWelcome } from "../Data/fontFamilyObject";
 
 export interface PillProps {
   //   image: ImageSourcePropType;
@@ -48,7 +56,7 @@ const PillItem = (props: PillProps) => {
     await like(userId, supplementId);
     setIsLiked(true);
     props.onPressChange();
-    ToastAndroid.show("해당 상품이 나의 Pick에 추가됐습니다.", 3)
+    ToastAndroid.show("해당 상품이 나의 Pick에 추가됐습니다.", 3);
     // setIsLikeChange(true);
   };
 
@@ -59,7 +67,7 @@ const PillItem = (props: PillProps) => {
     setIsLiked(false);
 
     props.onPressChange();
-    ToastAndroid.show("해당 상품이 나의 Pick에서 제외됐습니다.", 3)
+    ToastAndroid.show("해당 상품이 나의 Pick에서 제외됐습니다.", 3);
     // setIsLikeChange(false);
   };
   // console.log(props.image);
@@ -99,7 +107,9 @@ const PillItem = (props: PillProps) => {
             />
           </Pressable>
           <View style={styles.likeCnt}>
-            <Text style={styles.likeText}>{likeCnt}</Text>
+            <Text style={{ ...styles.likeText, ...regularWelcome }}>
+              {likeCnt}
+            </Text>
           </View>
         </View>
         {/* <View style={styles.likeContainer}>
@@ -113,8 +123,12 @@ const PillItem = (props: PillProps) => {
         /> */}
       </View>
       <View style={styles.textcontainer}>
-        <Text style={styles.brandname}>{props.brand}</Text>
-        <Text style={styles.pillname}>{cutLongTitle(props.pill, 11)}</Text>
+        <Text style={{ ...styles.brandname, ...regularWelcome }}>
+          {props.brand}
+        </Text>
+        <Text style={{ ...styles.pillname, ...boldWelcome }}>
+          {cutLongTitle(props.pill, 11)}
+        </Text>
         {/* <Text style={styles.pillname}>{props.pill}</Text> */}
       </View>
     </View>
@@ -195,9 +209,9 @@ const styles = StyleSheet.create({
     color: "#B7B7B7",
   },
   pillname: {
-    marginTop: 2,
+    marginTop: 5,
     fontSize: 11,
-    fontWeight: "bold",
+    // fontWeight: "bold",
   },
 });
 

@@ -1,4 +1,13 @@
-import { StyleSheet, View, Text, Image, ToastAndroid, Pressable, FlatList } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  ToastAndroid,
+  Pressable,
+  FlatList,
+  KeyboardAvoidingView,
+} from "react-native";
 import BackgroundScreen2 from "../BackgroundScreen2";
 import Card from "../../components/UI/Card";
 import SearchBar from "../../components/TopBar/SearchBar";
@@ -7,6 +16,7 @@ import { useState, useCallback } from "react";
 import { fetchAllSupplements } from "../../API/supplementAPI";
 import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import GoBackBtn from "../../components/UI/GoBackBtn";
 
 export default function SearchScreen({ navigation, route }: any) {
   //searchResults: 검색어를 이름에 포함하는 영양제 배열
@@ -20,8 +30,8 @@ export default function SearchScreen({ navigation, route }: any) {
     if (word) {
       const supplements = await fetchAllSupplements();
       const filteredSupplements = supplements.filter((supplement) =>
-        supplement.supplementName.toLowerCase().includes(word.toLowerCase()
-      ));
+        supplement.supplementName.toLowerCase().includes(word.toLowerCase())
+      );
       if (filteredSupplements.length > 0) {
         setFailedSearch(false);
         await setSearchResults(filteredSupplements);
@@ -56,43 +66,52 @@ export default function SearchScreen({ navigation, route }: any) {
     <BackgroundScreen2>
       <Card>
         <View style={styles.container}>
-          <SearchBar navigation={navigation} word={route.params.word} isMain={route.params.isMain} />
-            {
-              isLoading ?
-              <View style={styles.loadingspinnercontainer}>
-                <Image
-                  source={require("../../assets/images/loadingspinner.gif")}
-                  style={styles.loadingspinner}
-                />
-              </View> :
-              failedSearch ?
-              <View style={styles.imagecontainer}>
-                <Image
-                  source={require("../../assets/images/noResult.png")}
-                  style={styles.image}
-                />
-              </View> :
-              <FlatList
-                data={searchResults}
-                renderItem={({ item }) => {
-                  return (
-                    <DetailedPillCard
-                      key={item.supplementId}
-                      userId={userId}
-                      supplementId={item.supplementId}
-                      image={item.image}
-                      brand={item.brand}
-                      supplementName={item.supplementName}
-                      like={item.like}
-                      note={item.note}
-                      additionalEfficacy={item.additionalEfficacy}
-                      ingredients={item.ingredients}
-                      caution={item.caution}
-                    />
-                  )
-                }}
+          <View style={styles.topContainer}>
+            <View style={styles.backBtn}>
+              <GoBackBtn onPress={() => navigation.pop()} size={36} />
+            </View>
+            <SearchBar
+              navigation={navigation}
+              word={route.params.word}
+              isMain={route.params.isMain}
+            />
+          </View>
+          {isLoading ? (
+            <View style={styles.loadingspinnercontainer}>
+              <Image
+                source={require("../../assets/images/loadingspinner.gif")}
+                style={styles.loadingspinner}
               />
-            }
+            </View>
+          ) : failedSearch ? (
+            <View style={styles.imagecontainer}>
+              <Image
+                source={require("../../assets/images/noResult.png")}
+                style={styles.image}
+              />
+            </View>
+          ) : (
+            <FlatList
+              data={searchResults}
+              renderItem={({ item }) => {
+                return (
+                  <DetailedPillCard
+                    key={item.supplementId}
+                    userId={userId}
+                    supplementId={item.supplementId}
+                    image={item.image}
+                    brand={item.brand}
+                    supplementName={item.supplementName}
+                    like={item.like}
+                    note={item.note}
+                    additionalEfficacy={item.additionalEfficacy}
+                    ingredients={item.ingredients}
+                    caution={item.caution}
+                  />
+                );
+              }}
+            />
+          )}
         </View>
       </Card>
     </BackgroundScreen2>
@@ -102,6 +121,16 @@ export default function SearchScreen({ navigation, route }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  topContainer: {
+    // paddingTop: 10,
+    paddingHorizontal: 20,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  backBtn: {
+    // marginRight: 10,
   },
   paginationcontainer: {
     flexDirection: "row",
@@ -150,6 +179,6 @@ const styles = StyleSheet.create({
   image: {
     width: "140%",
     height: "100%",
-    resizeMode: "contain"
+    resizeMode: "contain",
   },
 });
