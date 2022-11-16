@@ -38,7 +38,7 @@ const SearchBar = ({ navigation, word, isMain }: any) => {
   return (
     <View style={styles.container}>
       <TextInput
-        style={{ ...styles.textinput, ...regularWelcome }}
+        style={{ ...styles.textinput, ...regularWelcome, letterSpacing: 1 }}
         placeholder="어떤 영양제를 찾으세요?"
         onChangeText={(word) => setKeyword(word)}
         onSubmitEditing={() => Search()}
