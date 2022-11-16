@@ -12,7 +12,9 @@ export default function HomeScreen({ navigation }: any) {
     <BackgroundScreen2>
       <Card>
         <View style={styles.container}>
-          <SearchBar navigation={navigation} isMain={true} />
+          <View style={styles.searchBarContainer}>
+            <SearchBar navigation={navigation} isMain={true} />
+          </View>
           <ScrollView>
             <MainPill />
             <MainNutrient navigation={navigation} />
@@ -31,5 +33,8 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     marginBottom: 10,
+  },
+  searchBarContainer: {
+    alignItems: "center",
   },
 });

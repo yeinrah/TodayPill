@@ -16,6 +16,7 @@ import { useState, useCallback } from "react";
 import { fetchAllSupplements } from "../../API/supplementAPI";
 import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import GoBackBtn from "../../components/UI/GoBackBtn";
 
 export default function SearchScreen({ navigation, route }: any) {
   //searchResults: 검색어를 이름에 포함하는 영양제 배열
@@ -65,11 +66,16 @@ export default function SearchScreen({ navigation, route }: any) {
     <BackgroundScreen2>
       <Card>
         <View style={styles.container}>
-          <SearchBar
-            navigation={navigation}
-            word={route.params.word}
-            isMain={route.params.isMain}
-          />
+          <View style={styles.topContainer}>
+            <View style={styles.backBtn}>
+              <GoBackBtn onPress={() => navigation.pop()} size={36} />
+            </View>
+            <SearchBar
+              navigation={navigation}
+              word={route.params.word}
+              isMain={route.params.isMain}
+            />
+          </View>
           {isLoading ? (
             <View style={styles.loadingspinnercontainer}>
               <Image
@@ -115,6 +121,16 @@ export default function SearchScreen({ navigation, route }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  topContainer: {
+    // paddingTop: 10,
+    paddingHorizontal: 20,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  backBtn: {
+    // marginRight: 10,
   },
   paginationcontainer: {
     flexDirection: "row",
