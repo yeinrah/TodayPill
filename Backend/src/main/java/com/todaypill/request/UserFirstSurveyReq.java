@@ -45,10 +45,6 @@ public class UserFirstSurveyReq {
 	@NotNull(message = "바깥활동 여부 입력하세요.")
 	private Integer outdoor_activity;
 	
-	@ApiModelProperty(name = "신체에 있는 여러 병에 대한 정보", example = "를 받습니다.")
-	@NotNull(message = "안좋은 것들 입력하세요.")
-	private String bodyProblems;
-	
 	@ApiModelProperty(name = "균형식사 여부", example = "true")
 	@NotNull(message = "균형식사 입력하세요.")
 	private boolean balanced_meal;
