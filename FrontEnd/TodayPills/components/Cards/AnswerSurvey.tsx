@@ -23,7 +23,7 @@ const AnswerSurvey = ({
   const [maxPrice, setMaxPrice] = useState("");
   useFocusEffect(
     useCallback(() => {
-      if (nowStage !== 1) {
+      if (surveyData[nowStage][3] && surveyData[nowStage][3].length > 2) {
         setOptionClear(false);
         setMultiSelected("");
         setSelectedItem("");
@@ -39,8 +39,13 @@ const AnswerSurvey = ({
               <View style={styles.itemoutercontainer}>
                 {surveyData[nowStage][0] !== "allergy" &&
                   surveyData[nowStage][0] !== "lack" &&
+                  surveyData[nowStage][0] !== "symptom" &&
+                  surveyData[nowStage][0] !== "disease" &&
+                  surveyData[nowStage][0] !== "medicine" &&
                   surveyData[nowStage][0] !== "preferred_brand" &&
-                  surveyData[nowStage][0] !== "problem" && (
+                  surveyData[nowStage][0] !== "problem" &&
+                  surveyData[nowStage][0] !== "additionalEfficacy" &&
+                  surveyData[nowStage][0] !== "formula" && (
                     <Pressable
                       android_ripple={{ color: "#4E736F" }}
                       style={
@@ -63,12 +68,18 @@ const AnswerSurvey = ({
                   )}
                 {(surveyData[nowStage][0] !== "allergy" ||
                   surveyData[nowStage][0] !== "lack" ||
+                  surveyData[nowStage][0] !== "symptom" ||
+                  surveyData[nowStage][0] !== "disease" ||
+                  surveyData[nowStage][0] !== "medicine" ||
                   surveyData[nowStage][0] !== "preferred_brand" ||
-                  surveyData[nowStage][0] !== "problem") && (
+                  surveyData[nowStage][0] !== "problem" ||
+                  surveyData[nowStage][0] !== "additionalEfficacy" ||
+                  surveyData[nowStage][0] !== "formula") && (
                   <Pressable
                     android_ripple={{ color: "#4E736F" }}
                     style={
-                      (multiSelceted.indexOf(item) >= 0 && !optionClear) ||
+                      (multiSelceted.indexOf(item.replace(" ", "")) >= 0 &&
+                        !optionClear) ||
                       (index == 0 && optionClear)
                         ? styles.iteminnercontainerClicked
                         : styles.iteminnercontainer
@@ -84,20 +95,33 @@ const AnswerSurvey = ({
                           setSelectedItem("해당없음");
                           setOptionClear(true);
                         }
-                      } else if (multiSelceted.indexOf(item) >= 0) {
-                        setMultiSelected(multiSelceted.replace(item, ""));
-                        setSelectedItem(multiSelceted.replace(item, ""));
+                      } else if (
+                        multiSelceted.indexOf(item.replace(" ", "")) >= 0
+                      ) {
+                        setMultiSelected(
+                          multiSelceted.replace(item.replace(" ", ""), "")
+                        );
+                        setSelectedItem(
+                          multiSelceted.replace(item.replace(" ", ""), "")
+                        );
                       } else {
                         setOptionClear(false);
                         if (multiSelceted.indexOf("해당없음") >= 0) {
                           setMultiSelected(
-                            multiSelceted.replace("해당없음", "") + item
+                            multiSelceted.replace("해당없음", "") +
+                              item.replace(" ", "")
                           );
                           setSelectedItem(
-                            multiSelceted.replace("해당없음", "") + item
+                            multiSelceted.replace("해당없음", "") +
+                              item.replace(" ", "")
                           );
-                        } else setMultiSelected(multiSelceted + item);
-                        setSelectedItem(multiSelceted + item);
+                        } else
+                          setMultiSelected(
+                            multiSelceted + " " + item.replace(" ", "")
+                          );
+                        setSelectedItem(
+                          multiSelceted + " " + item.replace(" ", "")
+                        );
                       }
                     }}
                   >

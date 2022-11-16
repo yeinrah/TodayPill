@@ -35,6 +35,7 @@ const SecondAddSurvey = ({ navigation }: any) => {
       "추가로 원하는 효과가 있나요?",
       "선택해주세요",
       [
+        "해당없음",
         "스트레스 완화",
         "기억력 증진",
         "혈액 순환",
@@ -51,9 +52,14 @@ const SecondAddSurvey = ({ navigation }: any) => {
       "formula",
       "원하는 약의 형태를 선택해주세요",
       "선택해주세요",
-      ["캡슐형", "츄어블", "액체형", "파우더형"],
+      ["해당없음", "캡슐형", "츄어블", "액체형", "파우더형"],
     ],
-    ["sustainedRelease", "서방형제재를 원하세요?", "알려주세요", ["YES", "NO"]],
+    [
+      "sustainedRelease",
+      "서방형제재를 원하세요?",
+      "서방형 제제란 영양제 성분이 천천히 방출되게끔 만든 형태를 말해요. 더 자세한 정보는 AI 분석 탭에서 확인해보실 수 있어요.",
+      ["YES", "NO"],
+    ],
     [],
   ];
   useEffect(() => {
@@ -109,28 +115,22 @@ const SecondAddSurvey = ({ navigation }: any) => {
                       "@storage_nowNutrient"
                     );
                     setNowStage(nowStage + 1);
-                    let answer: boolean | number;
+                    let answer: boolean | number | string;
                     if (nowStage === 0) {
                       // let price = selectedItem.split(" ");
                       // answer = price;
                       answer = selectedItem.split(" ");
-                      console.warn(answer);
-                    } else if (nowStage === 1) {
-                      answer = SurveyQuestion.get(selectedItem);
-                      if (!answer) {
-                        setNowStage(nowStage);
-                        ToastAndroid.show("선택 해주세요", ToastAndroid.SHORT);
-                        return;
-                      }
-                    } else if (nowStage === 2) {
-                      answer = SurveyFormula.get(selectedItem);
-                      if (!answer) {
+                    } else if (nowStage === 1 || nowStage === 2) {
+                      // answer = SurveyQuestion.get(selectedItem);
+                      answer = selectedItem;
+                      console.log(answer, "what!!!");
+                      if (!answer || answer === " ") {
                         setNowStage(nowStage);
                         ToastAndroid.show("선택 해주세요", ToastAndroid.SHORT);
                         return;
                       }
                     } else if (surveyData[nowStage][3]) {
-                      selectedItem == 0 ? (answer = true) : (answer = false);
+                      selectedItem == 0 ? (answer = false) : (answer = true);
                     } else answer = selectedItem;
                     if (nowStage === surveyData.length - 2) setIsLoading(true);
                     if (nowStage !== 0) {
@@ -144,7 +144,6 @@ const SecondAddSurvey = ({ navigation }: any) => {
                     } else {
                       if (!answer[0] || !answer[1]) {
                         setNowStage(nowStage);
-                        console.log(answer[0], answer[1]);
                         ToastAndroid.show(
                           "가격을 입력해주세요",
                           ToastAndroid.SHORT
@@ -152,7 +151,6 @@ const SecondAddSurvey = ({ navigation }: any) => {
                       }
                       if (Number(answer[0]) > Number(answer[1])) {
                         setNowStage(nowStage);
-                        console.log(answer[0], answer[1]);
                         ToastAndroid.show(
                           "최소 가격이 더 큽니다.",
                           ToastAndroid.SHORT

@@ -12,11 +12,11 @@ export default function HomeScreen({ navigation }: any) {
     <BackgroundScreen2>
       <Card>
         <View style={styles.container}>
-          <SearchBar navigation={navigation} />
+          <SearchBar navigation={navigation} isMain={true} />
           <ScrollView>
             <MainPill />
             <MainNutrient navigation={navigation} />
-            <View style={styles.buttoncontainer}>
+            {/* <View style={styles.buttoncontainer}>
               <CustomBtn
                 buttonColor={accent}
                 title={"모든 영양제 보기"}
@@ -30,7 +30,7 @@ export default function HomeScreen({ navigation }: any) {
                   })
                 }
               />
-            </View>
+            </View> */}
           </ScrollView>
         </View>
       </Card>

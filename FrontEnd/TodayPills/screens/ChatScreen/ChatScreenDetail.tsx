@@ -1,13 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 import BackgroundScreen from "../BackgroundScreen";
-import { GiftedChat } from "react-native-gifted-chat";
+import { Bubble, GiftedChat } from "react-native-gifted-chat";
 import { over } from "stompjs";
 import SockJS from "sockjs-client";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Ionicons } from "@expo/vector-icons";
 import { getSpecificRoomChat } from "../../API/chatAPI";
 import { useFocusEffect } from "@react-navigation/native";
+import BackgroundScreen2 from "../BackgroundScreen2";
 var stompClient = null;
 
 const ChatScreenDetail = ({ navigation, route }: any) => {
@@ -43,15 +44,17 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
     }
     // setPublicChats(...publicChats, chatData);
   };
-  useFocusEffect(
-    useCallback(() => {
-      registerUser();
-      loadPrevData();
-    }, [])
-  );
   useEffect(() => {
-    console.log(publicChats, "thissssss");
-  }, [publicChats]);
+    registerUser();
+    loadPrevData();
+  }, []);
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     registerUser();
+  //     loadPrevData();
+  //   }, [])
+  // );
+  useEffect(() => {}, [publicChats]);
   const connect = () => {
     let Sock = new SockJS("http://k7a706.p.ssafy.io:8080/wss");
     stompClient = over(Sock);
@@ -174,8 +177,25 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
   const registerUser = () => {
     connect();
   };
+  const renderBubble = (props) => {
+    return (
+      <Bubble
+        {...props}
+        wrapperStyle={{
+          left: {
+            backgroundColor: "#d6d6d6",
+          },
+        }}
+        textStyle={{
+          left: {
+            color: "#fff",
+          },
+        }}
+      />
+    );
+  };
   return (
-    <BackgroundScreen>
+    <BackgroundScreen2>
       <>
         <View style={styles.chatTitle}>
           <Ionicons
@@ -186,7 +206,7 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
               navigation.goBack();
             }}
           />
-          <Text>채팅방</Text>
+          <Text style={styles.roomChat}>{`${route.params?.nutrient}`}</Text>
         </View>
         {userData.userId !== 0 && (
           <GiftedChat
@@ -194,6 +214,7 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
             alwaysShowSend={true}
             renderUsernameOnMessage={true}
             messages={publicChats}
+            renderBubble={renderBubble}
             textInputProps={{ keyboardAppearance: "dark", autoCorrect: false }}
             onSend={(messages) => {
               return sendValue(messages);
@@ -206,7 +227,7 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
           />
         )}
       </>
-    </BackgroundScreen>
+    </BackgroundScreen2>
   );
 };
 export default ChatScreenDetail;
@@ -229,7 +250,10 @@ const styles = StyleSheet.create({
   },
   chatTitle: {
     flexDirection: "row",
-    width: 100,
+    marginTop: 20,
+  },
+  roomChat: {
+    fontSize: 30,
   },
   // box: {
   //   flexDirection: "column-reverse",

@@ -5,20 +5,21 @@ import { useState } from "react";
 import CustomBtn from "../../components/UI/CustomBtn";
 import BackgroundScreen2 from "../BackgroundScreen2";
 import { boldWelcome } from "../../components/Data/fontFamilyObject";
+import BackgroundStartScreen from "../BackgroundStartScreen";
 
 const StartScreen = ({ navigation }: any) => {
   const [clikedStart, setClickedStart] = useState(false);
   return (
-    <BackgroundScreen2>
+    <BackgroundStartScreen>
       <View style={styles.container}>
         <View style={styles.titleContainer}>
-          <Text style={{ ...styles.subTitle, ...boldWelcome }}>
+          {/* <Text style={{ ...styles.subTitle, ...boldWelcome }}>
             내게 맞는 영양제 추천
-          </Text>
-          <View style={styles.mainTitle}>
+          </Text> */}
+          {/* <View style={styles.mainTitle}>
             <Text style={{ ...styles.text1, ...boldWelcome }}>오늘의 </Text>
             <Text style={{ ...styles.text2, ...boldWelcome }}>영양제</Text>
-          </View>
+          </View> */}
         </View>
         <View style={styles.btnGroup}>
           <CustomBtn
@@ -37,7 +38,7 @@ const StartScreen = ({ navigation }: any) => {
           />
         </View>
       </View>
-    </BackgroundScreen2>
+    </BackgroundStartScreen>
   );
 };
 

@@ -155,196 +155,197 @@ public class UserService {
 		if (userFirstSurveyReq.getLack().contains("과일")) {
 			eatData = eatData.replace("과일", "");
 		}
-		// 잘 먹고 있는 음식을 제외하고 부족한 데이터에서 걸리면 해당 영양소를 ++
-		if (eatData.contains("생선")) {
-			omega3 += 3;
+		//잘 먹고 있는 음식을 제외하고 부족한 데이터에서 걸리면 해당 영양소를 ++
+		if(eatData.contains("생선")) {
+			omega3+= 3;
 		}
-		if (eatData.contains("육류")) {
-			Fe += 2;
-			Zn += 2;
-			magnesium += 2;
+		if(eatData.contains("육류")) {
+			Fe+= 2;
+			Zn+= 2;
+			magnesium+=2;
 		}
-		if (eatData.contains("채소")) {
-			vitaminB += 2;
-			vitaminC += 2;
+		if(eatData.contains("채소")) {
+			vitaminB+=2;
+			vitaminC+=2;
 		}
-		if (eatData.contains("과일")) {
-			vitaminC += 2;
+		if(eatData.contains("과일")) {
+			vitaminC+=2;	
 		}
-
-		// 큰 약 잘 먹는지 -> 2차 설문용
-		if (userFirstSurveyReq.is_ok_big_pill()) {
-			// 여기는 뭐 별 상관 없을듯 그냥 값만 넘겨주면 됨
+		
+		//큰 약 잘 먹는지 -> 2차 설문용
+		if(userFirstSurveyReq.is_ok_big_pill()) {
+			//여기는 뭐 별 상관 없을듯 그냥 값만 넘겨주면 됨
 		}
-
-		// 앓는 증상
-		if (userFirstSurveyReq.getSymptom().contains("속쓰림")) {
-			multivitamin += 2;
+		
+		
+		
+		//앓는 증상
+		if(userFirstSurveyReq.getSymptom().contains("속쓰림")) {
+			multivitamin +=2;
 		}
-		if (userFirstSurveyReq.getSymptom().contains("변비")) {
-			lactobacillus += 2;
+		if(userFirstSurveyReq.getSymptom().contains("변비")) {
+			lactobacillus +=2;
 		}
-		if (userFirstSurveyReq.getSymptom().contains("설사")) {
-			lactobacillus += 2;
+		if(userFirstSurveyReq.getSymptom().contains("설사")) {
+			lactobacillus +=2;
 		}
-		if (userFirstSurveyReq.getSymptom().contains("소화장애")) {
-			multivitamin += 2;
+		if(userFirstSurveyReq.getSymptom().contains("소화장애")) {
+			multivitamin +=2;
 		}
-		if (userFirstSurveyReq.getSymptom().contains("요통")) {
-			vitaminD += 2;
+		if(userFirstSurveyReq.getSymptom().contains("요통")) {
+			vitaminD +=2;
 		}
-		if (userFirstSurveyReq.getSymptom().contains("편두통")) {
-			magnesium += 2;
+		if(userFirstSurveyReq.getSymptom().contains("편두통")) {
+			magnesium +=2;
 		}
-		if (userFirstSurveyReq.getSymptom().contains("과민성 대장 증후군")) {
-			lactobacillus += 2;
+		if(userFirstSurveyReq.getSymptom().contains("과민성 대장 증후군")) {
+			lactobacillus +=2;
 		}
-		if (userFirstSurveyReq.getSymptom().contains("아토피")) {
-			lactobacillus += 2;
+		if(userFirstSurveyReq.getSymptom().contains("아토피")) {
+			lactobacillus +=2;
 		}
-		if (userFirstSurveyReq.getSymptom().contains("비듬")) {
-			lactobacillus += 2;
+		if(userFirstSurveyReq.getSymptom().contains("비듬")) {
+			lactobacillus +=2;
 		}
-		if (userFirstSurveyReq.getSymptom().contains("야간 다리")) {
-			magnesium += 2;
+		if(userFirstSurveyReq.getSymptom().contains("야간 다리")) {
+			magnesium +=2;
 		}
-		if (userFirstSurveyReq.getSymptom().contains("구내염")) {
-			Zn += 2;
+		if(userFirstSurveyReq.getSymptom().contains("구내염")) {
+			Zn +=2;
 		}
-
-		// 앓고있는 질병
-		if (userFirstSurveyReq.getDisease().contains("빈혈")) {
-			Zn += 2;
+		
+		
+		
+		//앓고있는 질병
+		if(userFirstSurveyReq.getDisease().contains("빈혈")) {
+			Zn+=2;
 		}
-		if (userFirstSurveyReq.getDisease().contains("갑상선 질환")) {
-			Zn += 2;
+		if(userFirstSurveyReq.getDisease().contains("갑상선 질환")) {
+			Zn+=2;
 		}
-		if (userFirstSurveyReq.getDisease().contains("신장 질환")) {
-			multivitamin += 2;
+		if(userFirstSurveyReq.getDisease().contains("신장 질환")) {
+			multivitamin+=2;
 		}
-		if (userFirstSurveyReq.getDisease().contains("당뇨병")) {
-			vitaminB -= 5;
-			vitaminC += 2;
+		if(userFirstSurveyReq.getDisease().contains("당뇨병")) {
+			vitaminB-=5;
+			vitaminC +=2;
 		}
-		if (userFirstSurveyReq.getDisease().contains("통풍")) {
-			vitaminC += 2;
+		if(userFirstSurveyReq.getDisease().contains("통풍")) {
+			vitaminC+=2;
 		}
-		if (userFirstSurveyReq.getDisease().contains("고혈압")) {
-			Zn += 2;
-			vitaminC += 1;
+		if(userFirstSurveyReq.getDisease().contains("고혈압")) {
+			Zn+=2;
+			vitaminC+=1;
 		}
-		if (userFirstSurveyReq.getDisease().contains("고지혈증")) {
-			vitaminD += 2;
+		if(userFirstSurveyReq.getDisease().contains("고지혈증")) {
+			vitaminD+=2;
 		}
-		if (userFirstSurveyReq.getDisease().contains("치주염")) {
-			vitaminD += 2;
+		if(userFirstSurveyReq.getDisease().contains("치주염")) {
+			vitaminD+=2;
 		}
-		if (userFirstSurveyReq.getDisease().contains("심부전")) {
-			magnesium += 2;
+		if(userFirstSurveyReq.getDisease().contains("심부전")) {
+			magnesium+=2;
 		}
-
-		// 복용중인 약
-		if (userFirstSurveyReq.getMedicine().contains("피임약")) {
-			vitaminB += 2;
-			magnesium += 2;
-			milkcistle -= 2;
+		
+		
+		
+		//복용중인 약
+		if(userFirstSurveyReq.getMedicine().contains("피임약")) {
+			vitaminB+=2;
+			magnesium+=2;
+			milkcistle-=2;
 		}
-		if (userFirstSurveyReq.getMedicine().contains("제산제")) {
-			magnesium += 2;
+		if(userFirstSurveyReq.getMedicine().contains("제산제")) {
+			magnesium+=2;
 		}
-		if (userFirstSurveyReq.getMedicine().contains("혈압약")) {
-			Zn += 2;
+		if(userFirstSurveyReq.getMedicine().contains("혈압약")) {
+			Zn+=2;
 		}
-		if (userFirstSurveyReq.getMedicine().contains("이뇨제")) {
-			magnesium += 2;
+		if(userFirstSurveyReq.getMedicine().contains("이뇨제")) {
+			magnesium+=2;
 		}
-		if (userFirstSurveyReq.getMedicine().contains("부정맥")) {
-			magnesium -= 5;
+		if(userFirstSurveyReq.getMedicine().contains("부정맥")) {
+			magnesium-=5;
 		}
-		if (userFirstSurveyReq.getMedicine().contains("항경련제")) {
-			magnesium -= 5;
+		if(userFirstSurveyReq.getMedicine().contains("항경련제")) {
+			magnesium-=5;
 		}
-		if (userFirstSurveyReq.getMedicine().contains("갑상선")) {
-			Zn += 2;
-			vitaminB += 2;
+		if(userFirstSurveyReq.getMedicine().contains("갑상선")) {
+			Zn+=2;
+			vitaminB+=2;
 		}
-		if (userFirstSurveyReq.getMedicine().contains("항생제")) {
-			Zn -= 5;
-			magnesium -= 5;
-			lactobacillus += 2;
-		}
-
-		// 임신했을 때 철분 , 종합비타민,
-		if (userFirstSurveyReq.isPregnant()) {
-			Fe += 2;
-			multivitamin += 2;
-		}
-		// 흡연할 경우, 루테인이 안좋음
-		if (userFirstSurveyReq.isSmoking()) {
-			lutain -= 2;
-		}
-		// 무슨 알러지든 간에 항산화제인 비타민 C는 도움이 된다.
-		if (userFirstSurveyReq.getAllergy().contains("")) {
-			vitaminC += 2;
-			lactobacillus += 2;
-		}
-		if (userFirstSurveyReq.getAllergy().contains("꽃")) {
-			profolis -= 10;
-		}
-		if (userFirstSurveyReq.getAllergy().contains("고양이")) {
-			profolis += 2;
-			lactobacillus += 2;
-		}
-		if (userFirstSurveyReq.getAllergy().contains("비염")) {
-			vitaminD += 2;
-			profolis += 2;
-		}
-		// 여기도 레퍼 찾아라
-		if (userFirstSurveyReq.getAllergy().contains("허브")) {
-			milkcistle += 1;
-		}
-		if (userFirstSurveyReq.getAllergy().contains("생선")) {
-			omega3 -= 5;
-
-		}
-		if (userFirstSurveyReq.getAllergy().contains("계란")) {
-			collagen -= 5;
-		}
-		// 음주
-		if (userFirstSurveyReq.getDrink() == 0) {
-			milkcistle += 0;
-		} else if (userFirstSurveyReq.getDrink() == 1) {
-			milkcistle += 2;
-		} else if (userFirstSurveyReq.getDrink() == 2) {
-			milkcistle += 3;
-		} else if (userFirstSurveyReq.getDrink() == 3) {
-			milkcistle += 4;
+		if(userFirstSurveyReq.getMedicine().contains("항생제")) {
+			Zn-=5;
+			magnesium-=5;
+			lactobacillus+=2;
 		}
 
-		// 선호하는 브랜드명 -> 2차설문용
-		if (userFirstSurveyReq.getPreferred_brand().contains("")) {
+		//임신했을 때 철분 , 종합비타민, 
+		if(userFirstSurveyReq.isPregnant()) {
+			Fe+=2;
+			multivitamin+=2;
 		}
-		// 고민거리도 뭐 받아서 해주면 될듯(버튼으로 체크하는 형식) 피로감, 눈건강, 피부건강 등 이거는 사용자가 원하는 것이기 때문에 높은 +
-		if (userFirstSurveyReq.getProblem().contains("피로감")) {
+		//흡연할 경우, 루테인이 안좋음
+		if(userFirstSurveyReq.isSmoking()) {
+			lutain-=2;
+		}
+		//무슨 알러지든 간에 항산화제인 비타민 C는 도움이 된다.
+		if(userFirstSurveyReq.getAllergy().contains("")) {
+			vitaminC+=2;
+			lactobacillus+=2;
+		}
+		if(userFirstSurveyReq.getAllergy().contains("꽃")) {
+			profolis-=10;
+		}
+		if(userFirstSurveyReq.getAllergy().contains("고양이")) {
+			profolis+=2;
+			lactobacillus+=2;
+		}
+		if(userFirstSurveyReq.getAllergy().contains("비염")) {
+			vitaminD +=2;
+			profolis +=2;
+		}
+		//여기도 레퍼 찾아라
+		if(userFirstSurveyReq.getAllergy().contains("허브")) {
+			milkcistle+=1;
+		}
+		if(userFirstSurveyReq.getAllergy().contains("생선")) {
+			omega3-=5;
+			
+		}
+		if(userFirstSurveyReq.getAllergy().contains("계란")) {
+			collagen-=5;
+		}
+		//음주
+		if(userFirstSurveyReq.getDrink()==0) {
+			milkcistle+=0;
+		}else if(userFirstSurveyReq.getDrink()==1) {
+			milkcistle+=2;
+		}else if(userFirstSurveyReq.getDrink()==2) {
+			milkcistle+=3;
+		}else if(userFirstSurveyReq.getDrink()==3) {
+			milkcistle+=4;
+		}
+		
+		//선호하는 브랜드명 -> 2차설문용
+		if(userFirstSurveyReq.getPreferred_brand().contains("")) {}
+		//고민거리도 뭐 받아서 해주면 될듯(버튼으로 체크하는 형식) 피로감, 눈건강, 피부건강 등 이거는 사용자가 원하는 것이기 때문에 높은 +
+		if(userFirstSurveyReq.getProblem().contains("피로감")) {
 			vitaminB += 5;
 		}
-		if (userFirstSurveyReq.getProblem().contains("눈건강")) {
+		if(userFirstSurveyReq.getProblem().contains("눈건강")) {
 			lutain += 5;
 		}
-		if (userFirstSurveyReq.getProblem().contains("피부건강")) {
+		if(userFirstSurveyReq.getProblem().contains("피부건강")) {
 			collagen += 5;
 		}
-		// 햇빛 많이쬐면 쬔 만큼 비타민D 변수 조절
-		if (userFirstSurveyReq.getOutdoor_activity() == 1)
-			vitaminD += 3;
-		else if (userFirstSurveyReq.getOutdoor_activity() == 2)
-			vitaminD += 2.5;
-		else if (userFirstSurveyReq.getOutdoor_activity() == 3)
-			vitaminD += 1;
-		else if (userFirstSurveyReq.getOutdoor_activity() == 4)
-			vitaminD += 0.5;
-
-		Map<String, Integer> map = new HashMap<String, Integer>();
+		//햇빛 많이쬐면 쬔 만큼 비타민D 변수 조절
+		if(userFirstSurveyReq.getOutdoor_activity()==1)vitaminD+=3;
+		else if(userFirstSurveyReq.getOutdoor_activity()==2)vitaminD+=2.5;
+		else if(userFirstSurveyReq.getOutdoor_activity()==3)vitaminD+=1;
+		else if(userFirstSurveyReq.getOutdoor_activity()==4)vitaminD+=0.5;
+		
+		Map<String,Integer> map = new HashMap<String, Integer>();
 		map.put("비타민 B", vitaminB);
 		map.put("비타민 C", vitaminC);
 		map.put("비타민 D", vitaminD);
@@ -366,26 +367,31 @@ public class UserService {
 			}
 		});
 		String[] arr = new String[3];
-		for (int i = 0; i < 3; i++) {
-			arr[i] = (list.get(i)).getKey();
+		for(int i=0; i<3;i++) {
+			arr[i]=(list.get(i)).getKey();
 		}
+		
 
-		CommonQuestion cq = CommonQuestion.builder().userId(userFirstSurveyReq.getUserId())
-				.pregnant(userFirstSurveyReq.isPregnant()).smoking(userFirstSurveyReq.isSmoking())
-				.allergy(userFirstSurveyReq.getAllergy()).outdoor_activity(userFirstSurveyReq.getOutdoor_activity())
-				.balanced_meal(userFirstSurveyReq.isBalanced_meal()).lack(userFirstSurveyReq.getLack())
+		CommonQuestion cq = CommonQuestion.builder()
+				.userId(userFirstSurveyReq.getUserId())
+				.pregnant(userFirstSurveyReq.isPregnant())
+				.smoking(userFirstSurveyReq.isSmoking())
+				.allergy(userFirstSurveyReq.getAllergy())
+				.outdoor_activity(userFirstSurveyReq.getOutdoor_activity())
+				.balanced_meal(userFirstSurveyReq.isBalanced_meal())
+				.lack(userFirstSurveyReq.getLack())
 				.is_ok_big_pill(userFirstSurveyReq.is_ok_big_pill())
 				.heartburn(userFirstSurveyReq.getSymptom().contains("속쓰림"))
-				.constipation(userFirstSurveyReq.getSymptom().contains("변비"))
-				.diarrhea(userFirstSurveyReq.getSymptom().contains("설사"))
-				.digestiveDisorder(userFirstSurveyReq.getSymptom().contains("소화장애"))
-				.migraine(userFirstSurveyReq.getSymptom().contains("편두통"))
-				.backache(userFirstSurveyReq.getSymptom().contains("요통"))
-				.bowelSyndrome(userFirstSurveyReq.getSymptom().contains("과민성 대장"))
-				.atopy(userFirstSurveyReq.getSymptom().contains("아토피"))
-				.dandruff(userFirstSurveyReq.getSymptom().contains("비듬"))
-				.stomatitis(userFirstSurveyReq.getSymptom().contains("구내염"))
-				.legCramp(userFirstSurveyReq.getSymptom().contains("다리 경련"))
+				.constipation(	userFirstSurveyReq.getSymptom().contains("변비"))
+				.diarrhea(	userFirstSurveyReq.getSymptom().contains("설사"))
+				.digestiveDisorder(	userFirstSurveyReq.getSymptom().contains("소화장애"))
+				.migraine(	userFirstSurveyReq.getSymptom().contains("편두통"))
+				.backache(	userFirstSurveyReq.getSymptom().contains("요통"))
+				.bowelSyndrome(	userFirstSurveyReq.getSymptom().contains("과민성 대장"))
+				.atopy(	userFirstSurveyReq.getSymptom().contains("아토피"))
+				.dandruff(	userFirstSurveyReq.getSymptom().contains("비듬"))
+				.stomatitis(	userFirstSurveyReq.getSymptom().contains("구내염"))
+				.legCramp(	userFirstSurveyReq.getSymptom().contains("다리 경련"))
 				.anemia(userFirstSurveyReq.getDisease().contains("빈혈"))
 				.thyroidDisease(userFirstSurveyReq.getDisease().contains("빈혈"))
 				.kidney_disease(userFirstSurveyReq.getDisease().contains("신장 질환"))
@@ -404,7 +410,8 @@ public class UserService {
 				.levothyroxine(userFirstSurveyReq.getMedicine().contains("갑상선"))
 				.antibiotics(userFirstSurveyReq.getMedicine().contains("항생제"))
 				.physicalActivity(userFirstSurveyReq.getMedicine().contains("신체"))
-				.preferred_brand(userFirstSurveyReq.getPreferred_brand()).problem(userFirstSurveyReq.getProblem())
+				.preferred_brand(userFirstSurveyReq.getPreferred_brand())
+				.problem(userFirstSurveyReq.getProblem())
 				.build();
 		commonQuestionRepository.save(cq);
 		return arr;

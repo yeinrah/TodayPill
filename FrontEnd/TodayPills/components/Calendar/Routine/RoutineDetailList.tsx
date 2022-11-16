@@ -6,6 +6,7 @@ import RoutineItemDetail from "./RoutineItemDetail";
 import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fetchAllRoutineSupplements } from "../../../API/routineAPI";
+import { strTimeToNum } from "../../functions/strTimeToNum";
 
 // export interface PillScheduleProps {
 //   selectedDate: string;
@@ -22,6 +23,11 @@ export default function RoutineDetailList() {
     const allMyRoutines = await fetchAllRoutineSupplements(userId);
     const visibleRoutineList = allMyRoutines.filter((eachRoutine: any) => {
       return !eachRoutine.deletedSince;
+    });
+    visibleRoutineList.sort((a: any, b: any) => {
+      if (strTimeToNum(a.time) > strTimeToNum(b.time)) return 1;
+      if (strTimeToNum(a.time) === strTimeToNum(b.time)) return 0;
+      if (strTimeToNum(a.time) < strTimeToNum(b.time)) return -1;
     });
 
     setPillRoutineDetailList(visibleRoutineList);

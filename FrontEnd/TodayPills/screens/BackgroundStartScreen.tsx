@@ -8,7 +8,7 @@ import { primary, secondary } from "../constants/Colors";
 
 import { IBackground, RootTabScreenProps } from "../types";
 
-export default function BackgroundScreen2({ children }: IBackground) {
+export default function BackgroundStartScreen({ children }: IBackground) {
   return (
     // <LinearGradient
     //   colors={[primary, secondary]}
@@ -18,27 +18,16 @@ export default function BackgroundScreen2({ children }: IBackground) {
     //   // locations={[0, 0.5, 0.6]}
     //   style={styles.rootScreen}
     // >
-      <ImageBackground
-        source={require("../assets/images/background3.png")}
-        resizeMode="cover"
-        style={styles.rootScreen}
-        imageStyle={styles.backgroundImage}
-      >
-        <View style={styles.logoContainer}>
-          <View style={styles.imageContainer}>
-            <Image
-              style={styles.image}
-              source={require("../assets/images/logo3.png")}
-            />
-          </View>
-          {/* <Text style={styles.logoColor1}>
-            오늘의 <Text style={styles.logoColor2}>영양제</Text>
-          </Text> */}
-        </View>
-        {/* <Card> */}
-        <View style={styles.children}>{children}</View>
-        {/* </Card> */}
-      </ImageBackground>
+    <ImageBackground
+      source={require("../assets/images/backgroundStart.png")}
+      resizeMode="cover"
+      style={styles.rootScreen}
+      imageStyle={styles.backgroundImage}
+    >
+      {/* <Card> */}
+      <View style={styles.children}>{children}</View>
+      {/* </Card> */}
+    </ImageBackground>
     // </LinearGradient>
   );
 }

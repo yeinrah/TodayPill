@@ -122,7 +122,7 @@ public class Codef {
 //			}
 		
 //			accountMap.put("data",result);
-			Thread.sleep(15000);
+			Thread.sleep(20000);
 			result = codef.requestCertification(productUrl, EasyCodefServiceType.DEMO, accountMap);
 
 			//resReferenceList를 가져오는 것. 실제로는 resPreviewList를 가져오는게 맞는듯??

@@ -57,19 +57,36 @@ public class RecommendService {
                 Integer labScore = 0;
                 String additionalEfficacy = "";
                 if ( supplement.getCategory().contains(userSecondSurveyReq.getCategory())) {
-                	
+
                     score = (commonQuestion.getPreferred_brand().equals(supplement.getBrand()) ? 3 : 0)
                             + supplement.getBioavailability()
                             + (commonQuestion.isConstipation() ? supplement.getLaxative() : 0)
                             + (commonQuestion.isKidney_disease() ? supplement.getKidneyDisease() : 0)
                             + (supplement.getConsumerLabScore() == null ? labScore : supplement.getConsumerLabScore())
-                            + (supplement.getAdditionalEfficacy() != null && supplement.getAdditionalEfficacy().contains(userSecondSurveyReq.getAdditionalEfficacy()) ? 3 : 0)
+//                            + (supplement.getAdditionalEfficacy() != null && supplement.getAdditionalEfficacy().contains(userSecondSurveyReq.getAdditionalEfficacy()) ? 3 : 0)
                             + (commonQuestion.is_ok_big_pill() && supplement.getRequiredCount().contains("1") ? 3 : -3)
 //                            + (commonQuestion.is_ok_big_pill() ? supplement.getPillSize() : 0)
                             + (userSecondSurveyReq.getFormula().equals(supplement.getFormula()) ? 3 : 0)
                             + (userSecondSurveyReq.getSustainedRelease() && supplement.getSustainedRelease() ? 3 : 0)
                     		+ (supplement.getBrand().contains(commonQuestion.getPreferred_brand()) ? 10 : 0)
                     		+	(userSecondSurveyReq.getLowerPriceLimit() < supplement.getPrice() && userSecondSurveyReq.getUpperPriceLimit() > supplement.getPrice() ? 10 : 0);
+                    
+
+              	String[] additionalArr = userSecondSurveyReq.getAdditionalEfficacy().split(" ");
+              	for(int i=0; i<additionalArr.length;i++) {
+              		if(additionalArr[i].equals("스트레스완화")) additionalArr[i] = "스트레스 완화";
+              		if(additionalArr[i].equals("기억력증진")) additionalArr[i] = "기억력 증진";
+              		if(additionalArr[i].equals("혈액순환")) additionalArr[i] = "혈액 순환";
+              		if(additionalArr[i].equals("에너지증진")) additionalArr[i] = "에너지 증진";
+              		if(additionalArr[i].equals("근육통완화")) additionalArr[i] = "근육통 완화";
+              		if(additionalArr[i].equals("면역증진")) additionalArr[i] = "면역 증진";
+              		if(additionalArr[i].equals("신경통완화")) additionalArr[i] = "신경통 완화";
+              		if(additionalArr[i].equals("관절건강")) additionalArr[i] = "관절 건강";
+              		if(additionalArr[i].equals("다이어트")) additionalArr[i] = "다이어트";
+              		if(additionalArr[i].equals("질건강")) additionalArr[i] = "질 건강";
+              		
+              		if(supplement.getAdditionalEfficacy().contains(additionalArr[i])) score+=3;    		
+              	}
                     //}
                 }
                 supplementAndScoreRes.add(new SupplementAndScoreRes(supplement.getSupplementId(),supplement.getCategory()

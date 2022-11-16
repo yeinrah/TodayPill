@@ -81,8 +81,9 @@ const PersonalRecommendationScreen = ({ navigation }: any) => {
         </View>
         <View style={styles.pillBox}>
           <ImageBackground
-            source={require("../../assets/images/pillbag.png")}
+            source={require("../../assets/images/pinkPillBag.png")}
             style={styles.inPillDetail}
+            resizeMode="cover"
           >
             <View style={styles.inTextContainer}>
               <Text>
@@ -145,8 +146,9 @@ const styles = StyleSheet.create({
   inPillDetail: {
     width: 200,
     height: 200,
-    backgroundColor: "grey",
+    backgroundColor: "#e0e0e0",
     marginTop: 50,
+    borderRadius: 10,
   },
   pillBox: { alignItems: "center" },
   listGroup: { marginLeft: 25, marginTop: 30 },
