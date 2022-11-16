@@ -14,11 +14,9 @@ import LoadingSpinner from "../../UI/LoadingSpinner";
 const weekDays = ["월", "화", "수", "목", "금", "토", "일"];
 
 export default function WeekDayList(props: any) {
-  const daysSet = new Set();
   const [isLoading, setIsLoading] = useState(true);
-  const [isDayLoading, setIsDayLoading] = useState(true);
+  // const [isDayLoading, setIsDayLoading] = useState(true);
   const [takenWeekDays, setTakenWeekDays] = useRecoilState(takenWeekDaysState);
-  const [selectedDays, setSelectedDays] = useState(daysSet);
   const [daysNames, setDaysNames] = useState("");
 
   const [isSelectCompleted, setIsSelectCompleted] = useState(false);
@@ -28,31 +26,9 @@ export default function WeekDayList(props: any) {
   const submitDaysNames = takenWeekDays.map(
     (eachDayId: number) => weekDays[eachDayId - 1]
   );
-  // const finalSubmitDaysNames = getDaysName(submitDaysNames);
+
   const finalSubmitDaysNames = getDaysName(submitDaysNames);
-  // let finalSubmitDaysNames: string = submitDaysNames.join(", ");
-  // if (submitDaysNames.length === 7) {
-  //   finalSubmitDaysNames = "매일";
-  // } else if (finalSubmitDaysNames === "월, 화, 수, 목, 금") {
-  //   finalSubmitDaysNames = "주중";
-  // } else if (finalSubmitDaysNames === "토, 일") {
-  //   finalSubmitDaysNames = "주말";
-  // }
 
-  // props.onChangeDaysName(finalSubmitDaysNames);
-
-  // const daySelectHandler = (dayId: number) => {
-  //   setSelectedDays((selectedDays) => selectedDays.add(dayId));
-  //   // props.getSubmitted(false);
-  //   setIsSelectCompleted(false);
-  // };
-
-  // const deleteDayHandler = (dayId: number) => {
-  //   setSelectedDays((selectedDays) => {
-  //     selectedDays.delete(dayId);
-  //     return selectedDays;
-  //   });
-  // };
   useFocusEffect(
     useCallback(() => {
       if (props.updateOrNot === "false") {
@@ -68,7 +44,7 @@ export default function WeekDayList(props: any) {
             });
           console.warn(takenDaysNumberArray);
           setTakenWeekDays(takenDaysNumberArray);
-          setIsDayLoading(false);
+          // setIsDayLoading(false);
         }
       }
       setIsLoading(false);
@@ -99,12 +75,8 @@ export default function WeekDayList(props: any) {
                 key={idx}
                 day={day}
                 dayId={idx + 1}
-                isDayLoading={isDayLoading}
-                // selectedDayIdsArray={takenWeekDays}
-                // daySelectHandler={daySelectHandler}
-                // deleteDayHandler={deleteDayHandler}
-                // submitChangeHandler={submitChangeHandler}
-                // isDaysSelectCompleted={isSelectCompleted}
+                takeDays={takenWeekDays}
+                // isDayLoading={isDayLoading}
               />
             ))}
           </View>

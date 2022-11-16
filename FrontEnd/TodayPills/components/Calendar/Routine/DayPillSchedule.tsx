@@ -14,58 +14,30 @@ import { pillRoutineCheckChangeState } from "../../../Recoil/atoms/calendar";
 import { boldWelcome } from "../../Data/fontFamilyObject";
 import { strTimeToNum } from "../../functions/strTimeToNum";
 import LoadingSpinner from "../../UI/LoadingSpinner";
+import { getDateStr } from "../../functions/getDateStr";
 
 export interface PillScheduleProps {
   selectedDate: string;
 }
 
 const days = ["no", "월", "화", "수", "목", "금", "토", "일"];
+const todayDateNumber = parseInt(getDateStr(new Date()).split("-").join(""));
 export default function DayPillSchedule({ selectedDate }: PillScheduleProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [isCheckedChange, setIsCheckedChange] = useRecoilState(
     pillRoutineCheckChangeState
   );
   const navigation = useNavigation<any>();
-  // console.log(selectedDate, "캘린더 날짜");
   const [userId, setUserId] = useState(0);
   const [dayId, setDayId] = useState(0);
   const [dayStrOfWeek, setDayStrOfWeek] = useState("");
   const [pillRoutine, setPillRoutine] = useState([]);
   const [pillRoutineCheck, setPillRoutineCheck] = useState([]);
-  // const [isCheckedChange, setIsCheckedChange] = useState(false);
+  const [isCheckVisible, setIsCheckVisible] = useState(true);
   const dayString = `${deleteZero(selectedDate.slice(5, 7))}월 ${deleteZero(
     selectedDate.slice(8, 10)
   )}일 ${dayStrOfWeek}요일`;
-  // )}일 ${dayOfWeek}요일`;
-
-  // [
-  //   {
-  //     day: "3",
-  //     deletedSince: '"2022-11-10"',
-  //     pushAlarm: true,
-  //     routineId: 4,
-  //     supplementId: 222,
-  //     tablets: 7,
-  //     time: "19:39",
-  //     userId: 2,
-  //   },
-  //   {
-  //     day: "3, 4",
-  //     deletedSince: null,
-  //     pushAlarm: true,
-  //     routineId: 5,
-  //     supplementId: 28,
-  //     tablets: 3,
-  //     time: "03:40",
-  //     userId: 2,
-  //   },
-  // ];
-
-  // const changeCheckHandler = () => {
-  //   setIsCheckedChange((isChanged) => !isChanged);
-  // };
   const addRoutineHandler = () => {
-    // 밑에 userId 변경!!
     navigation.navigate("MyPills", { userId: userId });
   };
 
@@ -98,15 +70,23 @@ export default function DayPillSchedule({ selectedDate }: PillScheduleProps) {
       const dayOfWeek = getDayOfWeek(selectedDate);
       // setDayStrOfWeek(dayOfWeek);
       // setDayId(days.indexOf(dayOfWeek));
-
+      const judgeIsFutureOrNot = (selectedDateStr: string) => {
+        const selectedDateNumber = parseInt(
+          selectedDateStr.split("-").join("")
+        );
+        // console.warn(todayDateNumber, selectedDateNumber);
+        return todayDateNumber < selectedDateNumber;
+      };
+      if (judgeIsFutureOrNot(selectedDate)) {
+        setIsCheckVisible(false);
+      } else {
+        setIsCheckVisible(true);
+      }
       getMyEachRoutine();
       setIsLoading(false);
       // }, [userId, isCheckedChange, selectedDate, dayId, dayStrOfWeek])
     }, [userId, selectedDate, isCheckedChange])
   );
-
-  // [{"addedSince": "2022-11-11", "day": "1, 2, 3, 4, 5", "deletedSince": null,
-  //  "pushAlarm": false, "routineId": 10, "supplementId": 1, "tablets": 2, "taken": false, "time": "08:30", "userId": 2}]
 
   return (
     <>
@@ -115,8 +95,18 @@ export default function DayPillSchedule({ selectedDate }: PillScheduleProps) {
       ) : (
         <View style={styles.container}>
           <View style={styles.eachDateContainer}>
-            <View style={styles.takenDateContainer}>
-              <Text style={{ ...styles.takenDate, ...boldWelcome }}>
+            <View
+              style={{
+                ...styles.takenDateContainer,
+                backgroundColor: isCheckVisible ? accent : "#B7B7B7",
+              }}
+            >
+              <Text
+                style={{
+                  ...styles.takenDate,
+                  ...boldWelcome,
+                }}
+              >
                 {dayString}
               </Text>
             </View>
@@ -128,6 +118,7 @@ export default function DayPillSchedule({ selectedDate }: PillScheduleProps) {
               />
             </Pressable>
           </View>
+
           <View style={styles.pillRoutineContainer}>
             {pillRoutine.map((rout, idx) => (
               <RoutineItem
@@ -139,6 +130,7 @@ export default function DayPillSchedule({ selectedDate }: PillScheduleProps) {
                 cnt={rout.tablets}
                 taken={rout.taken}
                 calendarId={rout.calendarId}
+                isCheckVisible={isCheckVisible}
                 // changeCheckHandler={changeCheckHandler}
               />
             ))}
@@ -172,7 +164,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 30,
     // backgroundColor: "#FFEFFC",
-    backgroundColor: accent,
+    // backgroundColor: accent,
   },
   takenDate: {
     fontSize: 24,

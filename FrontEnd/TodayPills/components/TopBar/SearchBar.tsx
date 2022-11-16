@@ -1,7 +1,15 @@
-import { View, TextInput, StyleSheet, Alert, Keyboard } from "react-native";
+import {
+  View,
+  TextInput,
+  StyleSheet,
+  Alert,
+  Keyboard,
+  KeyboardAvoidingView,
+} from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { useRef, useState } from "react";
+import { regularWelcome } from "../Data/fontFamilyObject";
 
 const SearchBar = ({ navigation, word, isMain }: any) => {
   const [keyword, setKeyword] = useState(word);
@@ -10,7 +18,10 @@ const SearchBar = ({ navigation, word, isMain }: any) => {
     if (keyword) {
       const realKeyword = keyword.trim();
       if (isMain) {
-        navigation.navigate("SearchScreen", { word: realKeyword, isMain: true });
+        navigation.navigate("SearchScreen", {
+          word: realKeyword,
+          isMain: true,
+        });
       } else {
         navigation.navigate("Search", { word: realKeyword, isMain: false });
       }
@@ -26,7 +37,7 @@ const SearchBar = ({ navigation, word, isMain }: any) => {
   return (
     <View style={styles.container}>
       <TextInput
-        style={styles.textinput}
+        style={{ ...styles.textinput, ...regularWelcome }}
         placeholder="어떤 영양제를 찾으세요?"
         onChangeText={(word) => setKeyword(word)}
         onSubmitEditing={() => Search()}
