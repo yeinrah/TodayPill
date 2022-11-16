@@ -9,6 +9,10 @@ import BackgroundScreen2 from "./BackgroundScreen2";
 import LoadingSpinner from "../components/UI/LoadingSpinner";
 import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  boldWelcome,
+  regularWelcome,
+} from "../components/Data/fontFamilyObject";
 // import { getDeviceToken } from "../utils/Notifications";
 
 export default function CalendarScreen({
@@ -50,8 +54,11 @@ export default function CalendarScreen({
       <Card>
         <ScrollView style={styles.scrollView}>
           <View style={styles.titleContainer}>
-            <Text style={styles.title}>
-              <Text style={styles.name}>{UserName} </Text>님의 캘린더
+            <Text style={{ ...styles.title, ...regularWelcome }}>
+              <Text style={{ ...styles.name, ...boldWelcome }}>
+                {UserName}{" "}
+              </Text>
+              님의 캘린더
             </Text>
             {/* <View
             style={styles.separator}
@@ -112,9 +119,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 15,
     textAlign: "center",
+    letterSpacing: 1,
   },
   name: {
     fontSize: 20,
-    fontWeight: "bold",
+    // fontWeight: "bold",
   },
 });

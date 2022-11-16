@@ -6,6 +6,7 @@ import BackgroundScreen from "../BackgroundScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getUserInfoByEmail } from "../../API/userAPI";
 import BackgroundScreen2 from "../BackgroundScreen2";
+import { Ionicons } from "@expo/vector-icons";
 
 const REST_API_KEY = "acdc3561e2faeeafdcf245c2d609bd5d";
 let access_token: string;
@@ -81,33 +82,44 @@ const KakaoScreen = ({ navigation }: any) => {
   };
   return (
     <BackgroundScreen2>
-      <WebView
-        style={{ flex: 1 }}
-        source={{
-          // uri: `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`,
-          uri: kakaoLogin_URI,
-        }}
-        injectedJavaScript={INJECTED_JAVASCRIPT}
-        javaScriptEnabled
-        // onMessage={async (event) => {
-        //   // console.log(event);
-        //   // const data = event.nativeEvent.url;
-        //   const data =
-        //     "http://localhost:8080/api/user/login?code=JODvqeQDcWjoopjVtFsnTjmdkaq-qnSvkqbHJjQ4aPm1peujZDopTml-8rwqpJrFWjRMJQopcBQAAAGEHQx_ng";
+      <>
+        <Ionicons
+          name="arrow-back"
+          size={48}
+          color="black"
+          onPress={() => {
+            navigation.replace("Start");
+          }}
+        />
 
-        //   getCode(data);
-        // }}
-        onShouldStartLoadWithRequest={(event) => {
-          const { url } = event;
-          if (!url.includes("kakao.com")) {
-            getCode(url);
-            return false;
-          }
-          return true;
-          // getUser(event);
-          // return true;
-        }}
-      />
+        <WebView
+          style={{ flex: 1 }}
+          source={{
+            // uri: `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`,
+            uri: kakaoLogin_URI,
+          }}
+          injectedJavaScript={INJECTED_JAVASCRIPT}
+          javaScriptEnabled
+          // onMessage={async (event) => {
+          //   // console.log(event);
+          //   // const data = event.nativeEvent.url;
+          //   const data =
+          //     "http://localhost:8080/api/user/login?code=JODvqeQDcWjoopjVtFsnTjmdkaq-qnSvkqbHJjQ4aPm1peujZDopTml-8rwqpJrFWjRMJQopcBQAAAGEHQx_ng";
+
+          //   getCode(data);
+          // }}
+          onShouldStartLoadWithRequest={(event) => {
+            const { url } = event;
+            if (!url.includes("kakao.com")) {
+              getCode(url);
+              return false;
+            }
+            return true;
+            // getUser(event);
+            // return true;
+          }}
+        />
+      </>
     </BackgroundScreen2>
   );
 };

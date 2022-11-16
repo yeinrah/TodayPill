@@ -73,20 +73,23 @@ const DetailedPillCard = (props: any) => {
             {props.supplementName}
           </Text>
           <View style={styles.featurecontainer}>
-            {props.additionalEfficacy ?
-              props.additionalEfficacy.split(", ").filter((efficacy, idx) => idx < 4).map((efficacy, idx) => (
-                <Text
-                  key={idx}
-                  style={[styles.feature, styles.mintfeature]}
-                >
-                  {efficacy}
-                </Text>
-              )) :
-              props.note ?
-                <Text style={[styles.feature, styles.pinkfeature]}>
-                  {props.note}
-                </Text> : null
-            }
+            {props.additionalEfficacy ? (
+              props.additionalEfficacy
+                .split(", ")
+                .filter((efficacy, idx) => idx < 4)
+                .map((efficacy, idx) => (
+                  <Text
+                    key={idx}
+                    style={[styles.feature, styles.mintfeature]}
+                  >
+                    {efficacy}
+                  </Text>
+                ))
+            ) : props.note ? (
+              <Text style={[styles.feature, styles.pinkfeature]}>
+                {props.note}
+              </Text>
+            ) : null}
           </View>
           <View style={styles.alertcontainer}>
             <Ionicons name="warning" size={11} color="#FFCE31" style={{marginTop: 3}} />

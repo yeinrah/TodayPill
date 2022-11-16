@@ -53,7 +53,7 @@ const SecondAddSurvey = ({ navigation }: any) => {
       "선택해주세요",
       ["캡슐형", "츄어블", "액체형", "파우더형"],
     ],
-    ["sustainedRelease", "서방형제재를 원하세요?", "알려주세요", ["YSE", "NO"]],
+    ["sustainedRelease", "서방형제재를 원하세요?", "알려주세요", ["YES", "NO"]],
     [],
   ];
   useEffect(() => {
@@ -117,8 +117,18 @@ const SecondAddSurvey = ({ navigation }: any) => {
                       console.warn(answer);
                     } else if (nowStage === 1) {
                       answer = SurveyQuestion.get(selectedItem);
+                      if (!answer) {
+                        setNowStage(nowStage);
+                        ToastAndroid.show("선택 해주세요", ToastAndroid.SHORT);
+                        return;
+                      }
                     } else if (nowStage === 2) {
                       answer = SurveyFormula.get(selectedItem);
+                      if (!answer) {
+                        setNowStage(nowStage);
+                        ToastAndroid.show("선택 해주세요", ToastAndroid.SHORT);
+                        return;
+                      }
                     } else if (surveyData[nowStage][3]) {
                       selectedItem == 0 ? (answer = true) : (answer = false);
                     } else answer = selectedItem;

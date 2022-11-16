@@ -108,7 +108,7 @@ public class UserController {
 //        if(gender.equals("male")) gender = "남";
 //        else if(gender.equals("female")) gender = "여";
 //        else gender = "x";
-        gender = "똥";
+        gender = "미정";
         
         System.out.println("카카오 =>"+kakaoAccount);
         System.out.println(jsonOb);

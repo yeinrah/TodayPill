@@ -20,6 +20,7 @@ import { Ionicons } from "@expo/vector-icons";
 import RoutineDetailList from "../components/Calendar/Routine/RoutineDetailList";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
+import { boldWelcome } from "../components/Data/fontFamilyObject";
 
 export default function MyPillsScreen({ navigation }: any) {
   // RootStackScreenProps<"MyPills">
@@ -52,7 +53,9 @@ export default function MyPillsScreen({ navigation }: any) {
           <ScrollView style={styles.myPillsContainer}>
             <View style={styles.titleContainer}>
               <View style={styles.title}>
-                <Text style={styles.text}>내가 섭취중인 영양제</Text>
+                <Text style={{ ...styles.text, ...boldWelcome }}>
+                  내가 섭취중인 영양제
+                </Text>
               </View>
 
               <Pressable onPress={addRoutinePillHandler}>
@@ -97,6 +100,5 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 25,
-    fontWeight: "bold",
   },
 });

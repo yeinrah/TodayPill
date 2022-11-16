@@ -10,6 +10,7 @@ import { checkMyRoutine, deleteMyRoutineCheck } from "../../../API/calendarAPI";
 import LoadingSpinner from "../../UI/LoadingSpinner";
 import { useRecoilState } from "recoil";
 import { pillRoutineCheckChangeState } from "../../../Recoil/atoms/calendar";
+import { boldWelcome, regularWelcome } from "../../Data/fontFamilyObject";
 
 export interface RoutineProps {
   key: number;
@@ -100,7 +101,7 @@ RoutineProps) {
       ) : (
         <>
           <View>
-            <Text style={styles.time}>{time}</Text>
+            <Text style={{ ...styles.time, ...boldWelcome }}>{time}</Text>
           </View>
 
           <PillCard height={100} width={"90%"} bgColor={"white"}>
@@ -112,9 +113,19 @@ RoutineProps) {
                 />
               </View>
               <View style={styles.pillDetailContainer}>
-                <Text style={styles.brand}>{detailInfo.brand}</Text>
-                <Text style={styles.name}>{detailInfo.name}</Text>
-                <Text style={styles.cnt}>{cnt}정</Text>
+                <Text style={{ ...styles.brand, ...boldWelcome }}>
+                  {detailInfo.brand}
+                </Text>
+                <Text
+                  style={{
+                    ...boldWelcome,
+                    fontSize: detailInfo.name.length > 22 ? 13 : 15,
+                    letterSpacing: 0.5,
+                  }}
+                >
+                  {detailInfo.name}
+                </Text>
+                <Text style={{ ...styles.cnt, ...boldWelcome }}>{cnt}정</Text>
               </View>
               <View style={styles.check}>
                 {isChecked ? (
@@ -186,22 +197,25 @@ const styles = StyleSheet.create({
   brand: {
     color: "#B7B7B7",
     fontSize: 10,
-    fontWeight: "bold",
+    // fontWeight: "bold",
   },
   name: {
-    fontSize: 15,
-    fontWeight: "bold",
+    // fontSize: 15,
+    // fontWeight: "bold",
   },
   cnt: {
     color: "rgba(0, 0, 0, 0.5)",
     fontSize: 10,
-    fontWeight: "bold",
+    letterSpacing: 1,
+    // fontWeight: "bold",
     paddingHorizontal: 3,
   },
   time: {
     fontSize: 15,
-    fontWeight: "900",
-    color: "rgba(0, 0, 0, 0.5)",
+    // fontWeight: "900",
+
+    color: primary,
+    // color: "rgba(0, 0, 0, 0.5)",
     paddingHorizontal: 25,
   },
   pillRoutineContainer: {
