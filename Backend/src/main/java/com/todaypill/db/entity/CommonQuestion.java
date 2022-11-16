@@ -84,7 +84,7 @@ public class CommonQuestion {
 	private boolean  stomatitis; // 구내염
 
 	@Column(name = "leg_cramp")
-	private boolean lagCramp; // 다리 경련
+	private boolean legCramp; // 다리 경련
 
 	/*다음 중 해당하는 질환을 앓고 계시다면 선택해주세요.
 	-중복선택 ( 빈혈 / 갑상선 질환 / 신장 질환 / 당뇨병 / 통풍 / 고혈압 / 고지혈증 / 치주염 / 심부전)*/
