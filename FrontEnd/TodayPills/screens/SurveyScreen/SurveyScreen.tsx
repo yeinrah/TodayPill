@@ -268,17 +268,26 @@ const SurveyScreen = ({ navigation }: any) => {
                       if (answer === 1 || !answer) {
                         setNowStage(nowStage);
                         ToastAndroid.show("선택 해주세요", ToastAndroid.SHORT);
+                        return;
+                      }
+                    } else if (nowStage === 3 || nowStage === 9) {
+                      console.log(selectedItem);
+                      if (!selectedItem && selectedItem !== 0) {
+                        setNowStage(nowStage);
+                        ToastAndroid.show("선택 해주세요", ToastAndroid.SHORT);
+                      } else {
+                        answer = selectedItem;
                       }
                     } else if (surveyData[nowStage][3]) {
                       selectedItem == 0 ? (answer = true) : (answer = false);
-                      if (nowStage === 7) {
+                      if (nowStage === 3 || nowStage === 9) {
                         answer = selectedItem;
                       }
                     } else answer = selectedItem;
                     if (nowStage === surveyData.length - 2 && answer !== 1)
                       setIsLoading(true);
                     setAnswerSheet({
-                      userId: uid,
+                      userId: Number(uid),
                       ...answerSheet,
                       [`${surveyData[nowStage][0]}`]: answer,
                     });

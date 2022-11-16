@@ -52,7 +52,7 @@ const SecondAddSurvey = ({ navigation }: any) => {
       "formula",
       "원하는 약의 형태를 선택해주세요",
       "선택해주세요",
-      ["해당없음", "캡슐형", "츄어블", "액체형", "파우더형"],
+      ["해당없음", "캡슐형", "츄어블", "액체형", "파우더형", "스프레이형"],
     ],
     [
       "sustainedRelease",
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   smalltext: {
-    fontSize: 15,
+    fontSize: 13,
     marginTop: 10,
   },
   itemcontainer: {

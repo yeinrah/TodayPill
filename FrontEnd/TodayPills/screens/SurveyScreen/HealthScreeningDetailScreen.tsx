@@ -15,6 +15,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { HealthScreeningCheck } from "../../API/userAPI";
 import LoadingSpinner from "../../components/UI/LoadingSpinner";
 import BackgroundScreen2 from "../BackgroundScreen2";
+import LoadingSpinnerWithText from "../../components/UI/LoadingSpinnerWithText";
 const HealthScreeningDetailScreen = ({ navigation }) => {
   const [name, setName] = useState("");
   const [birth, setBirth] = useState("");
@@ -22,7 +23,7 @@ const HealthScreeningDetailScreen = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
   return (
     <>
-      {isLoading && <LoadingSpinner />}
+      {isLoading && <LoadingSpinnerWithText />}
       {!isLoading && (
         <BackgroundScreen2>
           <ScrollView style={styles.container}>
@@ -86,6 +87,40 @@ const HealthScreeningDetailScreen = ({ navigation }) => {
                 fontSize={20}
                 buttonWidth={"70%"}
                 onPress={async () => {
+                  console.log(name, "what");
+                  const nameRegex1 = /[A-Za-z가-힣]{1,20}/g;
+                  const nameRegex2 =
+                    /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"0-9]/g;
+
+                  if (!name.match(nameRegex1) || name.match(nameRegex2)) {
+                    ToastAndroid.show(
+                      "정상적인 이름을 작성해주세요",
+                      ToastAndroid.SHORT
+                    );
+                    return;
+                  }
+                  const birthRegex1 = /[0-9]{8}/g;
+                  const birthRegex2 =
+                    /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"0-9]/g;
+
+                  if (!birth.match(birthRegex1) || name.match(birthRegex2)) {
+                    ToastAndroid.show(
+                      "올바른 생일을 입력해주세요",
+                      ToastAndroid.SHORT
+                    );
+                    return;
+                  }
+                  const phoneRegex1 = /[0-9]{11}/g;
+                  const phoneRegex2 =
+                    /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"0-9]/g;
+
+                  if (!phone.match(phoneRegex1) || name.match(phoneRegex2)) {
+                    ToastAndroid.show(
+                      "올바른 핸드폰 번호를 입력해주세요",
+                      ToastAndroid.SHORT
+                    );
+                    return;
+                  }
                   setIsLoading(true);
                   try {
                     await AsyncStorage.setItem("@storage_userName", name);
