@@ -44,12 +44,16 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
     }
     // setPublicChats(...publicChats, chatData);
   };
-  useFocusEffect(
-    useCallback(() => {
-      registerUser();
-      loadPrevData();
-    }, [])
-  );
+  useEffect(() => {
+    registerUser();
+    loadPrevData();
+  }, []);
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     registerUser();
+  //     loadPrevData();
+  //   }, [])
+  // );
   useEffect(() => {}, [publicChats]);
   const connect = () => {
     let Sock = new SockJS("http://k7a706.p.ssafy.io:8080/wss");

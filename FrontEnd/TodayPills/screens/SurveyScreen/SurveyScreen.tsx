@@ -23,12 +23,14 @@ const SurveyScreen = ({ navigation }: any) => {
   const [answerSheet, setAnswerSheet] = useState<any>({
     smoking: false,
     pregnant: false,
+    menopause: false,
     allergy: "",
-    heartburn: false,
-    diarrhea: false,
-    constipation: false,
-    kidney_disease: false,
+    drink: 0,
+    symptom: "",
+    disease: "",
+    medicine: "",
     outdoor_activity: 0,
+    toughActivity: false,
     balanced_meal: false,
     lack: "",
     is_ok_big_pill: false,
@@ -37,32 +39,109 @@ const SurveyScreen = ({ navigation }: any) => {
   });
   const surveyData = [
     [
-      "smoking",
+      "pregnant",
       "임신 여부를 알려주세요",
       "임산부에 맞는 영양성분이 추천됩니다.",
       ["YES", "NO"],
     ],
     [
-      "pregnant",
-      "흡연 여부를 알려주세요",
-      "흡연할 경우 조심해야 할 성분이 있어요",
+      "menopause",
+      "폐경기를 지나셨나요?",
+      "그에 따른 영양성분이 추천됩니다.",
       ["YES", "NO"],
+    ],
+    [
+      "smoking",
+      "흡연 여부를 알려주세요",
+      "흡연자는 비흡연자보다 일부 영양소가 결핍될 확률이 더 높습니다.",
+      ["YES", "NO"],
+    ],
+    [
+      "drink",
+      "음주 습관에 대해 알려주세요",
+      "알려주세요",
+      ["안함", "한달에 1~2회", "일주일에 1~2회", "일주일에 3회"],
     ],
     [
       "allergy",
       "알러지가 있나요?",
       "입력해주세요.",
-      ["해당없음", "꽃가루", "벌", "고양이", "비염", "기타"],
+      [
+        "해당없음",
+        "꽃가루",
+        "벌",
+        "고양이",
+        "비염",
+        "허브",
+        "생선",
+        "계란",
+        "기타",
+      ],
     ],
-    ["heartburn", "속쓰림 증상이 있나요?", "알려주세요", ["YES.", "NO."]],
-    ["diarrhea", "설사를 하나요?", "알려주세요", ["YES.", "NO."]],
-    ["constipation", "변비가 있나요?", "알려주세요", ["YES.", "NO."]],
-    ["kidney_disease", "신장질환이 있나요?", "알려주세요", ["YES.", "NO."]],
+    [
+      "symptom",
+      "다음 중 해당 하는 증상이 있나요?",
+      "중복 선택 가능합니다",
+      [
+        "해당없음",
+        "속쓰림",
+        "변비",
+        "설사",
+        "소화장애",
+        "요통",
+        "편두통",
+        "과민성 대장군 증후군",
+        "아토피 피부염",
+        "비듬",
+        "야간 다리 경련",
+        "구내염",
+      ],
+    ],
+    [
+      "disease",
+      "다음 중 해당하는 질환을 앓고 계신다면 선택해주세요.",
+      "중복 선택 가능합니다",
+      [
+        "해당없음",
+        "빈혈",
+        "갑상선 질환",
+        "신장 질환",
+        "당뇨병",
+        "통풍",
+        "고혈압",
+        "고지혈증",
+        "치주염",
+        "심부전",
+        "기타",
+      ],
+    ],
+    [
+      "medicine",
+      "다음 중 복용중인 약이 있으시다면 선택해주세요",
+      "중복선택 가능합니다",
+      [
+        "해당없음",
+        "피임약",
+        "제산제",
+        "혈압약",
+        "이뇨제",
+        "부정맥(소타롤)",
+        "항경련제(가바펜틴)",
+        "갑상선(레보티록신)",
+        "항생제",
+      ],
+    ],
+    [
+      "toughActivity",
+      "평소 격렬한 신체 활동을 하는 편인가요?",
+      "근육통을 줄일 수 있는 알아봐드릴게요",
+      ["YES", "NO"],
+    ],
     [
       "outdoor_activity",
-      "야외활동을 얼마나 하세요?",
-      "알려주세요",
-      ["일주일에 4번이상", "일주일에 3번", "일주일에 2번", "일주일에 1번"],
+      "충분한 양의 햇빛을 쬐고 계신가요?",
+      "일주일에 4회이상 하루 20분이면 충분하다고 말할 수 있어요.",
+      ["충분하다", "보통이다", "불충분하다", "안 쬔다"],
     ],
     [
       "balanced_meal",
@@ -81,7 +160,7 @@ const SurveyScreen = ({ navigation }: any) => {
     [
       "preferred_brand",
       "선호하는 영양제 브랜드가 있나요?",
-      "알려주세요",
+      "중복 선택 가능합니다",
       [
         "해당없음",
         "solgar",
@@ -94,7 +173,7 @@ const SurveyScreen = ({ navigation }: any) => {
     [
       "problem",
       "해결하고자 하는 문제가 있나요?",
-      "자유롭게 알려주세요",
+      "중복 선택 가능합니다",
       ["해당없음", "피로감", "눈건강", "피부건강", "소화불량", "기타"],
     ],
     [],
@@ -102,7 +181,7 @@ const SurveyScreen = ({ navigation }: any) => {
   const checkGender = async () => {
     let nowGender = await AsyncStorage.getItem("@storage_UserGender");
     if (nowGender === "남성") {
-      setNowStage(1);
+      setNowStage(2);
     } else {
       setSelectedItem(1);
     }
@@ -172,15 +251,18 @@ const SurveyScreen = ({ navigation }: any) => {
                     setNowStage(nowStage + 1);
                     let answer: boolean | number | string;
                     //균형잡힌 식사 관련 질문
-                    if (nowStage === 8 && selectedItem === 0) {
+                    if (nowStage === 10 && selectedItem === 0) {
                       setNowStage(nowStage + 2);
                     }
                     //복수선택
                     if (
-                      nowStage === 9 ||
-                      nowStage === 2 ||
+                      nowStage === 4 ||
+                      nowStage === 5 ||
+                      nowStage === 6 ||
+                      nowStage === 7 ||
                       nowStage === 11 ||
-                      nowStage === 12
+                      nowStage === 13 ||
+                      nowStage === 14
                     ) {
                       answer = selectedItem;
                       if (answer === 1 || !answer) {
@@ -200,8 +282,9 @@ const SurveyScreen = ({ navigation }: any) => {
                       ...answerSheet,
                       [`${surveyData[nowStage][0]}`]: answer,
                     });
-                    if (nowStage == 6) setSelectedItem(0);
-                    else setSelectedItem(1);
+                    console.log(answerSheet);
+                    // if (nowStage == 6) setSelectedItem(0);
+                    // else setSelectedItem(1);
                   }}
                 >
                   <Text style={styles.title}>다 음</Text>
@@ -227,6 +310,8 @@ const styles = StyleSheet.create({
   },
   textcontainer: {
     marginLeft: 30,
+    marginRight: 40,
+    marginBottom: 30,
     height: "15%",
   },
   text: {
