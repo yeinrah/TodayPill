@@ -43,7 +43,12 @@ export default function ModifyRoutineScreen({ navigation, route }: any) {
             <View style={styles.titleContainer}>
               <View>
                 <Text style={{ ...styles.text, ...boldWelcome }}>
-                  영양제 섭취 수정
+                  영양제 섭취{" "}
+                  {route.params.update === "true" ? (
+                    <Text>수정</Text>
+                  ) : (
+                    <Text>등록</Text>
+                  )}
                 </Text>
                 {/* <Text style={styles.text}>{pillId}</Text> */}
               </View>

@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Image, Pressable } from "react-native";
+import { StyleSheet, View, Text, Image, Pressable, Alert } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useState, useCallback } from "react";
 import { accent, primary, secondary } from "../../../constants/Colors";
@@ -11,6 +11,7 @@ import LoadingSpinner from "../../UI/LoadingSpinner";
 import { useRecoilState } from "recoil";
 import { pillRoutineCheckChangeState } from "../../../Recoil/atoms/calendar";
 import { boldWelcome, regularWelcome } from "../../Data/fontFamilyObject";
+import { getDateStr } from "../../functions/getDateStr";
 
 export interface RoutineProps {
   key: number;
@@ -24,6 +25,7 @@ export interface RoutineProps {
   selectedDate: string;
   taken: boolean;
   calendarId: number;
+  isCheckVisible: boolean;
   // changeCheckHandler: () => void;
 }
 
@@ -38,11 +40,13 @@ export default function RoutineItem({
   selectedDate,
   taken,
   calendarId,
+  isCheckVisible,
 }: // changeCheckHandler,
 RoutineProps) {
   const [isCheckedChange, setIsCheckedChange] = useRecoilState(
     pillRoutineCheckChangeState
   );
+
   const [isChecked, setIsChecked] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [detailInfo, setDetailInfo] = useState({
@@ -89,6 +93,7 @@ RoutineProps) {
   useFocusEffect(
     useCallback(() => {
       getPillDetail();
+
       setIsChecked(taken);
       setIsLoading(false);
       // console.warn(selectedDate, taken);
@@ -127,17 +132,23 @@ RoutineProps) {
                 </Text>
                 <Text style={{ ...styles.cnt, ...boldWelcome }}>{cnt}정</Text>
               </View>
-              <View style={styles.check}>
-                {isChecked ? (
-                  <Pressable onPress={deleteCheckHandler}>
-                    <AntDesign name="checkcircle" size={30} color={primary} />
-                  </Pressable>
-                ) : (
-                  <Pressable onPress={checkHandler}>
-                    <AntDesign name="checkcircleo" size={30} color="#B7B7B7" />
-                  </Pressable>
-                )}
-              </View>
+              {isCheckVisible && (
+                <View style={styles.check}>
+                  {isChecked ? (
+                    <Pressable onPress={deleteCheckHandler}>
+                      <AntDesign name="checkcircle" size={30} color={primary} />
+                    </Pressable>
+                  ) : (
+                    <Pressable onPress={checkHandler}>
+                      <AntDesign
+                        name="checkcircleo"
+                        size={30}
+                        color="#B7B7B7"
+                      />
+                    </Pressable>
+                  )}
+                </View>
+              )}
             </View>
           </PillCard>
         </>

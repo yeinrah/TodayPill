@@ -1,4 +1,13 @@
-import { StyleSheet, View, Text, Image, ToastAndroid, Pressable, FlatList } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  ToastAndroid,
+  Pressable,
+  FlatList,
+  KeyboardAvoidingView,
+} from "react-native";
 import BackgroundScreen2 from "../BackgroundScreen2";
 import Card from "../../components/UI/Card";
 import SearchBar from "../../components/TopBar/SearchBar";
@@ -20,8 +29,8 @@ export default function SearchScreen({ navigation, route }: any) {
     if (word) {
       const supplements = await fetchAllSupplements();
       const filteredSupplements = supplements.filter((supplement) =>
-        supplement.supplementName.toLowerCase().includes(word.toLowerCase()
-      ));
+        supplement.supplementName.toLowerCase().includes(word.toLowerCase())
+      );
       if (filteredSupplements.length > 0) {
         setFailedSearch(false);
         await setSearchResults(filteredSupplements);
@@ -56,43 +65,47 @@ export default function SearchScreen({ navigation, route }: any) {
     <BackgroundScreen2>
       <Card>
         <View style={styles.container}>
-          <SearchBar navigation={navigation} word={route.params.word} isMain={route.params.isMain} />
-            {
-              isLoading ?
-              <View style={styles.loadingspinnercontainer}>
-                <Image
-                  source={require("../../assets/images/loadingspinner.gif")}
-                  style={styles.loadingspinner}
-                />
-              </View> :
-              failedSearch ?
-              <View style={styles.imagecontainer}>
-                <Image
-                  source={require("../../assets/images/noResult.png")}
-                  style={styles.image}
-                />
-              </View> :
-              <FlatList
-                data={searchResults}
-                renderItem={({ item }) => {
-                  return (
-                    <DetailedPillCard
-                      key={item.supplementId}
-                      userId={userId}
-                      supplementId={item.supplementId}
-                      image={item.image}
-                      brand={item.brand}
-                      supplementName={item.supplementName}
-                      like={item.like}
-                      note={item.note}
-                      additionalEfficacy={item.additionalEfficacy}
-                      ingredients={item.ingredients}
-                      caution={item.caution}
-                    />
-                  )
-                }}
+          <SearchBar
+            navigation={navigation}
+            word={route.params.word}
+            isMain={route.params.isMain}
+          />
+          {isLoading ? (
+            <View style={styles.loadingspinnercontainer}>
+              <Image
+                source={require("../../assets/images/loadingspinner.gif")}
+                style={styles.loadingspinner}
               />
-            }
+            </View>
+          ) : failedSearch ? (
+            <View style={styles.imagecontainer}>
+              <Image
+                source={require("../../assets/images/noResult.png")}
+                style={styles.image}
+              />
+            </View>
+          ) : (
+            <FlatList
+              data={searchResults}
+              renderItem={({ item }) => {
+                return (
+                  <DetailedPillCard
+                    key={item.supplementId}
+                    userId={userId}
+                    supplementId={item.supplementId}
+                    image={item.image}
+                    brand={item.brand}
+                    supplementName={item.supplementName}
+                    like={item.like}
+                    note={item.note}
+                    additionalEfficacy={item.additionalEfficacy}
+                    ingredients={item.ingredients}
+                    caution={item.caution}
+                  />
+                );
+              }}
+            />
+          )}
         </View>
       </Card>
     </BackgroundScreen2>
@@ -150,6 +163,6 @@ const styles = StyleSheet.create({
   image: {
     width: "140%",
     height: "100%",
-    resizeMode: "contain"
+    resizeMode: "contain",
   },
 });

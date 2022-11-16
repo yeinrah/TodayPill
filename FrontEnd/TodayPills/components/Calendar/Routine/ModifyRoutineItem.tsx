@@ -331,7 +331,11 @@ export default function ModifyRoutineItem({
                         섭취 요일
                       </Text>
 
-                      <Text style={styles.dayAndTimeName}>{takenDaysName}</Text>
+                      <Text
+                        style={{ ...styles.dayAndTimeName, ...regularWelcome }}
+                      >
+                        {takenDaysName}
+                      </Text>
                     </View>
 
                     <Text style={{ ...styles.dayExplText, ...regularWelcome }}>
@@ -406,7 +410,7 @@ export default function ModifyRoutineItem({
               <View style={styles.chooseBtn}>
                 <CustomBtn
                   buttonColor={accent}
-                  title={"수정 완료"}
+                  title={updateOrNot === "true" ? "수정하기" : "등록하기"}
                   titleColor={"#fff"}
                   buttonWidth={"90%"}
                   fontSize={20}

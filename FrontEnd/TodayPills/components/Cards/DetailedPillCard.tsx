@@ -1,4 +1,12 @@
-import { StyleSheet, View, Image, Text, Pressable, ToastAndroid, Linking } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Image,
+  Text,
+  Pressable,
+  ToastAndroid,
+  Linking,
+} from "react-native";
 import { useState, useCallback } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { fetchLikeUsers, like, dislike } from "../../API/likeAPI";
@@ -6,7 +14,8 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import PillCard from "../UI/PillCard";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../types";
-import { Entypo } from '@expo/vector-icons';
+import { Entypo } from "@expo/vector-icons";
+import { boldWelcome, regularWelcome } from "../Data/fontFamilyObject";
 
 const DetailedPillCard = (props: any) => {
   const [isLiked, setIsLiked] = useState(false);
@@ -29,17 +38,19 @@ const DetailedPillCard = (props: any) => {
   const likeHandler = async () => {
     await like(props.userId, props.supplementId);
     setIsLiked(true);
-    ToastAndroid.show("해당 상품이 나의 Pick에 추가됐습니다.", 3)
+    ToastAndroid.show("해당 상품이 나의 Pick에 추가됐습니다.", 3);
   };
 
   const dislikeHandler = async () => {
     await dislike(props.userId, props.supplementId);
     setIsLiked(false);
-    ToastAndroid.show("해당 상품이 나의 Pick에서 제외됐습니다.", 3)
+    ToastAndroid.show("해당 상품이 나의 Pick에서 제외됐습니다.", 3);
   };
 
   const naverSearch = () => {
-    Linking.openURL(`https://msearch.shopping.naver.com/search/all?query=${props.supplementName}&frm=NVSHSRC&vertical=home&fs=true`);
+    Linking.openURL(
+      `https://msearch.shopping.naver.com/search/all?query=${props.supplementName}&frm=NVSHSRC&vertical=home&fs=true`
+    );
   };
 
   useFocusEffect(
@@ -64,9 +75,11 @@ const DetailedPillCard = (props: any) => {
           <Image source={{ uri: props.image }} style={styles.image} />
         </View>
         <View style={styles.textcontainer}>
-          <Text style={styles.brandname}>{props.brand}</Text>
+          <Text style={{ ...styles.brandname, ...regularWelcome }}>
+            {props.brand}
+          </Text>
           <Text
-            style={styles.pillname}
+            style={{ ...styles.pillname, ...boldWelcome }}
             ellipsizeMode="tail"
             numberOfLines={1}
           >
@@ -80,21 +93,38 @@ const DetailedPillCard = (props: any) => {
                 .map((efficacy, idx) => (
                   <Text
                     key={idx}
-                    style={[styles.feature, styles.mintfeature]}
+                    style={{
+                      ...styles.feature,
+                      ...styles.mintfeature,
+                      ...regularWelcome,
+                    }}
                   >
                     {efficacy}
                   </Text>
                 ))
             ) : props.note ? (
-              <Text style={[styles.feature, styles.pinkfeature]}>
+              <Text
+                style={{
+                  ...regularWelcome,
+                  ...styles.feature,
+                  ...styles.pinkfeature,
+                }}
+              >
                 {props.note}
               </Text>
             ) : null}
           </View>
           <View style={styles.alertcontainer}>
-            <Ionicons name="warning" size={11} color="#FFCE31" style={{marginTop: 3}} />
-            <Text style={styles.blackalert}>주의&nbsp;</Text>
-            <Text style={styles.greyalert}>
+            <Ionicons
+              name="warning"
+              size={11}
+              color="#FFCE31"
+              style={{ marginTop: 3 }}
+            />
+            <Text style={{ ...styles.blackalert, ...regularWelcome }}>
+              주의&nbsp;
+            </Text>
+            <Text style={{ ...styles.greyalert, ...regularWelcome }}>
               {props.caution}
             </Text>
           </View>
@@ -104,7 +134,9 @@ const DetailedPillCard = (props: any) => {
           size={30}
           color="green"
           style={styles.navercontainer}
-          onPress={() => {naverSearch()}}
+          onPress={() => {
+            naverSearch();
+          }}
         />
         <View style={styles.heartcontainer}>
           <Pressable
@@ -120,7 +152,9 @@ const DetailedPillCard = (props: any) => {
               style={styles.heart}
             />
           </Pressable>
-          <Text style={styles.likeCnt}>{likeCnt}</Text>
+          <Text style={{ ...styles.likeCnt, ...regularWelcome }}>
+            {likeCnt}
+          </Text>
         </View>
       </Pressable>
     </PillCard>
@@ -155,7 +189,7 @@ const styles = StyleSheet.create({
   },
   pillname: {
     fontSize: 13,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     marginBottom: 2,
   },
   featurecontainer: {
@@ -165,15 +199,16 @@ const styles = StyleSheet.create({
   feature: {
     alignSelf: "flex-start",
     height: 16,
-    fontSize: 12,
-    fontWeight: "bold",
+    fontSize: 10,
+    // fontWeight: "bold",
     borderRadius: 20,
-    marginBottom: 3,
+    // marginBottom: 3,
     marginRight: 3,
     paddingHorizontal: 6,
   },
   mintfeature: {
     backgroundColor: "#C4F1EA",
+    paddingVertical: 3,
   },
   pinkfeature: {
     backgroundColor: "#F8F0F6",
@@ -186,7 +221,7 @@ const styles = StyleSheet.create({
     color: "black",
     fontSize: 11,
     width: 23,
-    marginTop: 1, 
+    marginTop: 1,
   },
   greyalert: {
     color: "#B7B7B7",
@@ -194,7 +229,7 @@ const styles = StyleSheet.create({
   },
   navercontainer: {
     position: "absolute",
-    top: 10, 
+    top: 10,
     right: 5,
   },
   naverbutton: {
@@ -209,11 +244,11 @@ const styles = StyleSheet.create({
     bottom: 10,
     right: 0,
     width: "10%",
-    height: "30%"
+    height: "30%",
   },
   heartbutton: {
     width: "100%",
-    height: "100%"
+    height: "100%",
   },
   heart: {
     width: "100%",
