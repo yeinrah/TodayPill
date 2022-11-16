@@ -1,12 +1,4 @@
-import {
-  StyleSheet,
-  View,
-  Image,
-  Text,
-  Pressable,
-  ToastAndroid,
-  Linking,
-} from "react-native";
+import { StyleSheet, View, Image, Text, Pressable, ToastAndroid, Linking } from "react-native";
 import { useState, useCallback } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { fetchLikeUsers, like, dislike } from "../../API/likeAPI";
@@ -14,6 +6,7 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import PillCard from "../UI/PillCard";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../types";
+import { Entypo } from '@expo/vector-icons';
 
 const DetailedPillCard = (props: any) => {
   const [isLiked, setIsLiked] = useState(false);
@@ -36,19 +29,17 @@ const DetailedPillCard = (props: any) => {
   const likeHandler = async () => {
     await like(props.userId, props.supplementId);
     setIsLiked(true);
-    ToastAndroid.show("해당 상품이 나의 Pick에 추가됐습니다.", 3);
+    ToastAndroid.show("해당 상품이 나의 Pick에 추가됐습니다.", 3)
   };
 
   const dislikeHandler = async () => {
     await dislike(props.userId, props.supplementId);
     setIsLiked(false);
-    ToastAndroid.show("해당 상품이 나의 Pick에서 제외됐습니다.", 3);
+    ToastAndroid.show("해당 상품이 나의 Pick에서 제외됐습니다.", 3)
   };
 
   const naverSearch = () => {
-    Linking.openURL(
-      `https://msearch.shopping.naver.com/search/all?query=${props.supplementName}&frm=NVSHSRC&vertical=home&fs=true`
-    );
+    Linking.openURL(`https://msearch.shopping.naver.com/search/all?query=${props.supplementName}&frm=NVSHSRC&vertical=home&fs=true`);
   };
 
   useFocusEffect(
@@ -58,129 +49,112 @@ const DetailedPillCard = (props: any) => {
   );
 
   return (
-    <View style={styles.outerContainer}>
-      <PillCard height={120} width={"90%"} bgColor={"white"}>
-        <Pressable
-          android_ripple={{ color: "#4E736F" }}
-          style={styles.cardContainer}
-          onPress={() => {
-            navigation.navigate("ModifyRoutine", {
-              pillId: props.supplementId,
-              update: "false",
-            });
-          }}
-        >
+    <PillCard height={120} width={"90%"} bgColor={"white"}>
+      <Pressable
+        android_ripple={{ color: "#4E736F" }}
+        style={styles.cardContainer}
+        onPress={() => {
+          navigation.navigate("ModifyRoutine", {
+            pillId: props.supplementId,
+            update: "false",
+          });
+        }}
+      >
+        <View style={styles.imagecontainer}>
           <Image source={{ uri: props.image }} style={styles.image} />
-          <View style={styles.textcontainer}>
-            <Text style={styles.brandname}>{props.brand}</Text>
-            <Text style={styles.pillname}>{props.supplementName}</Text>
-            <View style={styles.featurecontainer}>
-              {props.additionalEfficacy ? (
-                props.additionalEfficacy
-                  .split(", ")
-                  .filter((efficacy, idx) => idx < 4)
-                  .map((efficacy, idx) => (
-                    <Text
-                      key={idx}
-                      style={[styles.feature, styles.mintfeature]}
-                    >
-                      {efficacy}
-                    </Text>
-                  ))
-              ) : props.note ? (
-                <Text style={[styles.feature, styles.pinkfeature]}>
-                  {props.note}
-                </Text>
-              ) : null}
-            </View>
-            <View style={styles.alertcontainer}>
-              <Ionicons name="warning" size={11} color="#FFCE31" />
-              <Text style={styles.blackalert}>주의&nbsp;</Text>
-              <Text style={styles.greyalert}>
-                고용량 포함, 장기 복용시 전문가와 상의
+        </View>
+        <View style={styles.textcontainer}>
+          <Text style={styles.brandname}>{props.brand}</Text>
+          <Text
+            style={styles.pillname}
+            ellipsizeMode="tail"
+            numberOfLines={1}
+          >
+            {props.supplementName}
+          </Text>
+          <View style={styles.featurecontainer}>
+            {props.additionalEfficacy ? (
+              props.additionalEfficacy
+                .split(", ")
+                .filter((efficacy, idx) => idx < 4)
+                .map((efficacy, idx) => (
+                  <Text
+                    key={idx}
+                    style={[styles.feature, styles.mintfeature]}
+                  >
+                    {efficacy}
+                  </Text>
+                ))
+            ) : props.note ? (
+              <Text style={[styles.feature, styles.pinkfeature]}>
+                {props.note}
               </Text>
-            </View>
+            ) : null}
           </View>
-          <View style={styles.buttoncontainer}>
-            <Pressable
-              style={styles.navercontainer}
-              onPress={() => {
-                naverSearch();
-              }}
-            >
-              <Image
-                source={require("../../assets/images/naver2.png")}
-                style={styles.naverbutton}
-              />
-            </Pressable>
-            <View style={styles.heartcontainer}>
-              <Pressable
-                onPress={isLiked ? dislikeHandler : likeHandler}
-                style={styles.heartbutton}
-              >
-                <Image
-                  source={
-                    isLiked
-                      ? require("../../assets/images/heartOn3.png")
-                      : require("../../assets/images/heartOff1.png")
-                  }
-                  style={styles.heart}
-                />
-              </Pressable>
-              <Text style={styles.likeCnt}>{likeCnt}</Text>
-            </View>
+          <View style={styles.alertcontainer}>
+            <Ionicons name="warning" size={11} color="#FFCE31" style={{marginTop: 3}} />
+            <Text style={styles.blackalert}>주의&nbsp;</Text>
+            <Text style={styles.greyalert}>
+              {props.caution}
+            </Text>
           </View>
-        </Pressable>
-      </PillCard>
-    </View>
-    // <View style={styles.container}>
-    // </View>
+        </View>
+        <Entypo
+          name="magnifying-glass"
+          size={30}
+          color="green"
+          style={styles.navercontainer}
+          onPress={() => {naverSearch()}}
+        />
+        <View style={styles.heartcontainer}>
+          <Pressable
+            onPress={isLiked ? dislikeHandler : likeHandler}
+            style={styles.heartbutton}
+          >
+            <Image
+              source={
+                isLiked
+                  ? require("../../assets/images/heartOn3.png")
+                  : require("../../assets/images/heartOff1.png")
+              }
+              style={styles.heart}
+            />
+          </Pressable>
+          <Text style={styles.likeCnt}>{likeCnt}</Text>
+        </View>
+      </Pressable>
+    </PillCard>
   );
 };
 
 const styles = StyleSheet.create({
-  outerContainer: {
-    // marginTop: 13,
-    // height: 140,
-  },
-
   cardContainer: {
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
+    position: "relative",
   },
-  // container: {
-  //   // justifyContent: "space-between",
-  //   // position: "relative",
-  //   marginTop: 13,
-  //   marginHorizontal: 15,
-  //   height: 90,
-  //   // backgroundColor: "#F4FAF9",
-  //   backgroundColor: "white",
-  //   elevation: 10,
-  //   borderRadius: 10,
-  // },
-  image: {
-    marginVertical: 5,
-    marginHorizontal: 10,
-    // width: 70,
+  imagecontainer: {
     width: "20%",
-    height: 70,
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  image: {
+    width: "90%",
+    height: "100%",
     resizeMode: "contain",
   },
   textcontainer: {
-    width: "60%",
-    marginTop: 5,
-    paddingRight: 50,
-    // flexWrap: "wrap",
+    width: "70%",
   },
   brandname: {
-    fontSize: 8,
+    fontSize: 12,
     color: "#B7B7B7",
     marginTop: -5,
   },
   pillname: {
-    fontSize: 11,
+    fontSize: 13,
     fontWeight: "bold",
     marginBottom: 2,
   },
@@ -191,13 +165,12 @@ const styles = StyleSheet.create({
   feature: {
     alignSelf: "flex-start",
     height: 16,
-    fontSize: 10,
+    fontSize: 12,
     fontWeight: "bold",
     borderRadius: 20,
     marginBottom: 3,
     marginRight: 3,
     paddingHorizontal: 6,
-    paddingTop: 1,
   },
   mintfeature: {
     backgroundColor: "#C4F1EA",
@@ -207,33 +180,22 @@ const styles = StyleSheet.create({
   },
   alertcontainer: {
     flexDirection: "row",
+    width: "85%",
   },
   blackalert: {
     color: "black",
-    fontSize: 9,
+    fontSize: 11,
+    width: 23,
+    marginTop: 1, 
   },
   greyalert: {
     color: "#B7B7B7",
-    fontSize: 9,
-  },
-  buttoncontainer: {
-    height: "100%",
-    marginLeft: 10,
-    // marginBottom: 10,
-    // flexDirection: "column-reverse",
-    // position: "absolute",
-    // top: 10,
-    // right: 0,
-    // width: 50,
-    // height: 70,
-    alignItems: "center",
-    justifyContent: "space-between",
+    fontSize: 11,
   },
   navercontainer: {
-    marginTop: 10,
-    paddingRight: 10,
-    width: 50,
-    height: 30,
+    position: "absolute",
+    top: 10, 
+    right: 5,
   },
   naverbutton: {
     width: "100%",
@@ -242,11 +204,16 @@ const styles = StyleSheet.create({
   },
   heartcontainer: {
     alignItems: "center",
+    justifyContent: "center",
+    position: "absolute",
+    bottom: 10,
+    right: 0,
+    width: "10%",
+    height: "30%"
   },
   heartbutton: {
-    width: 40,
-    height: 35,
-    marginBottom: -5,
+    width: "100%",
+    height: "100%"
   },
   heart: {
     width: "100%",
@@ -255,6 +222,8 @@ const styles = StyleSheet.create({
   },
   likeCnt: {
     color: "#6B6B6B",
+    marginTop: -5,
+    fontSize: 15,
   },
 });
 

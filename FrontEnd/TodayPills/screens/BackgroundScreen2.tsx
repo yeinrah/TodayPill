@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
   // },
   rootScreen: {
     flex: 1,
+    backgroundColor: "white",
   },
   backgroundImage: {
     opacity: 1,

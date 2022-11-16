@@ -3,13 +3,17 @@ import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { useRef, useState } from "react";
 
-const SearchBar = ({ navigation, word }: any) => {
+const SearchBar = ({ navigation, word, isMain }: any) => {
   const [keyword, setKeyword] = useState(word);
   const textinput = useRef();
   const Search = () => {
     if (keyword) {
       const realKeyword = keyword.trim();
-      navigation.navigate("SearchScreen", { word: realKeyword });
+      if (isMain) {
+        navigation.navigate("SearchScreen", { word: realKeyword, isMain: true });
+      } else {
+        navigation.navigate("Search", { word: realKeyword, isMain: false });
+      }
     } else {
       Alert.alert("", "검색어를 입력하세요.", [
         {
