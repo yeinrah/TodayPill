@@ -1,9 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Pressable, View, Text, StyleSheet } from "react-native";
 import { Linking } from "react-native";
+import { Table, Row, Rows } from "react-native-table-component";
 
 export default function AiQna (props: any) {
 	const [isStretched, setIsStretched] = useState(false);
+	const [chartIndex, setChartIndex] = useState(-1);
+
+	useEffect(() => {
+		props.contents.forEach((content, idx) => {
+			if (content[0] === "chart") {
+				setChartIndex(idx);
+			}
+		})
+	}, []);
 
 	return (
 		<Pressable
@@ -17,18 +27,57 @@ export default function AiQna (props: any) {
 						{props.title}
 					</Text>
 					<View style={styles.line} />
-					<Text style={{...styles.text, fontFamily: "웰컴체_Regular"}}>
-						{props.contents.map((content, idx) =>
-							content.length === 2 ?
-							<Text
-								key={idx}
-								style={styles.link}
-								onPress={() => Linking.openURL(content[1])}
-							>
-								{content[0]}
-							</Text> : content
-						)}
-					</Text>
+					{
+						chartIndex === -1 ?
+						<Text style={{...styles.text, fontFamily: "웰컴체_Regular"}}>
+							{props.contents.map((content, idx) => (
+								content.length === 2 ?
+									<Text
+										key={idx}
+										style={styles.link}
+										onPress={() => Linking.openURL(content[1])}
+									>
+										{content[0]}
+									</Text> :
+									content
+							))}
+						</Text> :
+						<View>
+							<Text style={{...styles.text, fontFamily: "웰컴체_Regular"}}>
+								{props.contents.slice(0, chartIndex).map((content, idx) => (
+									content.length === 2 ?
+										<Text
+											key={idx}
+											style={styles.link}
+											onPress={() => Linking.openURL(content[1])}
+										>
+											{content[0]}
+										</Text> :
+										content
+								))}
+							</Text>
+							<Table borderStyle={styles.borderStyle} style={styles.borderstyle}>
+								<Row data={props.contents[chartIndex][1]} textStyle={{...styles.rowText, fontFamily: "웰컴체_Bold"}} />
+								<Rows data={props.contents[chartIndex][2]} textStyle={{...styles.rowText, fontFamily: "웰컴체_Regular"}} />
+							</Table>
+							<Text>
+								&nbsp;
+							</Text>
+							<Text style={{...styles.text, fontFamily: "웰컴체_Regular"}}>
+								{props.contents.slice(chartIndex + 1).map((content, idx) => (
+									content.length === 2 ?
+										<Text
+											key={idx}
+											style={styles.link}
+											onPress={() => Linking.openURL(content[1])}
+										>
+											{content[0]}
+										</Text> :
+										content
+								))}
+							</Text>
+						</View>
+					}
 				</View> :
 				<View style={styles.textcontainer}>
 					<Text style={{...styles.text, fontFamily: "웰컴체_Bold"}}>
@@ -66,5 +115,16 @@ const styles = StyleSheet.create({
 	link: {
 		color: "grey",
 		textDecorationLine: "underline",
+	},
+	borderStyle : {
+		borderWidth: 1,
+		borderColor: "black",
+	},
+	borderstyle: {
+		marginVertical: -15,
+	},
+	rowText : {
+		margin: 1,
+		textAlign: "center",
 	},
 });
