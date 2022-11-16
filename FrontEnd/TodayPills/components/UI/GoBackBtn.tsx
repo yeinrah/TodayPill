@@ -18,11 +18,9 @@ export default function GoBackBtn(props: any) {
 }
 
 const styles = StyleSheet.create({
-  container: {},
   // buttonOuterContainer: {
   //   flex: 1,
   //   borderRadius: 30,
-
   //   margin: 4,
   //   overflow: "hidden",
   //   marginVertical: 10,
@@ -30,6 +28,5 @@ const styles = StyleSheet.create({
   // },
   // buttonInnerContainer: {
   //   paddingVertical: 10,
-
   // },
 });

@@ -30,7 +30,7 @@ export interface RoutineDetailProps {
 const weekDays = ["월", "화", "수", "목", "금", "토", "일"];
 
 export default function RoutineItemDetail({
-  key,
+  // key,
   routineId,
   supplementId,
   time,

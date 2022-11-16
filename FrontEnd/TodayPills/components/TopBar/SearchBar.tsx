@@ -10,6 +10,7 @@ import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { useRef, useState } from "react";
 import { regularWelcome } from "../Data/fontFamilyObject";
+import { primary } from "../../constants/Colors";
 
 const SearchBar = ({ navigation, word, isMain }: any) => {
   const [keyword, setKeyword] = useState(word);
@@ -45,56 +46,70 @@ const SearchBar = ({ navigation, word, isMain }: any) => {
         returnKeyType="search"
         ref={textinput}
       />
-      {keyword ? (
-        <Feather
-          name="x"
-          size={24}
-          style={styles.clearicon}
+      <View style={styles.btns}>
+        {keyword ? (
+          <Feather
+            name="x"
+            size={24}
+            style={styles.clearicon}
+            onPress={() => {
+              setKeyword("");
+              textinput.current.clear();
+            }}
+          />
+        ) : null}
+        <Ionicons
+          name="search"
+          size={28}
+          style={styles.searchicon}
           onPress={() => {
-            setKeyword("");
-            textinput.current.clear();
+            Search();
+            Keyboard.dismiss();
           }}
         />
-      ) : null}
-      <Ionicons
-        name="search"
-        size={30}
-        style={styles.searchicon}
-        onPress={() => {
-          Search();
-          Keyboard.dismiss();
-        }}
-      />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
-    justifyContent: "center",
-    position: "relative",
+    width: "88%",
+    // flex: 1,
+    height: 40,
+    justifyContent: "space-between",
+    alignItems: "center",
     marginVertical: 15,
+    paddingHorizontal: 15,
+
+    flexDirection: "row",
+
+    // position: "relative",
+    borderWidth: 1,
+    borderRadius: 40,
+    borderColor: primary,
+    backgroundColor: "white",
+    elevation: 10,
   },
   textinput: {
     height: 36,
     fontSize: 15,
-    borderWidth: 1,
-    borderRadius: 40,
-    marginLeft: 30,
-    marginRight: 30,
-    paddingLeft: 20,
-    paddingRight: 66,
-    elevation: 10,
-    backgroundColor: "white",
+
+    width: "70%",
+  },
+  btns: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   clearicon: {
-    position: "absolute",
-    right: 70,
+    color: "#B7B7B7",
+    marginHorizontal: 3,
+    // position: "absolute",
+    // right: 70,
   },
   searchicon: {
-    position: "absolute",
-    right: 40,
+    // position: "absolute",
+    // right: 40,
     color: "#E2C3DC",
   },
 });
