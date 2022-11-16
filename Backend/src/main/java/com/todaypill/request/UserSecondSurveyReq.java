@@ -31,7 +31,7 @@ public class UserSecondSurveyReq {
     //,antacid (제산제 효과), 추가중..
 	@ApiModelProperty(name = "formula", example = "capsule")
 	@NotNull(message = "약의 제형을 입력하세요.")
-    private String formula; // capsule, chewable, liquid, powder
+    private String formula; // capsule, chewable, liquid, powder, spray
 	
 	@ApiModelProperty(name = "sustainedRelease", example = "false")
 	@NotNull(message = "서방형 제재를 원하시는지 여부를 입력하세요.")
