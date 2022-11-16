@@ -5,6 +5,7 @@ import {
   Pressable,
   ScrollView,
   TextInput,
+  Button,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
@@ -154,6 +155,50 @@ const AnswerSurvey = ({
             />
             <Text style={styles.price}>원</Text>
           </View>
+          <View style={styles.pricebtn}>
+            <View style={styles.pbtn}>
+              <Button
+                title="100"
+                onPress={() => {
+                  let str = String(
+                    Number(minPrice.replace(",", "")) + 100
+                  ).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                  setMinPrice(str);
+                  setSelectedItem(
+                    str.replace(",", "") + " " + maxPrice.replace(",", "")
+                  );
+                }}
+              />
+            </View>
+            <View style={styles.pbtn}>
+              <Button
+                title="1000"
+                onPress={() => {
+                  let str = String(
+                    Number(minPrice.replace(",", "")) + 1000
+                  ).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                  setMinPrice(str);
+                  setSelectedItem(
+                    str.replace(",", "") + " " + maxPrice.replace(",", "")
+                  );
+                }}
+              />
+            </View>
+            <View style={styles.pbtn}>
+              <Button
+                title="10000"
+                onPress={() => {
+                  let str = String(
+                    Number(minPrice.replace(",", "")) + 10000
+                  ).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                  setMinPrice(str);
+                  setSelectedItem(
+                    str.replace(",", "") + " " + maxPrice.replace(",", "")
+                  );
+                }}
+              />
+            </View>
+          </View>
           <Text style={styles.textInput}>~</Text>
           <View style={styles.priceView}>
             <TextInput
@@ -167,6 +212,50 @@ const AnswerSurvey = ({
               value={maxPrice}
             />
             <Text style={styles.price}>원</Text>
+          </View>
+          <View style={styles.pricebtn}>
+            <View style={styles.pbtn}>
+              <Button
+                title="100"
+                onPress={() => {
+                  let str = String(
+                    Number(maxPrice.replace(",", "")) + 100
+                  ).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                  setMaxPrice(str);
+                  setSelectedItem(
+                    minPrice.replace(",", "") + " " + str.replace(",", "")
+                  );
+                }}
+              />
+            </View>
+            <View style={styles.pbtn}>
+              <Button
+                title="1000"
+                onPress={() => {
+                  let str = String(
+                    Number(maxPrice.replace(",", "")) + 1000
+                  ).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                  setMaxPrice(str);
+                  setSelectedItem(
+                    minPrice.replace(",", "") + " " + str.replace(",", "")
+                  );
+                }}
+              />
+            </View>
+            <View style={styles.pbtn}>
+              <Button
+                title="10000"
+                onPress={() => {
+                  let str = String(
+                    Number(maxPrice.replace(",", "")) + 10000
+                  ).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                  setMaxPrice(str);
+                  setSelectedItem(
+                    minPrice.replace(",", "") + " " + str.replace(",", "")
+                  );
+                }}
+              />
+            </View>
           </View>
         </View>
       )}
@@ -265,6 +354,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingTop: 0,
     paddingBottom: 0,
+  },
+  pricebtn: {
+    flexDirection: "row",
+  },
+  pbtn: {
+    margin: 2,
   },
 });
 export default AnswerSurvey;

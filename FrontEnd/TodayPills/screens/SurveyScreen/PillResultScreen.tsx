@@ -61,6 +61,7 @@ const PillResultScreen = ({ navigation, route }: any) => {
           {/* <DetailedPillCard /> */}
           {route.params.answerSheet[0] &&
             route.params.answerSheet[0].data.map((item, index) => {
+              console.log(item);
               return (
                 <DetailedPillCard
                   supplementId={item.supplementId}
@@ -69,7 +70,11 @@ const PillResultScreen = ({ navigation, route }: any) => {
                   note={item.note}
                   userId={userId}
                   image={item.image}
-                  key={index}
+                  key={item.supplementId}
+                  like={item.like}
+                  additionalEfficacy={item.additionalEfficacy}
+                  ingredients={item.ingredients}
+                  caution={item.bestTime}
                 />
               );
             })}
