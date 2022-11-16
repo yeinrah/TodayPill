@@ -74,16 +74,16 @@ public class RecommendService {
 
               	String[] additionalArr = userSecondSurveyReq.getAdditionalEfficacy().split(" ");
               	for(int i=0; i<additionalArr.length;i++) {
-              		if(additionalArr[i].equals("스트레스완화")) additionalArr[i] = "stress_relief";
-              		if(additionalArr[i].equals("기억력증진")) additionalArr[i] = "memory_boost";
-              		if(additionalArr[i].equals("혈액순환")) additionalArr[i] = "blood_circulation";
-              		if(additionalArr[i].equals("에너지증진")) additionalArr[i] = "energy_boost";
-              		if(additionalArr[i].equals("근육통완화")) additionalArr[i] = "muscle_pain";
-              		if(additionalArr[i].equals("면역증진")) additionalArr[i] = "immune";
-              		if(additionalArr[i].equals("신경통완화")) additionalArr[i] = "neuralgia";
-              		if(additionalArr[i].equals("관절건강")) additionalArr[i] = "joint_health";
-              		if(additionalArr[i].equals("다이어트")) additionalArr[i] = "diet";
-              		if(additionalArr[i].equals("질건강")) additionalArr[i] = "vaginal";
+              		if(additionalArr[i].equals("스트레스완화")) additionalArr[i] = "스트레스 완화";
+              		if(additionalArr[i].equals("기억력증진")) additionalArr[i] = "기억력 증진";
+              		if(additionalArr[i].equals("혈액순환")) additionalArr[i] = "혈액 순환";
+              		if(additionalArr[i].equals("에너지증진")) additionalArr[i] = "에너지 증진";
+              		if(additionalArr[i].equals("근육통완화")) additionalArr[i] = "근육통 완화";
+              		if(additionalArr[i].equals("면역증진")) additionalArr[i] = "면역 증진";
+              		if(additionalArr[i].equals("신경통완화")) additionalArr[i] = "신경통 완화";
+              		if(additionalArr[i].equals("관절건강")) additionalArr[i] = "관절 건강";
+              		if(additionalArr[i].equals("다이어트")) additionalArr[i] = "다이어트";
+              		if(additionalArr[i].equals("질건강")) additionalArr[i] = "질 건강";
               		
               		if(supplement.getAdditionalEfficacy().contains(additionalArr[i])) score+=3;    		
               	}
