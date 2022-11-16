@@ -174,26 +174,111 @@ public class UserService {
 		if(userFirstSurveyReq.is_ok_big_pill()) {
 			//여기는 뭐 별 상관 없을듯 그냥 값만 넘겨주면 됨
 		}
-		//변비가 있으면 -> 유산균 더하기
-		if(userFirstSurveyReq.isConstipation()) {
+		
+		
+		
+		//앓는 증상
+		if(userFirstSurveyReq.getSymptom().contains("속쓰림")) {
 			lactobacillus +=2;
 		}
-		//설사는 마그네슘 섭취를 줄여야 한다.
-		if(userFirstSurveyReq.isDiarrhea()) {
+		if(userFirstSurveyReq.getSymptom().contains("변비")) {
+			lactobacillus +=2;
+		}
+		if(userFirstSurveyReq.getSymptom().contains("설사")) {
+			lactobacillus +=2;
+		}
+		if(userFirstSurveyReq.getSymptom().contains("소화장애")) {
+			lactobacillus +=2;
+		}
+		if(userFirstSurveyReq.getSymptom().contains("요통")) {
+			lactobacillus +=2;
+		}
+		if(userFirstSurveyReq.getSymptom().contains("편두통")) {
+			lactobacillus +=2;
+		}
+		if(userFirstSurveyReq.getSymptom().contains("과민성 대장 증후군")) {
+			lactobacillus +=2;
+		}
+		if(userFirstSurveyReq.getSymptom().contains("아토피")) {
+			lactobacillus +=2;
+		}
+		if(userFirstSurveyReq.getSymptom().contains("비듬")) {
+			lactobacillus +=2;
+		}
+		if(userFirstSurveyReq.getSymptom().contains("야간 다리")) {
+			lactobacillus +=2;
+		}
+		if(userFirstSurveyReq.getSymptom().contains("구내염")) {
+			lactobacillus +=2;
+		}
+		
+		
+		
+		//앓고있는 질병
+		if(userFirstSurveyReq.getDisease().contains("빈혈")) {
 			magnesium-=2;
 		}
-		//속쓰림은 비타민 A, C, E, 오메가 3
-		if(userFirstSurveyReq.isHeartburn()) {
+		if(userFirstSurveyReq.getDisease().contains("갑상선 질환")) {
+			magnesium-=2;
+		}
+		if(userFirstSurveyReq.getDisease().contains("신장 질환")) {
+			magnesium-=2;
+		}
+		if(userFirstSurveyReq.getDisease().contains("당뇨병")) {
+			magnesium-=2;
+		}
+		if(userFirstSurveyReq.getDisease().contains("통풍")) {
+			magnesium-=2;
+		}
+		if(userFirstSurveyReq.getDisease().contains("고혈압")) {
+			magnesium-=2;
+		}
+		if(userFirstSurveyReq.getDisease().contains("고지혈증")) {
+			magnesium-=2;
+		}
+		if(userFirstSurveyReq.getDisease().contains("치주염")) {
+			magnesium-=2;
+		}
+		if(userFirstSurveyReq.getDisease().contains("심부전")) {
+			magnesium-=2;
+		}
+		
+		
+		
+		//복용중인 약
+		if(userFirstSurveyReq.getMedicine().contains("피임약")) {
 			omega3+=2;
 			vitaminC+=2;
 		}
-		//신장에 비타민 C는 무리를 줄 수 있다. 비타민 D는 좋음 오메가3도
-		if(userFirstSurveyReq.isKidney_disease()) {
-			vitaminC-=2;
-			vitaminD+=1;
-			omega3+=1;
-			
+		if(userFirstSurveyReq.getMedicine().contains("제산제")) {
+			omega3+=2;
+			vitaminC+=2;
 		}
+		if(userFirstSurveyReq.getMedicine().contains("혈압약")) {
+			omega3+=2;
+			vitaminC+=2;
+		}
+		if(userFirstSurveyReq.getMedicine().contains("이뇨제")) {
+			omega3+=2;
+			vitaminC+=2;
+		}
+		if(userFirstSurveyReq.getMedicine().contains("부정맥")) {
+			omega3+=2;
+			vitaminC+=2;
+		}
+		if(userFirstSurveyReq.getMedicine().contains("항경련제")) {
+			omega3+=2;
+			vitaminC+=2;
+		}
+		if(userFirstSurveyReq.getMedicine().contains("갑상선")) {
+			omega3+=2;
+			vitaminC+=2;
+		}
+		if(userFirstSurveyReq.getMedicine().contains("항생제")) {
+			omega3+=2;
+			vitaminC+=2;
+		}
+
 		//임신했을 때 철분 , 종합비타민, 
 		if(userFirstSurveyReq.isPregnant()) {
 			Fe+=2;
@@ -218,6 +303,16 @@ public class UserService {
 		if(userFirstSurveyReq.getAllergy().contains("비염")) {
 			vitaminD +=2;
 			profolis +=2;
+		}
+		//여기도 레퍼 찾아라
+		if(userFirstSurveyReq.getAllergy().contains("허브")) {
+
+		}
+		if(userFirstSurveyReq.getAllergy().contains("생선")) {
+
+		}
+		if(userFirstSurveyReq.getAllergy().contains("계란")) {
+
 		}
 		
 		//선호하는 브랜드명 -> 2차설문용
@@ -267,9 +362,9 @@ public class UserService {
 		System.out.println("알러지 길이 =>"+userFirstSurveyReq.getAllergy());
 		CommonQuestion cq = CommonQuestion.builder().allergy(userFirstSurveyReq.getAllergy()).
 				balanced_meal(userFirstSurveyReq.isBalanced_meal()).
-				constipation(userFirstSurveyReq.isConstipation()).diarrhea(userFirstSurveyReq.isDiarrhea()).
-				heartburn(userFirstSurveyReq.isHeartburn()).is_ok_big_pill(userFirstSurveyReq.is_ok_big_pill())
-				.kidney_disease(userFirstSurveyReq.isKidney_disease()).lack(userFirstSurveyReq.getLack()).
+				
+				is_ok_big_pill(userFirstSurveyReq.is_ok_big_pill())
+				.lack(userFirstSurveyReq.getLack()).
 				preferred_brand(userFirstSurveyReq.getPreferred_brand())
 				.pregnant(userFirstSurveyReq.isPregnant()).problem(userFirstSurveyReq.getProblem()).
 				outdoor_activity(userFirstSurveyReq.getOutdoor_activity()).smoking(userFirstSurveyReq.isSmoking())
