@@ -152,6 +152,8 @@ const AnswerSurvey = ({
                 setSelectedItem(min + " " + maxPrice);
               }}
               value={minPrice}
+              editable={false}
+              selectTextOnFocus={false}
             />
             <Text style={styles.price}>원</Text>
           </View>
@@ -210,6 +212,8 @@ const AnswerSurvey = ({
                 setSelectedItem(minPrice + " " + max);
               }}
               value={maxPrice}
+              editable={false}
+              selectTextOnFocus={false}
             />
             <Text style={styles.price}>원</Text>
           </View>
@@ -347,7 +351,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 40,
   },
-  textInput: { fontSize: 40 },
+  textInput: { fontSize: 40, color: "black" },
   price: { marginTop: 8, marginLeft: 5, fontSize: 30 },
   priceView: {
     alignItems: "center",
