@@ -132,7 +132,7 @@ const DetailedPillCard = (props: any) => {
         <Entypo
           name="magnifying-glass"
           size={30}
-          color="green"
+          color="#a2a3f5"
           style={styles.navercontainer}
           onPress={() => {
             naverSearch();

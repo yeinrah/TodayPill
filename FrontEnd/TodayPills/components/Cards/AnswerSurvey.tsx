@@ -162,9 +162,9 @@ const AnswerSurvey = ({
           <View style={styles.pricebtn}>
             <View style={styles.pbtn}>
               <CustomBtn
-                buttonWidth={70}
+                buttonWidth={75}
                 title={"+1,000"}
-                buttonColor={"green"}
+                buttonColor={"#a2a3f5"}
                 titleColor={"white"}
                 onPress={() => {
                   let str = String(
@@ -179,9 +179,9 @@ const AnswerSurvey = ({
             </View>
             <View style={styles.pbtn}>
               <CustomBtn
-                buttonWidth={70}
+                buttonWidth={75}
                 title={"+5,000"}
-                buttonColor={"green"}
+                buttonColor={"#a2a3f5"}
                 titleColor={"white"}
                 onPress={() => {
                   let str = String(
@@ -196,9 +196,9 @@ const AnswerSurvey = ({
             </View>
             <View style={styles.pbtn}>
               <CustomBtn
-                buttonWidth={70}
+                buttonWidth={75}
                 title={"+10,000"}
-                buttonColor={"green"}
+                buttonColor={"#a2a3f5"}
                 titleColor={"white"}
                 onPress={() => {
                   let str = String(
@@ -213,7 +213,7 @@ const AnswerSurvey = ({
             </View>
             <View style={styles.pbtn}>
               <CustomBtn
-                buttonWidth={70}
+                buttonWidth={75}
                 title={"Reset"}
                 buttonColor={"red"}
                 titleColor={"white"}
@@ -243,9 +243,9 @@ const AnswerSurvey = ({
           <View style={styles.pricebtn}>
             <View style={styles.pbtn}>
               <CustomBtn
-                buttonWidth={70}
+                buttonWidth={75}
                 title={"+1,000"}
-                buttonColor={"green"}
+                buttonColor={"#a2a3f5"}
                 titleColor={"white"}
                 onPress={() => {
                   let str = String(
@@ -260,9 +260,9 @@ const AnswerSurvey = ({
             </View>
             <View style={styles.pbtn}>
               <CustomBtn
-                buttonWidth={70}
+                buttonWidth={75}
                 title={"+5,000"}
-                buttonColor={"green"}
+                buttonColor={"#a2a3f5"}
                 titleColor={"white"}
                 onPress={() => {
                   let str = String(
@@ -277,9 +277,9 @@ const AnswerSurvey = ({
             </View>
             <View style={styles.pbtn}>
               <CustomBtn
-                buttonWidth={70}
+                buttonWidth={75}
                 title={"+10,000"}
-                buttonColor={"green"}
+                buttonColor={"#a2a3f5"}
                 titleColor={"white"}
                 onPress={() => {
                   let str = String(
@@ -294,7 +294,7 @@ const AnswerSurvey = ({
             </View>
             <View style={styles.pbtn}>
               <CustomBtn
-                buttonWidth={70}
+                buttonWidth={75}
                 title={"Reset"}
                 buttonColor={"red"}
                 titleColor={"white"}
