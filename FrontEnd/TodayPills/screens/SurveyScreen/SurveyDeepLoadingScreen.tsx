@@ -13,8 +13,9 @@ const SurveyDeepLoadingScreen = ({ navigation, route }: any) => {
     setNowMyNutrient(nutrient);
   };
   const getResult = async () => {
-    console.log(route.params.answerSheet, "hah");
+    // console.log(route.params.answerSheet, "hah!");
     let arr = await afterSecondSurvey(route.params.answerSheet);
+    console.log(arr, "hehe");
     setItemList([...itemList, arr]);
   };
   useEffect(() => {

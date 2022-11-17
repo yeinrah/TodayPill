@@ -30,6 +30,6 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 	@Query(value = "update user set name = ?2 where user_Id = ?1", nativeQuery = true)
 	void updateName(int userId, String name);
 	
-	@Query(value = "select * from user where age = ?1 and gender = ?2", nativeQuery = true)
-	List<User> findByAgeAndGender(int age, String gender);
+	@Query(value = "select * from user where age = ?1 and gender = ?2 and user_id != ?3", nativeQuery = true)
+	List<User> findByAgeAndGender(int age, String gender, int userId);
 }

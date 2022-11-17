@@ -19,7 +19,7 @@ import {
 import { primary } from "../../constants/Colors";
 
 const NutrientDetailScreen = ({ navigation, route }: any) => {
-  const [myName, setMyName] = useState<string>();
+  const [myName, setMyName] = useState<string>("");
   const [nutrientName, setNutrientName] = useState("");
   const { nutrient } = route.params;
   const getMyName = async () => {
@@ -91,7 +91,10 @@ const NutrientDetailScreen = ({ navigation, route }: any) => {
                   letterSpacing: 1,
                 }}
               >
-                {myName}&nbsp;
+                {myName.length > 4
+                  ? myName.slice(0, 4) + "...  "
+                  : myName + " "}
+                &nbsp;
               </Text>
               <Text
                 style={{

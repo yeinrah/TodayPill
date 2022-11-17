@@ -90,6 +90,7 @@ const GenderCheckScreen = ({ navigation }: any) => {
               android_ripple={{ color: "#4E736F" }}
               style={styles.buttonInnerContainer}
               onPress={async () => {
+                if (selectedItem === 0 || !nowGender) return;
                 // console.log(await AsyncStorage.getItem("2s"))
                 changeGender(
                   await AsyncStorage.getItem("@storage_UserEmail"),
