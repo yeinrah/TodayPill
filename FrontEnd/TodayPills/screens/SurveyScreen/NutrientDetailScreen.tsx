@@ -64,7 +64,10 @@ const NutrientDetailScreen = ({ navigation, route }: any) => {
           <View style={styles.recommendcontainer}>
             <View style={styles.recommendtextcontainer}>
               <Text style={[styles.recommendtext, styles.boldtext]}>
-                {myName}&nbsp;
+                {myName.length > 4
+                  ? myName.slice(0, 4) + "...  "
+                  : myName + " "}
+                &nbsp;
               </Text>
               <Text style={styles.recommendtext}>님께 맞는&nbsp;</Text>
               <Text style={[styles.recommendtext, styles.boldtext]}>
