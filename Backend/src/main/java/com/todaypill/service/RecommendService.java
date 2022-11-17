@@ -58,7 +58,7 @@ public class RecommendService {
                 double score = 0;
                 Integer labScore = 0;
                 String additionalEfficacy = "";
-                if ( supplement.getCategory().equals(userSecondSurveyReq.getCategory())) {
+                if ( supplement.getCategory().contains(userSecondSurveyReq.getCategory())) {
 
                     score = (commonQuestion.getPreferred_brand().equals(supplement.getBrand()) ? 3 : 0)
                             + supplement.getBioavailability()
@@ -86,7 +86,6 @@ public class RecommendService {
               		if(additionalArr[i].equals("관절건강")) additionalArr[i] = "관절 건강";
               		if(additionalArr[i].equals("다이어트")) additionalArr[i] = "다이어트";
               		if(additionalArr[i].equals("질건강")) additionalArr[i] = "질 건강";
-              		
               		if(supplement.getAdditionalEfficacy().contains(additionalArr[i])) score+=3;    		
               	}
                     //}
