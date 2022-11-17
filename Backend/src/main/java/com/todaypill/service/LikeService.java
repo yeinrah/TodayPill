@@ -42,7 +42,7 @@ public class LikeService {
 			for (Like l : likeList) {
 				int supplementId = l.getSupplementId();
 				Supplement supplement = supplementRepository.findOneBySupplementId(supplementId);
-				if (supplement.getCategory() == category) {
+				if (supplement.getCategory().equals(category)) {
 					if (map.get(supplement.getSupplementId()) != null)
 						map.put(supplement.getSupplementId(), map.get(supplement.getSupplementId()) + 1);
 					else

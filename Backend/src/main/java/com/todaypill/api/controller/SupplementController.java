@@ -1,6 +1,8 @@
 package com.todaypill.api.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,11 +36,12 @@ public class SupplementController {
 
 	@Autowired
 	public SupplementController(UserService userService, SupplementService supplementService,
-			CommonquestionService commonquestionService) {
+			CommonquestionService commonquestionService, LikeService likeService) {
 		super();
 		this.userService = userService;
 		this.supplementService = supplementService;
 		this.commonquestionService = commonquestionService;
+		this.likeService = likeService;
 	}
 
 	@GetMapping("/findAll")
@@ -72,9 +75,13 @@ public class SupplementController {
 		User user = userService.findOneByUserId(userId);
 		int age = user.getAge();
 		String gender = user.getGender();
-		List<CompareUser> userList = userService.calcSimilarity(cq, age, gender);
+		List<CompareUser> userList = userService.calcSimilarity(cq, age, gender, userId);
 		List<Supplement> similarList = likeService.findByCategory(userList, category);
-
-		return new ResponseEntity<List<Supplement>>(similarList, HttpStatus.OK);
+		
+		Map<String, Object> res = new HashMap<String, Object>();
+		res.put("supplement", supplement);
+		res.put("similar", similarList);
+		
+		return new ResponseEntity<Map<String, Object>>(res, HttpStatus.OK);
 	}
 }

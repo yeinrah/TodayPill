@@ -112,7 +112,7 @@ public class CommonQuestion {
 	@Column(name = "periodontitis")
 	private boolean periodontitis; //치주염
 
-	@Column(name = "heart failure")
+	@Column(name = "heart_failure")
 	private boolean heartFailure; //심부전
 
 	/*10. 다음 중 복용중인 약이 있으시다면 선택해주세요.
@@ -124,7 +124,7 @@ public class CommonQuestion {
 	@Column(name = "antacid")
 	private boolean antacid; //제산제
 
-	@Column(name = "blood pressure medicine")
+	@Column(name = "blood_pressure_medicine")
 	private boolean bloodPressureMedicine; //혈압약
 
 	@Column(name = "diuretic")

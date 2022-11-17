@@ -432,9 +432,9 @@ public class UserService {
 	}
 
 	@Transactional
-	public List<CompareUser> calcSimilarity(CommonQuestion cq, int age, String gender) {
+	public List<CompareUser> calcSimilarity(CommonQuestion cq, int age, String gender, int uuId) {
 		// 나이와 성별로 1차 필터링한 유저 리스트 받아오기
-		List<User> userList = userRepository.findByAgeAndGender(age, gender);
+		List<User> userList = userRepository.findByAgeAndGender(age, gender, uuId);
 
 		// 비교할 유저의 1차 설문 데이터 칼럼별로 분류
 		boolean pregnant = cq.isPregnant();
