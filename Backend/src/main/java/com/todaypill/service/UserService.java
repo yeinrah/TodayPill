@@ -124,7 +124,8 @@ public class UserService {
 
 	@Transactional
 	public String[] userFirstSurvey(UserFirstSurveyReq userFirstSurveyReq) throws Exception {
-
+		User user = findOneByUserId(userFirstSurveyReq.getUserId());
+		
 		int vitaminB = 0;
 		int vitaminC = 0;
 		int vitaminD = 0;
@@ -180,23 +181,25 @@ public class UserService {
 		
 		
 		//앓는 증상
-		if(userFirstSurveyReq.getSymptom().contains("속쓰림")) {
-			multivitamin +=2;
-		}
+//		if(userFirstSurveyReq.getSymptom().contains("속쓰림")) {
+//			multivitamin +=2;
+//		}
 		if(userFirstSurveyReq.getSymptom().contains("변비")) {
 			lactobacillus +=2;
+			magnesium+=2;
 		}
 		if(userFirstSurveyReq.getSymptom().contains("설사")) {
 			lactobacillus +=2;
 		}
-		if(userFirstSurveyReq.getSymptom().contains("소화장애")) {
-			multivitamin +=2;
-		}
+//		if(userFirstSurveyReq.getSymptom().contains("소화장애")) {
+//			multivitamin +=2;
+//		}
 		if(userFirstSurveyReq.getSymptom().contains("요통")) {
 			vitaminD +=2;
 		}
 		if(userFirstSurveyReq.getSymptom().contains("편두통")) {
 			magnesium +=2;
+			omega3 +=2;
 		}
 		if(userFirstSurveyReq.getSymptom().contains("과민성 대장 증후군")) {
 			lactobacillus +=2;
@@ -212,30 +215,39 @@ public class UserService {
 		}
 		if(userFirstSurveyReq.getSymptom().contains("구내염")) {
 			Zn +=2;
+			vitaminB+=2;
 		}
 		
 		
 		
 		//앓고있는 질병
 		if(userFirstSurveyReq.getDisease().contains("빈혈")) {
-			Zn+=2;
+			Fe+=2;
 		}
 		if(userFirstSurveyReq.getDisease().contains("갑상선 질환")) {
 			Zn+=2;
+			vitaminB+=2;
 		}
 		if(userFirstSurveyReq.getDisease().contains("신장 질환")) {
-			multivitamin+=2;
+			vitaminB-=5;
+			vitaminC-=5;
 		}
 		if(userFirstSurveyReq.getDisease().contains("당뇨병")) {
 			vitaminB-=5;
 			vitaminC +=2;
+			milkcistle+=2;
+			Zn+=2;
+			magnesium+=2;
 		}
 		if(userFirstSurveyReq.getDisease().contains("통풍")) {
 			vitaminC+=2;
+			omega3+=2;
 		}
 		if(userFirstSurveyReq.getDisease().contains("고혈압")) {
 			Zn+=2;
 			vitaminC+=1;
+			lactobacillus+=1;
+			omega3+=2;
 		}
 		if(userFirstSurveyReq.getDisease().contains("고지혈증")) {
 			vitaminD+=2;
@@ -245,6 +257,7 @@ public class UserService {
 		}
 		if(userFirstSurveyReq.getDisease().contains("심부전")) {
 			magnesium+=2;
+			omega3+=2;
 		}
 		
 		
@@ -255,42 +268,44 @@ public class UserService {
 			magnesium+=2;
 			milkcistle-=2;
 		}
-		if(userFirstSurveyReq.getMedicine().contains("제산제")) {
-			magnesium+=2;
-		}
-		if(userFirstSurveyReq.getMedicine().contains("혈압약")) {
-			Zn+=2;
-		}
+//		if(userFirstSurveyReq.getMedicine().contains("제산제")) {
+//			magnesium+=2;
+//		}
+//		if(userFirstSurveyReq.getMedicine().contains("혈압약")) {
+//			Zn+=2;
+//		}
 		if(userFirstSurveyReq.getMedicine().contains("이뇨제")) {
 			magnesium+=2;
 		}
-		if(userFirstSurveyReq.getMedicine().contains("부정맥")) {
-			magnesium-=5;
-		}
-		if(userFirstSurveyReq.getMedicine().contains("항경련제")) {
-			magnesium-=5;
-		}
-		if(userFirstSurveyReq.getMedicine().contains("갑상선")) {
-			Zn+=2;
-			vitaminB+=2;
-		}
+//		if(userFirstSurveyReq.getMedicine().contains("부정맥")) {
+//			magnesium-=5;
+//		}
+//		if(userFirstSurveyReq.getMedicine().contains("항경련제")) {
+//			magnesium-=5;
+//		}
+//		if(userFirstSurveyReq.getMedicine().contains("갑상선")) {
+//			Zn+=2;
+//			vitaminB+=2;
+//		}
 		if(userFirstSurveyReq.getMedicine().contains("항생제")) {
 			Zn-=5;
 			magnesium-=5;
 			lactobacillus+=2;
+			vitaminB+=1;
 		}
 
 		//임신했을 때 철분 , 종합비타민, 
 		if(userFirstSurveyReq.isPregnant()) {
 			Fe+=2;
 			multivitamin+=2;
+			vitaminB+=2;
 		}
 		//흡연할 경우, 루테인이 안좋음
 		if(userFirstSurveyReq.isSmoking()) {
 			lutain-=2;
 		}
 		//무슨 알러지든 간에 항산화제인 비타민 C는 도움이 된다.
-		if(userFirstSurveyReq.getAllergy().contains("")) {
+		if(!userFirstSurveyReq.getAllergy().contains("해당")) {
 			vitaminC+=2;
 			lactobacillus+=2;
 		}
@@ -307,24 +322,24 @@ public class UserService {
 		}
 		//여기도 레퍼 찾아라
 		if(userFirstSurveyReq.getAllergy().contains("허브")) {
-			milkcistle+=1;
+			milkcistle-=10;
 		}
 		if(userFirstSurveyReq.getAllergy().contains("생선")) {
-			omega3-=5;
+			omega3-=10;
 			
 		}
 		if(userFirstSurveyReq.getAllergy().contains("계란")) {
-			collagen-=5;
+			collagen-=10;
 		}
 		//음주
 		if(userFirstSurveyReq.getDrink()==0) {
 			milkcistle+=0;
 		}else if(userFirstSurveyReq.getDrink()==1) {
-			milkcistle+=2;
+			milkcistle+=1;
 		}else if(userFirstSurveyReq.getDrink()==2) {
 			milkcistle+=3;
 		}else if(userFirstSurveyReq.getDrink()==3) {
-			milkcistle+=4;
+			milkcistle+=5;
 		}
 		
 		//선호하는 브랜드명 -> 2차설문용
@@ -332,18 +347,68 @@ public class UserService {
 		//고민거리도 뭐 받아서 해주면 될듯(버튼으로 체크하는 형식) 피로감, 눈건강, 피부건강 등 이거는 사용자가 원하는 것이기 때문에 높은 +
 		if(userFirstSurveyReq.getProblem().contains("피로감")) {
 			vitaminB += 5;
+			if(user.getGender().contains("여")) {
+				Fe+=3;
+			}
 		}
 		if(userFirstSurveyReq.getProblem().contains("눈건강")) {
 			lutain += 5;
+			omega3+=5;
 		}
 		if(userFirstSurveyReq.getProblem().contains("피부건강")) {
 			collagen += 5;
 		}
+		if(userFirstSurveyReq.getProblem().contains("암, 심혈관 질환 예방")) {
+			multivitamin+=5;
+		}
+		if(userFirstSurveyReq.getProblem().contains("치매 예방")) {
+			vitaminD += 5;
+		}
+		if(userFirstSurveyReq.getProblem().contains("식후 혈당 관리")) {
+			vitaminC += 5;
+		}
+		if(userFirstSurveyReq.getProblem().contains("콜레스테롤 수치 개선")) {
+			milkcistle += 5;
+		}
+		if(userFirstSurveyReq.getProblem().contains("관절 통증")) {
+			vitaminD += 5;
+		}
+		if(userFirstSurveyReq.getProblem().contains("뼈 건강")) {
+			vitaminD += 5;
+		}
+		if(userFirstSurveyReq.getProblem().contains("간 건강")) {
+			milkcistle += 5;
+		}
+		if(userFirstSurveyReq.getProblem().contains("우울감")) {
+			vitaminB += 5;
+		}
+		if(userFirstSurveyReq.getProblem().contains("PMS, 월경통")) {
+			magnesium += 5;
+		}
+		if(userFirstSurveyReq.getProblem().contains("빈혈 ")) {
+			Fe += 5;
+		}
+		if(userFirstSurveyReq.getProblem().contains("수면")) {
+			lutain += 5;
+		}
+		if(userFirstSurveyReq.getProblem().contains("눈 건강")) {
+			lutain += 5;
+		}
+		if(userFirstSurveyReq.getProblem().contains("청력 보호")) {
+			magnesium += 5;
+		}
+		if(userFirstSurveyReq.getProblem().contains("주름 개선")) {
+			collagen += 5;
+		}
+		if(userFirstSurveyReq.getProblem().contains("모발 건강")) {
+			collagen += 5;
+		}
+		
 		//햇빛 많이쬐면 쬔 만큼 비타민D 변수 조절
-		if(userFirstSurveyReq.getOutdoor_activity()==1)vitaminD+=3;
-		else if(userFirstSurveyReq.getOutdoor_activity()==2)vitaminD+=2.5;
+		if(userFirstSurveyReq.getOutdoor_activity()==1)vitaminD+=5;
+		else if(userFirstSurveyReq.getOutdoor_activity()==2)vitaminD+=3;
 		else if(userFirstSurveyReq.getOutdoor_activity()==3)vitaminD+=1;
-		else if(userFirstSurveyReq.getOutdoor_activity()==4)vitaminD+=0.5;
+		else if(userFirstSurveyReq.getOutdoor_activity()==4);
 		
 		Map<String,Integer> map = new HashMap<String, Integer>();
 		map.put("비타민 B", vitaminB);

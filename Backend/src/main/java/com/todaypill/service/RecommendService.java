@@ -45,7 +45,9 @@ public class RecommendService {
 
             // commonquestion과 user 객체를 가져오면 된다
     		String email = userSecondSurveyReq.getEmail();
+    		System.out.println(email);
             User user = userRepository.findOneByEmail(email);
+            System.out.println(user.getEmail());
             CommonQuestion commonQuestion = commonQuestionRepository.findOneByUserId(user.getUserId());
 
             List<SupplementAndScoreRes> supplementAndScoreRes = new ArrayList<>();
@@ -94,7 +96,7 @@ public class RecommendService {
                         , supplement.getIngredients(), supplement.getBioavailability(), supplement.getLaxative(), supplement.getKidneyDisease()
                         , supplement.getConsumerLabScore(), supplement.getAdditionalEfficacy(), supplement.getNote(),supplement.getAmount()
                         , supplement.getRequiredCount(), supplement.getFormula(), supplement.getLike(),supplement.getSustainedRelease()
-                        ,supplement.getPillSize(),supplement.getBestTime(), supplement.getCaution(), score));
+                        ,supplement.getPillSize(), supplement.getCaution(), supplement.getBestTime(), score));
                 cnt+=0.0001;
                 score+=cnt;
 //                System.out.println(score);
