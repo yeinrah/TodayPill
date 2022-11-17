@@ -60,7 +60,6 @@ const PillResultScreen = ({ navigation, route }: any) => {
           </Text>
         </View>
         <View>
-          {/* <DetailedPillCard /> */}
           {route.params.answerSheet[0] &&
             route.params.answerSheet[0].data.map((item, index) => {
               return (
@@ -79,6 +78,14 @@ const PillResultScreen = ({ navigation, route }: any) => {
                 />
               );
             })}
+          {route.params.answerSheet[0].data.length === 0 && (
+            <View style={styles.titleGroup}>
+              <Text style={styles.content}>검색 결과가 없습니다.</Text>
+              <Text style={styles.content2}>
+                영양제는 계속해서 추가될 예정입니다.
+              </Text>
+            </View>
+          )}
         </View>
         <View style={styles.btn}>
           <CustomBtn
@@ -124,6 +131,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 20,
     marginBottom: 30,
+  },
+  content: {
+    fontSize: 20,
+    paddingTop: 30,
+  },
+  content2: {
+    fontSize: 20,
+    paddingTop: 10,
   },
 });
 
