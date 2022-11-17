@@ -14,7 +14,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import BackgroundScreen2 from "../BackgroundScreen2";
 
 const NutrientDetailScreen = ({ navigation, route }: any) => {
-  const [myName, setMyName] = useState<string>();
+  const [myName, setMyName] = useState<string>("");
   const [nutrientName, setNutrientName] = useState("");
   const { nutrient } = route.params;
   const getMyName = async () => {
