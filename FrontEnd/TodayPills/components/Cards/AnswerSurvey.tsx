@@ -6,11 +6,13 @@ import {
   ScrollView,
   TextInput,
   Button,
+  TouchableOpacity,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { useCallback, useEffect, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
+import CustomBtn from "../UI/CustomBtn";
 
 const AnswerSurvey = ({
   selectedItem,
@@ -159,8 +161,11 @@ const AnswerSurvey = ({
           </View>
           <View style={styles.pricebtn}>
             <View style={styles.pbtn}>
-              <Button
-                title="100"
+              <CustomBtn
+                buttonWidth={70}
+                title={"100"}
+                buttonColor={"green"}
+                titleColor={"white"}
                 onPress={() => {
                   let str = String(
                     Number(minPrice.replace(",", "")) + 100
@@ -170,11 +175,14 @@ const AnswerSurvey = ({
                     str.replace(",", "") + " " + maxPrice.replace(",", "")
                   );
                 }}
-              />
+              ></CustomBtn>
             </View>
             <View style={styles.pbtn}>
-              <Button
-                title="1000"
+              <CustomBtn
+                buttonWidth={70}
+                title={"1000"}
+                buttonColor={"green"}
+                titleColor={"white"}
                 onPress={() => {
                   let str = String(
                     Number(minPrice.replace(",", "")) + 1000
@@ -184,11 +192,14 @@ const AnswerSurvey = ({
                     str.replace(",", "") + " " + maxPrice.replace(",", "")
                   );
                 }}
-              />
+              ></CustomBtn>
             </View>
             <View style={styles.pbtn}>
-              <Button
-                title="10000"
+              <CustomBtn
+                buttonWidth={70}
+                title={"10000"}
+                buttonColor={"green"}
+                titleColor={"white"}
                 onPress={() => {
                   let str = String(
                     Number(minPrice.replace(",", "")) + 10000
@@ -198,7 +209,7 @@ const AnswerSurvey = ({
                     str.replace(",", "") + " " + maxPrice.replace(",", "")
                   );
                 }}
-              />
+              ></CustomBtn>
             </View>
           </View>
           <Text style={styles.textInput}>~</Text>
@@ -219,8 +230,11 @@ const AnswerSurvey = ({
           </View>
           <View style={styles.pricebtn}>
             <View style={styles.pbtn}>
-              <Button
-                title="100"
+              <CustomBtn
+                buttonWidth={70}
+                title={"100"}
+                buttonColor={"green"}
+                titleColor={"white"}
                 onPress={() => {
                   let str = String(
                     Number(maxPrice.replace(",", "")) + 100
@@ -230,11 +244,14 @@ const AnswerSurvey = ({
                     minPrice.replace(",", "") + " " + str.replace(",", "")
                   );
                 }}
-              />
+              ></CustomBtn>
             </View>
             <View style={styles.pbtn}>
-              <Button
-                title="1000"
+              <CustomBtn
+                buttonWidth={70}
+                title={"1000"}
+                buttonColor={"green"}
+                titleColor={"white"}
                 onPress={() => {
                   let str = String(
                     Number(maxPrice.replace(",", "")) + 1000
@@ -244,11 +261,14 @@ const AnswerSurvey = ({
                     minPrice.replace(",", "") + " " + str.replace(",", "")
                   );
                 }}
-              />
+              ></CustomBtn>
             </View>
             <View style={styles.pbtn}>
-              <Button
-                title="10000"
+              <CustomBtn
+                buttonWidth={70}
+                title={"10000"}
+                buttonColor={"green"}
+                titleColor={"white"}
                 onPress={() => {
                   let str = String(
                     Number(maxPrice.replace(",", "")) + 10000
@@ -258,7 +278,7 @@ const AnswerSurvey = ({
                     minPrice.replace(",", "") + " " + str.replace(",", "")
                   );
                 }}
-              />
+              ></CustomBtn>
             </View>
           </View>
         </View>
@@ -364,6 +384,9 @@ const styles = StyleSheet.create({
   },
   pbtn: {
     margin: 2,
+  },
+  priceBtnDetail: {
+    backgroundColor: "grey",
   },
 });
 export default AnswerSurvey;
