@@ -379,7 +379,7 @@ const styles = StyleSheet.create({
   },
   textInputView: {
     alignItems: "center",
-    marginTop: 40,
+    marginTop: 35,
   },
   textInput: { fontSize: 40, color: "black" },
   price: { marginTop: 8, marginLeft: 5, fontSize: 30 },
