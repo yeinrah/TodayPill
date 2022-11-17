@@ -45,7 +45,7 @@ public class UserService {
 
 	// 회원 등록
 	@Transactional
-	public boolean signup(String email, String name, int age, String gender) throws Exception {
+	public Boolean signup(String email, String name, int age, String gender) throws Exception {
 		User user = userRepository.findOneByEmail(email);
 //        System.out.println("이메일로 찾아보면 이런 값이 나옵니다."+user.getEmail());
 		if (user == null) {
@@ -140,7 +140,7 @@ public class UserService {
 		int Fe = 0;
 		int profolis = 0;
 		String eatData = "생선, 육류, 채소, 과일";
-		// 밥 잘 먹고 있는지 -> boolean이면 뭘잘먹고있는지를 판단하기 힘듦
+		// 밥 잘 먹고 있는지 -> Boolean이면 뭘잘먹고있는지를 판단하기 힘듦
 		if (userFirstSurveyReq.isBalanced_meal()) {
 		}
 		// 이게 밥잘먹고있는지에 대한 string 받는곳
@@ -502,43 +502,43 @@ public class UserService {
 		List<User> userList = userRepository.findByAgeAndGender(age, gender, uuId);
 
 		// 비교할 유저의 1차 설문 데이터 칼럼별로 분류
-		boolean pregnant = cq.isPregnant();
-		boolean smoking = cq.isSmoking();
+		Boolean pregnant = cq.getPregnant();
+		Boolean smoking = cq.getSmoking();
 		Integer drinking = cq.getDrinking();
 		String allergy = cq.getAllergy();
 		Integer outdoor_activity = cq.getOutdoor_activity();
-		boolean balanced_meal = cq.isBalanced_meal();
+		Boolean balanced_meal = cq.getBalanced_meal();
 		String lack = cq.getLack();
-		boolean is_ok_big_pill = cq.is_ok_big_pill();
-		boolean heartburn = cq.isHeartburn();
-		boolean constipation = cq.isConstipation();
-		boolean diarrhea = cq.isDiarrhea();
-		boolean digestiveDisorder = cq.isDigestiveDisorder();
-		boolean migraine = cq.isMigraine();
-		boolean backache = cq.isBackache();
-		boolean bowelSyndrome = cq.isBowelSyndrome();
-		boolean atopy = cq.isAtopy();
-		boolean dandruff = cq.isDandruff();
-		boolean stomatitis = cq.isStomatitis();
-		boolean legCramp = cq.isLegCramp();
-		boolean anemia = cq.isAnemia();
-		boolean thyroidDisease = cq.isThyroidDisease();
-		boolean kidney_disease = cq.isKidney_disease();
-		boolean diabetes = cq.isDiabetes();
-		boolean gouty = cq.isGouty();
-		boolean highBloodPressure = cq.isHighBloodPressure();
-		boolean hyperlipidemia = cq.isHyperlipidemia();
-		boolean periodontitis = cq.isPeriodontitis();
-		boolean heartFailure = cq.isHeartFailure();
-		boolean contraceptive = cq.isContraceptive();
-		boolean antacid = cq.isAntacid();
-		boolean bloodPressureMedicine = cq.isBloodPressureMedicine();
-		boolean diuretic = cq.isDiuretic();
-		boolean sotalol = cq.isSotalol();
-		boolean gabapentin = cq.isGabapentin();
-		boolean levothyroxine = cq.isLevothyroxine();
-		boolean antibiotics = cq.isAntibiotics();
-		boolean physicalActivity = cq.isPhysicalActivity();
+		Boolean is_ok_big_pill = cq.getIs_ok_big_pill();
+		Boolean heartburn = cq.getHeartburn();
+		Boolean constipation = cq.getConstipation();
+		Boolean diarrhea = cq.getDiarrhea();
+		Boolean digestiveDisorder = cq.getDigestiveDisorder();
+		Boolean migraine = cq.getMigraine();
+		Boolean backache = cq.getBackache();
+		Boolean bowelSyndrome = cq.getBowelSyndrome();
+		Boolean atopy = cq.getAtopy();
+		Boolean dandruff = cq.getDandruff();
+		Boolean stomatitis = cq.getStomatitis();
+		Boolean legCramp = cq.getLegCramp();
+		Boolean anemia = cq.getAnemia();
+		Boolean thyroidDisease = cq.getThyroidDisease();
+		Boolean kidney_disease = cq.getKidney_disease();
+		Boolean diabetes = cq.getDiabetes();
+		Boolean gouty = cq.getGouty();
+		Boolean highBloodPressure = cq.getHighBloodPressure();
+		Boolean hyperlipidemia = cq.getHyperlipidemia();
+		Boolean periodontitis = cq.getPeriodontitis();
+		Boolean heartFailure = cq.getHeartFailure();
+		Boolean contraceptive = cq.getContraceptive();
+		Boolean antacid = cq.getAntacid();
+		Boolean bloodPressureMedicine = cq.getBloodPressureMedicine();
+		Boolean diuretic = cq.getDiuretic();
+		Boolean sotalol = cq.getSotalol();
+		Boolean gabapentin = cq.getGabapentin();
+		Boolean levothyroxine = cq.getLevothyroxine();
+		Boolean antibiotics = cq.getAntibiotics();
+		Boolean physicalActivity = cq.getPhysicalActivity();
 		String preferred_brand = cq.getPreferred_brand();
 		String problem = cq.getProblem();
 
@@ -550,9 +550,9 @@ public class UserService {
 			int userId = u.getUserId();
 			CommonQuestion ucq = commonQuestionRepository.findOneByUserId(userId);
 
-			if (ucq.isPregnant() == pregnant)
+			if (ucq.getPregnant() == pregnant)
 				cnt++;
-			if (ucq.isSmoking() == smoking)
+			if (ucq.getSmoking() == smoking)
 				cnt++;
 			if (ucq.getDrinking() == drinking)
 				cnt++;
@@ -560,69 +560,69 @@ public class UserService {
 				cnt++;
 			if (ucq.getOutdoor_activity() == outdoor_activity)
 				cnt++;
-			if (ucq.isBalanced_meal() == balanced_meal)
+			if (ucq.getBalanced_meal() == balanced_meal)
 				cnt++;
 			if (ucq.getLack().contains(lack) || lack.contains(ucq.getLack()))
 				cnt++;
-			if (ucq.is_ok_big_pill() == is_ok_big_pill)
+			if (ucq.getIs_ok_big_pill() == is_ok_big_pill)
 				cnt++;
-			if (ucq.isHeartburn() == heartburn)
+			if (ucq.getHeartburn() == heartburn)
 				cnt++;
-			if (ucq.isConstipation() == constipation)
+			if (ucq.getConstipation() == constipation)
 				cnt++;
-			if (ucq.isDiarrhea() == diarrhea)
+			if (ucq.getDiarrhea() == diarrhea)
 				cnt++;
-			if (ucq.isDigestiveDisorder() == digestiveDisorder)
+			if (ucq.getDigestiveDisorder() == digestiveDisorder)
 				cnt++;
-			if (ucq.isMigraine() == migraine)
+			if (ucq.getMigraine() == migraine)
 				cnt++;
-			if (ucq.isBackache() == backache)
+			if (ucq.getBackache() == backache)
 				cnt++;
-			if (ucq.isBowelSyndrome() == bowelSyndrome)
+			if (ucq.getBowelSyndrome() == bowelSyndrome)
 				cnt++;
-			if (ucq.isAtopy() == atopy)
+			if (ucq.getAtopy() == atopy)
 				cnt++;
-			if (ucq.isDandruff() == dandruff)
+			if (ucq.getDandruff() == dandruff)
 				cnt++;
-			if (ucq.isStomatitis() == stomatitis)
+			if (ucq.getStomatitis() == stomatitis)
 				cnt++;
-			if (ucq.isLegCramp() == legCramp)
+			if (ucq.getLegCramp() == legCramp)
 				cnt++;
-			if (ucq.isAnemia() == anemia)
+			if (ucq.getAnemia() == anemia)
 				cnt++;
-			if (ucq.isThyroidDisease() == thyroidDisease)
+			if (ucq.getThyroidDisease() == thyroidDisease)
 				cnt++;
-			if (ucq.isKidney_disease() == kidney_disease)
+			if (ucq.getKidney_disease() == kidney_disease)
 				cnt++;
-			if (ucq.isDiabetes() == diabetes)
+			if (ucq.getDiabetes() == diabetes)
 				cnt++;
-			if (ucq.isGouty() == gouty)
+			if (ucq.getGouty() == gouty)
 				cnt++;
-			if (ucq.isHighBloodPressure() == highBloodPressure)
+			if (ucq.getHighBloodPressure() == highBloodPressure)
 				cnt++;
-			if (ucq.isHyperlipidemia() == hyperlipidemia)
+			if (ucq.getHyperlipidemia() == hyperlipidemia)
 				cnt++;
-			if (ucq.isPeriodontitis() == periodontitis)
+			if (ucq.getPeriodontitis() == periodontitis)
 				cnt++;
-			if (ucq.isHeartFailure() == heartFailure)
+			if (ucq.getHeartFailure() == heartFailure)
 				cnt++;
-			if (ucq.isContraceptive() == contraceptive)
+			if (ucq.getContraceptive() == contraceptive)
 				cnt++;
-			if (ucq.isAntacid() == antacid)
+			if (ucq.getAntacid() == antacid)
 				cnt++;
-			if (ucq.isBloodPressureMedicine() == bloodPressureMedicine)
+			if (ucq.getBloodPressureMedicine() == bloodPressureMedicine)
 				cnt++;
-			if (ucq.isDiuretic() == diuretic)
+			if (ucq.getDiuretic() == diuretic)
 				cnt++;
-			if (ucq.isSotalol() == sotalol)
+			if (ucq.getSotalol() == sotalol)
 				cnt++;
-			if (ucq.isGabapentin() == gabapentin)
+			if (ucq.getGabapentin() == gabapentin)
 				cnt++;
-			if (ucq.isLevothyroxine() == levothyroxine)
+			if (ucq.getLevothyroxine() == levothyroxine)
 				cnt++;
-			if (ucq.isAntibiotics() == antibiotics)
+			if (ucq.getAntibiotics() == antibiotics)
 				cnt++;
-			if (ucq.isPhysicalActivity() == physicalActivity)
+			if (ucq.getPhysicalActivity() == physicalActivity)
 				cnt++;
 			if (ucq.getPreferred_brand().contains(preferred_brand)
 					|| preferred_brand.contains(ucq.getPreferred_brand()))
