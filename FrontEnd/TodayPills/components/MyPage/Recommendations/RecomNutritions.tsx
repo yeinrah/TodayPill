@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
   },
   myPickContainer: {
     flexDirection: "row",
+    alignItems: "center",
   },
   pill: {
     width: 45,

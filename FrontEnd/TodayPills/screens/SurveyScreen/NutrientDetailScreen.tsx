@@ -12,6 +12,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import NutrientDescription from "../../components/Data/NutrientDescription";
 import { useFocusEffect } from "@react-navigation/native";
 import BackgroundScreen2 from "../BackgroundScreen2";
+import {
+  boldWelcome,
+  regularWelcome,
+} from "../../components/Data/fontFamilyObject";
+import { primary } from "../../constants/Colors";
 
 const NutrientDetailScreen = ({ navigation, route }: any) => {
   const [myName, setMyName] = useState<string>();
@@ -45,10 +50,20 @@ const NutrientDetailScreen = ({ navigation, route }: any) => {
           }}
         />
         <View style={styles.nutrienttextcontainer}>
-          <Text style={[styles.nutrienttext, styles.boldtext]}>
+          <Text
+            style={{ ...styles.nutrienttext, ...boldWelcome, letterSpacing: 1 }}
+          >
             {nutrientName}
           </Text>
-          <Text style={styles.nutrienttext}>은?</Text>
+          {/* <Text
+            style={{
+              ...styles.nutrienttext,
+              ...regularWelcome,
+              letterSpacing: 1,
+            }}
+          >
+             은?
+          </Text> */}
         </View>
         <View style={styles.aligncenter}>
           <View style={styles.descriptioncontainer}>
@@ -56,21 +71,68 @@ const NutrientDetailScreen = ({ navigation, route }: any) => {
               source={require("../../assets/images/pinkPillBag.png")}
               style={styles.image}
             >
-              <Text style={styles.descriptiontext}>
+              <Text
+                style={{
+                  ...styles.descriptiontext,
+                  ...regularWelcome,
+                  letterSpacing: 3,
+                }}
+              >
                 {NutrientDescription.get(nutrientName)}
               </Text>
             </ImageBackground>
           </View>
           <View style={styles.recommendcontainer}>
             <View style={styles.recommendtextcontainer}>
-              <Text style={[styles.recommendtext, styles.boldtext]}>
+              <Text
+                style={{
+                  ...styles.recommendtext,
+                  ...boldWelcome,
+                  letterSpacing: 1,
+                }}
+              >
                 {myName}&nbsp;
               </Text>
-              <Text style={styles.recommendtext}>님께 맞는&nbsp;</Text>
-              <Text style={[styles.recommendtext, styles.boldtext]}>
+              <Text
+                style={{
+                  ...styles.recommendtext,
+                  ...regularWelcome,
+                  letterSpacing: 1,
+                }}
+              >
+                님께 맞는&nbsp;
+              </Text>
+              <Text
+                style={{
+                  ...styles.recommendtext,
+                  ...boldWelcome,
+                  letterSpacing: 1,
+                  // color: "#FF78A3",
+                  color: primary,
+                }}
+              >
                 {nutrientName}
               </Text>
-              <Text style={styles.recommendtext}>을(를) 추천받으시겠어요?</Text>
+              <Text
+                style={{
+                  ...styles.recommendtext,
+                  ...regularWelcome,
+                  letterSpacing: 1,
+                }}
+              >
+                을(를)
+              </Text>
+            </View>
+            <View style={{ justifyContent: "center", marginBottom: 20 }}>
+              <Text
+                style={{
+                  ...styles.recommendtext,
+                  ...regularWelcome,
+                  letterSpacing: 1,
+                }}
+              >
+                추천받고 싶으시면 설문을 진행해주세요!
+              </Text>
             </View>
             <View style={styles.buttonOuterContainer}>
               <Pressable
@@ -88,7 +150,15 @@ const NutrientDetailScreen = ({ navigation, route }: any) => {
                   navigation.navigate("SecondAddSurvey");
                 }}
               >
-                <Text style={styles.title}>추천 받기</Text>
+                <Text
+                  style={{
+                    ...styles.title,
+                    ...boldWelcome,
+                    letterSpacing: 3,
+                  }}
+                >
+                  설문하기
+                </Text>
               </Pressable>
             </View>
           </View>
@@ -143,7 +213,8 @@ const styles = StyleSheet.create({
   },
   recommendtextcontainer: {
     flexDirection: "row",
-    marginBottom: 15,
+    marginBottom: 5,
+    justifyContent: "center",
   },
   recommendtext: {
     fontSize: 15,
@@ -160,10 +231,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#8EE8DE",
   },
   title: {
-    fontSize: 35,
-    fontWeight: "bold",
+    fontSize: 25,
+
     textAlign: "center",
     color: "white",
+    paddingVertical: 3,
   },
 });
 

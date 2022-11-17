@@ -59,7 +59,7 @@ export default function MyPickPills() {
           style={{
             fontSize: 24,
             // fontWeight: "900",
-            marginTop: 5,
+            // marginTop: 10,
             ...boldWelcome,
           }}
         >
@@ -108,6 +108,7 @@ const styles = StyleSheet.create({
 
   myPickContainer: {
     flexDirection: "row",
+    alignItems: "center",
   },
   heartContainer: {
     // width: 50,

@@ -38,13 +38,13 @@ const DetailedPillCard = (props: any) => {
   const likeHandler = async () => {
     await like(props.userId, props.supplementId);
     setIsLiked(true);
-    ToastAndroid.show("해당 상품이 나의 Pick에 추가됐습니다.", 3);
+    ToastAndroid.show("영양제가 나의 Pick에 추가됐습니다.", 3);
   };
 
   const dislikeHandler = async () => {
     await dislike(props.userId, props.supplementId);
     setIsLiked(false);
-    ToastAndroid.show("해당 상품이 나의 Pick에서 제외됐습니다.", 3);
+    ToastAndroid.show("영양제가 나의 Pick에서 제외됐습니다.", 3);
   };
 
   const naverSearch = () => {
