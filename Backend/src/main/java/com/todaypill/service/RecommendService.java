@@ -121,7 +121,7 @@ public class RecommendService {
 		});
 		List<SupplementAndScoreRes> list = new ArrayList();
 		int size = 7;
-		if (list.size() < size)
+		if (supplementAndScoreRes.size() < size)
 			size = supplementAndScoreRes.size();
 		for (int i = 0; i < size; i++) {
 			list.add(supplementAndScoreRes.get(i));
