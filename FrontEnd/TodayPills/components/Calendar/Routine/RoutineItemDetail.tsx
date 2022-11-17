@@ -1,4 +1,11 @@
-import { StyleSheet, View, Text, Image, Pressable } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  Pressable,
+  ToastAndroid,
+} from "react-native";
 
 import { FontAwesome } from "@expo/vector-icons";
 import { useState, useEffect, useCallback } from "react";
@@ -15,6 +22,7 @@ import { getDateStr } from "../../functions/getDateStr";
 import { deleteMySupplement } from "../../../API/routineAPI";
 import { boldWelcome, regularWelcome } from "../../Data/fontFamilyObject";
 import LoadingSpinner from "../../UI/LoadingSpinner";
+import { cancelNotification } from "../../functions/cancelNotification";
 
 export interface RoutineDetailProps {
   key: number;
@@ -77,8 +85,8 @@ export default function RoutineItemDetail({
 
     await deleteMySupplement(userId, routineId, dateStr);
     onClickDelete();
-
-    console.warn("지우기!");
+    cancelNotification(supplementId.toString());
+    ToastAndroid.show(`해당 영양제 섭취 루틴이 삭제되었습니다.`, 2);
   };
 
   useFocusEffect(

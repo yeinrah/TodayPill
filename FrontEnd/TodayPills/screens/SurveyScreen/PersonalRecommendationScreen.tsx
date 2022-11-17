@@ -47,7 +47,9 @@ const PersonalRecommendationScreen = ({ navigation }: any) => {
       <ScrollView>
         <View style={styles.textContainer}>
           <Text>
-            <Text style={styles.title}>{name + "  "}</Text>
+            <Text style={styles.title}>
+              {name.length > 5 ? name.slice(0, 5) + "...  " : name + " "}
+            </Text>
             <Text style={styles.contentText}>님의 맞춤 솔루션</Text>
           </Text>
         </View>

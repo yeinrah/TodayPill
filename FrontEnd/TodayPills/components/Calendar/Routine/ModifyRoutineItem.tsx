@@ -9,6 +9,7 @@ import {
   Modal,
   Button,
   Alert,
+  ToastAndroid,
 } from "react-native";
 import { useRecoilState } from "recoil";
 import { useState, useRef, useMemo, useCallback, useEffect } from "react";
@@ -38,6 +39,7 @@ import { boldWelcome, regularWelcome } from "../../Data/fontFamilyObject";
 import { takenWeekDaysState } from "../../../Recoil/atoms/calendar";
 import { getDaysName } from "../../functions/getDaysName";
 import LoadingSpinner from "../../UI/LoadingSpinner";
+import { cancelNotification } from "../../functions/cancelNotification";
 // import Notifications from "../../../utils/Notifications";
 
 export default function ModifyRoutineItem({
@@ -48,11 +50,11 @@ export default function ModifyRoutineItem({
 }: any) {
   const [userId, setUserId] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  // const [selectedRoutineDays, setSelectedRoutineDays] = useState("");
+
   const [takenDaysName, setTakenDaysName] = useState("");
   const [isDaySubmitted, setIsDaySubmitted] = useState(false);
   const [allMyRoutineList, setAllMyRoutineList] = useState([]);
-  const [isFinalSubmitted, setIsFinalSubmitted] = useState(false);
+  // const [isFinalSubmitted, setIsFinalSubmitted] = useState(false);
 
   const [supplementDetail, setSupplementDetail] = useState({
     name: "",
@@ -83,7 +85,6 @@ export default function ModifyRoutineItem({
     }
 
     if (updateOrNot === "true") {
-      console.warn("제출할때 요일들", takenWeekDays.toString);
       await updateMyRoutineSupplement(
         userId,
         prevRoutineDetail.routineId,
@@ -94,8 +95,13 @@ export default function ModifyRoutineItem({
         submitTakenTime,
         nowDateStr
       );
+      if (prevRoutineDetail.pushAlarm) {
+        cancelNotification(pillId.toString());
+      }
     } else {
       let isExist = false;
+
+      console.warn("새로 등록하는 영양제들!!!!!!!!!!!!!!!!!!!!!");
 
       allMyRoutineList.map((eachRoutine: any) => {
         if (eachRoutine.supplementId == pillId) {
@@ -110,7 +116,6 @@ export default function ModifyRoutineItem({
         );
         return navigation.navigate("MyPills", { userId });
       }
-      console.warn("제출할때 요일들", takenWeekDays.toString);
       await addMyRoutineSupplement(
         userId,
         pillId,
@@ -121,9 +126,6 @@ export default function ModifyRoutineItem({
         nowDateStr
       );
     }
-
-    navigation.navigate("MyPills", { userId });
-    setIsFinalSubmitted(true);
 
     if (isAlarmEnabled) {
       // const tempAlarmDays = selectedRoutineDays.split(",");
@@ -150,7 +152,12 @@ export default function ModifyRoutineItem({
         });
       }
     }
-
+    ToastAndroid.show(
+      `영양제 섭취 ${updateOrNot === "true" ? "수정" : "등록"} 완료!`,
+      2
+    );
+    navigation.navigate("MyPills", { userId });
+    // setIsFinalSubmitted(true);
     // console.warn("제출함!!!!!!!!!!!!!!!!!!!!");
   };
 
@@ -160,7 +167,6 @@ export default function ModifyRoutineItem({
     const eachSupplementDetail = await fetchSupplementDetail(pillId);
     // if (eachSupplementDetail.bestTime.slice(0,2))
     if (updateOrNot === "false") {
-      console.warn(updateOrNot);
       setTakenTime(timeConvert(eachSupplementDetail.bestTime));
       // setPillCnt(1);
     } else {
@@ -243,7 +249,6 @@ export default function ModifyRoutineItem({
       // getMyAllRoutineSupplements();
       getSupplementDetailAndAllRoutine();
       if (updateOrNot === "true") {
-        console.warn("요일들", prevRoutineDetail.days);
         const takenDaysArray = prevRoutineDetail.days
           .split(",")
           .map((day: string) => {

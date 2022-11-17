@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     color: "black",
   },
   whitetext: {
-    color: "white",
+    color: "green",
   },
   flexrow: {
     flexDirection: "row",

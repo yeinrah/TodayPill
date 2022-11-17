@@ -15,7 +15,6 @@ const HealthScreeningCheck = async (
   });
 };
 const updateUsername = async (userId: number, name: string) => {
-  console.warn("업데이트  닉네임!!!!!!!!!!!!!");
   await api.put("/user/user/updateName", {
     userId,
     name,
