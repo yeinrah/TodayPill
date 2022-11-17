@@ -75,7 +75,7 @@ const PillResultScreen = ({ navigation, route }: any) => {
                   like={item.like}
                   additionalEfficacy={item.additionalEfficacy}
                   ingredients={item.ingredients}
-                  caution={item.bestTime}
+                  caution={item.caution}
                 />
               );
             })}
