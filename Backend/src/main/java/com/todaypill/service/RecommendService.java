@@ -58,7 +58,7 @@ public class RecommendService {
                 double score = 0;
                 Integer labScore = 0;
                 String additionalEfficacy = "";
-                if ( supplement.getCategory().contains(userSecondSurveyReq.getCategory())) {
+                if ( supplement.getCategory().equals(userSecondSurveyReq.getCategory())) {
 
                     score = (commonQuestion.getPreferred_brand().equals(supplement.getBrand()) ? 3 : 0)
                             + supplement.getBioavailability()
@@ -90,13 +90,13 @@ public class RecommendService {
               		if(supplement.getAdditionalEfficacy().contains(additionalArr[i])) score+=3;    		
               	}
                     //}
+              	supplementAndScoreRes.add(new SupplementAndScoreRes(supplement.getSupplementId(),supplement.getCategory()
+              			, supplement.getSupplementName(), supplement.getPrice(), supplement.getBrand(), supplement.getImage()
+              			, supplement.getIngredients(), supplement.getBioavailability(), supplement.getLaxative(), supplement.getKidneyDisease()
+              			, supplement.getConsumerLabScore(), supplement.getAdditionalEfficacy(), supplement.getNote(),supplement.getAmount()
+              			, supplement.getRequiredCount(), supplement.getFormula(), supplement.getLike(),supplement.getSustainedRelease()
+              			,supplement.getPillSize(), supplement.getCaution(), supplement.getBestTime(), score));
                 }
-                supplementAndScoreRes.add(new SupplementAndScoreRes(supplement.getSupplementId(),supplement.getCategory()
-                        , supplement.getSupplementName(), supplement.getPrice(), supplement.getBrand(), supplement.getImage()
-                        , supplement.getIngredients(), supplement.getBioavailability(), supplement.getLaxative(), supplement.getKidneyDisease()
-                        , supplement.getConsumerLabScore(), supplement.getAdditionalEfficacy(), supplement.getNote(),supplement.getAmount()
-                        , supplement.getRequiredCount(), supplement.getFormula(), supplement.getLike(),supplement.getSustainedRelease()
-                        ,supplement.getPillSize(), supplement.getCaution(), supplement.getBestTime(), score));
                 cnt+=0.0001;
                 score+=cnt;
 //                System.out.println(score);
