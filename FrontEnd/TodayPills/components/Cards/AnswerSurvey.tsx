@@ -211,6 +211,18 @@ const AnswerSurvey = ({
                 }}
               ></CustomBtn>
             </View>
+            <View style={styles.pbtn}>
+              <CustomBtn
+                buttonWidth={70}
+                title={"Reset"}
+                buttonColor={"red"}
+                titleColor={"white"}
+                onPress={() => {
+                  setMinPrice("");
+                  setSelectedItem("" + maxPrice.replace(",", ""));
+                }}
+              ></CustomBtn>
+            </View>
           </View>
           <Text style={styles.textInput}>~</Text>
           <View style={styles.priceView}>
@@ -280,17 +292,19 @@ const AnswerSurvey = ({
                 }}
               ></CustomBtn>
             </View>
+            <View style={styles.pbtn}>
+              <CustomBtn
+                buttonWidth={70}
+                title={"Reset"}
+                buttonColor={"red"}
+                titleColor={"white"}
+                onPress={() => {
+                  setMaxPrice("");
+                  setSelectedItem(minPrice.replace(",", "") + " ");
+                }}
+              ></CustomBtn>
+            </View>
           </View>
-          <CustomBtn
-            buttonWidth={70}
-            title={"Reset"}
-            buttonColor={"red"}
-            titleColor={"white"}
-            onPress={() => {
-              setMinPrice("");
-              setMaxPrice("");
-            }}
-          ></CustomBtn>
         </View>
       )}
     </>
@@ -379,7 +393,7 @@ const styles = StyleSheet.create({
   },
   textInputView: {
     alignItems: "center",
-    marginTop: 35,
+    marginTop: 30,
   },
   textInput: { fontSize: 40, color: "black" },
   price: { marginTop: 8, marginLeft: 5, fontSize: 30 },
