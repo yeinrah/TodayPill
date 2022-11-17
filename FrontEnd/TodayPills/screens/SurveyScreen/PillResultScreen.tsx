@@ -15,8 +15,10 @@ const PillResultScreen = ({ navigation, route }: any) => {
   const [nowMyNutrient, setNowMyNutrient] = useState("");
   const [userId, setUserId] = useState(0);
   const [itemList, setItemList] = useState([]);
-  const getMyName = async () => {
+  const getMyNameAndId = async () => {
     const name = await AsyncStorage.getItem("@storage_UserNickName");
+    const currentUserId = await AsyncStorage.getItem("@storage_UserId");
+    setUserId(parseInt(currentUserId));
     setMyName(name);
   };
   const getMyNowNutrient = async () => {
@@ -34,7 +36,7 @@ const PillResultScreen = ({ navigation, route }: any) => {
   //   return arr;
   // };
   useEffect(() => {
-    getMyName();
+    getMyNameAndId();
     getMyNowNutrient();
     // console.log(route.params.answerSheet);
     // getResult();
@@ -97,7 +99,7 @@ const PillResultScreen = ({ navigation, route }: any) => {
             fontSize={20}
             buttonWidth={"70%"}
             onPress={() => {
-              navigation.navigate("MainScreen");
+              navigation.replace("MainScreen");
             }}
           />
         </View>

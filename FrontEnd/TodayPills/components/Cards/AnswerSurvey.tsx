@@ -163,24 +163,7 @@ const AnswerSurvey = ({
             <View style={styles.pbtn}>
               <CustomBtn
                 buttonWidth={70}
-                title={"100"}
-                buttonColor={"green"}
-                titleColor={"white"}
-                onPress={() => {
-                  let str = String(
-                    Number(minPrice.replace(",", "")) + 100
-                  ).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                  setMinPrice(str);
-                  setSelectedItem(
-                    str.replace(",", "") + " " + maxPrice.replace(",", "")
-                  );
-                }}
-              ></CustomBtn>
-            </View>
-            <View style={styles.pbtn}>
-              <CustomBtn
-                buttonWidth={70}
-                title={"1000"}
+                title={"+1,000"}
                 buttonColor={"green"}
                 titleColor={"white"}
                 onPress={() => {
@@ -197,7 +180,24 @@ const AnswerSurvey = ({
             <View style={styles.pbtn}>
               <CustomBtn
                 buttonWidth={70}
-                title={"10000"}
+                title={"+5,000"}
+                buttonColor={"green"}
+                titleColor={"white"}
+                onPress={() => {
+                  let str = String(
+                    Number(minPrice.replace(",", "")) + 5000
+                  ).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                  setMinPrice(str);
+                  setSelectedItem(
+                    str.replace(",", "") + " " + maxPrice.replace(",", "")
+                  );
+                }}
+              ></CustomBtn>
+            </View>
+            <View style={styles.pbtn}>
+              <CustomBtn
+                buttonWidth={70}
+                title={"+10,000"}
                 buttonColor={"green"}
                 titleColor={"white"}
                 onPress={() => {
@@ -232,24 +232,7 @@ const AnswerSurvey = ({
             <View style={styles.pbtn}>
               <CustomBtn
                 buttonWidth={70}
-                title={"100"}
-                buttonColor={"green"}
-                titleColor={"white"}
-                onPress={() => {
-                  let str = String(
-                    Number(maxPrice.replace(",", "")) + 100
-                  ).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                  setMaxPrice(str);
-                  setSelectedItem(
-                    minPrice.replace(",", "") + " " + str.replace(",", "")
-                  );
-                }}
-              ></CustomBtn>
-            </View>
-            <View style={styles.pbtn}>
-              <CustomBtn
-                buttonWidth={70}
-                title={"1000"}
+                title={"+1,000"}
                 buttonColor={"green"}
                 titleColor={"white"}
                 onPress={() => {
@@ -266,7 +249,24 @@ const AnswerSurvey = ({
             <View style={styles.pbtn}>
               <CustomBtn
                 buttonWidth={70}
-                title={"10000"}
+                title={"+5,000"}
+                buttonColor={"green"}
+                titleColor={"white"}
+                onPress={() => {
+                  let str = String(
+                    Number(maxPrice.replace(",", "")) + 5000
+                  ).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                  setMaxPrice(str);
+                  setSelectedItem(
+                    minPrice.replace(",", "") + " " + str.replace(",", "")
+                  );
+                }}
+              ></CustomBtn>
+            </View>
+            <View style={styles.pbtn}>
+              <CustomBtn
+                buttonWidth={70}
+                title={"+10,000"}
                 buttonColor={"green"}
                 titleColor={"white"}
                 onPress={() => {
