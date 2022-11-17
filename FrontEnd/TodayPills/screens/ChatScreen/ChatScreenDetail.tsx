@@ -216,6 +216,9 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
             messages={publicChats}
             renderBubble={renderBubble}
             textInputProps={{ keyboardAppearance: "dark", autoCorrect: false }}
+            // onInputTextChanged={(text) => {
+            //   if(text.startsWith("@"))
+            // }}
             onSend={(messages) => {
               return sendValue(messages);
               // return onSend(messages);
