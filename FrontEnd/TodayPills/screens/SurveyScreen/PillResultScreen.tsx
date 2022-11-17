@@ -63,7 +63,6 @@ const PillResultScreen = ({ navigation, route }: any) => {
           {/* <DetailedPillCard /> */}
           {route.params.answerSheet[0] &&
             route.params.answerSheet[0].data.map((item, index) => {
-              console.log(item);
               return (
                 <DetailedPillCard
                   supplementId={item.supplementId}

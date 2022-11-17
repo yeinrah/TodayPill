@@ -281,6 +281,16 @@ const AnswerSurvey = ({
               ></CustomBtn>
             </View>
           </View>
+          <CustomBtn
+            buttonWidth={70}
+            title={"Reset"}
+            buttonColor={"red"}
+            titleColor={"white"}
+            onPress={() => {
+              setMinPrice("");
+              setMaxPrice("");
+            }}
+          ></CustomBtn>
         </View>
       )}
     </>
