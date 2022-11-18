@@ -29,6 +29,7 @@ import {
 } from "../components/Data/fontFamilyObject";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function MyPageScreen({ navigation }: any) {
   // RootTabScreenProps<"MyPage">
@@ -84,6 +85,11 @@ export default function MyPageScreen({ navigation }: any) {
             <View style={styles.nutrBtn}>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 {/* <FontAwesome5 name="pills" size={24} color="#B7B7B7" /> */}
+                <Ionicons
+                  name="md-checkmark-done-outline"
+                  size={24}
+                  color="black"
+                />
                 <Text style={{ ...styles.nutrBtnText, ...regularWelcome }}>
                   나의 영양제
                 </Text>
