@@ -16,6 +16,7 @@ import SurveyQuestion from '../../components/Data/SurveyAdditionalEfficiency';
 import SurveyFormula from '../../components/Data/SurveyFormula';
 import LoadingSpinner from '../../components/UI/LoadingSpinner';
 import BackgroundScreen2 from '../BackgroundScreen2';
+import GoBackBtn from '../../components/UI/GoBackBtn';
 
 const SecondAddSurvey = ({ navigation }: any) => {
   const [selectedItem, setSelectedItem] = useState<any>(1);
@@ -75,7 +76,7 @@ const SecondAddSurvey = ({ navigation }: any) => {
         {isLoading && <LoadingSpinner />}
         {!isLoading && (
           <>
-            <Ionicons
+            {/* <Ionicons
               name="arrow-back"
               size={48}
               color="black"
@@ -83,7 +84,15 @@ const SecondAddSurvey = ({ navigation }: any) => {
               onPress={() => {
                 navigation.goBack();
               }}
-            />
+            /> */}
+            <View style={{ marginLeft: 5 }}>
+              <GoBackBtn
+                size={48}
+                onPress={() => {
+                  navigation.goBack();
+                }}
+              />
+            </View>
             <View style={styles.textcontainer}>
               <Text style={[styles.text, styles.largetext]}>
                 {surveyData[nowStage][1]}

@@ -16,6 +16,7 @@ import { HealthScreeningCheck } from '../../API/userAPI';
 import LoadingSpinner from '../../components/UI/LoadingSpinner';
 import BackgroundScreen2 from '../BackgroundScreen2';
 import LoadingSpinnerWithText from '../../components/UI/LoadingSpinnerWithText';
+import GoBackBtn from '../../components/UI/GoBackBtn';
 const HealthScreeningDetailScreen = ({ navigation }) => {
   const [name, setName] = useState('');
   const [birth, setBirth] = useState('');
@@ -27,7 +28,7 @@ const HealthScreeningDetailScreen = ({ navigation }) => {
       {!isLoading && (
         <BackgroundScreen2>
           <ScrollView style={styles.container}>
-            <Ionicons
+            {/* <Ionicons
               name="arrow-back"
               size={48}
               color="black"
@@ -35,7 +36,15 @@ const HealthScreeningDetailScreen = ({ navigation }) => {
               onPress={() => {
                 navigation.goBack();
               }}
-            />
+            /> */}
+            <View style={{ marginLeft: 5 }}>
+              <GoBackBtn
+                size={48}
+                onPress={() => {
+                  navigation.goBack();
+                }}
+              />
+            </View>
             <View style={styles.textcontainer}>
               <Text style={[styles.text, styles.largetext]}>
                 건강 검진 결과 분석을 위해

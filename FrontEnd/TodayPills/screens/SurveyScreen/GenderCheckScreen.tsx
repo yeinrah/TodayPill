@@ -1,19 +1,20 @@
-import { StyleSheet, Text, View, Pressable, ScrollView } from "react-native";
-import BackgroundScreen from "../BackgroundScreen";
-import { Ionicons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
-import { useState } from "react";
-import { changeGender } from "../../API/userAPI";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import BackgroundScreen2 from "../BackgroundScreen2";
+import { StyleSheet, Text, View, Pressable, ScrollView } from 'react-native';
+import BackgroundScreen from '../BackgroundScreen';
+import { Ionicons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+import { useState } from 'react';
+import { changeGender } from '../../API/userAPI';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import BackgroundScreen2 from '../BackgroundScreen2';
+import GoBackBtn from '../../components/UI/GoBackBtn';
 
 const GenderCheckScreen = ({ navigation }: any) => {
   const [selectedItem, setSelectedItem] = useState(0);
-  const [nowGender, setNowGender] = useState("");
+  const [nowGender, setNowGender] = useState('');
   return (
     <BackgroundScreen2>
       <View style={styles.container}>
-        <Ionicons
+        {/* <Ionicons
           name="arrow-back"
           size={48}
           color="black"
@@ -21,7 +22,15 @@ const GenderCheckScreen = ({ navigation }: any) => {
           onPress={() => {
             navigation.goBack();
           }}
-        />
+        /> */}
+        <View style={{ marginLeft: 5 }}>
+          <GoBackBtn
+            size={48}
+            onPress={() => {
+              navigation.goBack();
+            }}
+          />
+        </View>
         <View style={styles.textcontainer}>
           <Text style={[styles.text, styles.largetext]}>
             성별을 알려주세요.
@@ -34,14 +43,14 @@ const GenderCheckScreen = ({ navigation }: any) => {
           <View style={styles.itemcontainer}>
             <View style={styles.itemoutercontainer}>
               <Pressable
-                android_ripple={{ color: "#4E736F" }}
+                android_ripple={{ color: '#4E736F' }}
                 style={
                   selectedItem === 1
                     ? styles.iteminnercontainerClicked
                     : styles.iteminnercontainer
                 }
                 onPress={() => {
-                  setNowGender("남성");
+                  setNowGender('남성');
                   setSelectedItem(1);
                 }}
               >
@@ -60,7 +69,7 @@ const GenderCheckScreen = ({ navigation }: any) => {
           <View style={styles.itemcontainer}>
             <View style={styles.itemoutercontainer}>
               <Pressable
-                android_ripple={{ color: "#4E736F" }}
+                android_ripple={{ color: '#4E736F' }}
                 style={
                   selectedItem === 2
                     ? styles.iteminnercontainerClicked
@@ -68,7 +77,7 @@ const GenderCheckScreen = ({ navigation }: any) => {
                 }
                 onPress={() => {
                   setSelectedItem(2);
-                  setNowGender("여성");
+                  setNowGender('여성');
                 }}
               >
                 <View style={styles.itemflex}>
@@ -87,17 +96,17 @@ const GenderCheckScreen = ({ navigation }: any) => {
         <View style={styles.buttoncontainer}>
           <View style={styles.buttonOuterContainer}>
             <Pressable
-              android_ripple={{ color: "#4E736F" }}
+              android_ripple={{ color: '#4E736F' }}
               style={styles.buttonInnerContainer}
               onPress={async () => {
                 if (selectedItem === 0 || !nowGender) return;
                 // console.log(await AsyncStorage.getItem("2s"))
                 changeGender(
-                  await AsyncStorage.getItem("@storage_UserEmail"),
+                  await AsyncStorage.getItem('@storage_UserEmail'),
                   nowGender
                 );
-                await AsyncStorage.setItem("@storage_UserGender", nowGender);
-                navigation.navigate("HealthScreeningCheckScreen");
+                await AsyncStorage.setItem('@storage_UserGender', nowGender);
+                navigation.navigate('HealthScreeningCheckScreen');
               }}
             >
               <Text style={styles.title}>다 음</Text>
@@ -121,11 +130,11 @@ const styles = StyleSheet.create({
   },
   textcontainer: {
     marginLeft: 30,
-    height: "15%",
+    height: '15%',
   },
   text: {
-    fontWeight: "bold",
-    color: "black",
+    fontWeight: 'bold',
+    color: 'black',
   },
   largetext: {
     fontSize: 24,
@@ -135,57 +144,57 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   itemcontainer: {
-    width: "100%",
-    alignItems: "center",
+    width: '100%',
+    alignItems: 'center',
   },
   itemoutercontainer: {
     borderRadius: 10,
-    width: "80%",
+    width: '80%',
     height: 80,
-    overflow: "hidden",
+    overflow: 'hidden',
     marginVertical: 10,
     elevation: 10,
   },
   iteminnercontainer: {
     paddingVertical: 25,
-    backgroundColor: "#E5E5E5",
+    backgroundColor: '#E5E5E5',
   },
   iteminnercontainerClicked: {
     paddingVertical: 25,
-    backgroundColor: "rgba(142,232,222,0.95)",
+    backgroundColor: 'rgba(142,232,222,0.95)',
   },
   itemflex: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   itemtitle: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginLeft: 25,
   },
   buttoncontainer: {
-    width: "100%",
-    alignItems: "center",
+    width: '100%',
+    alignItems: 'center',
     marginVertical: 20,
   },
   buttonOuterContainer: {
     borderRadius: 10,
-    width: "80%",
+    width: '80%',
     height: 50,
-    overflow: "hidden",
+    overflow: 'hidden',
     marginVertical: 10,
     elevation: 10,
   },
   buttonInnerContainer: {
     paddingVertical: 10,
-    backgroundColor: "#E881B1",
+    backgroundColor: '#E881B1',
   },
   title: {
     fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
-    color: "white",
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: 'white',
   },
   icon1: {
     marginRight: 20,

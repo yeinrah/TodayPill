@@ -9,6 +9,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { getSpecificRoomChat } from '../../API/chatAPI';
 import { useFocusEffect } from '@react-navigation/native';
 import BackgroundScreen2 from '../BackgroundScreen2';
+import GoBackBtn from '../../components/UI/GoBackBtn';
 var stompClient = null;
 
 const ChatScreenDetail = ({ navigation, route }: any) => {
@@ -198,14 +199,22 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
     <BackgroundScreen2>
       <>
         <View style={styles.chatTitle}>
-          <Ionicons
+          {/* <Ionicons
             name="arrow-back"
             size={48}
             color="black"
             onPress={() => {
               navigation.goBack();
             }}
-          />
+          /> */}
+          <View style={{ marginLeft: 5 }}>
+            <GoBackBtn
+              size={48}
+              onPress={() => {
+                navigation.goBack();
+              }}
+            />
+          </View>
           <Text
             style={styles.roomChat}
           >{`${route.params?.nutrientName} 채팅방`}</Text>

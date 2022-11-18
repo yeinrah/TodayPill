@@ -18,6 +18,7 @@ import {
   regularWelcome,
 } from '../../components/Data/fontFamilyObject';
 import { primary } from '../../constants/Colors';
+import GoBackBtn from '../../components/UI/GoBackBtn';
 
 const NutrientDetailScreen = ({ navigation, route }: any) => {
   const [myName, setMyName] = useState<string>('');
@@ -41,7 +42,7 @@ const NutrientDetailScreen = ({ navigation, route }: any) => {
   return (
     <BackgroundScreen2>
       <View style={styles.container}>
-        <Ionicons
+        {/* <Ionicons
           name="arrow-back"
           size={48}
           color="black"
@@ -49,7 +50,15 @@ const NutrientDetailScreen = ({ navigation, route }: any) => {
           onPress={() => {
             navigation.goBack();
           }}
-        />
+        /> */}
+        <View style={{ marginLeft: 5 }}>
+          <GoBackBtn
+            size={48}
+            onPress={() => {
+              navigation.goBack();
+            }}
+          />
+        </View>
         <View style={styles.nutrienttextcontainer}>
           <Text
             style={{ ...styles.nutrienttext, ...boldWelcome, letterSpacing: 1 }}

@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import AnswerSurvey from '../../components/Cards/AnswerSurvey';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import BackgroundScreen2 from '../BackgroundScreen2';
+import GoBackBtn from '../../components/UI/GoBackBtn';
 
 const FirstAddSurvey = ({ navigation }: any) => {
   const [selectedItem, setSelectedItem] = useState(1);
@@ -39,7 +40,7 @@ const FirstAddSurvey = ({ navigation }: any) => {
   return (
     <BackgroundScreen2>
       <View style={styles.container}>
-        <Ionicons
+        {/* <Ionicons
           name="arrow-back"
           size={48}
           color="black"
@@ -47,7 +48,15 @@ const FirstAddSurvey = ({ navigation }: any) => {
           onPress={() => {
             navigation.goBack();
           }}
-        />
+        /> */}
+        <View style={{ marginLeft: 5 }}>
+          <GoBackBtn
+            size={48}
+            onPress={() => {
+              navigation.goBack();
+            }}
+          />
+        </View>
         <View style={styles.textcontainer}>
           <Text style={[styles.text, styles.largetext]}>
             {surveyData[nowStage][1]}
