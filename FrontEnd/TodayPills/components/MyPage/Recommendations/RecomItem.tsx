@@ -27,6 +27,8 @@ export default function RecomItem({ nutName, id }: RecomItemProps) {
   return (
     <View style={styles.outerContainer}>
       <Pressable
+        android_ripple={{ color: "#827880" }}
+        style={styles.buttonInnerContainer}
         onPress={async () => {
           await AsyncStorage.setItem("@storage_nowNutrient", nutName);
           navigation.navigate("NutrientDetailScreen", {
@@ -36,11 +38,7 @@ export default function RecomItem({ nutName, id }: RecomItemProps) {
       >
         <View style={styles.nutContainer}>
           {/* <FontAwesome5 name="pills" size={22} color="#8EE8DE" /> */}
-          <Image
-            // source={require("../../assets/images/hearton.png")}
-            source={pillIcons[id]}
-            style={styles.icon}
-          />
+          <Image source={pillIcons[id]} style={styles.icon} />
           <View style={styles.textContainer}>
             <Text style={{ ...styles.nutrition, ...boldWelcome }}>
               {nutName}
@@ -54,20 +52,24 @@ export default function RecomItem({ nutName, id }: RecomItemProps) {
 
 const styles = StyleSheet.create({
   outerContainer: {
-    height: 70,
+    flex: 1,
+    height: 50,
+    borderRadius: 20,
+    overflow: "hidden",
+    elevation: 3,
+    marginBottom: 15,
+    justifyContent: "center",
+    backgroundColor: "#FFEFFC",
+  },
+  buttonInnerContainer: {
+    padding: 10,
   },
   nutContainer: {
-    // width: "90%",
     flexDirection: "row",
-    backgroundColor: "#FFEFFC",
-    borderRadius: 20,
-    marginBottom: 15,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    elevation: 5,
   },
   textContainer: {
-    flex: 1,
+    // flex: 1,
+
     justifyContent: "center",
   },
   nutrition: {

@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     // justifyContent: "center",
   },
   calendarOuterContainer: {
-    height: 400,
+    height: 350,
     // backgroundColor: "red",
     width: "100%",
     alignItems: "center",

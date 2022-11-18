@@ -71,7 +71,7 @@ export default function UpdateNickname({ onChangeName }) {
               <TextInput
                 style={{ ...styles.input, ...boldWelcome }}
                 // caretHidden={true}
-                maxLength={10}
+                maxLength={8}
                 onChangeText={(updatedNickname) => setNickname(updatedNickname)}
                 placeholder="닉네임 입력"
                 autoFocus={true}

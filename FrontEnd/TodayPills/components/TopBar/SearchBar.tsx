@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
 
     // position: "relative",
-    borderWidth: 1,
+    borderWidth: 2,
     borderRadius: 40,
     borderColor: primary,
     backgroundColor: "white",

@@ -69,7 +69,11 @@ export default function MyPickPills() {
       </View>
 
       <View style={styles.outerContainer}>
-        <ScrollView style={styles.cardsContainer} horizontal={true}>
+        <ScrollView
+          style={styles.cardsContainer}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+        >
           {pickedPills.length === 0 ? (
             <View style={styles.textContainer}>
               <Text style={{ ...styles.emptyText, ...regularWelcome }}>
@@ -110,15 +114,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  heartContainer: {
-    // width: 50,
-    // height: 50,
-    // paddingBottom: 10,
-    // marginBottom: 5,
-    // position: "absolute",
-    // bottom: 0,
-    // right: -5,
-  },
+  heartContainer: {},
   heart: {
     width: 45,
     height: 45,
@@ -165,8 +161,11 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     marginTop: 10,
     paddingHorizontal: 5,
-    backgroundColor: "#ECF6F4",
+    // backgroundColor: "#ECF6F4",
+    backgroundColor: "white",
     borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#ECF6F4",
     elevation: 5,
   },
 });

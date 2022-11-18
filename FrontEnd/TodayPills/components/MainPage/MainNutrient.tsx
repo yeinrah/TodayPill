@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View, Image } from "react-native";
 import SimpleNutrientCard from "../Cards/SimpleNutrientCard";
 
 const MainNutrient = ({ navigation }: any) => {
@@ -53,7 +53,21 @@ const MainNutrient = ({ navigation }: any) => {
 
   return (
     <View style={styles.container}>
-      <Text style={{...styles.text, fontFamily: "웰컴체_Bold"}}>인기 성분</Text>
+      <View style={styles.title}>
+        <Image
+          source={require("../../assets/images/star.png")}
+          style={styles.star}
+        />
+        <Text
+          style={{
+            ...styles.text,
+            fontFamily: "웰컴체_Bold",
+            letterSpacing: 0.5,
+          }}
+        >
+          인기 성분
+        </Text>
+      </View>
       <View style={styles.cardscontainer}>
         {mainNutrients.map((mainNutrient, idx) => (
           <Pressable
@@ -80,14 +94,22 @@ const MainNutrient = ({ navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 10,
-    marginTop: 15,
+    marginTop: 20,
     paddingBottom: 15,
   },
+  title: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 5,
+  },
+  star: {
+    width: 38,
+    height: 38,
+  },
   text: {
-    fontSize: 17,
+    fontSize: 20,
     // fontWeight: "bold",
     marginLeft: 5,
-    marginBottom: 10,
   },
   cardscontainer: {
     flexDirection: "row",
