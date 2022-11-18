@@ -1,5 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  ToastAndroid,
+} from 'react-native';
 import BackgroundScreen from '../BackgroundScreen';
 import { Bubble, GiftedChat } from 'react-native-gifted-chat';
 import { over } from 'stompjs';
@@ -57,9 +64,17 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
   // );
   useEffect(() => {}, [publicChats]);
   const connect = () => {
-    let Sock = new SockJS('http://k7a706.p.ssafy.io:8080/wss');
-    stompClient = over(Sock);
-    stompClient.connect({}, onConnected, onError);
+    try {
+      let Sock = new SockJS('http://k7a706.p.ssafy.io:8080/wss');
+      stompClient = over(Sock);
+      stompClient.connect({}, onConnected, onError);
+    } catch {
+      ToastAndroid.show(
+        '일시적 오류 입니다, 다시 시도 해주세요',
+        ToastAndroid.SHORT
+      );
+      navigation.navigate('ChatHomeScreen');
+    }
   };
   const onConnected = async () => {
     let userName = await AsyncStorage.getItem('@storage_UserNickName');
@@ -215,9 +230,12 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
               }}
             />
           </View>
-          <Text
-            style={styles.roomChat}
-          >{`${route.params?.nutrientName} 채팅방`}</Text>
+          <View style={{ marginLeft: 20 }}>
+            <Text style={styles.roomChat}>
+              <Text style={styles.chat}>{`${route.params?.nutrientName}`}</Text>{' '}
+              채팅방
+            </Text>
+          </View>
         </View>
         {userData.userId !== 0 && (
           <GiftedChat
@@ -267,7 +285,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   roomChat: {
-    fontSize: 30,
+    fontSize: 20,
+    marginTop: 10,
+  },
+  chat: {
+    color: '#a2a3f5',
+    fontFamily: '웰컴체_Bold',
+    fontSize: 25,
   },
   // box: {
   //   flexDirection: "column-reverse",
