@@ -5,21 +5,21 @@ import {
   TextInput,
   ToastAndroid,
   View,
-} from "react-native";
-import BackgroundScreen from "../BackgroundScreen";
-import { Ionicons } from "@expo/vector-icons";
-import CustomBtn from "../../components/UI/CustomBtn";
-import { accent } from "../../constants/Colors";
-import { useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { HealthScreeningCheck } from "../../API/userAPI";
-import LoadingSpinner from "../../components/UI/LoadingSpinner";
-import BackgroundScreen2 from "../BackgroundScreen2";
-import LoadingSpinnerWithText from "../../components/UI/LoadingSpinnerWithText";
+} from 'react-native';
+import BackgroundScreen from '../BackgroundScreen';
+import { Ionicons } from '@expo/vector-icons';
+import CustomBtn from '../../components/UI/CustomBtn';
+import { accent } from '../../constants/Colors';
+import { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { HealthScreeningCheck } from '../../API/userAPI';
+import LoadingSpinner from '../../components/UI/LoadingSpinner';
+import BackgroundScreen2 from '../BackgroundScreen2';
+import LoadingSpinnerWithText from '../../components/UI/LoadingSpinnerWithText';
 const HealthScreeningDetailScreen = ({ navigation }) => {
-  const [name, setName] = useState("");
-  const [birth, setBirth] = useState("");
-  const [phone, setPhone] = useState("");
+  const [name, setName] = useState('');
+  const [birth, setBirth] = useState('');
+  const [phone, setPhone] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   return (
     <>
@@ -52,7 +52,7 @@ const HealthScreeningDetailScreen = ({ navigation }) => {
                 <Text>이름</Text>
                 <TextInput
                   style={styles.inputText}
-                  placeholder="김정서"
+                  placeholder="홍길동"
                   onChangeText={(text) => {
                     setName(text);
                   }}
@@ -82,19 +82,19 @@ const HealthScreeningDetailScreen = ({ navigation }) => {
             <View style={styles.customBtnView}>
               <CustomBtn
                 buttonColor={accent}
-                title={"확인"}
-                titleColor={"#fff"}
+                title={'확인'}
+                titleColor={'#fff'}
                 fontSize={20}
-                buttonWidth={"70%"}
+                buttonWidth={'70%'}
                 onPress={async () => {
-                  console.log(name, "what");
+                  console.log(name, 'what');
                   const nameRegex1 = /[A-Za-z가-힣]{1,20}/g;
                   const nameRegex2 =
                     /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"0-9]/g;
 
                   if (!name.match(nameRegex1) || name.match(nameRegex2)) {
                     ToastAndroid.show(
-                      "정상적인 이름을 작성해주세요",
+                      '정상적인 이름을 작성해주세요',
                       ToastAndroid.SHORT
                     );
                     return;
@@ -105,7 +105,7 @@ const HealthScreeningDetailScreen = ({ navigation }) => {
 
                   if (!birth.match(birthRegex1) || name.match(birthRegex2)) {
                     ToastAndroid.show(
-                      "올바른 생일을 입력해주세요",
+                      '올바른 생일을 입력해주세요',
                       ToastAndroid.SHORT
                     );
                     return;
@@ -116,18 +116,18 @@ const HealthScreeningDetailScreen = ({ navigation }) => {
 
                   if (!phone.match(phoneRegex1) || name.match(phoneRegex2)) {
                     ToastAndroid.show(
-                      "올바른 핸드폰 번호를 입력해주세요",
+                      '올바른 핸드폰 번호를 입력해주세요',
                       ToastAndroid.SHORT
                     );
                     return;
                   }
                   setIsLoading(true);
                   try {
-                    await AsyncStorage.setItem("@storage_userName", name);
-                    await AsyncStorage.setItem("@storage_userBirth", birth);
-                    await AsyncStorage.setItem("@storage_userPhone", phone);
+                    await AsyncStorage.setItem('@storage_userName', name);
+                    await AsyncStorage.setItem('@storage_userBirth', birth);
+                    await AsyncStorage.setItem('@storage_userPhone', phone);
                     const email = await AsyncStorage.getItem(
-                      "@storage_UserEmail"
+                      '@storage_UserEmail'
                     );
                     const result = await HealthScreeningCheck(
                       birth,
@@ -136,14 +136,14 @@ const HealthScreeningDetailScreen = ({ navigation }) => {
                       name
                     );
                     setIsLoading(false);
-                    navigation.navigate("FirstAddSurvey");
+                    navigation.navigate('FirstAddSurvey');
                   } catch {
                     ToastAndroid.show(
-                      "인증에 실패 하였습니다.",
+                      '인증에 실패 하였습니다.',
                       ToastAndroid.SHORT
                     );
                     setIsLoading(false);
-                    navigation.navigate("HealthScreeningDetailScreen");
+                    navigation.navigate('HealthScreeningDetailScreen');
                   }
                 }}
               />
@@ -164,11 +164,11 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   textcontainer: {
-    alignItems: "center",
+    alignItems: 'center',
   },
   text: {
-    fontWeight: "bold",
-    textShadowColor: "rgba(0, 0, 0, 0.25)",
+    fontWeight: 'bold',
+    textShadowColor: 'rgba(0, 0, 0, 0.25)',
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 1,
   },
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   greytext: {
-    color: "black",
+    color: 'black',
     fontSize: 30,
   },
   inputTextContainer: {
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   customBtnView: {
-    alignItems: "center",
+    alignItems: 'center',
   },
 });
 export default HealthScreeningDetailScreen;
