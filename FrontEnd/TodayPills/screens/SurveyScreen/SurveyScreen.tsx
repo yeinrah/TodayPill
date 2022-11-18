@@ -148,7 +148,6 @@ const SurveyScreen = ({ navigation }: any) => {
       "평소 균형잡힌 식사를 하시나요?",
       "알려주세요",
       ["YES", "NO"],
-      // ["채소", "생선", "육류", "과일"],
     ],
     [
       "lack",

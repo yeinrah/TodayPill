@@ -65,10 +65,14 @@ const DetailedPillCard = (props: any) => {
         android_ripple={{ color: "#4E736F" }}
         style={styles.cardContainer}
         onPress={() => {
-          navigation.navigate("ModifyRoutine", {
-            pillId: props.supplementId,
-            update: "false",
-          });
+          if (props.isMain) {
+            console.log("test");
+          } else {
+            navigation.navigate("ModifyRoutine", {
+              pillId: props.supplementId,
+              update: "false",
+            });
+          }
         }}
       >
         <View style={styles.imagecontainer}>
