@@ -66,7 +66,7 @@ const DetailedPillCard = (props: any) => {
         style={styles.cardContainer}
         onPress={() => {
           if (props.isMain) {
-            console.log("test");
+            props.navigation.navigate("SupplementScreen", {data: props})
           } else {
             navigation.navigate("ModifyRoutine", {
               pillId: props.supplementId,
@@ -123,7 +123,6 @@ const DetailedPillCard = (props: any) => {
               name="warning"
               size={11}
               color="#FFCE31"
-              style={{ marginTop: 3 }}
             />
             <Text style={{ ...styles.blackalert, ...regularWelcome }}>
               주의&nbsp;
@@ -206,7 +205,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
     // fontWeight: "bold",
     borderRadius: 20,
-    // marginBottom: 3,
+    marginBottom: 1,
     marginRight: 3,
     paddingHorizontal: 6,
   },
@@ -230,6 +229,7 @@ const styles = StyleSheet.create({
   greyalert: {
     color: "#B7B7B7",
     fontSize: 11,
+    marginTop: 1,
   },
   navercontainer: {
     position: "absolute",
