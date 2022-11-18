@@ -17,6 +17,7 @@ import LoadingSpinner from '../../components/UI/LoadingSpinner';
 import BackgroundScreen2 from '../BackgroundScreen2';
 import LoadingSpinnerWithText from '../../components/UI/LoadingSpinnerWithText';
 import GoBackBtn from '../../components/UI/GoBackBtn';
+import { boldWelcome } from '../../components/Data/fontFamilyObject';
 const HealthScreeningDetailScreen = ({ navigation }) => {
   const [name, setName] = useState('');
   const [birth, setBirth] = useState('');
@@ -37,7 +38,7 @@ const HealthScreeningDetailScreen = ({ navigation }) => {
                 navigation.goBack();
               }}
             /> */}
-            <View style={{ marginLeft: 5 }}>
+            <View style={{ marginLeft: 20 }}>
               <GoBackBtn
                 size={48}
                 onPress={() => {
@@ -46,10 +47,14 @@ const HealthScreeningDetailScreen = ({ navigation }) => {
               />
             </View>
             <View style={styles.textcontainer}>
-              <Text style={[styles.text, styles.largetext]}>
+              <Text
+                style={{ ...styles.text, ...styles.largetext, ...boldWelcome }}
+              >
                 건강 검진 결과 분석을 위해
               </Text>
-              <Text style={[styles.text, styles.largetext]}>
+              <Text
+                style={{ ...styles.text, ...styles.largetext, ...boldWelcome }}
+              >
                 본인 정보를 입력해주세요
               </Text>
               {/* <Text style={[styles.text, styles.smalltext]}>

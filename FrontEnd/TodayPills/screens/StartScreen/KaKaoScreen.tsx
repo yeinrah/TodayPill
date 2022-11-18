@@ -92,7 +92,7 @@ const KakaoScreen = ({ navigation }: any) => {
             navigation.replace("Start");
           }}
         /> */}
-        <View style={{ marginLeft: 5 }}>
+        <View style={{ marginLeft: 20 }}>
           <GoBackBtn
             size={48}
             onPress={() => {

@@ -80,6 +80,7 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
     let userName = await AsyncStorage.getItem('@storage_UserNickName');
     let userId = Number(await AsyncStorage.getItem('@storage_UserId'));
     console.log('연결시도!!');
+    console.log(route.params);
     setUserData({
       ...userData,
       connected: true,
@@ -222,7 +223,7 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
               navigation.goBack();
             }}
           /> */}
-          <View style={{ marginLeft: 5 }}>
+          <View style={{ marginLeft: 20 }}>
             <GoBackBtn
               size={48}
               onPress={() => {

@@ -4,6 +4,10 @@ import { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { afterSecondSurvey } from '../../API/userAPI';
 import DetailedPillCard from '../../components/Cards/DetailedPillCard';
+import {
+  boldWelcome,
+  regularWelcome,
+} from '../../components/Data/fontFamilyObject';
 import CustomBtn from '../../components/UI/CustomBtn';
 import GoBackBtn from '../../components/UI/GoBackBtn';
 import { accent } from '../../constants/Colors';
@@ -55,7 +59,7 @@ const PillResultScreen = ({ navigation, route }: any) => {
             navigation.replace("PersonalRecommendationScreen");
           }}
         /> */}
-        <View style={{ marginLeft: 5 }}>
+        <View style={{ marginLeft: 20 }}>
           <GoBackBtn
             size={48}
             onPress={() => {
@@ -64,7 +68,7 @@ const PillResultScreen = ({ navigation, route }: any) => {
           />
         </View>
         <View style={styles.titleGroup}>
-          <Text style={styles.title}>
+          <Text style={{ ...styles.title, ...boldWelcome }}>
             {myName} 님의 {nowMyNutrient} 추천
           </Text>
         </View>
@@ -89,8 +93,10 @@ const PillResultScreen = ({ navigation, route }: any) => {
             })}
           {route.params.answerSheet[0].data.length === 0 && (
             <View style={styles.titleGroup}>
-              <Text style={styles.content}>검색 결과가 없습니다.</Text>
-              <Text style={styles.content2}>
+              <Text style={{ ...styles.content, ...boldWelcome }}>
+                검색 결과가 없습니다.
+              </Text>
+              <Text style={{ ...styles.content2, ...regularWelcome }}>
                 영양제는 계속해서 추가될 예정입니다.
               </Text>
             </View>

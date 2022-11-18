@@ -16,6 +16,10 @@ import { useFocusEffect } from '@react-navigation/native';
 import LoadingSpinner from '../../components/UI/LoadingSpinner';
 import BackgroundScreen2 from '../BackgroundScreen2';
 import GoBackBtn from '../../components/UI/GoBackBtn';
+import {
+  boldWelcome,
+  regularWelcome,
+} from '../../components/Data/fontFamilyObject';
 
 const SurveyScreen = ({ navigation }: any) => {
   const [selectedItem, setSelectedItem] = useState(1);
@@ -243,21 +247,27 @@ const SurveyScreen = ({ navigation }: any) => {
                 navigation.goBack();
               }}
             /> */}
-            <View style={{ marginLeft: 5 }}>
-              <View style={{ marginLeft: 20 }}>
-                <GoBackBtn
-                  size={48}
-                  onPress={() => {
-                    navigation.goBack();
-                  }}
-                />
-              </View>
+            <View style={{ marginLeft: 20 }}>
+              <GoBackBtn
+                size={48}
+                onPress={() => {
+                  navigation.goBack();
+                }}
+              />
             </View>
             <View style={styles.textcontainer}>
-              <Text style={[styles.text, styles.largetext]}>
+              <Text
+                style={{ ...styles.text, ...styles.largetext, ...boldWelcome }}
+              >
                 {surveyData[nowStage][1]}
               </Text>
-              <Text style={[styles.text, styles.smalltext]}>
+              <Text
+                style={{
+                  ...styles.text,
+                  ...styles.smalltext,
+                  ...regularWelcome,
+                }}
+              >
                 {surveyData[nowStage][2]}
               </Text>
             </View>
@@ -325,7 +335,7 @@ const SurveyScreen = ({ navigation }: any) => {
                     // else setSelectedItem(1);
                   }}
                 >
-                  <Text style={styles.title}>다 음</Text>
+                  <Text style={{ ...styles.title, ...boldWelcome }}>다 음</Text>
                 </Pressable>
               </View>
             </View>

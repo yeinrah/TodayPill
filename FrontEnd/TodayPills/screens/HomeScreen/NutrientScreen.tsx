@@ -6,15 +6,17 @@ import {
   Image,
   ToastAndroid,
   FlatList,
-} from "react-native";
-import DetailedPillCard from "../../components/Cards/DetailedPillCard";
-import Card from "../../components/UI/Card";
-import BackgroundScreen2 from "../BackgroundScreen2";
-import { useCallback, useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { fetchAllSupplements } from "../../API/supplementAPI";
-import { useFocusEffect } from "@react-navigation/native";
-import { boldWelcome } from "../../components/Data/fontFamilyObject";
+} from 'react-native';
+import DetailedPillCard from '../../components/Cards/DetailedPillCard';
+import Card from '../../components/UI/Card';
+import BackgroundScreen2 from '../BackgroundScreen2';
+import { useCallback, useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { fetchAllSupplements } from '../../API/supplementAPI';
+import { useFocusEffect } from '@react-navigation/native';
+import { boldWelcome } from '../../components/Data/fontFamilyObject';
+import pillKOtoEN from '../../components/Data/pillKOtoEN';
+import GoBackBtn from '../../components/UI/GoBackBtn';
 
 const NutrientScreen = ({ navigation, route }: any) => {
   const { nutId, nutrient } = route.params;
@@ -23,7 +25,7 @@ const NutrientScreen = ({ navigation, route }: any) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const getAllSupplements = async () => {
-    const currentUserId = await AsyncStorage.getItem("@storage_UserId");
+    const currentUserId = await AsyncStorage.getItem('@storage_UserId');
     setUserId(parseInt(currentUserId));
     const allSupplements = await fetchAllSupplements();
     const supplements = allSupplements.filter((i) => i.category === nutrient);
@@ -52,31 +54,62 @@ const NutrientScreen = ({ navigation, route }: any) => {
     <BackgroundScreen2>
       <Card>
         <View style={styles.container}>
-          <Text style={{ ...styles.text, ...boldWelcome, letterSpacing: 1 }}>
-            {nutrient}
-          </Text>
-          <View style={styles.buttonOuterContainer}>
-            <Pressable
-              android_ripple={{ color: "#4E736F" }}
-              style={styles.buttonInnerContainer}
-              onPress={async () => {
-                await AsyncStorage.setItem("@storage_nowNutrient", nutrient);
-                navigation.navigate("NutrientDetailScreen", {
-                  nutrient: [nutrient],
-                });
-              }}
-            >
-              <Text
-                style={{ ...styles.title, ...boldWelcome, letterSpacing: 1 }}
+          <View style={styles.titleback}>
+            <View style={styles.backBtn}>
+              <GoBackBtn
+                size={30}
+                onPress={() => {
+                  navigation.goBack();
+                }}
+              />
+            </View>
+            <Text style={{ ...styles.text, ...boldWelcome, letterSpacing: 1 }}>
+              {nutrient}
+            </Text>
+          </View>
+          <View style={styles.btnGroup}>
+            <View style={styles.buttonOuterContainer}>
+              <Pressable
+                android_ripple={{ color: '#4E736F' }}
+                style={styles.buttonInnerContainer}
+                onPress={async () => {
+                  await AsyncStorage.setItem('@storage_nowNutrient', nutrient);
+                  navigation.navigate('NutrientDetailScreen', {
+                    nutrient: [nutrient],
+                  });
+                }}
               >
-                영양제 추천받기
-              </Text>
-            </Pressable>
+                <Text
+                  style={{ ...styles.title, ...boldWelcome, letterSpacing: 1 }}
+                >
+                  영양제 추천받기
+                </Text>
+              </Pressable>
+            </View>
+            <View style={styles.buttonOuterContainer}>
+              <Pressable
+                android_ripple={{ color: '#4E736F' }}
+                style={styles.buttonInnerContainer}
+                onPress={async () => {
+                  navigation.navigate('ChatScreenDetail', {
+                    nutId: nutId,
+                    nutrient: pillKOtoEN.get(nutrient),
+                    nutrientName: nutrient,
+                  });
+                }}
+              >
+                <Text
+                  style={{ ...styles.title, ...boldWelcome, letterSpacing: 1 }}
+                >
+                  채팅방 접속
+                </Text>
+              </Pressable>
+            </View>
           </View>
           {isLoading ? (
             <View style={styles.loadingspinnercontainer}>
               <Image
-                source={require("../../assets/images/loadingspinner.gif")}
+                source={require('../../assets/images/loadingspinner.gif')}
                 style={styles.loadingspinner}
               />
             </View>
@@ -122,27 +155,27 @@ const styles = StyleSheet.create({
   },
   buttonOuterContainer: {
     borderRadius: 10,
-    width: "35%",
+    width: '35%',
     marginLeft: 20,
-    overflow: "hidden",
+    overflow: 'hidden',
     marginVertical: 10,
     elevation: 10,
   },
   buttonInnerContainer: {
     paddingVertical: 7,
-    backgroundColor: "#8EE8DE",
+    backgroundColor: '#8EE8DE',
   },
   title: {
     fontSize: 15,
     // fontWeight: "bold",
-    textAlign: "center",
-    color: "white",
+    textAlign: 'center',
+    color: 'white',
   },
   loadingspinnercontainer: {
-    width: "100%",
-    height: "80%",
-    justifyContent: "center",
-    alignItems: "center",
+    width: '100%',
+    height: '80%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   loadingspinner: {
     width: 200,
@@ -151,6 +184,9 @@ const styles = StyleSheet.create({
   height: {
     height: 120,
   },
+  btnGroup: { flexDirection: 'row' },
+  titleback: { flexDirection: 'row' },
+  backBtn: { position: 'relative', top: 23, marginRight: -20 },
 });
 
 export default NutrientScreen;

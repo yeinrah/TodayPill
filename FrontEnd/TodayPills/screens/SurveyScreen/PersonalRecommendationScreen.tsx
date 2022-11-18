@@ -15,6 +15,10 @@ import { accent } from '../../constants/Colors';
 import BackgroundScreen from '../BackgroundScreen';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import BackgroundScreen2 from '../BackgroundScreen2';
+import {
+  boldWelcome,
+  regularWelcome,
+} from '../../components/Data/fontFamilyObject';
 
 const PersonalRecommendationScreen = ({ navigation }: any) => {
   const [myNutrient, setMyNutrient] = useState([
@@ -47,17 +51,19 @@ const PersonalRecommendationScreen = ({ navigation }: any) => {
       <ScrollView>
         <View style={styles.textContainer}>
           <Text>
-            <Text style={styles.title}>
+            <Text style={{ ...styles.title, ...boldWelcome }}>
               {name.length > 5 ? name.slice(0, 5) + '...  ' : name + ' '}
             </Text>
-            <Text style={styles.contentText}>님의 맞춤 솔루션</Text>
+            <Text style={{ ...styles.contentText, ...boldWelcome }}>
+              님의 맞춤 솔루션
+            </Text>
           </Text>
         </View>
         {/* <View style={styles.clickBox}>
           <Text style={styles.clickText}>click me</Text>
         </View> */}
         <View style={styles.textGroup}>
-          <Text style={styles.shape}>
+          <Text style={{ ...styles.shape, ...regularWelcome }}>
             {myNutrient.map((item, index) => (
               <Text
                 key={index}
@@ -93,15 +99,17 @@ const PersonalRecommendationScreen = ({ navigation }: any) => {
           <View style={styles.inPillDetail}>
             <View style={styles.inTextContainer}>
               <Text>
-                <Text style={styles.inTitle}>{name}</Text>
-                <Text>님의 추천 영양성분</Text>
+                <Text style={{ ...styles.inTitle, ...boldWelcome }}>
+                  {name}
+                </Text>
+                <Text style={{ ...boldWelcome }}>님의 추천 영양성분</Text>
               </Text>
             </View>
             <View style={styles.listGroup}>
               {myNutrient.map((item, index) => (
                 <Text
                   key={index}
-                  style={styles.listText}
+                  style={{ ...styles.listText, ...boldWelcome }}
                   onPress={async () => {
                     await AsyncStorage.setItem('@storage_nowNutrient', item);
                     navigation.navigate('NutrientDetailScreen', {

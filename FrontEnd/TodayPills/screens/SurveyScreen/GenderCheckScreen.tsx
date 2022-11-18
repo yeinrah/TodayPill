@@ -7,6 +7,10 @@ import { changeGender } from '../../API/userAPI';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import BackgroundScreen2 from '../BackgroundScreen2';
 import GoBackBtn from '../../components/UI/GoBackBtn';
+import {
+  boldWelcome,
+  regularWelcome,
+} from '../../components/Data/fontFamilyObject';
 
 const GenderCheckScreen = ({ navigation }: any) => {
   const [selectedItem, setSelectedItem] = useState(0);
@@ -23,7 +27,7 @@ const GenderCheckScreen = ({ navigation }: any) => {
             navigation.goBack();
           }}
         /> */}
-        <View style={{ marginLeft: 5 }}>
+        <View style={{ marginLeft: 20 }}>
           <GoBackBtn
             size={48}
             onPress={() => {
@@ -32,10 +36,12 @@ const GenderCheckScreen = ({ navigation }: any) => {
           />
         </View>
         <View style={styles.textcontainer}>
-          <Text style={[styles.text, styles.largetext]}>
+          <Text style={{ ...styles.text, ...styles.largetext, ...boldWelcome }}>
             성별을 알려주세요.
           </Text>
-          <Text style={[styles.text, styles.smalltext]}>
+          <Text
+            style={{ ...styles.text, ...styles.smalltext, ...regularWelcome }}
+          >
             성별에 기반한 설문이 준비되어 있습니다.
           </Text>
         </View>

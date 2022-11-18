@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { afterSecondSurvey } from '../../API/userAPI';
+import { boldWelcome } from '../../components/Data/fontFamilyObject';
 import BackgroundScreen from '../BackgroundScreen';
 import BackgroundScreen2 from '../BackgroundScreen2';
 
@@ -29,7 +30,14 @@ const SurveyDeepLoadingScreen = ({ navigation, route }: any) => {
     <BackgroundScreen2>
       <View style={styles.container}>
         <View style={styles.textcontainer}>
-          <Text style={[styles.text, styles.greetingtext, styles.blacktext]}>
+          <Text
+            style={{
+              ...styles.text,
+              ...styles.greetingtext,
+              ...styles.blacktext,
+              ...boldWelcome,
+            }}
+          >
             {nowMyNutrient} 맞춤 추천 완료 !!
           </Text>
         </View>
@@ -49,7 +57,7 @@ const SurveyDeepLoadingScreen = ({ navigation, route }: any) => {
               })
             }
           >
-            <Text style={styles.title}>다음</Text>
+            <Text style={{ ...styles.title, ...boldWelcome }}>다음</Text>
           </Pressable>
         </View>
       </View>

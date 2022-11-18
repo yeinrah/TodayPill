@@ -51,7 +51,7 @@ const NutrientDetailScreen = ({ navigation, route }: any) => {
             navigation.goBack();
           }}
         /> */}
-        <View style={{ marginLeft: 5 }}>
+        <View style={{ marginLeft: 20 }}>
           <GoBackBtn
             size={48}
             onPress={() => {
@@ -80,7 +80,7 @@ const NutrientDetailScreen = ({ navigation, route }: any) => {
                 style={{
                   ...styles.descriptiontext,
                   ...regularWelcome,
-                  letterSpacing: 3,
+                  letterSpacing: 2,
                 }}
               >
                 {NutrientDescription.get(nutrientName)}
@@ -215,6 +215,7 @@ const styles = StyleSheet.create({
     borderStyle: 'dashed',
     backgroundColor: '#FFE3FF',
     margin: 10,
+    padding: 10,
     // alignContent: 'stretch',
     // backgroundColor: '#e0e0e0',
   },

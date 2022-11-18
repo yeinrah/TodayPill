@@ -93,13 +93,13 @@ const ChatNutrient = ({ navigation }: any) => {
         {mainNutrients.map((mainNutrient, idx) => (
           <Pressable
             key={idx}
-            onPress={() =>
+            onPress={() => {
               navigation.navigate('ChatScreenDetail', {
                 nutId: mainNutrient.nutId,
                 nutrient: mainNutrient.nutrient,
                 nutrientName: mainNutrient.nutrientName,
-              })
-            }
+              });
+            }}
           >
             <SimpleNutrientCard
               image={mainNutrient.image}

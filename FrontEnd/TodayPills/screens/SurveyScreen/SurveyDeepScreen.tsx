@@ -5,6 +5,10 @@ import { AntDesign } from '@expo/vector-icons';
 import { useState } from 'react';
 import BackgroundScreen2 from '../BackgroundScreen2';
 import GoBackBtn from '../../components/UI/GoBackBtn';
+import {
+  boldWelcome,
+  regularWelcome,
+} from '../../components/Data/fontFamilyObject';
 
 const SurveyDeepScreen = ({ navigation }: any) => {
   const [selectedItem, setSelectedItem] = useState(0);
@@ -21,7 +25,7 @@ const SurveyDeepScreen = ({ navigation }: any) => {
             navigation.goBack();
           }}
         /> */}
-        <View style={{ marginLeft: 5 }}>
+        <View style={{ marginLeft: 20 }}>
           <GoBackBtn
             size={48}
             onPress={() => {
@@ -30,10 +34,12 @@ const SurveyDeepScreen = ({ navigation }: any) => {
           />
         </View>
         <View style={styles.textcontainer}>
-          <Text style={[styles.text, styles.largetext]}>
+          <Text style={{ ...styles.text, ...styles.largetext, ...boldWelcome }}>
             흡연 여부를 알려주세요
           </Text>
-          <Text style={[styles.text, styles.smalltext]}>
+          <Text
+            style={{ ...styles.text, ...styles.smalltext, ...regularWelcome }}
+          >
             흡연할 경우 조심해야 할 성분이 있어요
           </Text>
         </View>
@@ -50,7 +56,9 @@ const SurveyDeepScreen = ({ navigation }: any) => {
                 onPress={() => setSelectedItem(1)}
               >
                 <View style={styles.itemflex}>
-                  <Text style={styles.itemtitle}>비흡연</Text>
+                  <Text style={{ ...styles.itemtitle, ...regularWelcome }}>
+                    비흡연
+                  </Text>
                   <AntDesign
                     name="checkcircleo"
                     size={24}
@@ -73,7 +81,9 @@ const SurveyDeepScreen = ({ navigation }: any) => {
                 onPress={() => setSelectedItem(2)}
               >
                 <View style={styles.itemflex}>
-                  <Text style={styles.itemtitle}>흡연</Text>
+                  <Text style={{ ...styles.itemtitle, ...regularWelcome }}>
+                    흡연
+                  </Text>
                   <AntDesign
                     name="checkcircleo"
                     size={24}
@@ -92,7 +102,7 @@ const SurveyDeepScreen = ({ navigation }: any) => {
               style={styles.buttonInnerContainer}
               onPress={() => navigation.navigate('SurveyDeepLoadingScreen')}
             >
-              <Text style={styles.title}>다 음</Text>
+              <Text style={{ ...styles.title, ...boldWelcome }}>다 음</Text>
             </Pressable>
           </View>
         </View>
