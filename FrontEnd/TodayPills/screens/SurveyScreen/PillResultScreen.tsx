@@ -1,28 +1,29 @@
-import { Ionicons } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
-import { afterSecondSurvey } from "../../API/userAPI";
-import DetailedPillCard from "../../components/Cards/DetailedPillCard";
-import CustomBtn from "../../components/UI/CustomBtn";
-import { accent } from "../../constants/Colors";
-import BackgroundScreen from "../BackgroundScreen";
-import BackgroundScreen2 from "../BackgroundScreen2";
-import BackgroundStartScreen from "../BackgroundStartScreen";
+import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect, useState } from 'react';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { afterSecondSurvey } from '../../API/userAPI';
+import DetailedPillCard from '../../components/Cards/DetailedPillCard';
+import CustomBtn from '../../components/UI/CustomBtn';
+import GoBackBtn from '../../components/UI/GoBackBtn';
+import { accent } from '../../constants/Colors';
+import BackgroundScreen from '../BackgroundScreen';
+import BackgroundScreen2 from '../BackgroundScreen2';
+import BackgroundStartScreen from '../BackgroundStartScreen';
 
 const PillResultScreen = ({ navigation, route }: any) => {
-  const [myName, setMyName] = useState("");
-  const [nowMyNutrient, setNowMyNutrient] = useState("");
+  const [myName, setMyName] = useState('');
+  const [nowMyNutrient, setNowMyNutrient] = useState('');
   const [userId, setUserId] = useState(0);
   const [itemList, setItemList] = useState([]);
   const getMyNameAndId = async () => {
-    const name = await AsyncStorage.getItem("@storage_UserNickName");
-    const currentUserId = await AsyncStorage.getItem("@storage_UserId");
+    const name = await AsyncStorage.getItem('@storage_UserNickName');
+    const currentUserId = await AsyncStorage.getItem('@storage_UserId');
     setUserId(parseInt(currentUserId));
     setMyName(name);
   };
   const getMyNowNutrient = async () => {
-    const nutrient = await AsyncStorage.getItem("@storage_nowNutrient");
+    const nutrient = await AsyncStorage.getItem('@storage_nowNutrient');
     setNowMyNutrient(nutrient);
   };
   // const getUserId = async () => {
@@ -44,7 +45,7 @@ const PillResultScreen = ({ navigation, route }: any) => {
   return (
     <BackgroundScreen2>
       <ScrollView style={styles.container}>
-        <Ionicons
+        {/* <Ionicons
           name="arrow-back"
           size={48}
           color="black"
@@ -53,7 +54,15 @@ const PillResultScreen = ({ navigation, route }: any) => {
             // navigation.goBack();
             navigation.replace("PersonalRecommendationScreen");
           }}
-        />
+        /> */}
+        <View style={{ marginLeft: 5 }}>
+          <GoBackBtn
+            size={48}
+            onPress={() => {
+              navigation.replace('PersonalRecommendationScreen');
+            }}
+          />
+        </View>
         <View style={styles.titleGroup}>
           <Text style={styles.title}>
             {myName} 님의 {nowMyNutrient} 추천
@@ -90,22 +99,22 @@ const PillResultScreen = ({ navigation, route }: any) => {
         <View style={styles.btn}>
           <CustomBtn
             buttonColor={accent}
-            title={"영양제 추천 다시 받기!"}
-            titleColor={"#fff"}
+            title={'영양제 추천 다시 받기!'}
+            titleColor={'#fff'}
             fontSize={20}
-            buttonWidth={"70%"}
+            buttonWidth={'70%'}
             onPress={() => {
-              navigation.navigate("PersonalRecommendationScreen");
+              navigation.navigate('PersonalRecommendationScreen');
             }}
           />
           <CustomBtn
             buttonColor={accent}
-            title={"홈으로 가기"}
-            titleColor={"#fff"}
+            title={'홈으로 가기'}
+            titleColor={'#fff'}
             fontSize={20}
-            buttonWidth={"70%"}
+            buttonWidth={'70%'}
             onPress={() => {
-              navigation.replace("MainScreen");
+              navigation.replace('MainScreen');
             }}
           />
         </View>
@@ -122,13 +131,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   titleGroup: {
-    alignItems: "center",
+    alignItems: 'center',
   },
   title: {
     fontSize: 25,
   },
   btn: {
-    alignItems: "center",
+    alignItems: 'center',
     marginTop: 20,
     marginBottom: 30,
   },

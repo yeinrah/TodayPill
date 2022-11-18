@@ -76,6 +76,12 @@ const ChatNutrient = ({ navigation }: any) => {
       nutrient: 'milkthistle',
       nutrientName: '밀크시슬',
     },
+    {
+      nutId: 13,
+      image: require('../../assets/images/ai/프로폴리스.png'),
+      nutrient: 'profolis',
+      nutrientName: '프로폴리스',
+    },
   ];
 
   return (
@@ -91,6 +97,7 @@ const ChatNutrient = ({ navigation }: any) => {
               navigation.navigate('ChatScreenDetail', {
                 nutId: mainNutrient.nutId,
                 nutrient: mainNutrient.nutrient,
+                nutrientName: mainNutrient.nutrientName,
               })
             }
           >

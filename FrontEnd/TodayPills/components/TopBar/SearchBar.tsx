@@ -4,13 +4,13 @@ import {
   StyleSheet,
   Alert,
   Keyboard,
-  KeyboardAvoidingView,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-import { useRef, useState } from "react";
+import { useRef, useState, useCallback } from "react";
 import { regularWelcome } from "../Data/fontFamilyObject";
 import { primary } from "../../constants/Colors";
+import { useFocusEffect } from "@react-navigation/native";
 
 const SearchBar = ({ navigation, word, isMain }: any) => {
   const [keyword, setKeyword] = useState(word);
@@ -34,6 +34,12 @@ const SearchBar = ({ navigation, word, isMain }: any) => {
       ]);
     }
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      setKeyword(word);
+    }, [])
+  );
 
   return (
     <View style={styles.container}>
@@ -90,6 +96,7 @@ const styles = StyleSheet.create({
     borderColor: primary,
     backgroundColor: "white",
     elevation: 10,
+    alignSelf: "center",
   },
   textinput: {
     height: 36,
