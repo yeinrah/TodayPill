@@ -58,7 +58,6 @@ import SurveyDeepLoadingScreen from '../screens/SurveyScreen/SurveyDeepLoadingSc
 import PillResultScreen from '../screens/SurveyScreen/PillResultScreen';
 import GenderCheckScreen from '../screens/SurveyScreen/GenderCheckScreen';
 import FirstAddSurvey from '../screens/AddSurvey/FirstAddSurvey';
-import AllSupplementsScreen from '../screens/HomeScreen/AllSupplementsScreen';
 import SecondAddSurvey from '../screens/AddSurvey/SecondAddSurvey';
 import ChatScreen from '../screens/ChatScreen/ChatHomeScreen';
 import AiHomeScreen from '../screens/AiScreen/AiHomeScreen';
@@ -68,6 +67,7 @@ import AiAnalysisScreen from '../screens/AiScreen/AiAnalysisScreen';
 import AiResultScreen from '../screens/AiScreen/AiResultScreen';
 import ChatScreenDetail from '../screens/ChatScreen/ChatScreenDetail';
 import ChatHomeScreen from '../screens/ChatScreen/ChatHomeScreen';
+import SupplementScreen from '../screens/HomeScreen/SupplementScreen';
 interface Inavigation {
   colorScheme: ColorSchemeName;
   LoginCheck: () => {};
@@ -300,8 +300,8 @@ function Home() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="AllSupplementsScreen"
-        component={AllSupplementsScreen}
+        name="SupplementScreen"
+        component={SupplementScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

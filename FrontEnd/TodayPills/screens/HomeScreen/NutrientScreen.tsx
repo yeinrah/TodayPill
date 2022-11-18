@@ -98,6 +98,7 @@ const NutrientScreen = ({ navigation, route }: any) => {
                     ingredients={item.ingredients}
                     caution={item.caution}
                     isMain={true}
+                    navigation={navigation}
                   />
                 );
               }}

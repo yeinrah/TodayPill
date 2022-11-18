@@ -55,6 +55,7 @@ export type RootStackParamList = {
   AiResultScreen: undefined;
   ChatHomeScreen: undefined;
   ChatScreenDetail: undefined;
+  SupplementScreen: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
