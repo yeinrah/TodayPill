@@ -36,11 +36,11 @@ export default function ModifyRoutineScreen({ navigation, route }: any) {
     <BackgroundScreen2>
       <Card>
         <View style={styles.container}>
-          <View style={styles.backBtn}>
-            <GoBackBtn onPress={() => navigation.pop()} size={33} />
-          </View>
           <View style={styles.myPillsContainer}>
             <View style={styles.titleContainer}>
+              <View style={styles.backBtn}>
+                <GoBackBtn onPress={() => navigation.pop()} size={33} />
+              </View>
               <View>
                 <Text style={{ ...styles.text, ...boldWelcome }}>
                   영양제 섭취{" "}
@@ -72,20 +72,23 @@ const styles = StyleSheet.create({
     // marginTop: 20,
     marginTop: 10,
     marginBottom: 80,
-    marginHorizontal: 20,
+    marginHorizontal: 15,
   },
   backBtn: {
-    marginTop: 10,
+    // marginTop: 10,
   },
   myPillsContainer: {
     marginVertical: 10,
   },
   titleContainer: {
     margin: 10,
+    flexDirection: "row",
+    alignItems: "center",
   },
 
   text: {
     fontSize: 25,
+    marginLeft: 5,
     // fontWeight: "bold",
   },
 });

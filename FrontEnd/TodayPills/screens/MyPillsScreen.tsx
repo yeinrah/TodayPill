@@ -47,21 +47,23 @@ export default function MyPillsScreen({ navigation }: any) {
     <BackgroundScreen2>
       <Card>
         <View style={styles.container}>
-          <View style={styles.backBtn}>
-            <GoBackBtn onPress={() => navigation.pop()} size={33} />
-          </View>
-          <ScrollView style={styles.myPillsContainer}>
-            <View style={styles.titleContainer}>
+          <View style={styles.titleContainer}>
+            <View style={{ flexDirection: "row" }}>
+              <View style={{ marginTop: 3 }}>
+                <GoBackBtn onPress={() => navigation.pop()} size={33} />
+              </View>
+
               <View style={styles.title}>
                 <Text style={{ ...styles.text, ...boldWelcome }}>
                   내가 섭취중인 영양제
                 </Text>
               </View>
-
-              <Pressable onPress={addRoutinePillHandler}>
-                <Ionicons name="add-circle-sharp" size={35} color={primary} />
-              </Pressable>
             </View>
+            <Pressable onPress={addRoutinePillHandler}>
+              <Ionicons name="add-circle-sharp" size={35} color={primary} />
+            </Pressable>
+          </View>
+          <ScrollView style={styles.myPillsContainer}>
             <RoutineDetailList />
           </ScrollView>
         </View>
@@ -77,15 +79,14 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginHorizontal: 20,
   },
-  backBtn: {
-    marginTop: 10,
-  },
+
   myPillsContainer: {
     marginVertical: 10,
   },
   titleContainer: {
     flexDirection: "row",
     // marginTop: 20,
+    marginTop: 15,
     justifyContent: "space-between",
     alignItems: "center",
     width: "95%",
@@ -93,6 +94,7 @@ const styles = StyleSheet.create({
   title: {
     marginStart: 10,
     // paddingHorizontal: 10,
+
     paddingVertical: 7,
     borderRadius: 30,
     // backgroundColor: "#FFEFFC",

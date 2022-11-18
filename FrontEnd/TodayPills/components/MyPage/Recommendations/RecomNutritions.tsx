@@ -10,13 +10,14 @@ import {
   Button,
   ScrollView,
   Image,
+  Pressable,
 } from "react-native";
 import { getUserInfoByEmail } from "../../../API/userAPI";
-import { boldWelcome } from "../../Data/fontFamilyObject";
+import { boldWelcome, regularWelcome } from "../../Data/fontFamilyObject";
 import PillItem, { PillProps } from "../../Pills/PillItem";
 import RecomItem from "./RecomItem";
 
-export default function RecomNutritions() {
+export default function RecomNutritions({ navigation }: any) {
   const [myNutritions, setMyNutritions] = useState([]);
   const [userId, setUserId] = useState(0);
   const getRecomNut = async () => {
@@ -40,13 +41,34 @@ export default function RecomNutritions() {
   return (
     <View style={styles.likeContainer}>
       <View style={styles.myPickContainer}>
-        <Image
-          // source={require("../../assets/images/hearton.png")}
-          source={require("../../../assets/images/likeIcon.png")}
-          style={styles.pill}
-        />
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Image
+            // source={require("../../assets/images/hearton.png")}
+            source={require("../../../assets/images/likeIcon.png")}
+            style={styles.pill}
+          />
 
-        <Text style={{ ...styles.name, ...boldWelcome }}>추천 영양성분</Text>
+          <Text style={{ ...styles.name, ...boldWelcome }}>추천 영양성분</Text>
+        </View>
+        <Pressable
+          onPress={() => {
+            navigation.replace("HealthScreeningCheckScreen");
+          }}
+          style={{ marginTop: 3 }}
+        >
+          {({ pressed }) => (
+            <Text
+              style={{
+                fontSize: 18,
+                color: pressed ? "black" : "#B7B7B7",
+                ...regularWelcome,
+                letterSpacing: 0.5,
+              }}
+            >
+              재추천받기
+            </Text>
+          )}
+        </Pressable>
       </View>
 
       <View>
@@ -73,6 +95,8 @@ const styles = StyleSheet.create({
   myPickContainer: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
+    paddingRight: 10,
   },
   pill: {
     width: 45,

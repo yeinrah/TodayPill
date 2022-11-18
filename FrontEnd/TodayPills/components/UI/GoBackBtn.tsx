@@ -7,11 +7,12 @@ export default function GoBackBtn(props: any) {
   return (
     <View style={styles.container}>
       <Pressable onPress={props.onPress}>
-        <Ionicons
+        {/* <Ionicons
           name="arrow-back-circle-outline"
           size={props.size}
           color="gray"
-        />
+        /> */}
+        <Ionicons name="chevron-back" size={props.size} color="gray" />
       </Pressable>
     </View>
   );

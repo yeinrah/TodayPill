@@ -28,8 +28,7 @@ import {
   regularWelcome,
 } from "../components/Data/fontFamilyObject";
 import { AntDesign } from "@expo/vector-icons";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 
 export default function MyPageScreen({ navigation }: any) {
   // RootTabScreenProps<"MyPage">
@@ -85,11 +84,7 @@ export default function MyPageScreen({ navigation }: any) {
             <View style={styles.nutrBtn}>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 {/* <FontAwesome5 name="pills" size={24} color="#B7B7B7" /> */}
-                <Ionicons
-                  name="md-checkmark-done-outline"
-                  size={24}
-                  color="black"
-                />
+                {/* <Feather name="check" size={24} color="black" /> */}
                 <Text style={{ ...styles.nutrBtnText, ...regularWelcome }}>
                   나의 영양제
                 </Text>
@@ -121,10 +116,10 @@ export default function MyPageScreen({ navigation }: any) {
             <MyPickPills />
           </View>
           <View style={styles.nutrisContainer}>
-            <RecomNutritions />
+            <RecomNutritions navigation={navigation} />
           </View>
           <View style={styles.btnContainer}>
-            <CustomBtn
+            {/* <CustomBtn
               buttonColor={accent}
               title={"영양성분 다시 추천 받기!"}
               fontSize={20}
@@ -133,7 +128,7 @@ export default function MyPageScreen({ navigation }: any) {
               onPress={() => {
                 navigation.replace("HealthScreeningCheckScreen");
               }}
-            />
+            /> */}
             <Pressable
               onPress={async () => {
                 await AsyncStorage.removeItem("@storage_UserId");
