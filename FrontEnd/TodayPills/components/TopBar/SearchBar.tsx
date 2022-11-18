@@ -4,7 +4,6 @@ import {
   StyleSheet,
   Alert,
   Keyboard,
-  KeyboardAvoidingView,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
@@ -97,6 +96,7 @@ const styles = StyleSheet.create({
     borderColor: primary,
     backgroundColor: "white",
     elevation: 10,
+    alignSelf: "center",
   },
   textinput: {
     height: 36,
