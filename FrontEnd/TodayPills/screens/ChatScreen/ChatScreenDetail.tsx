@@ -1,35 +1,35 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
-import BackgroundScreen from "../BackgroundScreen";
-import { Bubble, GiftedChat } from "react-native-gifted-chat";
-import { over } from "stompjs";
-import SockJS from "sockjs-client";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Ionicons } from "@expo/vector-icons";
-import { getSpecificRoomChat } from "../../API/chatAPI";
-import { useFocusEffect } from "@react-navigation/native";
-import BackgroundScreen2 from "../BackgroundScreen2";
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import BackgroundScreen from '../BackgroundScreen';
+import { Bubble, GiftedChat } from 'react-native-gifted-chat';
+import { over } from 'stompjs';
+import SockJS from 'sockjs-client';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Ionicons } from '@expo/vector-icons';
+import { getSpecificRoomChat } from '../../API/chatAPI';
+import { useFocusEffect } from '@react-navigation/native';
+import BackgroundScreen2 from '../BackgroundScreen2';
 var stompClient = null;
 
 const ChatScreenDetail = ({ navigation, route }: any) => {
   const [publicChats, setPublicChats] = useState([]);
   const [loadFlag, setLoadFlag] = useState(false);
   const [messages, setMessages] = useState([]);
-  const [tab, setTab] = useState("CHATROOM");
+  const [tab, setTab] = useState('CHATROOM');
   const [userData, setUserData] = useState({
     userId: 0,
-    username: "wjdtj",
+    username: 'wjdtj',
     // receivername: "wjdtj",
     connected: false,
-    message: "hello",
+    message: 'hello',
   });
   const loadUserNickName = async () => {
-    let name = await AsyncStorage.getItem("@storage_UserNickName");
+    let name = await AsyncStorage.getItem('@storage_UserNickName');
     setUserData({
       ...userData,
       username: name,
       connected: false,
-      message: "hello",
+      message: 'hello',
     });
   };
   // useEffect(() => {
@@ -56,14 +56,14 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
   // );
   useEffect(() => {}, [publicChats]);
   const connect = () => {
-    let Sock = new SockJS("http://k7a706.p.ssafy.io:8080/wss");
+    let Sock = new SockJS('http://k7a706.p.ssafy.io:8080/wss');
     stompClient = over(Sock);
     stompClient.connect({}, onConnected, onError);
   };
   const onConnected = async () => {
-    let userName = await AsyncStorage.getItem("@storage_UserNickName");
-    let userId = Number(await AsyncStorage.getItem("@storage_UserId"));
-    console.log("연결시도!!");
+    let userName = await AsyncStorage.getItem('@storage_UserNickName');
+    let userId = Number(await AsyncStorage.getItem('@storage_UserId'));
+    console.log('연결시도!!');
     setUserData({
       ...userData,
       connected: true,
@@ -79,7 +79,7 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
   const userJoin = (userName) => {
     var chatMessage = {
       senderName: userName,
-      status: "JOIN",
+      status: 'JOIN',
     };
     stompClient.send(
       `/app/${route.params?.nutrient}`,
@@ -96,7 +96,7 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
     // message: messages[0].text,
     // status: 'MESSAGE',
     var payloadData = JSON.parse(payload.body);
-    console.log(payloadData, "thisispay");
+    console.log(payloadData, 'thisispay');
     let refinedData = {
       message: payloadData.text,
       text: payloadData.text,
@@ -108,9 +108,9 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
     };
     // console.log(payloadData, 'this is payloadData');
     switch (payloadData.status) {
-      case "JOIN":
+      case 'JOIN':
         break;
-      case "MESSAGE":
+      case 'MESSAGE':
         // publicChats.push(payloadData);
         publicChats.unshift(refinedData);
         setPublicChats([...publicChats]);
@@ -120,7 +120,7 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
   };
 
   const onError = (err) => {
-    console.log("실패!!");
+    console.log('실패!!');
     console.log(err);
   };
 
@@ -135,9 +135,9 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
     // user: { _id: 1 },
     // createdAt: new Date(),
     // username: 'haha',
-    console.log("this is message!!!", messages);
+    console.log('this is message!!!', messages);
     if (stompClient) {
-      let id = await AsyncStorage.getItem("@storage_UserId");
+      let id = await AsyncStorage.getItem('@storage_UserId');
       var chatMessage = {
         _id: messages[0]._id,
         text: messages[0].text,
@@ -146,7 +146,7 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
         senderName: userData.username,
         userName: userData.username,
         // message: messages[0].text,
-        status: "MESSAGE",
+        status: 'MESSAGE',
       };
       // console.log(chatMessage.message, 'this is messages');
       // console.log(messages, 'all messagse');
@@ -158,7 +158,7 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
         {},
         JSON.stringify(chatMessage)
       );
-      setUserData({ ...userData, message: "" });
+      setUserData({ ...userData, message: '' });
     }
   };
 
@@ -183,12 +183,12 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
         {...props}
         wrapperStyle={{
           left: {
-            backgroundColor: "#d6d6d6",
+            backgroundColor: '#d6d6d6',
           },
         }}
         textStyle={{
           left: {
-            color: "#fff",
+            color: '#fff',
           },
         }}
       />
@@ -206,16 +206,18 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
               navigation.goBack();
             }}
           />
-          <Text style={styles.roomChat}>{`${route.params?.nutrient}`}</Text>
+          <Text
+            style={styles.roomChat}
+          >{`${route.params?.nutrientName} 채팅방`}</Text>
         </View>
         {userData.userId !== 0 && (
           <GiftedChat
-            placeholder={"메세지를 입력하세요..."}
+            placeholder={'메세지를 입력하세요...'}
             alwaysShowSend={true}
             renderUsernameOnMessage={true}
             messages={publicChats}
             renderBubble={renderBubble}
-            textInputProps={{ keyboardAppearance: "dark", autoCorrect: false }}
+            textInputProps={{ keyboardAppearance: 'dark', autoCorrect: false }}
             // onInputTextChanged={(text) => {
             //   if(text.startsWith("@"))
             // }}
@@ -242,17 +244,17 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   textInput: {
-    backgroundColor: "white",
-    width: "85%",
+    backgroundColor: 'white',
+    width: '85%',
   },
   textBox: {
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   textBtn: {
-    width: "15%",
+    width: '15%',
   },
   chatTitle: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginTop: 20,
   },
   roomChat: {

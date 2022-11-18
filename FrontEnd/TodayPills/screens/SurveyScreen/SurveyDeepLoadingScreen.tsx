@@ -1,21 +1,22 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useEffect, useState } from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import { afterSecondSurvey } from "../../API/userAPI";
-import BackgroundScreen from "../BackgroundScreen";
-import BackgroundScreen2 from "../BackgroundScreen2";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect, useState } from 'react';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { afterSecondSurvey } from '../../API/userAPI';
+import BackgroundScreen from '../BackgroundScreen';
+import BackgroundScreen2 from '../BackgroundScreen2';
 
 const SurveyDeepLoadingScreen = ({ navigation, route }: any) => {
-  const [nowMyNutrient, setNowMyNutrient] = useState("");
+  const [nowMyNutrient, setNowMyNutrient] = useState('');
   const [itemList, setItemList] = useState([]);
   const getMyNowNutrient = async () => {
-    const nutrient = await AsyncStorage.getItem("@storage_nowNutrient");
+    const nutrient = await AsyncStorage.getItem('@storage_nowNutrient');
     setNowMyNutrient(nutrient);
   };
   const getResult = async () => {
     // console.log(route.params.answerSheet, "hah!");
     let arr = await afterSecondSurvey(route.params.answerSheet);
-    console.log(arr, "hehe");
+    console.log(route.params.answerSheet);
+    console.log(arr.data, 'hehe');
     setItemList([...itemList, arr]);
   };
   useEffect(() => {
@@ -36,15 +37,15 @@ const SurveyDeepLoadingScreen = ({ navigation, route }: any) => {
         <View style={styles.imagecontainer}>
           <Image
             style={styles.image}
-            source={require("../../assets/images/surveyResult.png")}
+            source={require('../../assets/images/surveyResult.png')}
           />
         </View>
         <View style={styles.buttonOuterContainer}>
           <Pressable
-            android_ripple={{ color: "#4E736F" }}
+            android_ripple={{ color: '#4E736F' }}
             style={styles.buttonInnerContainer}
             onPress={() =>
-              navigation.navigate("PillResultScreen", {
+              navigation.navigate('PillResultScreen', {
                 answerSheet: itemList,
               })
             }
@@ -59,26 +60,26 @@ const SurveyDeepLoadingScreen = ({ navigation, route }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-around",
-    alignItems: "center",
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
   imagecontainer: {
     width: 100,
     height: 150,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   image: {
     width: 600,
     height: 600,
-    resizeMode: "contain",
+    resizeMode: 'contain',
   },
   textcontainer: {
-    alignItems: "center",
+    alignItems: 'center',
   },
   text: {
-    fontWeight: "bold",
-    textShadowColor: "rgba(0, 0, 0, 0.25)",
+    fontWeight: 'bold',
+    textShadowColor: 'rgba(0, 0, 0, 0.25)',
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 1,
   },
@@ -90,31 +91,31 @@ const styles = StyleSheet.create({
     fontSize: 40,
   },
   blacktext: {
-    color: "black",
+    color: 'black',
   },
   whitetext: {
-    color: "white",
+    color: 'white',
   },
   flexrow: {
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   buttonOuterContainer: {
     borderRadius: 20,
-    width: "80%",
+    width: '80%',
     marginLeft: 20,
-    overflow: "hidden",
+    overflow: 'hidden',
     marginVertical: 10,
     elevation: 10,
   },
   buttonInnerContainer: {
     paddingVertical: 7,
-    backgroundColor: "#E881B1",
+    backgroundColor: '#E881B1',
   },
   title: {
     fontSize: 35,
-    fontWeight: "bold",
-    textAlign: "center",
-    color: "white",
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: 'white',
   },
 });
 

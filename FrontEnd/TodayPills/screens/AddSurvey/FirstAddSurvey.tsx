@@ -5,6 +5,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { useEffect, useState } from 'react';
 import AnswerSurvey from '../../components/Cards/AnswerSurvey';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import BackgroundScreen2 from '../BackgroundScreen2';
 
 const FirstAddSurvey = ({ navigation }: any) => {
   const [selectedItem, setSelectedItem] = useState(1);
@@ -36,7 +37,7 @@ const FirstAddSurvey = ({ navigation }: any) => {
     }
   }, [answerSheet]);
   return (
-    <BackgroundScreen>
+    <BackgroundScreen2>
       <View style={styles.container}>
         <Ionicons
           name="arrow-back"
@@ -99,7 +100,7 @@ const FirstAddSurvey = ({ navigation }: any) => {
           </View>
         </View>
       </View>
-    </BackgroundScreen>
+    </BackgroundScreen2>
   );
 };
 
