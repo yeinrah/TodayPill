@@ -1,5 +1,5 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useEffect, useState } from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect, useState } from 'react';
 import {
   Image,
   ImageBackground,
@@ -7,30 +7,30 @@ import {
   StyleSheet,
   Text,
   View,
-} from "react-native";
-import { getUserInfoByEmail } from "../../API/userAPI";
-import NutrientImage from "../../components/Data/NutrientImage";
-import CustomBtn from "../../components/UI/CustomBtn";
-import { accent } from "../../constants/Colors";
-import BackgroundScreen from "../BackgroundScreen";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import BackgroundScreen2 from "../BackgroundScreen2";
+} from 'react-native';
+import { getUserInfoByEmail } from '../../API/userAPI';
+import NutrientImage from '../../components/Data/NutrientImage';
+import CustomBtn from '../../components/UI/CustomBtn';
+import { accent } from '../../constants/Colors';
+import BackgroundScreen from '../BackgroundScreen';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import BackgroundScreen2 from '../BackgroundScreen2';
 
 const PersonalRecommendationScreen = ({ navigation }: any) => {
   const [myNutrient, setMyNutrient] = useState([
-    "비타민 C",
-    "비타민 A",
-    "비타민 D",
+    '비타민 C',
+    '비타민 A',
+    '비타민 D',
   ]);
   // const [nutrientImage, setNutrientImage] = useState<string[]>(NutrientImage);
-  const [name, setName] = useState("");
+  const [name, setName] = useState('');
   // const str = require("../../assets/images/nutrients/sample1.png");
   const getMyName = async () => {
-    const nowName = await AsyncStorage.getItem("@storage_UserNickName");
+    const nowName = await AsyncStorage.getItem('@storage_UserNickName');
     setName(nowName);
   };
   const getMyList = async () => {
-    const email = await AsyncStorage.getItem("@storage_UserEmail");
+    const email = await AsyncStorage.getItem('@storage_UserEmail');
     const userInfo = await getUserInfoByEmail(email);
     setMyNutrient([
       userInfo.recommendNutrients[0],
@@ -48,7 +48,7 @@ const PersonalRecommendationScreen = ({ navigation }: any) => {
         <View style={styles.textContainer}>
           <Text>
             <Text style={styles.title}>
-              {name.length > 5 ? name.slice(0, 5) + "...  " : name + " "}
+              {name.length > 5 ? name.slice(0, 5) + '...  ' : name + ' '}
             </Text>
             <Text style={styles.contentText}>님의 맞춤 솔루션</Text>
           </Text>
@@ -62,8 +62,8 @@ const PersonalRecommendationScreen = ({ navigation }: any) => {
               <Text
                 key={index}
                 onPress={async () => {
-                  await AsyncStorage.setItem("@storage_nowNutrient", item);
-                  navigation.navigate("NutrientDetailScreen", {
+                  await AsyncStorage.setItem('@storage_nowNutrient', item);
+                  navigation.navigate('NutrientDetailScreen', {
                     nutrient: [item],
                   });
                 }}
@@ -82,11 +82,15 @@ const PersonalRecommendationScreen = ({ navigation }: any) => {
           </Text>
         </View>
         <View style={styles.pillBox}>
-          <ImageBackground
+          {/* <ImageBackground
             source={require("../../assets/images/pinkPillBag.png")}
             style={styles.inPillDetail}
             resizeMode="cover"
-          >
+          > */}
+          <View style={styles.pillDetailImage}>
+            <Image source={require('../../assets/images/pillbox.png')} />
+          </View>
+          <View style={styles.inPillDetail}>
             <View style={styles.inTextContainer}>
               <Text>
                 <Text style={styles.inTitle}>{name}</Text>
@@ -99,26 +103,30 @@ const PersonalRecommendationScreen = ({ navigation }: any) => {
                   key={index}
                   style={styles.listText}
                   onPress={async () => {
-                    await AsyncStorage.setItem("@storage_nowNutrient", item);
-                    navigation.navigate("NutrientDetailScreen", {
+                    await AsyncStorage.setItem('@storage_nowNutrient', item);
+                    navigation.navigate('NutrientDetailScreen', {
                       nutrient: [item],
                     });
                   }}
                 >
-                  {"\u2022" + item}
+                  {'\u2022' + item}
                 </Text>
               ))}
             </View>
-          </ImageBackground>
+          </View>
+          {/* </ImageBackground> */}
+        </View>
+        <View style={styles.pillCharacter}>
+          <Image source={require('../../assets/images/pillCharacter.png')} />
         </View>
         <View style={styles.btn}>
           <CustomBtn
             buttonColor={accent}
-            title={"홈으로 가기"}
+            title={'홈으로 가기'}
             fontSize={20}
-            titleColor={"#fff"}
-            buttonWidth={"70%"}
-            onPress={() => navigation.navigate("MainScreen")}
+            titleColor={'#fff'}
+            buttonWidth={'70%'}
+            onPress={() => navigation.navigate('MainScreen')}
           />
         </View>
       </ScrollView>
@@ -126,33 +134,33 @@ const PersonalRecommendationScreen = ({ navigation }: any) => {
   );
 };
 const styles = StyleSheet.create({
-  textContainer: { alignItems: "center", fontSize: 20 },
-  inTextContainer: { alignItems: "center", fontSize: 10, marginTop: 20 },
-  title: { fontWeight: "bold", fontSize: 22 },
+  textContainer: { alignItems: 'center', fontSize: 20 },
+  inTextContainer: { alignItems: 'center', fontSize: 10, marginTop: 20 },
+  title: { fontWeight: 'bold', fontSize: 22 },
   contentText: { fontSize: 15 },
-  inTitle: { fontWeight: "bold", fontSize: 15 },
+  inTitle: { fontWeight: 'bold', fontSize: 15 },
   btn: {
-    alignItems: "center",
-    marginTop: 50,
+    alignItems: 'center',
   },
   textGroup: {
-    alignItems: "center",
+    alignItems: 'center',
     marginTop: 30,
     marginLeft: 30,
   },
   pillDetail: {
     width: 200,
     height: 200,
-    backgroundColor: "white",
+    backgroundColor: 'white',
   },
   inPillDetail: {
     width: 200,
-    height: 200,
-    backgroundColor: "#e0e0e0",
+    backgroundColor: '#FFE3FF',
     marginTop: 50,
     borderRadius: 10,
+    borderWidth: 2,
+    borderStyle: 'dashed',
   },
-  pillBox: { alignItems: "center" },
+  pillBox: { alignItems: 'center' },
   listGroup: { marginLeft: 25, marginTop: 30 },
   listText: { marginBottom: 15 },
   shape: {
@@ -163,10 +171,27 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     width: 50,
     height: 50,
-    resizeMode: "contain",
+    resizeMode: 'contain',
+  },
+  pillDetailImage: {
+    position: 'relative',
+    top: -30,
+    width: '15%',
+    height: 0,
+    // marginLeft: '30%',
+    marginTop: '10%',
+    transform: [{ scale: 0.15 }],
+  },
+  pillCharacter: {
+    position: 'relative',
+    top: -30,
+    width: '15%',
+    marginLeft: '20%',
+    height: 100,
+    transform: [{ scale: 0.15 }],
   },
   clickBox: {
-    alignItems: "center",
+    alignItems: 'center',
     borderWidth: 1,
   },
   clickText: {

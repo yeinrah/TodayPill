@@ -112,15 +112,6 @@ const PillItem = (props: PillProps) => {
             </Text>
           </View>
         </View>
-        {/* <View style={styles.likeContainer}>
-        </View> */}
-        {/* <AntDesign 
-          name="hearto"
-          size={14}
-          color={like ? "#E2C3DC" : "#CCCCCC"}
-          style={styles.likeicon}
-          onPress={() => setLike(!like)}
-        /> */}
       </View>
       <View style={styles.textcontainer}>
         <Text style={{ ...styles.brandname, ...regularWelcome }}>

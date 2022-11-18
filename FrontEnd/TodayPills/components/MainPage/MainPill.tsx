@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import { useState, useEffect, useCallback } from "react";
-import { View, StyleSheet, Text, ScrollView } from "react-native";
+import { View, StyleSheet, Text, ScrollView, Image } from "react-native";
 import {
   fetchAllSupplements,
   fetchPopularSupplements,
@@ -26,17 +26,6 @@ const MainPill = () => {
   const likeChangeHandler = () => {
     setLikeChanged((likedOrNot) => !likedOrNot);
   };
-  // const getAllSupplements = async () => {
-  //   const currentUserId = await AsyncStorage.getItem("@storage_UserId");
-  //   setUserId(parseInt(currentUserId));
-  //   const allSupplements = await fetchAllSupplements();
-  //   // console.log(allSupplements);
-  //   setMainPills(allSupplements.slice(1, 9));
-  //   // const userId = await AsyncStorage.getItem("@storage_UserId");
-  // };
-  // useEffect(() => {
-  //   getAllSupplements();
-  // }, []);
 
   useFocusEffect(
     useCallback(() => {
@@ -48,12 +37,28 @@ const MainPill = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={{ ...styles.text, fontFamily: "웰컴체_Bold" }}>
-        실시간 인기 영양제
-      </Text>
+      <View style={styles.title}>
+        {/* <Image
+          source={require("../../assets/images/hot.png")}
+          style={styles.heart}
+        /> */}
+        <Text
+          style={{
+            ...styles.text,
+            fontFamily: "웰컴체_Bold",
+            letterSpacing: 0.5,
+          }}
+        >
+          실시간 인기 영양제
+        </Text>
+      </View>
 
       <View style={styles.outerContainer}>
-        <ScrollView style={styles.cardsContainer} horizontal={true}>
+        <ScrollView
+          style={styles.cardsContainer}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+        >
           {mainPills.map((pill, idx) => (
             <PillItem
               key={pill.supplementId}
@@ -68,22 +73,6 @@ const MainPill = () => {
           ))}
         </ScrollView>
       </View>
-      {/* <View style={styles.cardsContainer}>
-        {mainPills.map((pill, idx) => (
-          <PillItem
-            key={idx}
-            image={pill.image}
-            brand={pill.brand}
-            pill={pill.pill}
-          />
-          //   <SimplePillCard
-          //     key={idx}
-          //     image={mainPill.image}
-          //     brand={mainPill.brand}
-          //     pill={mainPill.pill}
-          //   />
-        ))}
-      </View> */}
     </View>
   );
 };
@@ -93,11 +82,19 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginTop: 15,
   },
+  title: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  heart: {
+    width: 34,
+    height: 34,
+  },
   text: {
-    fontSize: 17,
+    fontSize: 20,
+
     // fontWeight: "bold",
     marginLeft: 5,
-    marginBottom: 10,
   },
 
   outerContainer: {
@@ -106,14 +103,19 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     // overflow: "hidden",
   },
+
   cardsContainer: {
     flexDirection: "row",
     // justifyContent: "space-around",
+    minHeight: 100,
     paddingVertical: 10,
     marginTop: 10,
     paddingHorizontal: 5,
-    backgroundColor: "#ECF6F4",
+    // backgroundColor: "#ECF6F4",
+    backgroundColor: "white",
     borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#ECF6F4",
     elevation: 5,
   },
 });

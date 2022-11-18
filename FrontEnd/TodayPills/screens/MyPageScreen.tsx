@@ -1,8 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
-
-import axios from "axios";
-
 import {
   StyleSheet,
   Pressable,
@@ -11,6 +8,7 @@ import {
   Text,
   Button,
   ScrollView,
+  Image,
 } from "react-native";
 
 import { getUserInfoByEmail, kakaoLogout } from "../API/userAPI";
@@ -29,6 +27,9 @@ import {
   boldWelcome,
   regularWelcome,
 } from "../components/Data/fontFamilyObject";
+import { AntDesign } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function MyPageScreen({ navigation }: any) {
   // RootTabScreenProps<"MyPage">
@@ -74,13 +75,36 @@ export default function MyPageScreen({ navigation }: any) {
               <Text style={{ ...styles.age, ...regularWelcome }}>
                 {myInfo.age}대
               </Text>
-              {/* gender 받아오는거!!! */}
+
               <Text style={{ ...styles.age, ...regularWelcome }}>
                 {myInfo.gender}
               </Text>
             </View>
           </View>
           <View style={styles.nutrBtnContainer}>
+            <View style={styles.nutrBtn}>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                {/* <FontAwesome5 name="pills" size={24} color="#B7B7B7" /> */}
+                <Ionicons
+                  name="md-checkmark-done-outline"
+                  size={24}
+                  color="black"
+                />
+                <Text style={{ ...styles.nutrBtnText, ...regularWelcome }}>
+                  나의 영양제
+                </Text>
+              </View>
+              <Pressable onPress={goMyPillsHandler}>
+                <AntDesign
+                  name="right"
+                  size={23}
+                  color="#B7B7B7"
+                  style={{ marginBottom: 3, marginLeft: 3 }}
+                />
+              </Pressable>
+            </View>
+          </View>
+          {/* <View style={styles.nutrBtnContainer}>
             <View style={styles.nutrBtn}>
               <CustomBtn
                 buttonColor={accent}
@@ -91,7 +115,7 @@ export default function MyPageScreen({ navigation }: any) {
                 onPress={goMyPillsHandler}
               />
             </View>
-          </View>
+          </View> */}
 
           <View style={styles.myLikeContainer}>
             <MyPickPills />
@@ -102,10 +126,10 @@ export default function MyPageScreen({ navigation }: any) {
           <View style={styles.btnContainer}>
             <CustomBtn
               buttonColor={accent}
-              title={"영양성분 추천 다시 받기!"}
+              title={"영양성분 다시 추천 받기!"}
               fontSize={20}
               titleColor={"#fff"}
-              buttonWidth={"90%"}
+              buttonWidth={"85%"}
               onPress={() => {
                 navigation.replace("HealthScreeningCheckScreen");
               }}
@@ -200,16 +224,30 @@ const styles = StyleSheet.create({
   },
   nutrBtnContainer: {
     width: "100%",
-    alignItems: "center",
+    marginTop: 5,
+    // alignItems: "center",
     justifyContent: "center",
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: "#EEEEEE",
+    paddingHorizontal: 10,
   },
   nutrBtn: {
-    width: "90%",
-    paddingTop: 10,
-    borderTopWidth: 2,
-    borderTopColor: "#B7B7B7",
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    // width: "90%",
+    // borderTopWidth: 2,
+    // borderTopColor: "#B7B7B7",
     // alignItems: "center",
     // justifyContent: "center",
+  },
+  nutrBtnText: {
+    marginLeft: 7,
+    fontSize: 20,
+    letterSpacing: 0.5,
   },
   myLikeContainer: {
     // flex: 2,
@@ -237,6 +275,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     elevation: 5,
   },
+  pillIcon: {
+    width: 27,
+    height: 35,
+  },
 
   name: {
     fontSize: 24,
@@ -245,10 +287,16 @@ const styles = StyleSheet.create({
 
   age: {
     fontSize: 15,
-    // fontWeight: "bold",
+
     color: "#B7B7B7",
+    // color: primary,
     marginLeft: 5,
   },
+  // gender: {
+  //   fontSize: 15,
+  //   color: accent,
+  //   marginLeft: 5,
+  // },
   separator: {
     marginVertical: 30,
     height: 1,

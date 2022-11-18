@@ -4,26 +4,28 @@ import {
   View,
   Pressable,
   ImageBackground,
-} from "react-native";
-import BackgroundScreen from "../BackgroundScreen";
-import { Ionicons } from "@expo/vector-icons";
-import { useCallback, useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import NutrientDescription from "../../components/Data/NutrientDescription";
-import { useFocusEffect } from "@react-navigation/native";
-import BackgroundScreen2 from "../BackgroundScreen2";
+  Image,
+} from 'react-native';
+import BackgroundScreen from '../BackgroundScreen';
+import { Ionicons } from '@expo/vector-icons';
+import { useCallback, useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import NutrientDescription from '../../components/Data/NutrientDescription';
+import { useFocusEffect } from '@react-navigation/native';
+import BackgroundScreen2 from '../BackgroundScreen2';
 import {
   boldWelcome,
   regularWelcome,
-} from "../../components/Data/fontFamilyObject";
-import { primary } from "../../constants/Colors";
+} from '../../components/Data/fontFamilyObject';
+import { primary } from '../../constants/Colors';
+import GoBackBtn from '../../components/UI/GoBackBtn';
 
 const NutrientDetailScreen = ({ navigation, route }: any) => {
-  const [myName, setMyName] = useState<string>("");
-  const [nutrientName, setNutrientName] = useState("");
+  const [myName, setMyName] = useState<string>('');
+  const [nutrientName, setNutrientName] = useState('');
   const { nutrient } = route.params;
   const getMyName = async () => {
-    const name = await AsyncStorage.getItem("@storage_UserNickName");
+    const name = await AsyncStorage.getItem('@storage_UserNickName');
     setMyName(name);
   };
   const setDescription = async () => {
@@ -40,7 +42,7 @@ const NutrientDetailScreen = ({ navigation, route }: any) => {
   return (
     <BackgroundScreen2>
       <View style={styles.container}>
-        <Ionicons
+        {/* <Ionicons
           name="arrow-back"
           size={48}
           color="black"
@@ -48,29 +50,32 @@ const NutrientDetailScreen = ({ navigation, route }: any) => {
           onPress={() => {
             navigation.goBack();
           }}
-        />
+        /> */}
+        <View style={{ marginLeft: 5 }}>
+          <GoBackBtn
+            size={48}
+            onPress={() => {
+              navigation.goBack();
+            }}
+          />
+        </View>
         <View style={styles.nutrienttextcontainer}>
           <Text
             style={{ ...styles.nutrienttext, ...boldWelcome, letterSpacing: 1 }}
           >
             {nutrientName}
           </Text>
-          {/* <Text
-            style={{
-              ...styles.nutrienttext,
-              ...regularWelcome,
-              letterSpacing: 1,
-            }}
-          >
-             은?
-          </Text> */}
         </View>
         <View style={styles.aligncenter}>
           <View style={styles.descriptioncontainer}>
-            <ImageBackground
-              source={require("../../assets/images/pinkPillBag.png")}
+            {/* <ImageBackground
+              source={require('../../assets/images/pinkPillBag.png')}
               style={styles.image}
-            >
+            > */}
+            <View style={styles.pillImage}>
+              <Image source={require('../../assets/images/pillbox.png')} />
+            </View>
+            <View style={styles.image}>
               <Text
                 style={{
                   ...styles.descriptiontext,
@@ -80,7 +85,11 @@ const NutrientDetailScreen = ({ navigation, route }: any) => {
               >
                 {NutrientDescription.get(nutrientName)}
               </Text>
-            </ImageBackground>
+            </View>
+            {/* </ImageBackground> */}
+          </View>
+          <View style={styles.pillCharacter}>
+            <Image source={require('../../assets/images/pillCharacter.png')} />
           </View>
           <View style={styles.recommendcontainer}>
             <View style={styles.recommendtextcontainer}>
@@ -92,8 +101,8 @@ const NutrientDetailScreen = ({ navigation, route }: any) => {
                 }}
               >
                 {myName.length > 4
-                  ? myName.slice(0, 4) + "...  "
-                  : myName + " "}
+                  ? myName.slice(0, 4) + '...  '
+                  : myName + ' '}
                 &nbsp;
               </Text>
               <Text
@@ -126,7 +135,7 @@ const NutrientDetailScreen = ({ navigation, route }: any) => {
                 을(를)
               </Text>
             </View>
-            <View style={{ justifyContent: "center", marginBottom: 20 }}>
+            <View style={{ justifyContent: 'center', marginBottom: 20 }}>
               <Text
                 style={{
                   ...styles.recommendtext,
@@ -139,7 +148,7 @@ const NutrientDetailScreen = ({ navigation, route }: any) => {
             </View>
             <View style={styles.buttonOuterContainer}>
               <Pressable
-                android_ripple={{ color: "#4E736F" }}
+                android_ripple={{ color: '#4E736F' }}
                 style={styles.buttonInnerContainer}
                 onPress={async () => {
                   // if (
@@ -150,7 +159,7 @@ const NutrientDetailScreen = ({ navigation, route }: any) => {
                   // } else {
                   //   navigation.navigate("SurveyDeepScreen");
                   // }
-                  navigation.navigate("SecondAddSurvey");
+                  navigation.navigate('SecondAddSurvey');
                 }}
               >
                 <Text
@@ -180,65 +189,86 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   nutrienttextcontainer: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginLeft: 30,
   },
   nutrienttext: {
     fontSize: 25,
   },
   aligncenter: {
-    alignItems: "center",
-    justifyContent: "space-between",
-    height: "70%",
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    // height: '70%',
   },
   boldtext: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   descriptioncontainer: {
-    width: "80%",
-    alignItems: "center",
-    marginTop: 30,
+    width: '80%',
+    alignItems: 'center',
+    // justifyContent: 'center',
   },
   image: {
-    width: "100%",
-    alignItems: "center",
-    backgroundColor: "#e0e0e0",
+    width: '100%',
+    borderWidth: 2,
+    borderRadius: 5,
+    borderStyle: 'dashed',
+    backgroundColor: '#FFE3FF',
+    margin: 10,
+    // alignContent: 'stretch',
+    // backgroundColor: '#e0e0e0',
+  },
+  pillImage: {
+    position: 'relative',
+    top: -60,
+    width: '15%',
+    height: '15%',
+    marginLeft: '30%',
+    transform: [{ scale: 0.15 }],
   },
   descriptiontext: {
+    // position: 'absolute',
+    // left: 30,
     fontSize: 20,
-    width: "70%",
-    marginTop: 40,
-    marginBottom: 40,
+    width: '90%',
   },
   recommendcontainer: {
-    width: "100%",
-    alignItems: "center",
+    width: '100%',
+    alignItems: 'center',
   },
   recommendtextcontainer: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginBottom: 5,
-    justifyContent: "center",
+    justifyContent: 'center',
   },
   recommendtext: {
     fontSize: 15,
   },
   buttonOuterContainer: {
     borderRadius: 20,
-    width: "80%",
-    overflow: "hidden",
+    width: '80%',
+    overflow: 'hidden',
     marginVertical: 10,
     elevation: 10,
   },
   buttonInnerContainer: {
     paddingVertical: 7,
-    backgroundColor: "#8EE8DE",
+    backgroundColor: '#8EE8DE',
   },
   title: {
     fontSize: 25,
 
-    textAlign: "center",
-    color: "white",
+    textAlign: 'center',
+    color: 'white',
     paddingVertical: 3,
+  },
+  pillCharacter: {
+    position: 'relative',
+    top: -60,
+    width: '15%',
+    marginRight: '70%',
+    height: 60,
+    transform: [{ scale: 0.25 }],
   },
 });
 

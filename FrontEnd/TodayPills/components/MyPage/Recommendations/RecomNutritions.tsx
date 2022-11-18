@@ -53,12 +53,6 @@ export default function RecomNutritions() {
         <View style={styles.cardscontainer}>
           {myNutritions.map((nut, idx) => (
             <RecomItem nutName={nut} key={idx} id={idx} />
-
-            // <View style={styles.outerContainer}>
-            //   <View key={idx} style={styles.nutContainer}>
-            //     <Text style={styles.nutrition}>{nut}</Text>
-            //   </View>
-            // </View>
           ))}
         </View>
       </View>
@@ -70,14 +64,6 @@ const styles = StyleSheet.create({
   likeContainer: {
     marginHorizontal: 15,
     marginTop: 10,
-    // backgroundColor: "red",
-    // marginVertical: 10,
-    // // flex: 2,
-    // width: "100%",
-    // // height: "30%",
-    // height: 150,
-    // alignItems: "center",
-    // justifyContent: "center",
   },
   name: {
     fontSize: 24,
@@ -91,10 +77,6 @@ const styles = StyleSheet.create({
   pill: {
     width: 45,
     height: 45,
-    // paddingBottom: 20,
-    // width: "100%",
-    // height: "100%",
-    // resizeMode: "contain",
   },
   text: {
     fontSize: 17,
@@ -103,12 +85,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   cardscontainer: {
-    // justifyContent: "space-around",
     padding: 10,
     marginTop: 10,
-    // backgroundColor: "#ECF6F4",
-    // borderRadius: 10,
-    // elevation: 5,
   },
   outerContainer: {
     backgroundColor: "rgba(226, 195, 220, 0.26)",

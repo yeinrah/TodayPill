@@ -15,7 +15,7 @@ import { boldWelcome } from "../../Data/fontFamilyObject";
 import { strTimeToNum } from "../../functions/strTimeToNum";
 import LoadingSpinner from "../../UI/LoadingSpinner";
 import { getDateStr } from "../../functions/getDateStr";
-
+import { FontAwesome } from "@expo/vector-icons";
 export interface PillScheduleProps {
   selectedDate: string;
 }
@@ -34,6 +34,9 @@ export default function DayPillSchedule({ selectedDate }: PillScheduleProps) {
   const [pillRoutine, setPillRoutine] = useState([]);
   const [pillRoutineCheck, setPillRoutineCheck] = useState([]);
   const [isCheckVisible, setIsCheckVisible] = useState(true);
+  // const dayString = `${deleteZero(selectedDate.slice(5, 7))}월 ${deleteZero(
+  //   selectedDate.slice(8, 10)
+  // )}일 ${dayStrOfWeek}`;
   const dayString = `${deleteZero(selectedDate.slice(5, 7))}월 ${deleteZero(
     selectedDate.slice(8, 10)
   )}일 ${dayStrOfWeek}요일`;
@@ -98,12 +101,20 @@ export default function DayPillSchedule({ selectedDate }: PillScheduleProps) {
             <View
               style={{
                 ...styles.takenDateContainer,
-                backgroundColor: isCheckVisible ? accent : "#B7B7B7",
+                // backgroundColor: isCheckVisible ? accent : "#B7B7B7",
+                borderColor: isCheckVisible ? accent : "#B7B7B7",
               }}
             >
+              <FontAwesome
+                name="calendar-check-o"
+                size={24}
+                color={isCheckVisible ? accent : "#B7B7B7"}
+              />
+              {/* <FontAwesome name="calendar-check-o" size={24} color="white" /> */}
               <Text
                 style={{
                   ...styles.takenDate,
+                  color: isCheckVisible ? accent : "#B7B7B7",
                   ...boldWelcome,
                 }}
               >
@@ -159,17 +170,20 @@ const styles = StyleSheet.create({
     width: "90%",
   },
   takenDateContainer: {
+    flexDirection: "row",
+    alignItems: "center",
     marginHorizontal: 20,
-    paddingHorizontal: 20,
+    paddingHorizontal: 5,
     paddingVertical: 10,
     borderRadius: 30,
+    // borderWidth: 1.5,
     // backgroundColor: "#FFEFFC",
     // backgroundColor: accent,
   },
   takenDate: {
-    fontSize: 24,
-    // fontWeight: "900",
-    color: "white",
+    fontSize: 20,
+    marginLeft: 5,
+    // color: "white",
     letterSpacing: 1,
     // color: accent,
     // paddingHorizontal: 25,
