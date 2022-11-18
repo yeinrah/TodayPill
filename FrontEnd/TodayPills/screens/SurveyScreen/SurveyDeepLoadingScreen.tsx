@@ -16,7 +16,6 @@ const SurveyDeepLoadingScreen = ({ navigation, route }: any) => {
     // console.log(route.params.answerSheet, "hah!");
     let arr = await afterSecondSurvey(route.params.answerSheet);
     console.log(route.params.answerSheet);
-    console.log(arr.data, 'hehe');
     setItemList([...itemList, arr]);
   };
   useEffect(() => {
