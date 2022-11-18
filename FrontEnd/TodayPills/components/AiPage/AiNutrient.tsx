@@ -1,6 +1,6 @@
-import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import SimpleNutrientCard from "../Cards/SimpleNutrientCard";
+import GoBackBtn from "../UI/GoBackBtn";
 
 const AiNutrient = ({ navigation }: any) => {
   const mainNutrients = [
@@ -68,7 +68,16 @@ const AiNutrient = ({ navigation }: any) => {
 
   return (
     <View style={styles.container}>
-      <Text style={{...styles.text, fontFamily: "웰컴체_Bold"}}>영양 성분</Text>
+      <View style={styles.titlecontainer}>
+        <View style={styles.marginLeft}>
+          <GoBackBtn
+            onPress={() => navigation.goBack()}
+            size={33}
+          />
+        </View>
+        <Text style={{...styles.text, fontFamily: "웰컴체_Bold"}}>영양 성분</Text>
+        <View style={styles.empty} />
+      </View>
       <View style={styles.cardscontainer}>
         {mainNutrients.map((mainNutrient, idx) => (
           <Pressable
@@ -98,10 +107,21 @@ const styles = StyleSheet.create({
     marginTop: 15,
     paddingBottom: 15,
   },
-  text: {
-    fontSize: 21,
-    marginLeft: 15,
+  titlecontainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 10,
+  },
+  marginLeft: {
+    marginLeft: 10,
+  },
+  empty: {
+    width: 33,
+    marginRight: 10,
+  },
+  text: {
+    fontSize: 24,
   },
   cardscontainer: {
     flexDirection: "row",

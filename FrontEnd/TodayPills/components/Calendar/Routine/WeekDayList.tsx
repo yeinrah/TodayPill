@@ -35,14 +35,12 @@ export default function WeekDayList(props: any) {
         setTakenWeekDays([1, 2, 3, 4, 5, 6, 7]);
       } else {
         const takenWeekDayIdsStr = props.prevRoutineDetail.days;
-        console.warn(takenWeekDayIdsStr, "스트링");
         if (takenWeekDayIdsStr) {
           const takenDaysNumberArray = takenWeekDayIdsStr
             .split(",")
             .map((eachDayIdStr: string) => {
               return parseInt(eachDayIdStr);
             });
-          console.warn(takenDaysNumberArray);
           setTakenWeekDays(takenDaysNumberArray);
           // setIsDayLoading(false);
         }

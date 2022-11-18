@@ -8,6 +8,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Alert,
+  ToastAndroid,
 } from "react-native";
 import { updateUsername } from "../../API/userAPI";
 import { accent, primary } from "../../constants/Colors";
@@ -41,6 +42,7 @@ export default function UpdateNickname({ onChangeName }) {
     onChangeName(true);
 
     modalCloseHandler();
+    ToastAndroid.show("닉네임 수정이 완료되었습니다.", 2);
   };
   const getCurrentNickname = async () => {
     const currentName = await AsyncStorage.getItem("@storage_UserNickName");

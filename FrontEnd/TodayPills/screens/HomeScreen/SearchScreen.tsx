@@ -1,12 +1,9 @@
 import {
   StyleSheet,
   View,
-  Text,
   Image,
   ToastAndroid,
-  Pressable,
   FlatList,
-  KeyboardAvoidingView,
 } from "react-native";
 import BackgroundScreen2 from "../BackgroundScreen2";
 import Card from "../../components/UI/Card";
@@ -24,7 +21,6 @@ export default function SearchScreen({ navigation, route }: any) {
   const [userId, setUserId] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [failedSearch, setFailedSearch] = useState(false);
-  const [page, setPage] = useState(1);
   const filterSupplements = async (word) => {
     setIsLoading(true);
     if (word) {
@@ -36,19 +32,16 @@ export default function SearchScreen({ navigation, route }: any) {
         setFailedSearch(false);
         await setSearchResults(filteredSupplements);
         await setIsLoading(false);
-        await setPage(1);
         ToastAndroid.show(`${filteredSupplements.length}건이 검색됐습니다.`, 3);
       } else {
         setFailedSearch(true);
         setSearchResults(filteredSupplements);
         setIsLoading(false);
-        setPage(1);
         ToastAndroid.show("검색에 실패했습니다.", 3);
       }
     } else {
       setFailedSearch(false);
       setIsLoading(false);
-      setPage(1);
     }
   };
   const getUserId = async () => {

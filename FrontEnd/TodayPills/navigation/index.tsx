@@ -62,7 +62,10 @@ import AllSupplementsScreen from '../screens/HomeScreen/AllSupplementsScreen';
 import SecondAddSurvey from '../screens/AddSurvey/SecondAddSurvey';
 import ChatScreen from '../screens/ChatScreen/ChatHomeScreen';
 import AiHomeScreen from '../screens/AiScreen/AiHomeScreen';
+import AiPaperScreen from '../screens/AiScreen/AiPaperScreen';
 import AiQnaScreen from '../screens/AiScreen/AiQnaScreen';
+import AiAnalysisScreen from '../screens/AiScreen/AiAnalysisScreen';
+import AiResultScreen from '../screens/AiScreen/AiResultScreen';
 import ChatScreenDetail from '../screens/ChatScreen/ChatScreenDetail';
 import ChatHomeScreen from '../screens/ChatScreen/ChatHomeScreen';
 interface Inavigation {
@@ -313,8 +316,23 @@ function Ai() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
+        name="AiPaperScreen"
+        component={AiPaperScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name="AiQnaScreen"
         component={AiQnaScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AiAnalysisScreen"
+        component={AiAnalysisScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AiResultScreen"
+        component={AiResultScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
@@ -367,6 +385,11 @@ function MaterialBottomTabNavigator({ navigation }: any) {
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="home" color={color} size={26} />
           ),
+        }}
+        listeners={{
+          tabPress: e => {
+            navigation.navigate("HomeScreen")
+          }
         }}
 
         // options={({ navigation }: RootTabScreenProps<"Home">) => ({
@@ -425,6 +448,11 @@ function MaterialBottomTabNavigator({ navigation }: any) {
           tabBarIcon: ({ color }) => (
             <Entypo name="bar-graph" size={26} color={color} />
           ),
+        }}
+        listeners={{
+          tabPress: e => {
+            navigation.navigate("AiHomeScreen")
+          }
         }}
       />
       <BottomTab.Screen

@@ -15,8 +15,10 @@ const PillResultScreen = ({ navigation, route }: any) => {
   const [nowMyNutrient, setNowMyNutrient] = useState("");
   const [userId, setUserId] = useState(0);
   const [itemList, setItemList] = useState([]);
-  const getMyName = async () => {
+  const getMyNameAndId = async () => {
     const name = await AsyncStorage.getItem("@storage_UserNickName");
+    const currentUserId = await AsyncStorage.getItem("@storage_UserId");
+    setUserId(parseInt(currentUserId));
     setMyName(name);
   };
   const getMyNowNutrient = async () => {
@@ -34,7 +36,7 @@ const PillResultScreen = ({ navigation, route }: any) => {
   //   return arr;
   // };
   useEffect(() => {
-    getMyName();
+    getMyNameAndId();
     getMyNowNutrient();
     // console.log(route.params.answerSheet);
     // getResult();
@@ -58,7 +60,6 @@ const PillResultScreen = ({ navigation, route }: any) => {
           </Text>
         </View>
         <View>
-          {/* <DetailedPillCard /> */}
           {route.params.answerSheet[0] &&
             route.params.answerSheet[0].data.map((item, index) => {
               return (
@@ -69,10 +70,22 @@ const PillResultScreen = ({ navigation, route }: any) => {
                   note={item.note}
                   userId={userId}
                   image={item.image}
-                  key={index}
+                  key={item.supplementId}
+                  like={item.like}
+                  additionalEfficacy={item.additionalEfficacy}
+                  ingredients={item.ingredients}
+                  caution={item.caution}
                 />
               );
             })}
+          {route.params.answerSheet[0].data.length === 0 && (
+            <View style={styles.titleGroup}>
+              <Text style={styles.content}>검색 결과가 없습니다.</Text>
+              <Text style={styles.content2}>
+                영양제는 계속해서 추가될 예정입니다.
+              </Text>
+            </View>
+          )}
         </View>
         <View style={styles.btn}>
           <CustomBtn
@@ -92,7 +105,7 @@ const PillResultScreen = ({ navigation, route }: any) => {
             fontSize={20}
             buttonWidth={"70%"}
             onPress={() => {
-              navigation.navigate("MainScreen");
+              navigation.replace("MainScreen");
             }}
           />
         </View>
@@ -118,6 +131,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 20,
     marginBottom: 30,
+  },
+  content: {
+    fontSize: 20,
+    paddingTop: 30,
+  },
+  content2: {
+    fontSize: 20,
+    paddingTop: 10,
   },
 });
 

@@ -28,10 +28,10 @@ public class CommonQuestion {
 	private int userId;
 
 	@Column(name = "pregnant")
-	private boolean pregnant;
+	private Boolean pregnant;
 
 	@Column(name = "smoking")
-	private boolean smoking;
+	private Boolean smoking;
 
 	@Column(name = "drinking")
 	private Integer drinking; //한달에 1~2회 / 일주일에 1~2회 / 일주일에 3회 이상 각 1, 3, 6점으로
@@ -43,107 +43,107 @@ public class CommonQuestion {
 	private Integer outdoor_activity; // (충분한 양의 햇볕을 쬔다 / 종종 햇볕을 쬔다 / 거의 햇볕을 쬐지 않는다 ) 각 1, 3, 6점으로
 
 	@Column(name = "balanced_meal")
-	private boolean balanced_meal; //아니오를 선택했다면 채소/생선/과일/육류 버튼으로 중복선택 가능하게끔
+	private Boolean balanced_meal; //아니오를 선택했다면 채소/생선/과일/육류 버튼으로 중복선택 가능하게끔
 
 	@Column(name = "lack")
 	private String lack; // lackFish, lackVeg, lackFruit, lackMeat
 
 	@Column(name = "is_ok_big_pill")
-	private boolean is_ok_big_pill;
+	private Boolean is_ok_big_pill;
 
 	/* 다음 중 해당하는 증상이 있다면 선택해주세요.
 	-중복선택 (속쓰림 / 변비 / 설사 / 소화장애 / 요통 / 편두통 / 과민성 대장 증후군 / 아토피 피부염 / 비듬 / 야간 다리 경련 / 구내염)*/
 	@Column(name = "heartburn")
-	private boolean heartburn; //속쓰림
+	private Boolean heartburn; //속쓰림
 
 	@Column(name = "constipation")
-	private boolean constipation; //변비
+	private Boolean constipation; //변비
 
 	@Column(name = "diarrhea")
-	private boolean diarrhea; // 설사
+	private Boolean diarrhea; // 설사
 		
 	@Column(name = "digestive_disorder")
-	private boolean digestiveDisorder; // 소화장애
+	private Boolean digestiveDisorder; // 소화장애
 
 	@Column(name = "migraine")
-	private boolean migraine; //편두통
+	private Boolean migraine; //편두통
 
 	@Column(name = "backache")
-	private boolean backache; //요통
+	private Boolean backache; //요통
 
 	@Column(name = "bowel_syndrome")
-	private boolean bowelSyndrome; // 과민성 대장 증후군
+	private Boolean bowelSyndrome; // 과민성 대장 증후군
 
 	@Column(name = "atopy")
-	private boolean atopy; // 아토피
+	private Boolean atopy; // 아토피
 
 	@Column(name = "dandruff")
-	private boolean dandruff; // 비듬
+	private Boolean dandruff; // 비듬
 
 	@Column(name = "stomatitis")
-	private boolean  stomatitis; // 구내염
+	private Boolean  stomatitis; // 구내염
 
 	@Column(name = "leg_cramp")
-	private boolean legCramp; // 다리 경련
+	private Boolean legCramp; // 다리 경련
 
 	/*다음 중 해당하는 질환을 앓고 계시다면 선택해주세요.
 	-중복선택 ( 빈혈 / 갑상선 질환 / 신장 질환 / 당뇨병 / 통풍 / 고혈압 / 고지혈증 / 치주염 / 심부전)*/
 	@Column(name = "anemia")
-	private boolean anemia; // 빈혈
+	private Boolean anemia; // 빈혈
 
 	@Column(name = "thyroid_disease")
-	private boolean thyroidDisease; // 갑상선 질환
+	private Boolean thyroidDisease; // 갑상선 질환
 
 	@Column(name = "kidney_disease")
-	private boolean kidney_disease; // 신장 질환
+	private Boolean kidney_disease; // 신장 질환
 
 	@Column(name = "diabetes")
-	private boolean diabetes; // 당뇨병
+	private Boolean diabetes; // 당뇨병
 
 	@Column(name = "gouty")
-	private boolean gouty; //통풍
+	private Boolean gouty; //통풍
 
 	@Column(name = "high_blood_pressure")
-	private boolean highBloodPressure; //혈압약
+	private Boolean highBloodPressure; //혈압약
 
 	@Column(name = "hyperlipidemia")
-	private boolean hyperlipidemia; //고지혈증
+	private Boolean hyperlipidemia; //고지혈증
 
 	@Column(name = "periodontitis")
-	private boolean periodontitis; //치주염
+	private Boolean periodontitis; //치주염
 
-	@Column(name = "heart failure")
-	private boolean heartFailure; //심부전
+	@Column(name = "heart_failure")
+	private Boolean heartFailure; //심부전
 
 	/*10. 다음 중 복용중인 약이 있으시다면 선택해주세요.
 	-중복선택 (피임약 / 제산제 / 혈압약 / 이뇨제 / 소타롤(부정맥) / 가바펜틴(항경련제) / 레보티록신(갑상선) / 항생제)*/
 
 	@Column(name = "contraceptive")
-	private boolean contraceptive; //피임약
+	private Boolean contraceptive; //피임약
 
 	@Column(name = "antacid")
-	private boolean antacid; //제산제
+	private Boolean antacid; //제산제
 
-	@Column(name = "blood pressure medicine")
-	private boolean bloodPressureMedicine; //혈압약
+	@Column(name = "blood_pressure_medicine")
+	private Boolean bloodPressureMedicine; //혈압약
 
 	@Column(name = "diuretic")
-	private boolean diuretic; //이뇨제
+	private Boolean diuretic; //이뇨제
 
 	@Column(name = "sotalol")
-	private boolean sotalol; //소타롤(부정맥약)
+	private Boolean sotalol; //소타롤(부정맥약)
 
 	@Column(name = "gabapentin")
-	private boolean  gabapentin; //가바펜틴(항경련제)
+	private Boolean  gabapentin; //가바펜틴(항경련제)
 
 	@Column(name = "levothyroxine")
-	private boolean levothyroxine; //레보티록신(갑상선 호르몬 결핍 치료제)
+	private Boolean levothyroxine; //레보티록신(갑상선 호르몬 결핍 치료제)
 
 	@Column(name = "antibiotics")
-	private boolean antibiotics; //항생제
+	private Boolean antibiotics; //항생제
 	
 	@Column(name = "physical_activity")
-	private boolean physicalActivity; //격렬한 신체 활동
+	private Boolean physicalActivity; //격렬한 신체 활동
 	
 	@Column(name = "preferred_brand")
 	private String preferred_brand;

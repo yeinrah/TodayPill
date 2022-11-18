@@ -41,7 +41,7 @@ export default function CustomBtn(props: any) {
             ...styles.title,
             color: props.titleColor,
             fontSize: props.fontSize,
-            letterSpacing: 1,
+            letterSpacing: 2,
             ...regularWelcome,
           }}
         >

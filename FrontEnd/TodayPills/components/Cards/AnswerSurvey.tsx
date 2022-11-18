@@ -5,11 +5,14 @@ import {
   Pressable,
   ScrollView,
   TextInput,
+  Button,
+  TouchableOpacity,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { useCallback, useEffect, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
+import CustomBtn from "../UI/CustomBtn";
 
 const AnswerSurvey = ({
   selectedItem,
@@ -151,8 +154,75 @@ const AnswerSurvey = ({
                 setSelectedItem(min + " " + maxPrice);
               }}
               value={minPrice}
+              editable={false}
+              selectTextOnFocus={false}
             />
             <Text style={styles.price}>원</Text>
+          </View>
+          <View style={styles.pricebtn}>
+            <View style={styles.pbtn}>
+              <CustomBtn
+                buttonWidth={75}
+                title={"+1,000"}
+                buttonColor={"#a2a3f5"}
+                titleColor={"white"}
+                onPress={() => {
+                  let str = String(
+                    Number(minPrice.replace(",", "")) + 1000
+                  ).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                  setMinPrice(str);
+                  setSelectedItem(
+                    str.replace(",", "") + " " + maxPrice.replace(",", "")
+                  );
+                }}
+              ></CustomBtn>
+            </View>
+            <View style={styles.pbtn}>
+              <CustomBtn
+                buttonWidth={75}
+                title={"+5,000"}
+                buttonColor={"#a2a3f5"}
+                titleColor={"white"}
+                onPress={() => {
+                  let str = String(
+                    Number(minPrice.replace(",", "")) + 5000
+                  ).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                  setMinPrice(str);
+                  setSelectedItem(
+                    str.replace(",", "") + " " + maxPrice.replace(",", "")
+                  );
+                }}
+              ></CustomBtn>
+            </View>
+            <View style={styles.pbtn}>
+              <CustomBtn
+                buttonWidth={75}
+                title={"+10,000"}
+                buttonColor={"#a2a3f5"}
+                titleColor={"white"}
+                onPress={() => {
+                  let str = String(
+                    Number(minPrice.replace(",", "")) + 10000
+                  ).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                  setMinPrice(str);
+                  setSelectedItem(
+                    str.replace(",", "") + " " + maxPrice.replace(",", "")
+                  );
+                }}
+              ></CustomBtn>
+            </View>
+            <View style={styles.pbtn}>
+              <CustomBtn
+                buttonWidth={75}
+                title={"Reset"}
+                buttonColor={"red"}
+                titleColor={"white"}
+                onPress={() => {
+                  setMinPrice("");
+                  setSelectedItem("" + maxPrice.replace(",", ""));
+                }}
+              ></CustomBtn>
+            </View>
           </View>
           <Text style={styles.textInput}>~</Text>
           <View style={styles.priceView}>
@@ -165,8 +235,75 @@ const AnswerSurvey = ({
                 setSelectedItem(minPrice + " " + max);
               }}
               value={maxPrice}
+              editable={false}
+              selectTextOnFocus={false}
             />
             <Text style={styles.price}>원</Text>
+          </View>
+          <View style={styles.pricebtn}>
+            <View style={styles.pbtn}>
+              <CustomBtn
+                buttonWidth={75}
+                title={"+1,000"}
+                buttonColor={"#a2a3f5"}
+                titleColor={"white"}
+                onPress={() => {
+                  let str = String(
+                    Number(maxPrice.replace(",", "")) + 1000
+                  ).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                  setMaxPrice(str);
+                  setSelectedItem(
+                    minPrice.replace(",", "") + " " + str.replace(",", "")
+                  );
+                }}
+              ></CustomBtn>
+            </View>
+            <View style={styles.pbtn}>
+              <CustomBtn
+                buttonWidth={75}
+                title={"+5,000"}
+                buttonColor={"#a2a3f5"}
+                titleColor={"white"}
+                onPress={() => {
+                  let str = String(
+                    Number(maxPrice.replace(",", "")) + 5000
+                  ).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                  setMaxPrice(str);
+                  setSelectedItem(
+                    minPrice.replace(",", "") + " " + str.replace(",", "")
+                  );
+                }}
+              ></CustomBtn>
+            </View>
+            <View style={styles.pbtn}>
+              <CustomBtn
+                buttonWidth={75}
+                title={"+10,000"}
+                buttonColor={"#a2a3f5"}
+                titleColor={"white"}
+                onPress={() => {
+                  let str = String(
+                    Number(maxPrice.replace(",", "")) + 10000
+                  ).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                  setMaxPrice(str);
+                  setSelectedItem(
+                    minPrice.replace(",", "") + " " + str.replace(",", "")
+                  );
+                }}
+              ></CustomBtn>
+            </View>
+            <View style={styles.pbtn}>
+              <CustomBtn
+                buttonWidth={75}
+                title={"Reset"}
+                buttonColor={"red"}
+                titleColor={"white"}
+                onPress={() => {
+                  setMaxPrice("");
+                  setSelectedItem(minPrice.replace(",", "") + " ");
+                }}
+              ></CustomBtn>
+            </View>
           </View>
         </View>
       )}
@@ -256,15 +393,24 @@ const styles = StyleSheet.create({
   },
   textInputView: {
     alignItems: "center",
-    marginTop: 40,
+    marginTop: 30,
   },
-  textInput: { fontSize: 40 },
+  textInput: { fontSize: 40, color: "black" },
   price: { marginTop: 8, marginLeft: 5, fontSize: 30 },
   priceView: {
     alignItems: "center",
     flexDirection: "row",
     paddingTop: 0,
     paddingBottom: 0,
+  },
+  pricebtn: {
+    flexDirection: "row",
+  },
+  pbtn: {
+    margin: 2,
+  },
+  priceBtnDetail: {
+    backgroundColor: "grey",
   },
 });
 export default AnswerSurvey;

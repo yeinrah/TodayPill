@@ -63,7 +63,7 @@ export default function MyPageScreen({ navigation }: any) {
           <View style={styles.myInfoContainer}>
             <View style={styles.nameContainer}>
               <Text style={{ fontSize: 27, ...boldWelcome }}>
-                {myName}{" "}
+                {myName}&nbsp;
                 <Text style={{ fontSize: 23, ...regularWelcome }}>님</Text>
               </Text>
 
@@ -164,7 +164,7 @@ export default function MyPageScreen({ navigation }: any) {
 const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
-    marginTop: 20,
+    marginTop: 30,
     // backgroundColor: "red",
     // alignItems: "center",
     // justifyContent: "center",
@@ -175,7 +175,8 @@ const styles = StyleSheet.create({
   myInfoContainer: {
     // flex: 1,
     width: "100%",
-    height: 90,
+    height: 70,
+    // marginTop: 10,
     // backgroundColor: "yellow",
     // height: 600,
     // borderTopWidth: 2,
@@ -193,7 +194,8 @@ const styles = StyleSheet.create({
   ageContainer: {
     width: "100%",
     flexDirection: "row",
-    marginTop: 5,
+    marginTop: 8,
+
     // padding: 10,
   },
   nutrBtnContainer: {

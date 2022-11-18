@@ -8,9 +8,10 @@ import {
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-import { useRef, useState } from "react";
+import { useRef, useState, useCallback } from "react";
 import { regularWelcome } from "../Data/fontFamilyObject";
 import { primary } from "../../constants/Colors";
+import { useFocusEffect } from "@react-navigation/native";
 
 const SearchBar = ({ navigation, word, isMain }: any) => {
   const [keyword, setKeyword] = useState(word);
@@ -35,10 +36,16 @@ const SearchBar = ({ navigation, word, isMain }: any) => {
     }
   };
 
+  useFocusEffect(
+    useCallback(() => {
+      setKeyword(word);
+    }, [])
+  );
+
   return (
     <View style={styles.container}>
       <TextInput
-        style={{ ...styles.textinput, ...regularWelcome }}
+        style={{ ...styles.textinput, ...regularWelcome, letterSpacing: 1 }}
         placeholder="어떤 영양제를 찾으세요?"
         onChangeText={(word) => setKeyword(word)}
         onSubmitEditing={() => Search()}
