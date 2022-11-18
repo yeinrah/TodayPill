@@ -4,17 +4,13 @@ import Card from "../../components/UI/Card";
 import SearchBar from "../../components/TopBar/SearchBar";
 import MainPill from "../../components/MainPage/MainPill";
 import MainNutrient from "../../components/MainPage/MainNutrient";
-import CustomBtn from "../../components/UI/CustomBtn";
-import { accent } from "../../constants/Colors";
 
 export default function HomeScreen({ navigation }: any) {
   return (
     <BackgroundScreen2>
       <Card>
         <View style={styles.container}>
-          <View style={styles.searchBarContainer}>
-            <SearchBar navigation={navigation} isMain={true} />
-          </View>
+          <SearchBar navigation={navigation} word={""} isMain={true} />
           <ScrollView>
             <MainPill />
             <MainNutrient navigation={navigation} />
@@ -23,7 +19,7 @@ export default function HomeScreen({ navigation }: any) {
       </Card>
     </BackgroundScreen2>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -33,8 +29,5 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     marginBottom: 10,
-  },
-  searchBarContainer: {
-    alignItems: "center",
   },
 });

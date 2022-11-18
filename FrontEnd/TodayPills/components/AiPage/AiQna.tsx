@@ -56,7 +56,7 @@ export default function AiQna (props: any) {
 										content
 								))}
 							</Text>
-							<Table borderStyle={styles.borderStyle} style={styles.borderstyle}>
+							<Table borderStyle={styles.borderStyle} style={styles.tablestyle}>
 								<Row data={props.contents[chartIndex][1]} textStyle={{...styles.rowText, fontFamily: "웰컴체_Bold"}} />
 								<Rows data={props.contents[chartIndex][2]} textStyle={{...styles.rowText, fontFamily: "웰컴체_Regular"}} />
 							</Table>
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		borderColor: "black",
 	},
-	borderstyle: {
+	tablestyle: {
 		marginVertical: -15,
 	},
 	rowText : {

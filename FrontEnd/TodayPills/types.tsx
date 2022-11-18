@@ -49,7 +49,10 @@ export type RootStackParamList = {
   AllSupplementsScreen: undefined;
   SecondAddSurvey: undefined;
   AiHomeScreen: undefined;
+  AiPaperScreen: undefined;
   AiQnaScreen: undefined;
+  AiAnalysisScreen: undefined;
+  AiResultScreen: undefined;
   ChatHomeScreen: undefined;
   ChatScreenDetail: undefined;
 };
