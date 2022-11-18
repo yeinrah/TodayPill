@@ -50,7 +50,7 @@ export default function AiAnalysisScreen ({ navigation }: any) {
 			"X-RapidAPI-Key": "13f6e22f9dmsh5f803277f702e1fp13cae8jsn62dafbdd137d",
 			"X-RapidAPI-Host": "tldrthis.p.rapidapi.com"
 		},
-		data: `{"${isPaper ? "url" : "text"}":"${isPaper ? url : content.replace(/\n|\r/g, " ")}","min_length":${minLength},"max_length":${maxLength}${isPaper ? ',"is_detailed":false' : ""}}`
+		data: `{"${isPaper ? "url" : "text"}":"${isPaper ? url : content.replace(/\n|\r/g, " ")}","min_length":10,"max_length":65${isPaper ? ',"is_detailed":false' : ""}}`
 	};
 
     return (
@@ -91,7 +91,7 @@ export default function AiAnalysisScreen ({ navigation }: any) {
                                 </Text>
                             </View>
                             <View style={styles.line} />
-                            <View style={[styles.fixeditem, styles.justifycenter]}>
+                            {/* <View style={[styles.fixeditem, styles.justifycenter]}>
                                 <Text style={{...styles.head, fontFamily: "웰컴체_Bold"}}>
                                     최소 길이
                                 </Text>
@@ -102,7 +102,7 @@ export default function AiAnalysisScreen ({ navigation }: any) {
                                     최대 길이
                                 </Text>
                             </View>
-                            <View style={styles.line} />
+                            <View style={styles.line} /> */}
                             {
                                 isPaper ?
                                 <View style={[styles.fixeditem, styles.justifycenter]}>
@@ -139,7 +139,7 @@ export default function AiAnalysisScreen ({ navigation }: any) {
                                 </Pressable>
                             </View>
                             <View style={styles.line} />
-                            <View style={styles.fixeditem}>
+                            {/* <View style={styles.fixeditem}>
                                 <TextInput
                                     style={styles.lengthinput}
                                     placeholder={"10 ~ 65"}
@@ -170,7 +170,7 @@ export default function AiAnalysisScreen ({ navigation }: any) {
                                     value={maxLength}
                                 />
                             </View>
-                            <View style={styles.line} />
+                            <View style={styles.line} /> */}
                             {
                                 isPaper ?
                                 <View style={styles.fixeditem}>
@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
     },
     cardcontainer: {
         width: "90%",
-        minHeight: 195,
+        minHeight: 70,
         backgroundColor: "white",
         elevation: 10,
         marginBottom: 20,
