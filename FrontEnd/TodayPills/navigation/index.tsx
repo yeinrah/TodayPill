@@ -304,6 +304,11 @@ function Home() {
         component={SupplementScreen}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="ChatScreenDetail"
+        component={ChatScreenDetail}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 }
@@ -387,9 +392,9 @@ function MaterialBottomTabNavigator({ navigation }: any) {
           ),
         }}
         listeners={{
-          tabPress: e => {
-            navigation.navigate("HomeScreen")
-          }
+          tabPress: (e) => {
+            navigation.navigate('HomeScreen');
+          },
         }}
 
         // options={({ navigation }: RootTabScreenProps<"Home">) => ({
@@ -450,9 +455,9 @@ function MaterialBottomTabNavigator({ navigation }: any) {
           ),
         }}
         listeners={{
-          tabPress: e => {
-            navigation.navigate("AiHomeScreen")
-          }
+          tabPress: (e) => {
+            navigation.navigate('AiHomeScreen');
+          },
         }}
       />
       <BottomTab.Screen

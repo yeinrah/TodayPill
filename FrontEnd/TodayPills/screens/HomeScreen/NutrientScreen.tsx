@@ -17,6 +17,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { boldWelcome } from '../../components/Data/fontFamilyObject';
 import pillKOtoEN from '../../components/Data/pillKOtoEN';
 import GoBackBtn from '../../components/UI/GoBackBtn';
+import getNutrientImage from '../../components/Data/getNutrientImage';
 
 const NutrientScreen = ({ navigation, route }: any) => {
   const { nutId, nutrient } = route.params;
@@ -95,6 +96,7 @@ const NutrientScreen = ({ navigation, route }: any) => {
                     nutId: nutId,
                     nutrient: pillKOtoEN.get(nutrient),
                     nutrientName: nutrient,
+                    nutrientImage: getNutrientImage.get(nutrient),
                   });
                 }}
               >
