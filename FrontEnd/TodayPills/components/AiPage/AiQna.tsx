@@ -13,6 +13,9 @@ export default function AiQna (props: any) {
 				setChartIndex(idx);
 			}
 		})
+		if (props.stretch === true) {
+			setIsStretched(true);
+		}
 	}, []);
 
 	return (

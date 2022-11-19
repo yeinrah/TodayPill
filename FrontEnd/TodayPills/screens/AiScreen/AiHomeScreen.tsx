@@ -1,7 +1,7 @@
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import BackgroundScreen2 from "../BackgroundScreen2";
 
-export default function AiHomeScreen ({ navigation }: any) {
+export default function AiHomeScreen ({ navigation, route }: any) {
     return (
         <BackgroundScreen2>
             <ScrollView>

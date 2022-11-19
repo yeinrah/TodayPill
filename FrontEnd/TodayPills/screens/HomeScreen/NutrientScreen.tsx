@@ -99,6 +99,10 @@ const NutrientScreen = ({ navigation, route }: any) => {
                     caution={item.caution}
                     isMain={true}
                     navigation={navigation}
+                    category={item.category}
+                    amount={item.amount}
+                    requiredCount={item.requiredCount}
+                    formula={item.formula}
                   />
                 );
               }}

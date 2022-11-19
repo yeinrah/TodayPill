@@ -118,7 +118,9 @@ export default function MyPageScreen({ navigation }: any) {
           </View> */}
 
           <View style={styles.myLikeContainer}>
-            <MyPickPills />
+            <MyPickPills
+              navigation={navigation}
+            />
           </View>
           <View style={styles.nutrisContainer}>
             <RecomNutritions />

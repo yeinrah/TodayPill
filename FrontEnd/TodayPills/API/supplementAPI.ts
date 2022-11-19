@@ -24,5 +24,10 @@ const fetchSupplementDetail = async (supplementId) => {
 
   return supplementDetail;
 };
+const fetchRecommendation = async (supplementId, userId) => {
+  const result = await api.get(`/supplement/${supplementId}/${userId}`);
+  const recommendation = result.data;
+  return recommendation;
+};
 
-export { fetchAllSupplements, fetchPopularSupplements, fetchSupplementDetail };
+export { fetchAllSupplements, fetchPopularSupplements, fetchSupplementDetail, fetchRecommendation };

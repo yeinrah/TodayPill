@@ -32,7 +32,7 @@ const DetailedPillCard = (props: any) => {
         ? setIsLiked(true)
         : setIsLiked(false);
     }
-    setLikeCnt(likeUsersList.length);
+    await setLikeCnt(likeUsersList.length);
   };
 
   const likeHandler = async () => {
@@ -66,7 +66,7 @@ const DetailedPillCard = (props: any) => {
         style={styles.cardContainer}
         onPress={() => {
           if (props.isMain) {
-            props.navigation.navigate("SupplementScreen", {data: props})
+            props.navigation.navigate("SupplementScreen", {supplementId: props.supplementId})
           } else {
             navigation.navigate("ModifyRoutine", {
               pillId: props.supplementId,
