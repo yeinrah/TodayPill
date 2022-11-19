@@ -6,6 +6,7 @@ import {
   TextInput,
   View,
   ToastAndroid,
+  Image,
 } from 'react-native';
 import BackgroundScreen from '../BackgroundScreen';
 import { Bubble, GiftedChat } from 'react-native-gifted-chat';
@@ -138,6 +139,8 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
 
   const onError = (err) => {
     console.log('실패!!');
+    navigation.replace('ChatHomeScreen');
+    ToastAndroid.show(`일시적 오류 입니다. 다시 시도해주세요`, 2);
     console.log(err);
   };
 
@@ -231,7 +234,8 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
               }}
             />
           </View>
-          <View style={{ marginLeft: 20 }}>
+          <View style={{ marginLeft: 20, flexDirection: 'row' }}>
+            <Image source={route.params?.nutrientImage} style={styles.image} />
             <Text style={styles.roomChat}>
               <Text style={styles.chat}>{`${route.params?.nutrientName}`}</Text>{' '}
               채팅방
@@ -293,6 +297,13 @@ const styles = StyleSheet.create({
     color: '#a2a3f5',
     fontFamily: '웰컴체_Bold',
     fontSize: 25,
+  },
+  image: {
+    position: 'relative',
+    top: 5,
+    marginRight: 15,
+    width: 40,
+    height: 40,
   },
   // box: {
   //   flexDirection: "column-reverse",

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import ChatNutrientCard from '../Cards/ChatNutrientCard';
 import SimpleNutrientCard from '../Cards/SimpleNutrientCard';
 
 const ChatNutrient = ({ navigation }: any) => {
@@ -98,10 +99,11 @@ const ChatNutrient = ({ navigation }: any) => {
                 nutId: mainNutrient.nutId,
                 nutrient: mainNutrient.nutrient,
                 nutrientName: mainNutrient.nutrientName,
+                nutrientImage: mainNutrient.image,
               });
             }}
           >
-            <SimpleNutrientCard
+            <ChatNutrientCard
               image={mainNutrient.image}
               nutId={mainNutrient.nutId}
               nutrient={mainNutrient.nutrientName}

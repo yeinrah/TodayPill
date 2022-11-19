@@ -80,7 +80,7 @@ const NutrientDetailScreen = ({ navigation, route }: any) => {
                 style={{
                   ...styles.descriptiontext,
                   ...regularWelcome,
-                  letterSpacing: 2,
+                  letterSpacing: 1,
                 }}
               >
                 {NutrientDescription.get(nutrientName)}
