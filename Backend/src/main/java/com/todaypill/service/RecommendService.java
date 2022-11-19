@@ -67,7 +67,7 @@ public class RecommendService {
 //                            + (commonQuestion.is_ok_big_pill() ? supplement.getPillSize() : 0)
 						+ (userSecondSurveyReq.getFormula().equals(supplement.getFormula()) ? 3 : 0)
 						+ (userSecondSurveyReq.getSustainedRelease() && supplement.getSustainedRelease() ? 3 : 0)
-						+ (supplement.getBrand().contains(commonQuestion.getPreferred_brand()) ? 10 : 0)
+						+ (commonQuestion.getPreferred_brand().contains(supplement.getBrand()) ? 10 : 0)
 						+ (userSecondSurveyReq.getLowerPriceLimit() < supplement.getPrice()
 								&& userSecondSurveyReq.getUpperPriceLimit() > supplement.getPrice() ? 10 : 0);
 
