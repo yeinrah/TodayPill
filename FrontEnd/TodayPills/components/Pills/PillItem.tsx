@@ -12,6 +12,7 @@ import { dislike, fetchLikeUsers, like } from "../../API/likeAPI";
 import { useFocusEffect } from "@react-navigation/native";
 import { cutLongTitle } from "../functions/CutLongTitle";
 import { boldWelcome, regularWelcome } from "../Data/fontFamilyObject";
+import Navigation from "../../navigation";
 
 export interface PillProps {
   //   image: ImageSourcePropType;
@@ -22,6 +23,7 @@ export interface PillProps {
   pill: string;
   // onPressDislike?: (isDisliked: boolean) => void;
   onPressChange: () => void;
+  navigation: any;
 }
 
 const PillItem = (props: PillProps) => {
@@ -82,7 +84,10 @@ const PillItem = (props: PillProps) => {
   );
 
   return (
-    <View style={styles.container}>
+    <Pressable
+      style={styles.container}
+      onPress={() => props.navigation.navigate("SupplementScreen", {supplementId: props.pillId})}
+    >
       <View style={styles.cardcontainer}>
         <View style={styles.imagecontainer}>
           <Image source={{ uri: props.image }} style={styles.pillimage} />
@@ -131,7 +136,7 @@ const PillItem = (props: PillProps) => {
         </Text>
         {/* <Text style={styles.pillname}>{props.pill}</Text> */}
       </View>
-    </View>
+    </Pressable>
   );
 };
 

@@ -86,6 +86,7 @@ const AiNutrient = ({ navigation }: any) => {
               navigation.navigate("AiQnaScreen", {
                 nutId: mainNutrient.nutId,
                 nutrient: mainNutrient.nutrient,
+                stretch: -1,
               })
             }
           >

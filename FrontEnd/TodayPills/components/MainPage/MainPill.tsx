@@ -9,7 +9,7 @@ import {
 import SimplePillCard from "../Cards/SimplePillCard";
 import PillItem from "../Pills/PillItem";
 
-const MainPill = () => {
+const MainPill = ({ navigation }: any) => {
   const [userId, setUserId] = useState(0);
   const [mainPills, setMainPills] = useState([]);
   const [likeChanged, setLikeChanged] = useState(false);
@@ -64,6 +64,7 @@ const MainPill = () => {
               pill={pill.supplementName}
               // onPressDislike={() => console.log("좋아요취소")}
               onPressChange={likeChangeHandler}
+              navigation={navigation}
             />
           ))}
         </ScrollView>

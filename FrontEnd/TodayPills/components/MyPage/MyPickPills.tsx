@@ -16,7 +16,7 @@ import { fetchAllSupplements } from "../../API/supplementAPI";
 import { boldWelcome, regularWelcome } from "../Data/fontFamilyObject";
 import PillItem, { PillProps } from "../Pills/PillItem";
 
-export default function MyPickPills() {
+export default function MyPickPills({ navigation }: any) {
   const [pickedPills, setPickedPills] = useState([]);
   const [userId, setUserId] = useState(0);
   const [disLiked, setDisLiked] = useState(false);
@@ -86,6 +86,7 @@ export default function MyPickPills() {
                 brand={pill.brand}
                 pill={pill.name}
                 onPressChange={dislikeHandler}
+                navigation={navigation}
               />
             ))
           )}
