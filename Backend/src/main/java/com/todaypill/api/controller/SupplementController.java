@@ -84,4 +84,7 @@ public class SupplementController {
 		
 		return new ResponseEntity<Map<String, Object>>(res, HttpStatus.OK);
 	}
+	
+
+
 }

@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todaypill.codef.Codef;
+import com.todaypill.db.entity.CommonQuestion;
 import com.todaypill.db.entity.Like;
 import com.todaypill.db.entity.Supplement;
 import com.todaypill.db.entity.User;
@@ -274,6 +275,11 @@ public class UserController {
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 	
-
+	@GetMapping("/findCommonQuestion/{userId}")
+	@ApiOperation(value = "userid를 통해서 commonquestion 데이터를 가져온다.", notes = "가져온다")
+	public ResponseEntity<?> findCommonQuestion(@PathVariable Integer userId) throws Exception {
+		CommonQuestion data = commonQuestionService.findOneByUserId(userId);
+		return new ResponseEntity<CommonQuestion>(data, HttpStatus.OK);
+	}
 
 } 
