@@ -247,6 +247,11 @@ function MyPageNav() {
         component={ModifyRoutineScreen}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="SupplementScreen"
+        component={SupplementScreen}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 }
@@ -455,9 +460,9 @@ function MaterialBottomTabNavigator({ navigation }: any) {
           ),
         }}
         listeners={{
-          tabPress: (e) => {
-            navigation.navigate('AiHomeScreen');
-          },
+          tabPress: e => {
+            navigation.navigate("AiHomeScreen")
+          }
         }}
       />
       <BottomTab.Screen

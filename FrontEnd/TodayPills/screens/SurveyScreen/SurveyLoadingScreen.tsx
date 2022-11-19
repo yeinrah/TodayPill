@@ -1,15 +1,16 @@
-import { useEffect } from 'react';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
-import { afterBasicSurvey, afterScreeningCheck } from '../../API/userAPI';
+import { useEffect } from "react";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { afterBasicSurvey, afterScreeningCheck } from "../../API/userAPI";
+import BackgroundScreen2 from "../BackgroundScreen2";
 import { boldWelcome } from '../../components/Data/fontFamilyObject';
-import BackgroundScreen from '../BackgroundScreen';
-import BackgroundScreen2 from '../BackgroundScreen2';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SurveyLoadingScreen = ({ navigation, route }: any) => {
   useEffect(() => {
     let size = Object.keys(route.params.answerSheet).length;
     if (size > 5) afterBasicSurvey(route.params.answerSheet);
     else afterScreeningCheck(route.params.answerSheet);
+    AsyncStorage.setItem("@storage_answerSheet", JSON.stringify(route.params.answerSheet));
   }, []);
   return (
     <BackgroundScreen2>

@@ -40,7 +40,7 @@ export default function AiQnaScreen ({ navigation, route }: any) {
 				<ScrollView style={styles.height}>
 					<View style={styles.qnacontainer}>
 						{datas[route.params.nutrient].map((data, idx) => 
-							<AiQna key={idx} title={data[0]} contents={data.slice(1)}/>
+							<AiQna key={idx} title={data[0]} contents={data.slice(1)} stretch={route.params.stretch === idx}/>
 						)}
 					</View>
 					<View style={styles.imagecontainer}>

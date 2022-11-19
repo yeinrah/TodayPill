@@ -12,7 +12,7 @@ export default function HomeScreen({ navigation }: any) {
         <View style={styles.container}>
           <SearchBar navigation={navigation} word={""} isMain={true} />
           <ScrollView>
-            <MainPill />
+            <MainPill navigation={navigation} />
             <MainNutrient navigation={navigation} />
           </ScrollView>
         </View>

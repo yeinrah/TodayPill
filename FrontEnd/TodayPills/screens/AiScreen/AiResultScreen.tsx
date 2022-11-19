@@ -32,7 +32,7 @@ export default function AiResultScreen ({ navigation, route }: any) {
 			setIsLoading(false);
 			return;
 		})
-		console.log(summaries)
+		// console.log(summaries)
 		const translate = async (text) => {
 			await axios.post(
 				`https://openapi.naver.com/v1/papago/n2mt?source=en&target=ko&text=${text}`,
