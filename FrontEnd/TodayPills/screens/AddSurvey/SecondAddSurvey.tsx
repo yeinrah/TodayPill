@@ -271,7 +271,6 @@ const styles = StyleSheet.create({
   buttonOuterContainer: {
     borderRadius: 10,
     width: '80%',
-    height: 50,
     overflow: 'hidden',
     marginVertical: 10,
     elevation: 10,
@@ -281,8 +280,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#E881B1',
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: 22,
+    fontFamily: '웰컴체_Regular',
     textAlign: 'center',
     color: 'white',
   },

@@ -1,8 +1,17 @@
-import { Image, ScrollView, StyleSheet, Text, View, Pressable, Linking, ToastAndroid } from "react-native";
-import BackgroundScreen2 from "../BackgroundScreen2";
-import Card from "../../components/UI/Card";
-import GoBackBtn from "../../components/UI/GoBackBtn";
-import { useState } from "react";
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  Linking,
+  ToastAndroid,
+} from 'react-native';
+import BackgroundScreen2 from '../BackgroundScreen2';
+import Card from '../../components/UI/Card';
+import GoBackBtn from '../../components/UI/GoBackBtn';
+import { useState } from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import { Entypo } from "@expo/vector-icons";
 import { fetchLikeUsers, like, dislike } from "../../API/likeAPI";
@@ -12,20 +21,19 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fetchRecommendation } from "../../API/supplementAPI";
 import PillItem from "../../components/Pills/PillItem";
 import { AiAnalysis } from "../../components/Data/AiAnalysis";
-import { findCommonQuestion } from "../../API/userAPI";
 
-export default function SupplementScreen ({ navigation, route }: any) {
-	const [ingredientStretch, setIngredientStretch] = useState(false);
-	const [isLiked, setIsLiked] = useState(false);
-	const [likeCnt, setLikeCnt] = useState(0);
-	const [userId, setUserId] = useState(0);
-	const [pill, setPills] : any = useState({});
-	const [similarPills, setSimilarPills] = useState([]);
-	const [userNickName, setUserNickName] = useState("");
-	const [isLoading, setIsLoading] = useState(false);
+export default function SupplementScreen({ navigation, route }: any) {
+  const [ingredientStretch, setIngredientStretch] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
+  const [likeCnt, setLikeCnt] = useState(0);
+  const [userId, setUserId] = useState(0);
+  const [pill, setPills]: any = useState({});
+  const [similarPills, setSimilarPills] = useState([]);
+  const [userNickName, setUserNickName] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [likeChanged, setLikeChanged] = useState(false);
-	const [AiPapers, setAiPapers] = useState([]);
-	const naverSearch = () => {
+  const [AiPapers, setAiPapers] = useState([]);
+  const naverSearch = () => {
     Linking.openURL(
       `https://msearch.shopping.naver.com/search/all?query=${pill.supplementName}&frm=NVSHSRC&vertical=home&fs=true`
     );
@@ -35,9 +43,7 @@ export default function SupplementScreen ({ navigation, route }: any) {
     if (likeUsersList.length === 0) {
       setIsLiked(false);
     } else {
-      likeUsersList.includes(userId)
-        ? setIsLiked(true)
-        : setIsLiked(false);
+      likeUsersList.includes(userId) ? setIsLiked(true) : setIsLiked(false);
     }
     setLikeCnt(likeUsersList.length);
   };
@@ -45,13 +51,13 @@ export default function SupplementScreen ({ navigation, route }: any) {
   const likeHandler = async () => {
     await like(userId, route.params.supplementId);
     setIsLiked(true);
-    ToastAndroid.show("영양제가 나의 Pick에 추가됐습니다.", 3);
+    ToastAndroid.show('영양제가 나의 Pick에 추가됐습니다.', 3);
   };
 
   const dislikeHandler = async () => {
     await dislike(userId, route.params.supplementId);
     setIsLiked(false);
-    ToastAndroid.show("영양제가 나의 Pick에서 제외됐습니다.", 3);
+    ToastAndroid.show('영양제가 나의 Pick에서 제외됐습니다.', 3);
   };
 
   const likeChangeHandler = () => {
@@ -71,9 +77,6 @@ export default function SupplementScreen ({ navigation, route }: any) {
 	const aiSetting = async () => {
 		const sheet = await AsyncStorage.getItem("@storage_answerSheet");
 		const answerSheet = await JSON.parse(sheet);
-		console.log(answerSheet)
-		// const answerSheet = await findCommonQuestion(userId);
-		// console.log(test._response);
 		const Ai = [];
 		if (answerSheet.pregnant) {
 			if (pill.category === "비타민 B") {
@@ -422,27 +425,27 @@ export default function SupplementScreen ({ navigation, route }: any) {
 			}
 		}
 		return Ai;
-	}
+	};
 
-	const analysisRecommendation = async () => {
-		const Ai = await aiSetting();
-		setAiPapers(Ai);
-		setIsLoading(true);
-	}
+  const analysisRecommendation = async () => {
+    const Ai = await aiSetting();
+    setAiPapers(Ai);
+    setIsLoading(true);
+  };
 
   useFocusEffect(
     useCallback(() => {
-			setIsLoading(false);
+      setIsLoading(false);
       getLikeOrNot();
-			userRecommendation();
+      userRecommendation();
     }, [route.params.supplementId, isLiked])
   );
 
-	useFocusEffect(
-		useCallback(() => {
-			analysisRecommendation();
-		}, [pill])
-	);
+  useFocusEffect(
+    useCallback(() => {
+      analysisRecommendation();
+    }, [pill])
+  );
 
 	return (
 		<BackgroundScreen2>
@@ -602,6 +605,7 @@ export default function SupplementScreen ({ navigation, route }: any) {
 										</View>
 									</View>
 								</View>
+							</View>
 							<View style={styles.flexrow}>
 								<View style={styles.headcontainer}>
 									<View style={styles.head}>
@@ -616,7 +620,7 @@ export default function SupplementScreen ({ navigation, route }: any) {
 											style={styles.contenttext}
 											numberOfLines={1}
 											ellipsizeMode={"tail"}
-											>
+										>
 											{pill.note}
 										</Text>
 									</View>
@@ -636,7 +640,7 @@ export default function SupplementScreen ({ navigation, route }: any) {
 											style={styles.contenttext}
 											numberOfLines={1}
 											ellipsizeMode={"tail"}
-											>
+										>
 											{pill.amount}
 										</Text>
 									</View>
@@ -656,7 +660,7 @@ export default function SupplementScreen ({ navigation, route }: any) {
 											style={styles.contenttext}
 											numberOfLines={1}
 											ellipsizeMode={"tail"}
-											>
+										>
 											{pill.requiredCount}
 										</Text>
 									</View>
@@ -676,19 +680,19 @@ export default function SupplementScreen ({ navigation, route }: any) {
 											style={styles.contenttext}
 											numberOfLines={1}
 											ellipsizeMode={"tail"}
-											>
+										>
 											{
 												pill.formula === "capsule" ?
 													"캡슐" :
 													pill.formula === "liquid" ?
-													"액상" :
-													pill.formula === "chewable" ?
-													"젤리" :
-													pill.formula === "powder" ?
-													"분말" :
-													pill.formula === "spray" ?
-													"스프레이" : null
-												}
+														"액상" :
+														pill.formula === "chewable" ?
+															"젤리" :
+															pill.formula === "powder" ?
+																"분말" :
+																pill.formula === "spray" ?
+																"스프레이" : null
+											}
 										</Text>
 									</View>
 								</View>
@@ -709,53 +713,41 @@ export default function SupplementScreen ({ navigation, route }: any) {
 									</View>
 								</View>
 							</View>
-								</View>
 							<View style={styles.similartextcontainer}>
 								<Image
 									source={require("../../assets/images/similar.png")}
 									style={styles.similarimage}
 								/>
-								<View style={styles.textjustify}>
-									<Text style={styles.similartext}>
-										{userNickName}님과 비슷한 분들은
-									</Text>
-									<Text style={styles.similartext}>
-										이 제품을 눈여겨보고 있어요
-									</Text>
-								</View>
+								<Text style={styles.similartext}>
+									{userNickName}님과 비슷한 분들이 찾는 영양제
+								</Text>
 							</View>
 							<View style={styles.similarpillcontainer}>
-								{
-									similarPills.map((pill, idx) =>
-									<PillItem
-										key={idx}
-										userId={userId}
-										pillId={pill.supplementId}
-										image={pill.image}
-										brand={pill.brand}
-										pill={pill.supplementName}
-										onPressChange={likeChangeHandler}
-										navigation={navigation}
-									/>)
-								}
-							</View>
-								{
-									AiPapers.length > 0 &&
-									<View style={styles.similartextcontainer}>
-										<Image
-											source={require("../../assets/images/aipaper.png")}
-											style={styles.aiimage}
-										/>
-										<View style={styles.textjustify}>
-											<Text style={styles.similartext}>
-												{userNickName}님과 관련있는
-											</Text>
-											<Text style={styles.similartext}>
-												논문 분석 결과를 살펴보세요
-											</Text>
-										</View>
-									</View>
-								}
+                {similarPills.map((pill, idx) => {
+                  if (!pill) return;
+                  return (
+                    <PillItem
+                      key={idx}
+                      userId={userId}
+                      pillId={pill.supplementId}
+                      image={pill.image}
+                      brand={pill.brand}
+                      pill={pill.supplementName}
+                      onPressChange={likeChangeHandler}
+                      navigation={navigation}
+                    />
+                  );
+                })}
+              </View>
+								<View style={styles.similartextcontainer}>
+									<Image
+										source={require("../../assets/images/aipaper.png")}
+										style={styles.similarimage}
+									/>
+									<Text style={styles.similartext}>
+										{userNickName}님께 맞는 AI 논문 분석 결과
+									</Text>
+								</View>
 								{
 									AiPapers.map((AiPaper, idx) =>
 										<View
@@ -765,17 +757,15 @@ export default function SupplementScreen ({ navigation, route }: any) {
 											<Text
 												style={styles.aitext}
 												onPress={async () => {
-													await navigation.jumpTo("Ai")
-													await navigation.navigate("AiQnaScreen", {
+													if (navigation.jumpTo) await navigation.jumpTo('Ai');
+													await navigation.navigate('AiQnaScreen', {
 														nutId: pill.supplementId,
 														nutrient: AiPaper[0],
 														stretch: AiPaper[1],
-													})
-												}
-													
-												}
+													});
+												}}
 											>
-												Q. {AiAnalysis[AiPaper[0]][AiPaper[1]][0]}
+												{AiAnalysis[AiPaper[0]][AiPaper[1]][0]}
 											</Text>
 										</View>
 									)
@@ -945,8 +935,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ECF6F4",
     borderRadius: 10,
     elevation: 5,
-		alignSelf: "center",
-		// marginHorizontal: 20,
+		marginHorizontal: 10,
 	},
 	flexrow: {
 		flexDirection: "row",
@@ -957,38 +946,21 @@ const styles = StyleSheet.create({
 		marginRight: 20,
 	},
 	aicontainer: {
-		width: "90%",
-		alignSelf: "center",
-		// paddingHorizontal: 10,
-		// marginHorizontal: 20,
-	},
-	aiimage: {
-		width: 50,
-		height: 60,
-		resizeMode: "contain",
-		// marginLeft: 3.5,
-		// marginRight: 10,
-		marginLeft: 8.5,
-		marginRight: 4,
+		width: "100%",
+		alignItems: "center",
 	},
 	aitext: {
-		width: "100%",
+		width: "90%",
     backgroundColor: "#ECF6F4",
 		elevation: 5,
-		paddingHorizontal: 15,
-		paddingVertical: 10,
-		fontSize: 17,
+		paddingHorizontal: 10,
+		paddingVertical: 5,
+		fontSize: 19,
 		fontFamily: "웰컴체_Regular",
 		borderRadius: 10,
-		marginBottom: 8,
 	},
 	height: {
 		height: 430,
-	},
-	textjustify: {
-		height: 60,
-		justifyContent: "flex-end",
-		paddingBottom: 1,
 	},
 	loadingspinnercontainer: {
 		width: "100%",
@@ -999,5 +971,5 @@ const styles = StyleSheet.create({
 	loadingspinner: {
     width: 200,
     height: 200,
-	},
+  },
 });

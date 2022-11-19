@@ -2,7 +2,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { afterSecondSurvey } from '../../API/userAPI';
-import { boldWelcome } from '../../components/Data/fontFamilyObject';
+import {
+  boldWelcome,
+  regularWelcome,
+} from '../../components/Data/fontFamilyObject';
 import BackgroundScreen from '../BackgroundScreen';
 import BackgroundScreen2 from '../BackgroundScreen2';
 
@@ -35,10 +38,10 @@ const SurveyDeepLoadingScreen = ({ navigation, route }: any) => {
               ...styles.text,
               ...styles.greetingtext,
               ...styles.blacktext,
-              ...boldWelcome,
+              ...regularWelcome,
             }}
           >
-            {nowMyNutrient} 맞춤 추천 완료 !!
+            맞춤 추천이 완료되었습니다.
           </Text>
         </View>
         <View style={styles.imagecontainer}>
@@ -77,21 +80,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   image: {
-    width: 600,
-    height: 600,
+    width: 300,
+    height: 300,
     resizeMode: 'contain',
   },
   textcontainer: {
     alignItems: 'center',
   },
   text: {
-    fontWeight: 'bold',
-    textShadowColor: 'rgba(0, 0, 0, 0.25)',
-    textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 1,
+    // textShadowColor: 'rgba(0, 0, 0, 0.25)',
+    // textShadowOffset: { width: 2, height: 2 },
+    // textShadowRadius: 1,
   },
   greetingtext: {
-    fontSize: 30,
+    fontSize: 25,
     marginBottom: 10,
   },
   nametext: {
@@ -106,21 +108,25 @@ const styles = StyleSheet.create({
   flexrow: {
     flexDirection: 'row',
   },
+  buttoncontainer: {
+    width: '100%',
+    alignItems: 'center',
+    marginVertical: 20,
+  },
   buttonOuterContainer: {
-    borderRadius: 20,
+    borderRadius: 10,
     width: '80%',
-    marginLeft: 20,
     overflow: 'hidden',
     marginVertical: 10,
     elevation: 10,
   },
   buttonInnerContainer: {
-    paddingVertical: 7,
+    paddingVertical: 10,
     backgroundColor: '#E881B1',
   },
   title: {
-    fontSize: 35,
-    fontWeight: 'bold',
+    fontSize: 22,
+    fontFamily: '웰컴체_Regular',
     textAlign: 'center',
     color: 'white',
   },
