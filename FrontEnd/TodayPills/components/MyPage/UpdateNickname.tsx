@@ -1,5 +1,5 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useEffect, useState } from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Pressable,
@@ -9,16 +9,16 @@ import {
   KeyboardAvoidingView,
   Alert,
   ToastAndroid,
-} from "react-native";
-import { updateUsername } from "../../API/userAPI";
-import { accent, primary } from "../../constants/Colors";
-import { boldWelcome, regularWelcome } from "../Data/fontFamilyObject";
-import CustomBtn from "../UI/CustomBtn";
-import CustomModal from "../UI/CustomModal";
+} from 'react-native';
+import { updateUsername } from '../../API/userAPI';
+import { accent, primary } from '../../constants/Colors';
+import { boldWelcome, regularWelcome } from '../Data/fontFamilyObject';
+import CustomBtn from '../UI/CustomBtn';
+import CustomModal from '../UI/CustomModal';
 
 export default function UpdateNickname({ onChangeName }) {
   const [modalVisible, setModalVisible] = useState(false);
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState('');
   const [nickname, setNickname] = useState(username);
 
   const modalCloseHandler = () => {
@@ -32,20 +32,20 @@ export default function UpdateNickname({ onChangeName }) {
   const changeNicknameHandler = async (nickname: string) => {
     // put 요청 닉네임 변경
     if (nickname.length === 0) {
-      Alert.alert("수정", "닉네임은 한 글자 이상 가능합니다!");
+      Alert.alert('수정', '닉네임은 한 글자 이상 가능합니다!');
       return;
     }
-    await AsyncStorage.setItem("@storage_UserNickName", nickname);
-    const userId = await AsyncStorage.getItem("@storage_UserId");
+    await AsyncStorage.setItem('@storage_UserNickName', nickname);
+    const userId = await AsyncStorage.getItem('@storage_UserId');
     await updateUsername(parseInt(userId), nickname);
     setNickname(nickname);
     onChangeName(true);
-
+    await AsyncStorage.setItem('@storage_UserNickName', nickname);
     modalCloseHandler();
-    ToastAndroid.show("닉네임 수정이 완료되었습니다.", 2);
+    ToastAndroid.show('닉네임 수정이 완료되었습니다.', 2);
   };
   const getCurrentNickname = async () => {
-    const currentName = await AsyncStorage.getItem("@storage_UserNickName");
+    const currentName = await AsyncStorage.getItem('@storage_UserNickName');
     setNickname(currentName);
   };
 
@@ -59,7 +59,7 @@ export default function UpdateNickname({ onChangeName }) {
         <CustomModal
           modalVisible={modalVisible}
           modalCloseHandler={modalCloseHandler}
-          customStyle={{ width: "90%", height: 190 }}
+          customStyle={{ width: '90%', height: 190 }}
         >
           <View style={styles.outerContainer}>
             <View style={styles.nameContainer}>
@@ -85,7 +85,7 @@ export default function UpdateNickname({ onChangeName }) {
                   <Text
                     style={{
                       ...styles.confirmText,
-                      color: pressed ? "black" : "#B7B7B7",
+                      color: pressed ? 'black' : '#B7B7B7',
                       ...regularWelcome,
                     }}
                   >
@@ -135,7 +135,7 @@ export default function UpdateNickname({ onChangeName }) {
             style={
               {
                 ...styles.confirmText,
-                color: pressed ? "black" : "#B7B7B7",
+                color: pressed ? 'black' : '#B7B7B7',
                 ...regularWelcome,
               }
               // { color: pressed ? "black" : "#B7B7B7" },
@@ -153,8 +153,8 @@ export default function UpdateNickname({ onChangeName }) {
 const styles = StyleSheet.create({
   outerContainer: {
     flex: 1,
-    width: "100%",
-    justifyContent: "space-between",
+    width: '100%',
+    justifyContent: 'space-between',
     paddingHorizontal: 15,
     paddingTop: 15,
     // paddingBottom: 15,
@@ -162,22 +162,22 @@ const styles = StyleSheet.create({
 
   nameContainer: {
     flex: 1,
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
     // backgroundColor: "red",
-    width: "100%",
+    width: '100%',
     // flexDirection: "row",
     // alignItems: "center",
   },
   inputContainer: {
     flex: 1,
-    alignItems: "center",
+    alignItems: 'center',
     // justifyContent: "center",
     // backgroundColor: "red",
     // marginBottom: 20,
   },
   input: {
     // height: 40,
-    width: "90%",
+    width: '90%',
     fontSize: 18,
     // fontWeight: "bold",
 
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
 
     // margin: 12,
     borderBottomWidth: 2,
-    borderBottomColor: "grey",
+    borderBottomColor: 'grey',
   },
   modifyContainer: {
     marginTop: 10,
@@ -201,13 +201,13 @@ const styles = StyleSheet.create({
   // },
   nickname: {
     fontSize: 20,
-    color: "#868686",
+    color: '#868686',
     // fontWeight: "900",
   },
   btnContainer: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   btn: {
     // buttonColor={accent}
@@ -217,8 +217,8 @@ const styles = StyleSheet.create({
 
     flex: 1,
     // width: "50%",
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     borderStyle: 'dashed',
   },
   pillBox: { alignItems: 'center' },
-  listGroup: { marginLeft: 25, marginTop: 30 },
+  listGroup: { marginLeft: 25, marginTop: 20 },
   listText: { marginBottom: 15 },
   shape: {
     height: 70,

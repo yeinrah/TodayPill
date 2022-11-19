@@ -1,18 +1,24 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useEffect, useState } from "react";
-import { StyleSheet, Text, View, Pressable } from "react-native";
-import BackgroundScreen from "../BackgroundScreen";
-import BackgroundScreen2 from "../BackgroundScreen2";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
+import { useEffect, useState, useCallback } from 'react';
+import { StyleSheet, Text, View, Pressable } from 'react-native';
+import BackgroundScreen from '../BackgroundScreen';
+import BackgroundScreen2 from '../BackgroundScreen2';
 
 const SurveyStartScreen = ({ navigation }: any) => {
-  const [name, setName] = useState("");
+  const [name, setName] = useState('');
   const getMyName = async () => {
-    const nowName = await AsyncStorage.getItem("@storage_UserNickName");
+    const nowName = await AsyncStorage.getItem('@storage_UserNickName');
     setName(nowName);
   };
-  useEffect(() => {
-    getMyName();
-  }, []);
+  // useEffect(() => {
+  //   getMyName();
+  // }, []);
+  useFocusEffect(
+    useCallback(() => {
+      getMyName();
+    }, [])
+  );
   return (
     <BackgroundScreen2>
       <View style={styles.container}>
@@ -31,9 +37,9 @@ const SurveyStartScreen = ({ navigation }: any) => {
         </View>
         <View style={styles.buttonOuterContainer}>
           <Pressable
-            android_ripple={{ color: "#4E736F" }}
+            android_ripple={{ color: '#4E736F' }}
             style={styles.buttonInnerContainer}
-            onPress={() => navigation.navigate("SurveyScreen")}
+            onPress={() => navigation.navigate('SurveyScreen')}
           >
             <Text style={styles.title}>설문하기</Text>
           </Pressable>
@@ -46,46 +52,46 @@ const SurveyStartScreen = ({ navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-around",
-    alignItems: "center",
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
   textcontainer: {
-    alignItems: "center",
+    alignItems: 'center',
   },
   flexrow: {
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   text: {
-    fontWeight: "bold",
-    textShadowColor: "rgba(0, 0, 0, 0.25)",
+    fontWeight: 'bold',
+    textShadowColor: 'rgba(0, 0, 0, 0.25)',
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 1,
     fontSize: 30,
   },
   blacktext: {
-    color: "black",
+    color: 'black',
   },
   whitetext: {
     // color: "white",
-    color: "#4E736F",
+    color: '#4E736F',
   },
   buttonOuterContainer: {
     borderRadius: 20,
-    width: "80%",
+    width: '80%',
     marginLeft: 20,
-    overflow: "hidden",
+    overflow: 'hidden',
     marginVertical: 10,
     elevation: 10,
   },
   buttonInnerContainer: {
     paddingVertical: 7,
-    backgroundColor: "#E881B1",
+    backgroundColor: '#E881B1',
   },
   title: {
     fontSize: 35,
-    fontWeight: "bold",
-    textAlign: "center",
-    color: "white",
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: 'white',
   },
 });
 
