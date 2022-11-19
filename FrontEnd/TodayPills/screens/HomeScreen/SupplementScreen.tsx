@@ -12,6 +12,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fetchRecommendation } from "../../API/supplementAPI";
 import PillItem from "../../components/Pills/PillItem";
 import { AiAnalysis } from "../../components/Data/AiAnalysis";
+import { findCommonQuestion } from "../../API/userAPI";
 
 export default function SupplementScreen ({ navigation, route }: any) {
 	const [ingredientStretch, setIngredientStretch] = useState(false);
@@ -70,6 +71,9 @@ export default function SupplementScreen ({ navigation, route }: any) {
 	const aiSetting = async () => {
 		const sheet = await AsyncStorage.getItem("@storage_answerSheet");
 		const answerSheet = await JSON.parse(sheet);
+		console.log(answerSheet)
+		// const answerSheet = await findCommonQuestion(userId);
+		// console.log(test._response);
 		const Ai = [];
 		if (answerSheet.pregnant) {
 			if (pill.category === "비타민 B") {
@@ -598,7 +602,6 @@ export default function SupplementScreen ({ navigation, route }: any) {
 										</View>
 									</View>
 								</View>
-							</View>
 							<View style={styles.flexrow}>
 								<View style={styles.headcontainer}>
 									<View style={styles.head}>
@@ -613,7 +616,7 @@ export default function SupplementScreen ({ navigation, route }: any) {
 											style={styles.contenttext}
 											numberOfLines={1}
 											ellipsizeMode={"tail"}
-										>
+											>
 											{pill.note}
 										</Text>
 									</View>
@@ -633,7 +636,7 @@ export default function SupplementScreen ({ navigation, route }: any) {
 											style={styles.contenttext}
 											numberOfLines={1}
 											ellipsizeMode={"tail"}
-										>
+											>
 											{pill.amount}
 										</Text>
 									</View>
@@ -653,7 +656,7 @@ export default function SupplementScreen ({ navigation, route }: any) {
 											style={styles.contenttext}
 											numberOfLines={1}
 											ellipsizeMode={"tail"}
-										>
+											>
 											{pill.requiredCount}
 										</Text>
 									</View>
@@ -673,19 +676,19 @@ export default function SupplementScreen ({ navigation, route }: any) {
 											style={styles.contenttext}
 											numberOfLines={1}
 											ellipsizeMode={"tail"}
-										>
+											>
 											{
 												pill.formula === "capsule" ?
 													"캡슐" :
 													pill.formula === "liquid" ?
-														"액상" :
-														pill.formula === "chewable" ?
-															"젤리" :
-															pill.formula === "powder" ?
-																"분말" :
-																pill.formula === "spray" ?
-																"스프레이" : null
-											}
+													"액상" :
+													pill.formula === "chewable" ?
+													"젤리" :
+													pill.formula === "powder" ?
+													"분말" :
+													pill.formula === "spray" ?
+													"스프레이" : null
+												}
 										</Text>
 									</View>
 								</View>
@@ -706,14 +709,20 @@ export default function SupplementScreen ({ navigation, route }: any) {
 									</View>
 								</View>
 							</View>
+								</View>
 							<View style={styles.similartextcontainer}>
 								<Image
 									source={require("../../assets/images/similar.png")}
 									style={styles.similarimage}
 								/>
-								<Text style={styles.similartext}>
-									{userNickName}님과 비슷한 분들이 찾는 영양제
-								</Text>
+								<View style={styles.textjustify}>
+									<Text style={styles.similartext}>
+										{userNickName}님과 비슷한 분들은
+									</Text>
+									<Text style={styles.similartext}>
+										이 제품을 눈여겨보고 있어요
+									</Text>
+								</View>
 							</View>
 							<View style={styles.similarpillcontainer}>
 								{
@@ -730,15 +739,23 @@ export default function SupplementScreen ({ navigation, route }: any) {
 									/>)
 								}
 							</View>
-								<View style={styles.similartextcontainer}>
-									<Image
-										source={require("../../assets/images/aipaper.png")}
-										style={styles.similarimage}
-									/>
-									<Text style={styles.similartext}>
-										{userNickName}님께 맞는 AI 논문 분석 결과
-									</Text>
-								</View>
+								{
+									AiPapers.length > 0 &&
+									<View style={styles.similartextcontainer}>
+										<Image
+											source={require("../../assets/images/aipaper.png")}
+											style={styles.aiimage}
+										/>
+										<View style={styles.textjustify}>
+											<Text style={styles.similartext}>
+												{userNickName}님과 관련있는
+											</Text>
+											<Text style={styles.similartext}>
+												논문 분석 결과를 살펴보세요
+											</Text>
+										</View>
+									</View>
+								}
 								{
 									AiPapers.map((AiPaper, idx) =>
 										<View
@@ -758,7 +775,7 @@ export default function SupplementScreen ({ navigation, route }: any) {
 													
 												}
 											>
-												{AiAnalysis[AiPaper[0]][AiPaper[1]][0]}
+												Q. {AiAnalysis[AiPaper[0]][AiPaper[1]][0]}
 											</Text>
 										</View>
 									)
@@ -780,7 +797,6 @@ export default function SupplementScreen ({ navigation, route }: any) {
 
 const styles = StyleSheet.create({
 	container: {
-		width: "100%",
 		height: 1000,
 		paddingTop: 10,
 	},
@@ -846,7 +862,8 @@ const styles = StyleSheet.create({
 		alignSelf: "center",
 	},
 	textcontainer: {
-		width: "100%",
+		width: "90%",
+		alignSelf: "center",
 	},
 	headcontainer: {
 		width: "30%",
@@ -866,61 +883,70 @@ const styles = StyleSheet.create({
 	},
 	head: {
 		height: 30,
-		alignItems: "center",
+		// alignItems: "center",
 		justifyContent: "center",
+		paddingVertical: 5,
+		paddingHorizontal: 7,
 	},
 	content: {
 		height: 30,
 		justifyContent: "center",
+		paddingVertical: 5,
+		paddingHorizontal: 7,
 	},
 	headtext: {
-		fontSize: 20,
+		fontSize: 18,
 		fontFamily: "웰컴체_Bold",
 	},
 	contenttext: {
-		fontSize: 19,
+		fontSize: 17,
 		fontFamily: "웰컴체_Regular",
-		lineHeight: 22,
+		lineHeight: 20,
+		marginRight: 8,
 	},
 	ingredienthead: {
-		alignItems: "center",
+		// alignItems: "center",
 		paddingVertical: 5,
+		paddingHorizontal: 7,
 	},
 	ingredientcontent: {
 		paddingVertical: 5.5,
+		paddingHorizontal: 7,
 	},
 	ingredientcontenttext: {
 		width: "85%",
-		fontSize: 19,
+		fontSize: 17,
 		fontFamily: "웰컴체_Regular",
 	},
 	similartextcontainer: {
 		width: "100%",
 		flexDirection: "row",
-		justifyContent: "center",
 		alignItems: "center",
 		marginTop: 10,
 		marginBottom: 5,
+		marginHorizontal: 12,
 	},
 	similarimage: {
-		width: 40,
-		height: 50,
+		width: 50,
+		height: 60,
 		resizeMode: "contain",
-		marginLeft: 20,
-		marginRight: 10,
+		marginLeft: 3.5,
+		marginRight: 9,
 	},
 	similartext: {
-		width: "90%",
-		fontSize: 20,
+		width: "100%",
+		fontSize: 18,
 		fontFamily: "웰컴체_Bold",
 	},
 	similarpillcontainer: {
+		width: "90%",
 		flexDirection: "row",
 		justifyContent: "space-evenly",
     backgroundColor: "#ECF6F4",
     borderRadius: 10,
     elevation: 5,
-		marginHorizontal: 10,
+		alignSelf: "center",
+		// marginHorizontal: 20,
 	},
 	flexrow: {
 		flexDirection: "row",
@@ -931,21 +957,38 @@ const styles = StyleSheet.create({
 		marginRight: 20,
 	},
 	aicontainer: {
-		width: "100%",
-		alignItems: "center",
+		width: "90%",
+		alignSelf: "center",
+		// paddingHorizontal: 10,
+		// marginHorizontal: 20,
+	},
+	aiimage: {
+		width: 50,
+		height: 60,
+		resizeMode: "contain",
+		// marginLeft: 3.5,
+		// marginRight: 10,
+		marginLeft: 8.5,
+		marginRight: 4,
 	},
 	aitext: {
-		width: "90%",
+		width: "100%",
     backgroundColor: "#ECF6F4",
 		elevation: 5,
-		paddingHorizontal: 10,
-		paddingVertical: 5,
-		fontSize: 19,
+		paddingHorizontal: 15,
+		paddingVertical: 10,
+		fontSize: 17,
 		fontFamily: "웰컴체_Regular",
 		borderRadius: 10,
+		marginBottom: 8,
 	},
 	height: {
 		height: 430,
+	},
+	textjustify: {
+		height: 60,
+		justifyContent: "flex-end",
+		paddingBottom: 1,
 	},
 	loadingspinnercontainer: {
 		width: "100%",

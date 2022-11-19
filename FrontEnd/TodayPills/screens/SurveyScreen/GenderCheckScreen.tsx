@@ -1,6 +1,4 @@
 import { StyleSheet, Text, View, Pressable, ScrollView } from 'react-native';
-import BackgroundScreen from '../BackgroundScreen';
-import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { useState } from 'react';
 import { changeGender } from '../../API/userAPI';
@@ -36,14 +34,21 @@ const GenderCheckScreen = ({ navigation }: any) => {
               }}
             />
           </View>
-          <Text style={{ ...styles.text, ...styles.largetext, ...boldWelcome }}>
-            성별을 알려주세요.
-          </Text>
-          <Text
-            style={{ ...styles.text, ...styles.smalltext, ...regularWelcome }}
-          >
-            성별에 기반한 설문이 준비되어 있습니다.
-          </Text>
+          <View style={styles.truetextcontainer}>
+            <Text style={{ ...styles.text, ...styles.largetext, ...boldWelcome }}>
+              성별을 알려주세요.
+            </Text>
+            <Text
+              style={{ ...styles.text, ...styles.smalltext, ...regularWelcome }}
+            >
+              철분과 같이 성별에 따라
+            </Text>
+            <Text
+              style={{ ...styles.text, ...styles.smalltext, ...regularWelcome, marginTop: 0 }}
+            >
+              필요도가 달라지는 영양소가 있어요.
+            </Text>
+          </View>
         </View>
         <ScrollView>
           <View style={styles.itemcontainer}>
@@ -115,7 +120,7 @@ const GenderCheckScreen = ({ navigation }: any) => {
                 navigation.navigate('HealthScreeningCheckScreen');
               }}
             >
-              <Text style={styles.title}>다 음</Text>
+              <Text style={styles.title}>다음</Text>
             </Pressable>
           </View>
         </View>
@@ -135,12 +140,18 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   textcontainer: {
-    marginLeft: 30,
-    height: '15%',
+    // marginLeft: 30,
+    width: "100%",
+  },
+  truetextcontainer: {
+    // marginLeft: -30,
+    width: "100%",
+    alignItems: "center",
   },
   text: {
-    fontWeight: 'bold',
     color: 'black',
+    width: "80%",
+    // marginLeft: -30,
   },
   largetext: {
     fontSize: 24,
@@ -187,7 +198,6 @@ const styles = StyleSheet.create({
   buttonOuterContainer: {
     borderRadius: 10,
     width: '80%',
-    height: 50,
     overflow: 'hidden',
     marginVertical: 10,
     elevation: 10,
@@ -197,8 +207,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#E881B1',
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: 22,
+    fontFamily: "웰컴체_Regular",
     textAlign: 'center',
     color: 'white',
   },

@@ -6,10 +6,7 @@ import {
   ScrollView,
   ToastAndroid,
 } from 'react-native';
-import BackgroundScreen from '../BackgroundScreen';
-import { Ionicons } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import AnswerSurvey from '../../components/Cards/AnswerSurvey';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
@@ -45,8 +42,8 @@ const SurveyScreen = ({ navigation }: any) => {
   const surveyData = [
     [
       'pregnant',
-      '임신 여부를 알려주세요',
-      '임산부에 맞는 영양성분이 추천됩니다.',
+      '임신 가능성이 있으신가요?',
+      '임신 계획이 있거나 현재 임신 중인 경우 이를 고려해 더욱 세심하게 영양제를 추천해드릴게요.',
       ['YES', 'NO'],
     ],
     [
@@ -57,20 +54,20 @@ const SurveyScreen = ({ navigation }: any) => {
     ],
     [
       'smoking',
-      '흡연 여부를 알려주세요',
+      '흡연 여부를 알려주세요.',
       '흡연자는 비흡연자보다 일부 영양소가 결핍될 확률이 더 높습니다.',
       ['YES', 'NO'],
     ],
     [
       'drink',
-      '음주 습관에 대해 알려주세요',
-      '알려주세요',
-      ['안함', '한달에 1~2회', '일주일에 1~2회', '일주일에 3회'],
+      '음주 습관에 대해 알려주세요.',
+      '',
+      ['술을 마시지 않음', '한달에 1~2회', '일주일에 1~2회', '일주일에 3회'],
     ],
     [
       'allergy',
       '알러지가 있나요?',
-      '입력해주세요.',
+      '',
       [
         '해당없음',
         '꽃가루',
@@ -85,8 +82,8 @@ const SurveyScreen = ({ navigation }: any) => {
     ],
     [
       'symptom',
-      '다음 중 해당 하는 증상이 있나요?',
-      '중복 선택 가능합니다',
+      '다음 중 해당하는 증상이 있다면 선택해주세요.',
+      '중복 선택 가능합니다.',
       [
         '해당없음',
         '속쓰림',
@@ -105,7 +102,7 @@ const SurveyScreen = ({ navigation }: any) => {
     [
       'disease',
       '다음 중 해당하는 질환을 앓고 계신다면 선택해주세요.',
-      '중복 선택 가능합니다',
+      '중복 선택 가능합니다.',
       [
         '해당없음',
         '빈혈',
@@ -122,8 +119,8 @@ const SurveyScreen = ({ navigation }: any) => {
     ],
     [
       'medicine',
-      '다음 중 복용중인 약이 있으시다면 선택해주세요',
-      '중복선택 가능합니다',
+      '다음 중 복용중인 약이 있으시다면 선택해주세요.',
+      '중복 선택 가능합니다.',
       [
         '해당없음',
         '피임약',
@@ -132,26 +129,26 @@ const SurveyScreen = ({ navigation }: any) => {
         '이뇨제',
         '부정맥(소타롤)',
         '항경련제(가바펜틴)',
-        '갑상선(레보티록신)',
+        '레보티록신(갑상선)',
         '항생제',
       ],
     ],
     [
       'toughActivity',
       '평소 격렬한 신체 활동을 하는 편인가요?',
-      '근육통을 줄일 수 있는 알아봐드릴게요',
+      '근육통을 줄일 수 있는지 알아봐드릴게요.',
       ['YES', 'NO'],
     ],
     [
       'outdoor_activity',
       '충분한 양의 햇빛을 쬐고 계신가요?',
-      '일주일에 4회이상 하루 20분이면 충분하다고 말할 수 있어요.',
-      ['충분하다', '보통이다', '불충분하다', '안 쬔다'],
+      '자외선 차단제를 사용하지 않은 상태에서 팔과 다리를 모두 노출하고 일주일에 4회이상, 하루 20분 이상 햇볕을 쬐면 충분하다고 말할 수 있어요.',
+      ['충분한 양의 햇볕을 쬔다', '종종 햇볕을 쬔다', '가끔 햇볕을 쬔다', '거의 햇볕을 쬐지 않는다'],
     ],
     [
       'balanced_meal',
       '평소 균형잡힌 식사를 하시나요?',
-      '알려주세요',
+      '',
       ['YES', 'NO'],
     ],
     [
@@ -160,24 +157,37 @@ const SurveyScreen = ({ navigation }: any) => {
       '복수 선택 가능합니다.',
       ['채소', '생선', '육류', '과일'],
     ],
-    ['is_ok_big_pill', '알약이 커도 괜찮을까요?', '알려주세요', ['YES.', 'NO']],
+    ['is_ok_big_pill', '큰 알약을 삼키는데 불편함이 없으신가요?', '', ['YES', 'NO']],
     [
       'preferred_brand',
       '선호하는 영양제 브랜드가 있나요?',
-      '중복 선택 가능합니다',
+      '중복 선택 가능합니다.',
       [
         '해당없음',
+        '고려은단',
+        '뉴트리코어',
+        '종근당',
+        'GC녹십자',
+        '제일헬스사이언스',
+        '하루틴',
         'solgar',
-        'california gold nutrition',
         'natural factors',
         'life extension',
+        "Doctor\'s Best",
+        '21st Century',
+        'Thorne Research',
+        'NOW Foods',
+        'MegaFood',
+        'Rainbow Light',
+        'Jarrow Formulas',
+        'Source Naturals',
         '기타',
       ],
     ],
     [
       'problem',
       '해결하고자 하는 문제가 있나요?',
-      '중복 선택 가능합니다',
+      '중복 선택 가능합니다.',
       [
         '해당없음',
         '면역력 개선',
@@ -257,7 +267,7 @@ const SurveyScreen = ({ navigation }: any) => {
             </View>
             <View style={styles.textcontainer}>
               <Text
-                style={{ ...styles.text, ...styles.largetext, ...boldWelcome }}
+                style={{ ...styles.text, ...styles.largetext, ...boldWelcome, width: "80%" }}
               >
                 {surveyData[nowStage][1]}
               </Text>
@@ -266,6 +276,7 @@ const SurveyScreen = ({ navigation }: any) => {
                   ...styles.text,
                   ...styles.smalltext,
                   ...regularWelcome,
+                  width: "80%"
                 }}
               >
                 {surveyData[nowStage][2]}
@@ -335,7 +346,7 @@ const SurveyScreen = ({ navigation }: any) => {
                     // else setSelectedItem(1);
                   }}
                 >
-                  <Text style={{ ...styles.title, ...boldWelcome }}>다 음</Text>
+                  <Text style={{ ...styles.title, ...boldWelcome }}>다음</Text>
                 </Pressable>
               </View>
             </View>
@@ -357,13 +368,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   textcontainer: {
-    marginLeft: 30,
-    marginRight: 40,
+    width: "100%",
+    alignItems: "center",
     marginBottom: 30,
     height: '15%',
   },
   text: {
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     color: 'black',
   },
   largetext: {
@@ -411,7 +422,6 @@ const styles = StyleSheet.create({
   buttonOuterContainer: {
     borderRadius: 10,
     width: '80%',
-    height: 50,
     overflow: 'hidden',
     marginVertical: 10,
     elevation: 10,
@@ -421,8 +431,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#E881B1',
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: 22,
+    fontFamily: "웰컴체_Regular",
     textAlign: 'center',
     color: 'white',
   },

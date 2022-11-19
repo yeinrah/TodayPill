@@ -118,19 +118,22 @@ const DetailedPillCard = (props: any) => {
               </Text>
             ) : null}
           </View>
-          <View style={styles.alertcontainer}>
-            <Ionicons
-              name="warning"
-              size={11}
-              color="#FFCE31"
-            />
-            <Text style={{ ...styles.blackalert, ...regularWelcome }}>
-              주의&nbsp;
-            </Text>
-            <Text style={{ ...styles.greyalert, ...regularWelcome }}>
-              {props.caution}
-            </Text>
-          </View>
+          {
+            props.caution !== null &&
+            <View style={styles.alertcontainer}>
+              <Ionicons
+                name="warning"
+                size={11}
+                color="#FFCE31"
+              />
+              <Text style={{ ...styles.blackalert, ...regularWelcome }}>
+                주의&nbsp;
+              </Text>
+              <Text style={{ ...styles.greyalert, ...regularWelcome }}>
+                {props.caution}
+              </Text>
+            </View>
+          }
         </View>
         <Entypo
           name="magnifying-glass"

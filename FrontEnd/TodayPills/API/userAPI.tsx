@@ -76,6 +76,10 @@ const afterSecondSurvey = async (data) => {
   });
   return res;
 };
+const findCommonQuestion = async (userId) => {
+  const result = await api.get(`/user/findCommonQuestion/${userId}`);
+  return result.data;
+};
 export {
   HealthScreeningCheck,
   getUserInfoByEmail,
@@ -85,4 +89,5 @@ export {
   afterBasicSurvey,
   afterScreeningCheck,
   afterSecondSurvey,
+  findCommonQuestion,
 };

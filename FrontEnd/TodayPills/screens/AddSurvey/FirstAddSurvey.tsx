@@ -20,17 +20,30 @@ const FirstAddSurvey = ({ navigation }: any) => {
     preferred_brand: '',
   });
   const surveyData = [
-    ['is_ok_big_pill', '알약이 커도 괜찮을까요?', '알려주세요', ['YES.', 'NO']],
+    ['is_ok_big_pill', '알약이 커도 괜찮을까요?', '', ['YES', 'NO']],
     [
       'preferred_brand',
       '선호하는 영양제 브랜드가 있나요?',
-      '알려주세요',
+      '',
       [
         '해당없음',
+        '고려은단',
+        '뉴트리코어',
+        '종근당',
+        'GC녹십자',
+        '제일헬스사이언스',
+        '하루틴',
         'solgar',
-        'california gold nutrition',
         'natural factors',
         'life extension',
+        "Doctor\'s Best",
+        '21st Century',
+        'Thorne Research',
+        'NOW Foods',
+        'MegaFood',
+        'Rainbow Light',
+        'Jarrow Formulas',
+        'Source Naturals',
         '기타',
       ],
     ],
@@ -110,7 +123,7 @@ const FirstAddSurvey = ({ navigation }: any) => {
                 setSelectedItem(1);
               }}
             >
-              <Text style={{ ...styles.title, ...boldWelcome }}>다 음</Text>
+              <Text style={styles.title}>다음</Text>
             </Pressable>
           </View>
         </View>
@@ -182,7 +195,6 @@ const styles = StyleSheet.create({
   buttonOuterContainer: {
     borderRadius: 10,
     width: '80%',
-    height: 50,
     overflow: 'hidden',
     marginVertical: 10,
     elevation: 10,
@@ -192,8 +204,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#E881B1',
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: 22,
+    fontFamily: "웰컴체_Regular",
     textAlign: 'center',
     color: 'white',
   },

@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View, Pressable } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import BackgroundScreen from "../BackgroundScreen";
 import { useState } from "react";
@@ -22,20 +22,30 @@ const StartScreen = ({ navigation }: any) => {
           </View> */}
         </View>
         <View style={styles.btnGroup}>
-          <CustomBtn
-            buttonColor={"#FFCE31"}
-            title={"카카오 로그인"}
-            titleColor={"#fff"}
-            fontSize={20}
-            buttonWidth={"200%"}
-            onPress={async () => {
-              // let temp = await AsyncStorage.setItem("@storage_User", "정서");
-              // console.log(temp);
-              //   console.log(navigation, "a");
-              navigation.replace("KakaoScreen");
-              //   navigation.goBack();
-            }}
-          />
+          <View style={[styles.buttonOuterContainer, { width: "200%" }]}>
+            <Pressable
+              android_ripple={{ color: "#4E736F" }}
+              style={[
+                styles.buttonInnerContainer,
+                { backgroundColor: "#F7D5E0"},
+              ]}
+              onPress={async () => {
+                navigation.replace("KakaoScreen");
+              }}
+            >
+              <Text
+                style={{
+                  ...styles.title,
+                  color: "#595959",
+                  fontSize: 20,
+                  letterSpacing: 2,
+                  fontFamily: "웰컴체_Bold"
+                }}
+              >
+                카카오 로그인
+              </Text>
+            </Pressable>
+          </View>
         </View>
       </View>
     </BackgroundStartScreen>
@@ -71,5 +81,20 @@ const styles = StyleSheet.create({
     color: "#C4F1EA",
   },
   btnGroup: { position: "absolute", bottom: 30, alignItems: "center" },
+  buttonOuterContainer: {
+    flex: 1,
+    borderRadius: 30,
+
+    margin: 4,
+    overflow: "hidden",
+    marginVertical: 10,
+    elevation: 5,
+  },
+  buttonInnerContainer: {
+    paddingVertical: 10,
+  },
+  title: {
+    textAlign: "center",
+  },
 });
 export default StartScreen;

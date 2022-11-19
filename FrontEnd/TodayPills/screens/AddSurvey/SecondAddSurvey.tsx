@@ -34,11 +34,11 @@ const SecondAddSurvey = ({ navigation }: any) => {
     sustainedRelease: false,
   });
   const surveyData = [
-    ['lowerPriceLimit', '원하는 가격을 알려주세요', '최소,최대가격 설정!'],
+    ['lowerPriceLimit', '원하는 가격대를 설정해주세요.', ''],
     [
       'additionalEfficacy',
       '추가로 원하는 효과가 있나요?',
-      '선택해주세요',
+      '중복 선택 가능합니다.',
       [
         '해당없음',
         '스트레스 완화',
@@ -55,13 +55,13 @@ const SecondAddSurvey = ({ navigation }: any) => {
     ],
     [
       'formula',
-      '원하는 약의 형태를 선택해주세요',
-      '선택해주세요',
+      '원하는 약의 형태를 선택해주세요.',
+      '',
       ['해당없음', '캡슐형', '츄어블', '액체형', '파우더형', '스프레이형'],
     ],
     [
       'sustainedRelease',
-      '서방형제재를 원하세요?',
+      '서방형 제제를 원하세요?',
       '서방형 제제란 영양제 성분이 천천히 방출되게끔 만든 형태를 말해요. 더 자세한 정보는 AI 분석 탭에서 확인해보실 수 있어요.',
       ['YES', 'NO'],
     ],

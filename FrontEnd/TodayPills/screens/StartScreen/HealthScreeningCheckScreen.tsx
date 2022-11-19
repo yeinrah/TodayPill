@@ -1,20 +1,22 @@
-import { useState } from "react";
-import { StyleSheet, Text, View, Pressable } from "react-native";
-import BackgroundScreen from "../BackgroundScreen";
+import { StyleSheet, Text, View, Pressable, Image } from "react-native";
 import BackgroundScreen2 from "../BackgroundScreen2";
 
 const HealthScreeningCheckScreen = ({ navigation }: any) => {
   return (
     <BackgroundScreen2>
       <View style={styles.container}>
+        <Image
+          source={require("../../assets/images/exam-intro.png")}
+          style={styles.image}
+        />
         <View style={styles.textcontainer}>
-          <Text style={[styles.text, styles.greytext]}>건강 검진 결과를</Text>
-          <Text style={[styles.text, styles.greytext]}>기반으로 필요한</Text>
-          <Text style={[styles.text, styles.greytext]}>영양 성분을</Text>
-          <Text style={[styles.text, styles.greytext]}>추천해드릴게요!</Text>
+          <Text style={{...styles.greytext, fontFamily: "웰컴체_Bold"}}>건강 검진 결과를 기반으로 필요한</Text>
+          {/* <Text style={{...styles.greytext, fontFamily: "웰컴체_Bold"}}></Text> */}
+          <Text style={{...styles.greytext, fontFamily: "웰컴체_Bold"}}>영양 성분을 추천해드릴게요!</Text>
+          {/* <Text style={{...styles.greytext, fontFamily: "웰컴체_Bold"}}></Text> */}
         </View>
         <View style={styles.questioncontainer}>
-          <Text style={[styles.text, styles.whitetext]}>
+          <Text style={styles.whitetext}>
             건강 검진을 받으신 적이 있나요?
           </Text>
           <View style={styles.buttoncontainer}>
@@ -51,31 +53,33 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
   },
+  image: {
+    width: "80%",
+    height: "80%",
+    resizeMode: "contain",
+    marginTop: -50,
+  },
   textcontainer: {
     alignItems: "center",
-  },
-  text: {
-    fontWeight: "bold",
-    textShadowColor: "rgba(0, 0, 0, 0.25)",
-    textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 1,
+    marginTop: -230,
   },
   greytext: {
     color: "black",
-    fontSize: 30,
+    fontSize: 25,
   },
   whitetext: {
-    // color: "white",
     fontSize: 24,
+    fontFamily: "웰컴체_Regular",
   },
   questioncontainer: {
     alignItems: "center",
+    marginTop: -20,
   },
   buttoncontainer: {
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-evenly",
-    marginTop: 20,
+    // marginTop: 20,
   },
   buttonOuterContainer: {
     borderRadius: 25,
@@ -94,8 +98,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#B7B7B7",
   },
   title: {
-    fontSize: 30,
-    fontWeight: "bold",
+    fontSize: 22,
+    fontFamily: "웰컴체_Regular",
     textAlign: "center",
     color: "white",
   },

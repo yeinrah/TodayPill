@@ -329,7 +329,7 @@ const styles = StyleSheet.create({
     color: "black",
   },
   largetext: {
-    fontSize: 24,
+    fontSize: 24
   },
   smalltext: {
     fontSize: 15,
@@ -348,11 +348,11 @@ const styles = StyleSheet.create({
     elevation: 10,
   },
   iteminnercontainer: {
-    paddingVertical: 25,
+    paddingVertical: 27,
     backgroundColor: "#E5E5E5",
   },
   iteminnercontainerClicked: {
-    paddingVertical: 25,
+    paddingVertical: 27,
     backgroundColor: "rgba(142,232,222,0.95)",
   },
   itemflex: {
@@ -362,7 +362,8 @@ const styles = StyleSheet.create({
   },
   itemtitle: {
     fontSize: 24,
-    fontWeight: "bold",
+    // fontWeight: "bold",
+    fontFamily: "웰컴체_Bold",
     marginLeft: 25,
   },
   buttoncontainer: {
@@ -384,7 +385,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: "bold",
+    // fontWeight: "bold",
+    fontFamily: "웰컴체_Bold",
     textAlign: "center",
     color: "white",
   },
