@@ -79,17 +79,17 @@ public class Codef {
 		HashMap<String, Object> responseMap;
 		HashMap<String, Object> resultMap;
 			responseMap = new ObjectMapper().readValue(result, HashMap.class);
-			System.out.println("accountMap1 =>" + accountMap);
-			System.out.println("responseMap =>"+ responseMap);
+//			System.out.println("accountMap1 =>" + accountMap);
+//			System.out.println("responseMap =>"+ responseMap);
 			resultMap = (HashMap<String, Object>)responseMap.get("result");
-			System.out.println("resultMap =>" + resultMap);
+//			System.out.println("resultMap =>" + resultMap);
 
 
 
 		//N차 추가인증은 기본 파라미터 + 추가인증 파라미터를 요청해줘야 한다.
 		accountMap.put("simpleAuth",	"1");	
 		accountMap.put("is2Way",	true);	
-		System.out.println("accountMap2 =>" + accountMap);
+//		System.out.println("accountMap2 =>" + accountMap);
 		JSONParser parser = new JSONParser();
 //		진짜로 할때
 			JSONObject jsonob = (JSONObject) parser.parse(result);
@@ -106,7 +106,7 @@ public class Codef {
 			add.put("jti",	jsonob.get("jti").toString());
 			add.put("twoWayTimestamp", Long.parseLong(jsonob.get("twoWayTimestamp").toString()));
 			accountMap.put("twoWayInfo",add);
-			System.out.println("accountMap3 =>" + accountMap);
+//			System.out.println("accountMap3 =>" + accountMap);
 			//1. json 안에 값들을 넣어서 실험해봐라
 			//2. 그게안되면 지갑에 계속 인증요청이 오는데, thread sleep를 해야하나? 잘 모르겠다.
 
@@ -126,23 +126,23 @@ public class Codef {
 			result = codef.requestCertification(productUrl, EasyCodefServiceType.DEMO, accountMap);
 
 			//resReferenceList를 가져오는 것. 실제로는 resPreviewList를 가져오는게 맞는듯??
-			System.out.println(result);
+//			System.out.println(result);
 			responseMap = new ObjectMapper().readValue(result, HashMap.class);
 			resultMap = (HashMap<String, Object>)responseMap.get("data");
 			ArrayList<Object> list = (ArrayList)resultMap.get("resReferenceList");
-			System.out.println("레퍼런스데이터 사이즈=>"+list.size());
+//			System.out.println("레퍼런스데이터 사이즈=>"+list.size());
 			ArrayList<Object> prevList = (ArrayList)resultMap.get("resPreviewList");
-			System.out.println("진짜데이터 사이즈=>"+prevList.size());
+//			System.out.println("진짜데이터 사이즈=>"+prevList.size());
 			HashMap<String, Object> returnMap = new HashMap<>();
 			
 			boolean checkHealthScreening = true;
 			if(prevList.size()==0) checkHealthScreening = false;
 			returnMap.put("check", checkHealthScreening);
 			
-			System.out.println(list);
-			System.out.println(list.get(3).getClass().getName());
+			//진짜 테스트때 get 
+//			System.out.println(list);
+//			System.out.println(list.get(3).getClass().getName());
 			LinkedHashMap<String, Object> linkedHashMap = (LinkedHashMap)list.get(3);
-			System.out.println();
 //			System.out.println((String)linkedHashMap.get("resyGPT"));
 //			System.out.println((String)linkedHashMap.get("resTotalCholesterol"));
 //			System.out.println((String)linkedHashMap.get("resBloodPressure"));
@@ -155,29 +155,46 @@ public class Codef {
 			String strResHemoglobin = (String)linkedHashMap.get("resHemoglobin");
 			strResHemoglobin = strResHemoglobin.substring(2,6);
 			double resHemoglobin = Double.parseDouble(strResHemoglobin);
-			System.out.println(strResHemoglobin);
+//			System.out.println(strResHemoglobin);
 			if(resHemoglobin<13.5) {
 				insufficientNutrient.add("철분");
 			}
+			
+			//Creatinine 정상범위 0.5~1.4 => 비타민 D
+			String strResSerumCreatinine = (String)linkedHashMap.get("resSerumCreatinine");
+			strResSerumCreatinine = strResSerumCreatinine.substring(0,3);
+//			System.out.println(strResSerumCreatinine);
+			Double resSerumCreatinine = Double.parseDouble(strResSerumCreatinine);
+			if(resSerumCreatinine>1.4 || resSerumCreatinine<0.5) {
+				insufficientNutrient.add("비타민 D");
+			}
+			//resUrinaryProtein => 종비
+			String strResUrinaryProtein = (String)linkedHashMap.get("resUrinaryProtein");
+//			System.out.println(strResUrinaryProtein);
+			if(strResUrinaryProtein.contains("양성")) {
+				insufficientNutrient.add("종합비타민");
+			}
+			
 			String strResyGPT = (String)linkedHashMap.get("resyGPT");
 			strResyGPT = strResyGPT.substring(2,4);
 			int resyGPT = Integer.parseInt(strResyGPT);
-			System.out.println(strResyGPT);
+//			System.out.println(strResyGPT);
 			if(resyGPT>50) {
 				insufficientNutrient.add("비타민 C");
 			}
 			String strResTotalCholesterol = (String)linkedHashMap.get("resTotalCholesterol");
 			strResTotalCholesterol = strResTotalCholesterol.substring(0,3);
 			int resTotalCholesterol = Integer.parseInt(strResTotalCholesterol);
-			System.out.println(resTotalCholesterol);
+//			System.out.println(resTotalCholesterol);
 			if(resTotalCholesterol>200) {
 				insufficientNutrient.add("오메가 3");
+				//여기 오메가 3는 띄워져있다. 확인해라
 			}
 			
 			String strResBloodPressure = (String)linkedHashMap.get("resBloodPressure");
 			strResBloodPressure = strResBloodPressure.substring(0,3);
 			int resBloodPressure = Integer.parseInt(strResBloodPressure);
-			System.out.println(resBloodPressure);
+//			System.out.println(resBloodPressure);
 			if(resBloodPressure>=140) {
 				insufficientNutrient.add("마그네슘");
 			}
@@ -185,10 +202,21 @@ public class Codef {
 			String strResBMI = (String)linkedHashMap.get("resBMI");
 			strResBMI = strResBMI.substring(0,2);
 			int resBMI = Integer.parseInt(strResBMI);
-			System.out.println(strResBMI);
+//			System.out.println(strResBMI);
 			if(resBMI>=23) {
 				insufficientNutrient.add("비타민 B");
 			}
+			//중성지방 Triglyceride 정상범위 ~150  => 콜라겐
+			String strResTriglyceride = (String)linkedHashMap.get("resTriglyceride");
+			if(strResTriglyceride.charAt(3)>='A') strResTriglyceride = strResTriglyceride.substring(0,2);
+			else strResTriglyceride = strResTriglyceride.substring(0,3);
+//			System.out.println(strResTriglyceride);
+			int ResTriglyceride = Integer.parseInt(strResTriglyceride);
+			if(ResTriglyceride>=150) {
+				insufficientNutrient.add("콜라겐");
+			}
+			
+			
 			returnMap.put("list", insufficientNutrient);
 			return returnMap;
 			

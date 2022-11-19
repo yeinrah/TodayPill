@@ -52,7 +52,7 @@ public class UserService {
 			User userinfo = User.builder().email(email).name(name).age(age).gender(gender).build();
 			userRepository.save(userinfo);
 			// 객체가 넘어가면 회원가입 처음 한거
-			System.out.println("builder하고 나면 이런 값이 나옵니다." + user);
+//			System.out.println("builder하고 나면 이런 값이 나옵니다." + user);
 			return true;
 		} else {
 			// null이 넘어가면 이미 있는 회원

@@ -17,7 +17,7 @@ import com.todaypill.db.entity.CommonQuestion;
 import com.todaypill.db.entity.CompareUser;
 import com.todaypill.db.entity.Supplement;
 import com.todaypill.db.entity.User;
-import com.todaypill.service.CommonquestionService;
+import com.todaypill.service.CommonQuestionService;
 import com.todaypill.service.LikeService;
 import com.todaypill.service.SupplementService;
 import com.todaypill.service.UserService;
@@ -31,12 +31,12 @@ public class SupplementController {
 
 	UserService userService;
 	SupplementService supplementService;
-	CommonquestionService commonquestionService;
+	CommonQuestionService commonquestionService;
 	LikeService likeService;
 
 	@Autowired
 	public SupplementController(UserService userService, SupplementService supplementService,
-			CommonquestionService commonquestionService, LikeService likeService) {
+			CommonQuestionService commonquestionService, LikeService likeService) {
 		super();
 		this.userService = userService;
 		this.supplementService = supplementService;

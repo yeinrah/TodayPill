@@ -41,9 +41,9 @@ public class RecommendService {
 
 		// commonquestion과 user 객체를 가져오면 된다
 		String email = userSecondSurveyReq.getEmail();
-		System.out.println(email);
+//		System.out.println(email);
 		User user = userRepository.findOneByEmail(email);
-		System.out.println(user.getEmail());
+//		System.out.println(user.getEmail());
 		CommonQuestion commonQuestion = commonQuestionRepository.findOneByUserId(user.getUserId());
 
 		List<SupplementAndScoreRes> supplementAndScoreRes = new ArrayList<>();
