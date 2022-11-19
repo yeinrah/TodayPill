@@ -51,11 +51,12 @@ const PersonalRecommendationScreen = ({ navigation }: any) => {
       <ScrollView>
         <View style={styles.textContainer}>
           <Text>
-            <Text style={{ ...styles.title, ...boldWelcome }}>
+            {/* <Text style={{ ...styles.title, ...boldWelcome }}>
               {name.length > 5 ? name.slice(0, 5) + '...  ' : name + ' '}
-            </Text>
+            </Text> */}
             <Text style={{ ...styles.contentText, ...boldWelcome }}>
-              님의 맞춤 솔루션
+              {name.length > 5 ? name.slice(0, 5) + '...  ' : name + ' '}님의
+              맞춤 솔루션
             </Text>
           </Text>
         </View>
@@ -79,7 +80,7 @@ const PersonalRecommendationScreen = ({ navigation }: any) => {
                   <MaterialCommunityIcons
                     style={styles.tagStyle}
                     name="cursor-pointer"
-                    size={24}
+                    size={20}
                     color="black"
                   />
                 </View>
@@ -94,15 +95,17 @@ const PersonalRecommendationScreen = ({ navigation }: any) => {
             resizeMode="cover"
           > */}
           <View style={styles.pillDetailImage}>
-            <Image source={require('../../assets/images/pillbox.png')} />
+            <Image source={require('../../assets/images/similar.png')} />
           </View>
           <View style={styles.inPillDetail}>
             <View style={styles.inTextContainer}>
               <Text>
-                <Text style={{ ...styles.inTitle, ...boldWelcome }}>
+                {/* <Text style={{ ...styles.inTitle, ...boldWelcome }}>
                   {name}
+                </Text> */}
+                <Text style={{ ...boldWelcome, fontSize: 17 }}>
+                  {name}님의 추천 영양성분
                 </Text>
-                <Text style={{ ...boldWelcome }}>님의 추천 영양성분</Text>
               </Text>
             </View>
             <View style={styles.listGroup}>
@@ -117,16 +120,16 @@ const PersonalRecommendationScreen = ({ navigation }: any) => {
                     });
                   }}
                 >
-                  {'\u2022' + item}
+                  {'\u2022' + ' ' + item}
                 </Text>
               ))}
             </View>
           </View>
           {/* </ImageBackground> */}
         </View>
-        <View style={styles.pillCharacter}>
+        {/* <View style={styles.pillCharacter}>
           <Image source={require('../../assets/images/pillCharacter.png')} />
-        </View>
+        </View> */}
         <View style={styles.btn}>
           <CustomBtn
             buttonColor={accent}
@@ -143,9 +146,9 @@ const PersonalRecommendationScreen = ({ navigation }: any) => {
 };
 const styles = StyleSheet.create({
   textContainer: { alignItems: 'center', fontSize: 20 },
-  inTextContainer: { alignItems: 'center', fontSize: 10, marginTop: 20 },
+  inTextContainer: { fontSize: 10, marginTop: 20, marginLeft: 20 },
   title: { fontWeight: 'bold', fontSize: 22 },
-  contentText: { fontSize: 15 },
+  contentText: { fontSize: 24 },
   inTitle: { fontWeight: 'bold', fontSize: 15 },
   btn: {
     alignItems: 'center',
@@ -161,25 +164,29 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   inPillDetail: {
-    width: 200,
-    backgroundColor: '#FFE3FF',
+    width: 270,
+    // backgroundColor: '#FFE3FF',
+    marginVertical: 15,
+    marginHorizontal: 30,
+    elevation: 15,
     marginTop: 50,
     borderRadius: 10,
-    borderWidth: 2,
-    borderStyle: 'dashed',
+    borderWidth: 1,
+    backgroundColor: 'white',
+    // borderStyle: 'dashed',
   },
-  pillBox: { alignItems: 'center' },
+  pillBox: { alignItems: 'center', marginBottom: 80 },
   listGroup: { marginLeft: 25, marginTop: 20 },
-  listText: { marginBottom: 15 },
+  listText: { marginBottom: 15, fontSize: 17 },
   shape: {
     height: 70,
   },
   image: {
-    marginVertical: 5,
-    marginHorizontal: 10,
-    width: 50,
-    height: 50,
-    resizeMode: 'contain',
+    // marginVertical: 5,
+    // marginHorizontal: 10,
+    // width: 50,
+    // height: 50,
+    // resizeMode: 'contain',
   },
   pillDetailImage: {
     position: 'relative',
@@ -188,7 +195,8 @@ const styles = StyleSheet.create({
     height: 0,
     // marginLeft: '30%',
     marginTop: '10%',
-    transform: [{ scale: 0.15 }],
+    marginRight: 230,
+    transform: [{ scale: 0.42 }],
   },
   pillCharacter: {
     position: 'relative',

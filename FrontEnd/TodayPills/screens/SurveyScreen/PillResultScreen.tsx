@@ -88,6 +88,8 @@ const PillResultScreen = ({ navigation, route }: any) => {
                   additionalEfficacy={item.additionalEfficacy}
                   ingredients={item.ingredients}
                   caution={item.caution}
+                  isMain={true}
+                  navigation={navigation}
                 />
               );
             })}

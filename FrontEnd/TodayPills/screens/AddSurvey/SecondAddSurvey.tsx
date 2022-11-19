@@ -34,7 +34,7 @@ const SecondAddSurvey = ({ navigation }: any) => {
     sustainedRelease: false,
   });
   const surveyData = [
-    ['lowerPriceLimit', '원하는 가격을 알려주세요', '최소,최대가격 설정!'],
+    ['lowerPriceLimit', '원하는 가격대를 설정해주세요', ''],
     [
       'additionalEfficacy',
       '추가로 원하는 효과가 있나요?',
@@ -271,7 +271,6 @@ const styles = StyleSheet.create({
   buttonOuterContainer: {
     borderRadius: 10,
     width: '80%',
-    height: 50,
     overflow: 'hidden',
     marginVertical: 10,
     elevation: 10,
@@ -281,8 +280,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#E881B1',
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: 22,
+    fontFamily: '웰컴체_Regular',
     textAlign: 'center',
     color: 'white',
   },

@@ -81,7 +81,7 @@ const NutrientDetailScreen = ({ navigation, route }: any) => {
               style={styles.image}
             > */}
             <View style={styles.pillImage}>
-              <Image source={require('../../assets/images/pillbox.png')} />
+              <Image source={require('../../assets/images/similar.png')} />
             </View>
             <View style={styles.image}>
               <Text
@@ -96,9 +96,9 @@ const NutrientDetailScreen = ({ navigation, route }: any) => {
             </View>
             {/* </ImageBackground> */}
           </View>
-          <View style={styles.pillCharacter}>
+          {/* <View style={styles.pillCharacter}>
             <Image source={require('../../assets/images/pillCharacter.png')} />
-          </View>
+          </View> */}
           <View style={styles.recommendcontainer}>
             <View style={styles.recommendtextcontainer}>
               <Text
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
     // height: '70%',
   },
   boldtext: {
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
   },
   descriptioncontainer: {
     width: '80%',
@@ -218,10 +218,11 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    borderWidth: 2,
-    borderRadius: 5,
-    borderStyle: 'dashed',
-    backgroundColor: '#FFE3FF',
+    borderRadius: 25,
+    // borderStyle: 'dashed',
+    // backgroundColor: '#FFE3FF',
+    backgroundColor: 'white',
+    elevation: 7,
     margin: 10,
     padding: 10,
     // alignContent: 'stretch',
@@ -229,21 +230,22 @@ const styles = StyleSheet.create({
   },
   pillImage: {
     position: 'relative',
-    top: -60,
+    top: -43,
     width: '15%',
-    height: '15%',
-    marginLeft: '30%',
-    transform: [{ scale: 0.15 }],
+    height: 28,
+    marginLeft: '50%',
+    transform: [{ scale: 0.4 }],
   },
   descriptiontext: {
     // position: 'absolute',
     // left: 30,
-    fontSize: 20,
+    fontSize: 17,
     width: '90%',
   },
   recommendcontainer: {
     width: '100%',
     alignItems: 'center',
+    marginTop: 60,
   },
   recommendtextcontainer: {
     flexDirection: 'row',
@@ -251,7 +253,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   recommendtext: {
-    fontSize: 15,
+    fontSize: 20,
   },
   buttonOuterContainer: {
     borderRadius: 20,

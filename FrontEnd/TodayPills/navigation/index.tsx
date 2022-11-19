@@ -167,6 +167,21 @@ export default function Navigation({ colorScheme, LoginCheck }: Inavigation) {
           component={SecondAddSurvey}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="SupplementScreen"
+          component={SupplementScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Ai"
+          component={Ai}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="AiQnaScreen"
+          component={AiQnaScreen}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
