@@ -51,15 +51,23 @@ const NutrientDetailScreen = ({ navigation, route }: any) => {
             navigation.goBack();
           }}
         /> */}
-        <View style={{ marginLeft: 20 }}>
+        {/* <View style={{ marginLeft: 20 }}>
           <GoBackBtn
             size={48}
             onPress={() => {
               navigation.goBack();
             }}
           />
-        </View>
+        </View> */}
         <View style={styles.nutrienttextcontainer}>
+          <View style={styles.backBtn}>
+            <GoBackBtn
+              size={48}
+              onPress={() => {
+                navigation.goBack();
+              }}
+            />
+          </View>
           <Text
             style={{ ...styles.nutrienttext, ...boldWelcome, letterSpacing: 1 }}
           >
@@ -190,7 +198,7 @@ const styles = StyleSheet.create({
   },
   nutrienttextcontainer: {
     flexDirection: 'row',
-    marginLeft: 30,
+    marginLeft: 10,
   },
   nutrienttext: {
     fontSize: 25,
@@ -270,6 +278,10 @@ const styles = StyleSheet.create({
     marginRight: '70%',
     height: 60,
     transform: [{ scale: 0.25 }],
+  },
+  backBtn: {
+    position: 'relative',
+    bottom: 10,
   },
 });
 

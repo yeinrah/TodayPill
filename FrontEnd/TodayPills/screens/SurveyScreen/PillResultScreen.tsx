@@ -59,15 +59,15 @@ const PillResultScreen = ({ navigation, route }: any) => {
             navigation.replace("PersonalRecommendationScreen");
           }}
         /> */}
-        <View style={{ marginLeft: 20 }}>
+        {/* <View style={{ marginLeft: 5 }}>
+        </View> */}
+        <View style={styles.titleGroup}>
           <GoBackBtn
             size={48}
             onPress={() => {
               navigation.replace('PersonalRecommendationScreen');
             }}
           />
-        </View>
-        <View style={styles.titleGroup}>
           <Text style={{ ...styles.title, ...boldWelcome }}>
             {myName} 님의 {nowMyNutrient} 추천
           </Text>
@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
   },
   titleGroup: {
     alignItems: 'center',
+    flexDirection: 'row',
   },
   title: {
     fontSize: 25,

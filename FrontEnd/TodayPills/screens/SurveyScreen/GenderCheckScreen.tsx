@@ -27,15 +27,15 @@ const GenderCheckScreen = ({ navigation }: any) => {
             navigation.goBack();
           }}
         /> */}
-        <View style={{ marginLeft: 20 }}>
-          <GoBackBtn
-            size={48}
-            onPress={() => {
-              navigation.goBack();
-            }}
-          />
-        </View>
         <View style={styles.textcontainer}>
+          <View style={{ marginLeft: 20 }}>
+            <GoBackBtn
+              size={48}
+              onPress={() => {
+                navigation.goBack();
+              }}
+            />
+          </View>
           <Text style={{ ...styles.text, ...styles.largetext, ...boldWelcome }}>
             성별을 알려주세요.
           </Text>

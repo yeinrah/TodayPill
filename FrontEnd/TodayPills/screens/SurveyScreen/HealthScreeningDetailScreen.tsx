@@ -38,15 +38,15 @@ const HealthScreeningDetailScreen = ({ navigation }) => {
                 navigation.goBack();
               }}
             /> */}
-            <View style={{ marginLeft: 20 }}>
-              <GoBackBtn
-                size={48}
-                onPress={() => {
-                  navigation.goBack();
-                }}
-              />
-            </View>
             <View style={styles.textcontainer}>
+              <View style={{ marginLeft: 20 }}>
+                <GoBackBtn
+                  size={48}
+                  onPress={() => {
+                    navigation.goBack();
+                  }}
+                />
+              </View>
               <Text
                 style={{ ...styles.text, ...styles.largetext, ...boldWelcome }}
               >
@@ -203,6 +203,10 @@ const styles = StyleSheet.create({
   },
   customBtnView: {
     alignItems: 'center',
+  },
+  backBtn: {
+    position: 'relative',
+    bottom: 10,
   },
 });
 export default HealthScreeningDetailScreen;
