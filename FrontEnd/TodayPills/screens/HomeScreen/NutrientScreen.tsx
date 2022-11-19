@@ -92,7 +92,8 @@ const NutrientScreen = ({ navigation, route }: any) => {
                 android_ripple={{ color: '#4E736F' }}
                 style={styles.buttonInnerContainer}
                 onPress={async () => {
-                  navigation.navigate('ChatScreenDetail', {
+                  await navigation.jumpTo('ChatScreen');
+                  await navigation.navigate('ChatScreenDetail', {
                     nutId: nutId,
                     nutrient: pillKOtoEN.get(nutrient),
                     nutrientName: nutrient,
