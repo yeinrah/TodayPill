@@ -605,111 +605,111 @@ export default function SupplementScreen({ navigation, route }: any) {
 										</View>
 									</View>
 								</View>
-							</View>
-							<View style={styles.flexrow}>
-								<View style={styles.headcontainer}>
-									<View style={styles.head}>
-										<Text style={styles.headtext}>
-											추천 복용 시간
-										</Text>
+								<View style={styles.flexrow}>
+									<View style={styles.headcontainer}>
+										<View style={styles.head}>
+											<Text style={styles.headtext}>
+												추천 복용 시간
+											</Text>
+										</View>
+									</View>
+									<View style={styles.contentcontainer}>
+										<View style={styles.content}>
+											<Text
+												style={styles.contenttext}
+												numberOfLines={1}
+												ellipsizeMode={"tail"}
+											>
+												{pill.note}
+											</Text>
+										</View>
 									</View>
 								</View>
-								<View style={styles.contentcontainer}>
-									<View style={styles.content}>
-										<Text
-											style={styles.contenttext}
-											numberOfLines={1}
-											ellipsizeMode={"tail"}
-										>
-											{pill.note}
-										</Text>
+								<View style={styles.flexrow}>
+									<View style={styles.headcontainer}>
+										<View style={styles.head}>
+											<Text style={styles.headtext}>
+												총량
+											</Text>
+										</View>
+									</View>
+									<View style={styles.contentcontainer}>
+										<View style={styles.content}>
+											<Text
+												style={styles.contenttext}
+												numberOfLines={1}
+												ellipsizeMode={"tail"}
+											>
+												{pill.amount}
+											</Text>
+										</View>
 									</View>
 								</View>
-							</View>
-							<View style={styles.flexrow}>
-								<View style={styles.headcontainer}>
-									<View style={styles.head}>
-										<Text style={styles.headtext}>
-											총량
-										</Text>
+								<View style={styles.flexrow}>
+									<View style={styles.headcontainer}>
+										<View style={styles.head}>
+											<Text style={styles.headtext}>
+												1회 섭취량
+											</Text>
+										</View>
+									</View>
+									<View style={styles.contentcontainer}>
+										<View style={styles.content}>
+											<Text
+												style={styles.contenttext}
+												numberOfLines={1}
+												ellipsizeMode={"tail"}
+											>
+												{pill.requiredCount}
+											</Text>
+										</View>
 									</View>
 								</View>
-								<View style={styles.contentcontainer}>
-									<View style={styles.content}>
-										<Text
-											style={styles.contenttext}
-											numberOfLines={1}
-											ellipsizeMode={"tail"}
-										>
-											{pill.amount}
-										</Text>
+								<View style={styles.flexrow}>
+									<View style={styles.headcontainer}>
+										<View style={styles.head}>
+											<Text style={styles.headtext}>
+												제형
+											</Text>
+										</View>
+									</View>
+									<View style={styles.contentcontainer}>
+										<View style={styles.content}>
+											<Text
+												style={styles.contenttext}
+												numberOfLines={1}
+												ellipsizeMode={"tail"}
+											>
+												{
+													pill.formula === "capsule" ?
+														"캡슐" :
+														pill.formula === "liquid" ?
+															"액상" :
+															pill.formula === "chewable" ?
+																"젤리" :
+																pill.formula === "powder" ?
+																	"분말" :
+																	pill.formula === "spray" ?
+																	"스프레이" : null
+												}
+											</Text>
+										</View>
 									</View>
 								</View>
-							</View>
-							<View style={styles.flexrow}>
-								<View style={styles.headcontainer}>
-									<View style={styles.head}>
-										<Text style={styles.headtext}>
-											1회 섭취량
-										</Text>
+								<View style={styles.flexrow}>
+									<View style={styles.headcontainer}>
+										<View style={styles.ingredienthead}>
+											<Text style={styles.headtext}>
+												주의사항
+											</Text>
+										</View>
 									</View>
-								</View>
-								<View style={styles.contentcontainer}>
-									<View style={styles.content}>
-										<Text
-											style={styles.contenttext}
-											numberOfLines={1}
-											ellipsizeMode={"tail"}
-										>
-											{pill.requiredCount}
-										</Text>
-									</View>
-								</View>
-							</View>
-							<View style={styles.flexrow}>
-								<View style={styles.headcontainer}>
-									<View style={styles.head}>
-										<Text style={styles.headtext}>
-											제형
-										</Text>
-									</View>
-								</View>
-								<View style={styles.contentcontainer}>
-									<View style={styles.content}>
-										<Text
-											style={styles.contenttext}
-											numberOfLines={1}
-											ellipsizeMode={"tail"}
-										>
-											{
-												pill.formula === "capsule" ?
-													"캡슐" :
-													pill.formula === "liquid" ?
-														"액상" :
-														pill.formula === "chewable" ?
-															"젤리" :
-															pill.formula === "powder" ?
-																"분말" :
-																pill.formula === "spray" ?
-																"스프레이" : null
-											}
-										</Text>
-									</View>
-								</View>
-							</View>
-							<View style={styles.flexrow}>
-								<View style={styles.headcontainer}>
-									<View style={styles.ingredienthead}>
-										<Text style={styles.headtext}>
-											주의사항
-										</Text>
-									</View>
-								</View>
-								<View style={styles.contentcontainer}>
-									<View style={styles.ingredientcontent}>
-										<Text style={styles.contenttext}>
-											{pill.caution}
-										</Text>
+									<View style={styles.contentcontainer}>
+										<View style={styles.ingredientcontent}>
+											<Text style={styles.contenttext}>
+												{pill.caution}
+											</Text>
+										</View>
 									</View>
 								</View>
 							</View>
@@ -935,7 +935,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#ECF6F4",
     borderRadius: 10,
     elevation: 5,
-		marginHorizontal: 10,
+		alignSelf: "center",
+		// marginHorizontal: 20,
 	},
 	flexrow: {
 		flexDirection: "row",
@@ -946,21 +947,38 @@ const styles = StyleSheet.create({
 		marginRight: 20,
 	},
 	aicontainer: {
-		width: "100%",
-		alignItems: "center",
+		width: "90%",
+		alignSelf: "center",
+		// paddingHorizontal: 10,
+		// marginHorizontal: 20,
+	},
+	aiimage: {
+		width: 50,
+		height: 60,
+		resizeMode: "contain",
+		// marginLeft: 3.5,
+		// marginRight: 10,
+		marginLeft: 8.5,
+		marginRight: 4,
 	},
 	aitext: {
-		width: "90%",
+		width: "100%",
     backgroundColor: "#ECF6F4",
 		elevation: 5,
-		paddingHorizontal: 10,
-		paddingVertical: 5,
-		fontSize: 19,
+		paddingHorizontal: 15,
+		paddingVertical: 10,
+		fontSize: 17,
 		fontFamily: "웰컴체_Regular",
 		borderRadius: 10,
+		marginBottom: 8,
 	},
 	height: {
 		height: 430,
+	},
+	textjustify: {
+		height: 60,
+		justifyContent: "flex-end",
+		paddingBottom: 1,
 	},
 	loadingspinnercontainer: {
 		width: "100%",
@@ -971,5 +989,5 @@ const styles = StyleSheet.create({
 	loadingspinner: {
     width: 200,
     height: 200,
-  },
+	},
 });
