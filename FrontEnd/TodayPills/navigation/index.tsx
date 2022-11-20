@@ -68,6 +68,7 @@ import AiResultScreen from '../screens/AiScreen/AiResultScreen';
 import ChatScreenDetail from '../screens/ChatScreen/ChatScreenDetail';
 import ChatHomeScreen from '../screens/ChatScreen/ChatHomeScreen';
 import SupplementScreen from '../screens/HomeScreen/SupplementScreen';
+import HealthScreeningFail from '../screens/SurveyScreen/HealthScreeningFail';
 interface Inavigation {
   colorScheme: ColorSchemeName;
   LoginCheck: () => {};
@@ -180,6 +181,11 @@ export default function Navigation({ colorScheme, LoginCheck }: Inavigation) {
         <Stack.Screen
           name="AiQnaScreen"
           component={AiQnaScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="HealthScreeningFail"
+          component={HealthScreeningFail}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

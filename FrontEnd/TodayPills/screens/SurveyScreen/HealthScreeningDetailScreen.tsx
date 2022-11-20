@@ -45,14 +45,22 @@ const HealthScreeningDetailScreen = ({ navigation }) => {
                   }}
                 />
               </View>
-              <View style={{width: "100%", alignItems: "center"}}>
+              <View style={{ width: '100%', alignItems: 'center' }}>
                 <Text
-                  style={{ ...styles.text, ...styles.largetext, ...boldWelcome }}
+                  style={{
+                    ...styles.text,
+                    ...styles.largetext,
+                    ...boldWelcome,
+                  }}
                 >
                   건강 검진 결과 분석을 위해
                 </Text>
                 <Text
-                  style={{ ...styles.text, ...styles.largetext, ...boldWelcome }}
+                  style={{
+                    ...styles.text,
+                    ...styles.largetext,
+                    ...boldWelcome,
+                  }}
                 >
                   본인 정보를 입력해주세요
                 </Text>
@@ -103,7 +111,7 @@ const HealthScreeningDetailScreen = ({ navigation }) => {
                     const nameRegex1 = /[A-Za-z가-힣]{1,20}/g;
                     const nameRegex2 =
                       /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"0-9]/g;
-  
+
                     if (!name.match(nameRegex1) || name.match(nameRegex2)) {
                       ToastAndroid.show(
                         '정상적인 이름을 작성해주세요',
@@ -114,7 +122,7 @@ const HealthScreeningDetailScreen = ({ navigation }) => {
                     const birthRegex1 = /[0-9]{8}/g;
                     const birthRegex2 =
                       /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"0-9]/g;
-  
+
                     if (!birth.match(birthRegex1) || name.match(birthRegex2)) {
                       ToastAndroid.show(
                         '올바른 생일을 입력해주세요',
@@ -125,7 +133,7 @@ const HealthScreeningDetailScreen = ({ navigation }) => {
                     const phoneRegex1 = /[0-9]{11}/g;
                     const phoneRegex2 =
                       /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"0-9]/g;
-  
+
                     if (!phone.match(phoneRegex1) || name.match(phoneRegex2)) {
                       ToastAndroid.show(
                         '올바른 핸드폰 번호를 입력해주세요',
@@ -148,7 +156,8 @@ const HealthScreeningDetailScreen = ({ navigation }) => {
                         name
                       );
                       setIsLoading(false);
-                      navigation.navigate('FirstAddSurvey');
+                      if (result.data) navigation.replace('FirstAddSurvey');
+                      else navigation.replace('HealthScreeningFail');
                     } catch {
                       ToastAndroid.show(
                         '인증에 실패 하였습니다.',
@@ -289,7 +298,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 22,
-    fontFamily: "웰컴체_Regular",
+    fontFamily: '웰컴체_Regular',
     textAlign: 'center',
     color: 'white',
   },
