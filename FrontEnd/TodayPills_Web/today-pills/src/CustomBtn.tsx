@@ -33,13 +33,13 @@ const CustomBtn = () => {
         variant="contained"
         onClick={routeChange}
         sx={{
-          width: 400,
-          height: 90,
+          width: 250,
+          height: 60,
           fontWeight: "bold",
-          fontSize: 36,
+          fontSize: 24,
           color: "white",
           borderRadius: "50px",
-          letterSpacing: 7,
+          letterSpacing: 6,
           fontFamily: "WelcomeBold",
         }}
       >

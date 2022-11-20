@@ -37,7 +37,7 @@
   /* width: 23vw; */
   height: 70vh;
   left: 61vw;
-  top: 58%;
+  top: 65%;
 
   position: absolute;
   transform: translate(-50%, -50%);
@@ -45,17 +45,20 @@
 
 .btn-container {
   position: absolute;
-  left: 50%;
-  top: 73%;
+  left: 100%;
+  top: 35%;
+  /* left: 50%;
+  top: 59%; */
   transform: translate(-50%, -50%);
 }
 .qrcode {
-  width: 14vw;
-  height: 14vw;
+  width: 12vw;
+  height: 12vw;
   position: absolute;
 
-  left: 50%;
-  top: 40%;
+  left: 20%;
+  /* left: 50%; */
+  top: 35%;
   /* margin-top: 10px; */
   transform: translate(-50%, -50%);
 }
@@ -100,7 +103,8 @@
 
   .header {
     top: 7%;
-    left: 160px;
+    /* left: 130px; */
+    left: 32vw;
     position: absolute;
     transform: translate(-50%, -50%);
   }
@@ -112,8 +116,10 @@
   }
 
   .main-screen {
-    width: 350px;
-    height: 500px;
+    /* width: 260px; */
+    width: 70vw;
+    /* height: 380px; */
+    height: 55vh;
     left: 50vw;
     top: 37%;
     position: absolute;
@@ -125,7 +131,7 @@
     width: 70vw;
     height: 200px;
     left: 52vw;
-    top: 80vh;
+    top: 86vh;
 
     position: absolute;
     transform: translate(-50%, -50%);
@@ -134,7 +140,7 @@
   .btn-container {
     position: absolute;
     left: 50%;
-    top: 80%;
+    top: 70%;
     transform: translate(-50%, -50%);
   }
   .qrcode {
@@ -154,9 +160,9 @@
   .intro {
     font-family: "WelcomeBold";
     text-align: center;
-    font-size: 28px;
-    line-height: 20px;
-    letter-spacing: 3px;
+    font-size: 23px;
+    line-height: 14px;
+    letter-spacing: 2px;
     padding-top: 20px;
   }
   /* .download-text {
