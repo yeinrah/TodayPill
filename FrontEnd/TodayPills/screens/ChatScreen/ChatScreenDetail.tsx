@@ -250,7 +250,7 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
     if (messages[0].supplementId) {
       messages[0].text = (
         <Text
-          style={{ color: '#736bfa' }}
+          style={{ color: '#ff8247' }}
           onPress={() => {
             navigation.navigate('SupplementScreen', {
               supplementId: messages[0].supplementId,
@@ -280,7 +280,7 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
             backgroundColor: '#d6d6d6',
           },
           right: {
-            backgroundColor: 'pink',
+            backgroundColor: '#f4caf3',
           },
         }}
         textStyle={{
