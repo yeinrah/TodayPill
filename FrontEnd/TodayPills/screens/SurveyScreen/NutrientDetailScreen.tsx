@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     elevation: 7,
     margin: 10,
-    padding: 10,
+    padding: 20,
     // alignContent: 'stretch',
     // backgroundColor: '#e0e0e0',
   },
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
     // position: 'absolute',
     // left: 30,
     fontSize: 17,
-    width: '90%',
+    width: '100%',
   },
   recommendcontainer: {
     width: '100%',
