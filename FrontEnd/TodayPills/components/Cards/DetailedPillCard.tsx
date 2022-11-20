@@ -66,7 +66,7 @@ const DetailedPillCard = (props: any) => {
         style={styles.cardContainer}
         onPress={() => {
           if (props.isChat) {
-            props.chatHandler();
+            props.chatHandler(props);
             return;
           }
           if (props.isMain) {

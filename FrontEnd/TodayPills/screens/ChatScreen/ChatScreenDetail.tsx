@@ -8,6 +8,7 @@ import {
   ToastAndroid,
   Image,
   Pressable,
+  FlatList,
 } from 'react-native';
 import BackgroundScreen from '../BackgroundScreen';
 import { Bubble, GiftedChat } from 'react-native-gifted-chat';
@@ -21,15 +22,23 @@ import BackgroundScreen2 from '../BackgroundScreen2';
 import GoBackBtn from '../../components/UI/GoBackBtn';
 import { ScrollView } from 'react-native-gesture-handler';
 import DetailedPillCard from '../../components/Cards/DetailedPillCard';
+import {
+  fetchAllSupplements,
+  fetchSupplementByCategory,
+} from '../../API/supplementAPI';
 var stompClient = null;
 
 const ChatScreenDetail = ({ navigation, route }: any) => {
   const [publicChats, setPublicChats] = useState([]);
   const [loadFlag, setLoadFlag] = useState(false);
   const [messages, setMessages] = useState([]);
+  const [pills, setPills] = useState([]);
+  const [nowPills, setNowPills] = useState([]);
   const [tab, setTab] = useState('CHATROOM');
   const [chat, setChat] = useState('');
   const [showSelectBox, SetShowSelectBox] = useState(false);
+  const chatRef = useRef();
+  const [uid, setUid] = useState(0);
   const [userData, setUserData] = useState({
     userId: 0,
     username: 'wjdtj',
@@ -54,16 +63,25 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
     let chatData = await getSpecificRoomChat(route.params?.nutrient);
     // publicChats.push(chatData[0]);
     for (let chat of chatData) {
-      chat.text = (
-        <Text
-          style={{ color: 'red' }}
-          onPress={() => {
-            console.log(publicChats, 'message!');
-          }}
-        >
-          T
-        </Text>
-      );
+      if (chat.supplementId) {
+        chat.text = (
+          <Text
+            style={{
+              color: '#736bfa',
+              textDecorationLine: 'underline',
+              textDecorationStyle: 'solid',
+              textDecorationColor: 'black',
+            }}
+            onPress={() => {
+              navigation.navigate('SupplementScreen', {
+                supplementId: chat.supplementId,
+              });
+            }}
+          >
+            {chat.text}
+          </Text>
+        );
+      }
       publicChats.push(chat);
     }
     // setPublicChats(...publicChats, chatData);
@@ -101,6 +119,7 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
   const onConnected = async () => {
     let userName = await AsyncStorage.getItem('@storage_UserNickName');
     let userId = Number(await AsyncStorage.getItem('@storage_UserId'));
+    setUid(userId);
     console.log('연결시도!!');
     console.log(route.params);
     setUserData({
@@ -136,13 +155,29 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
     // status: 'MESSAGE',
     var payloadData = JSON.parse(payload.body);
     console.log(payloadData, 'thisispay');
+    if (payloadData.supplementId) {
+    }
     let refinedData = {
       message: payloadData.text,
-      text: payloadData.text,
+      text: payloadData.supplementId ? (
+        <Text
+          style={{ color: '#736bfa' }}
+          onPress={() => {
+            navigation.navigate('SupplementScreen', {
+              supplementId: payloadData.supplementId,
+            });
+          }}
+        >
+          {payloadData.text}
+        </Text>
+      ) : (
+        payloadData.text
+      ),
       senderName: payloadData.senderName,
       status: payloadData.status,
       createdAt: payloadData.createdAt,
       _id: payloadData._id,
+      supplementId: payloadData.supplementId,
       user: { _id: payloadData.user._id, name: payloadData.senderName },
     };
     // console.log(payloadData, 'this is payloadData');
@@ -181,11 +216,12 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
       let id = await AsyncStorage.getItem('@storage_UserId');
       var chatMessage = {
         _id: messages[0]._id,
-        text: messages[0].text,
+        text: messages[0].text.props.children,
         user: { _id: id, name: userData.username },
         createdAt: new Date(),
         senderName: userData.username,
         userName: userData.username,
+        supplementId: messages[0].supplementId,
         // message: messages[0].text,
         status: 'MESSAGE',
       };
@@ -211,13 +247,29 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
     // setMessages((previousMessages) =>
     //   GiftedChat.append(previousMessages, messages)
     // );
+    if (messages[0].supplementId) {
+      messages[0].text = (
+        <Text
+          style={{ color: '#736bfa' }}
+          onPress={() => {
+            navigation.navigate('SupplementScreen', {
+              supplementId: messages[0].supplementId,
+            });
+          }}
+        >
+          {messages[0].text}
+        </Text>
+      );
+    }
     console.log(messages, 'this is message');
     setPublicChats((previousMessages) =>
       GiftedChat.append(previousMessages, messages)
     );
   }, []);
-  const registerUser = () => {
+  const registerUser = async () => {
     connect();
+    const arr = await fetchSupplementByCategory(route.params?.nutrientName);
+    setPills(arr);
   };
   const renderBubble = (props) => {
     return (
@@ -226,6 +278,9 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
         wrapperStyle={{
           left: {
             backgroundColor: '#d6d6d6',
+          },
+          right: {
+            backgroundColor: 'pink',
           },
         }}
         textStyle={{
@@ -236,8 +291,24 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
       />
     );
   };
-  const annotationHandler = () => {
+  const annotationHandler = async (value) => {
+    let id = await AsyncStorage.getItem('@storage_UserId');
+    let name = await AsyncStorage.getItem('@storage_UserNickName');
+
+    // console.log(value);
     SetShowSelectBox(false);
+    chatRef.current.onSend([
+      {
+        _id: String(Math.random()),
+        createdAt: new Date(),
+        text: '@' + value.supplementName,
+        supplementId: value.supplementId,
+        user: {
+          _id: id,
+          name: name,
+        },
+      },
+    ]);
     setChat('');
   };
   return (
@@ -272,29 +343,34 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
           <View style={styles.selectBox}>
             <View style={styles.selectContent}>
               <ScrollView>
-                <DetailedPillCard
-                  key={1}
-                  userId={201}
-                  supplementId={203}
-                  image={''}
-                  brand={''}
-                  supplementName={'haha'}
-                  // like={item.like}
-                  // note={item.note}
-                  // additionalEfficacy={item.additionalEfficacy}
-                  // ingredients={item.ingredients}
-                  // caution={item.caution}
-                  isMain={'chat'}
-                  isChat={true}
-                  chatHandler={annotationHandler}
-                  navigation={navigation}
-                />
+                {nowPills.map((item, index) => {
+                  return (
+                    <DetailedPillCard
+                      key={index}
+                      userId={uid}
+                      supplementId={item.supplementId}
+                      image={item.image}
+                      brand={item.brand}
+                      supplementName={item.supplementName}
+                      like={item.like}
+                      note={item.note}
+                      additionalEfficacy={item.additionalEfficacy}
+                      ingredients={item.ingredients}
+                      caution={item.caution}
+                      isMain={'chat'}
+                      isChat={true}
+                      chatHandler={annotationHandler}
+                      navigation={navigation}
+                    />
+                  );
+                })}
               </ScrollView>
             </View>
           </View>
         )}
         {userData.userId !== 0 && (
           <GiftedChat
+            ref={chatRef}
             placeholder={'메세지를 입력하세요...'}
             alwaysShowSend={true}
             renderUsernameOnMessage={true}
@@ -303,6 +379,10 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
             textInputProps={{ keyboardAppearance: 'dark', autoCorrect: false }}
             text={chat}
             onInputTextChanged={(text) => {
+              const nowArr = pills.filter((item) => {
+                return item.supplementName.includes(text.slice(1));
+              });
+              setNowPills(nowArr);
               setChat(text);
             }}
             onSend={(messages) => {
@@ -359,11 +439,11 @@ const styles = StyleSheet.create({
   },
   selectBox: {
     position: 'absolute',
-    top: 200,
+    bottom: 40,
     width: '100%',
     height: 370,
     zIndex: 100,
-    backgroundColor: 'green',
+    backgroundColor: 'white',
   },
   selectContent: {
     width: '100%',

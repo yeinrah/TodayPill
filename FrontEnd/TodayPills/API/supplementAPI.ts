@@ -1,4 +1,4 @@
-import apiInstance from "./index";
+import apiInstance from './index';
 const api = apiInstance();
 
 const fetchAllSupplements = async () => {
@@ -29,5 +29,15 @@ const fetchRecommendation = async (supplementId, userId) => {
   const recommendation = result.data;
   return recommendation;
 };
+const fetchSupplementByCategory = async (category: string) => {
+  const result = await api.get(`/supplement/findAllByCategory/${category}`);
+  return result.data;
+};
 
-export { fetchAllSupplements, fetchPopularSupplements, fetchSupplementDetail, fetchRecommendation };
+export {
+  fetchAllSupplements,
+  fetchPopularSupplements,
+  fetchSupplementDetail,
+  fetchRecommendation,
+  fetchSupplementByCategory,
+};
