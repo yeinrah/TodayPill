@@ -21,6 +21,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fetchRecommendation } from "../../API/supplementAPI";
 import PillItem from "../../components/Pills/PillItem";
 import { AiAnalysis } from "../../components/Data/AiAnalysis";
+import { findCommonQuestion } from '../../API/userAPI';
 
 export default function SupplementScreen({ navigation, route }: any) {
   const [ingredientStretch, setIngredientStretch] = useState(false);
@@ -75,8 +76,8 @@ export default function SupplementScreen({ navigation, route }: any) {
 	};
 
 	const aiSetting = async () => {
-		const sheet = await AsyncStorage.getItem("@storage_answerSheet");
-		const answerSheet = await JSON.parse(sheet);
+		const answerSheet = await findCommonQuestion(userId);
+		console.log(answerSheet);
 		const Ai = [];
 		if (answerSheet.pregnant) {
 			if (pill.category === "비타민 B") {
@@ -718,9 +719,14 @@ export default function SupplementScreen({ navigation, route }: any) {
 									source={require("../../assets/images/similar.png")}
 									style={styles.similarimage}
 								/>
-								<Text style={styles.similartext}>
-									{userNickName}님과 비슷한 분들이 찾는 영양제
-								</Text>
+								<View style={styles.textjustify}>
+									<Text style={styles.similartext}>
+										{userNickName}님과 비슷한 분들은
+									</Text>
+									<Text style={styles.similartext}>
+										이 제품을 눈여겨보고 있어요
+									</Text>
+								</View>
 							</View>
 							<View style={styles.similarpillcontainer}>
                 {similarPills.map((pill, idx) => {
@@ -739,15 +745,23 @@ export default function SupplementScreen({ navigation, route }: any) {
                   );
                 })}
               </View>
-								<View style={styles.similartextcontainer}>
-									<Image
-										source={require("../../assets/images/aipaper.png")}
-										style={styles.similarimage}
-									/>
-									<Text style={styles.similartext}>
-										{userNickName}님께 맞는 AI 논문 분석 결과
-									</Text>
-								</View>
+								{
+									AiPapers.length > 0 &&
+									<View style={styles.similartextcontainer}>
+										<Image
+											source={require("../../assets/images/aipaper.png")}
+											style={styles.aiimage}
+										/>
+										<View style={styles.textjustify}>
+											<Text style={styles.similartext}>
+												{userNickName}님과 관련있는
+											</Text>
+											<Text style={styles.similartext}>
+												논문 분석 결과를 살펴보세요
+											</Text>
+										</View>
+									</View>
+								}
 								{
 									AiPapers.map((AiPaper, idx) =>
 										<View
