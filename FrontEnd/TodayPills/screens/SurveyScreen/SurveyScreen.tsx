@@ -143,21 +143,26 @@ const SurveyScreen = ({ navigation }: any) => {
       'outdoor_activity',
       '충분한 양의 햇빛을 쬐고 계신가요?',
       '자외선 차단제를 사용하지 않은 상태에서 팔과 다리를 모두 노출하고 일주일에 4회이상, 하루 20분 이상 햇볕을 쬐면 충분하다고 말할 수 있어요.',
-      ['충분한 양의 햇볕을 쬔다', '종종 햇볕을 쬔다', '가끔 햇볕을 쬔다', '거의 햇볕을 쬐지 않는다'],
+      [
+        '충분한 양의 햇볕을 쬔다',
+        '종종 햇볕을 쬔다',
+        '가끔 햇볕을 쬔다',
+        '거의 햇볕을 쬐지 않는다',
+      ],
     ],
-    [
-      'balanced_meal',
-      '평소 균형잡힌 식사를 하시나요?',
-      '',
-      ['YES', 'NO'],
-    ],
+    ['balanced_meal', '평소 균형잡힌 식사를 하시나요?', '', ['YES', 'NO']],
     [
       'lack',
       '평소 먹는 음식을 알려주세요',
       '복수 선택 가능합니다.',
       ['채소', '생선', '육류', '과일'],
     ],
-    ['is_ok_big_pill', '큰 알약을 삼키는데 불편함이 없으신가요?', '', ['YES', 'NO']],
+    [
+      'is_ok_big_pill',
+      '큰 알약을 삼키는데 불편함이 없으신가요?',
+      '',
+      ['YES', 'NO'],
+    ],
     [
       'preferred_brand',
       '선호하는 영양제 브랜드가 있나요?',
@@ -173,7 +178,7 @@ const SurveyScreen = ({ navigation }: any) => {
         'solgar',
         'natural factors',
         'life extension',
-        "Doctor\'s Best",
+        "Doctor's Best",
         '21st Century',
         'Thorne Research',
         'NOW Foods',
@@ -230,7 +235,10 @@ const SurveyScreen = ({ navigation }: any) => {
   useFocusEffect(
     useCallback(() => {
       if (nowStage === surveyData.length - 1) {
-        navigation.navigate('SurveyLoadingScreen', {
+        // navigation.navigate('SurveyLoadingScreen', {
+        //   answerSheet: answerSheet,
+        // });
+        navigation.replace('SurveyLoadingScreen', {
           answerSheet: answerSheet,
         });
       }
@@ -267,7 +275,12 @@ const SurveyScreen = ({ navigation }: any) => {
             </View>
             <View style={styles.textcontainer}>
               <Text
-                style={{ ...styles.text, ...styles.largetext, ...boldWelcome, width: "80%" }}
+                style={{
+                  ...styles.text,
+                  ...styles.largetext,
+                  ...boldWelcome,
+                  width: '80%',
+                }}
               >
                 {surveyData[nowStage][1]}
               </Text>
@@ -276,7 +289,7 @@ const SurveyScreen = ({ navigation }: any) => {
                   ...styles.text,
                   ...styles.smalltext,
                   ...regularWelcome,
-                  width: "80%"
+                  width: '80%',
                 }}
               >
                 {surveyData[nowStage][2]}
@@ -368,8 +381,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   textcontainer: {
-    width: "100%",
-    alignItems: "center",
+    width: '100%',
+    alignItems: 'center',
     marginBottom: 30,
     height: '15%',
   },
@@ -432,7 +445,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 22,
-    fontFamily: "웰컴체_Regular",
+    fontFamily: '웰컴체_Regular',
     textAlign: 'center',
     color: 'white',
   },

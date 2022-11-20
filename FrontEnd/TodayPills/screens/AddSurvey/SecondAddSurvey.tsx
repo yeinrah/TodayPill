@@ -69,7 +69,10 @@ const SecondAddSurvey = ({ navigation }: any) => {
   ];
   useEffect(() => {
     if (nowStage === surveyData.length - 1) {
-      navigation.navigate('SurveyDeepLoadingScreen', {
+      // navigation.navigate('SurveyDeepLoadingScreen', {
+      //   answerSheet: answerSheet,
+      // });
+      navigation.replace('SurveyDeepLoadingScreen', {
         answerSheet: answerSheet,
       });
     }
