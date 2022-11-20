@@ -220,6 +220,7 @@ const styles = StyleSheet.create({
   },
   pinkfeature: {
     backgroundColor: '#F8F0F6',
+    paddingVertical: 3,
   },
   alertcontainer: {
     flexDirection: 'row',

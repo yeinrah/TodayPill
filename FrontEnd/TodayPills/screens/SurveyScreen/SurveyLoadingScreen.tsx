@@ -13,10 +13,6 @@ const SurveyLoadingScreen = ({ navigation, route }: any) => {
     let size = Object.keys(route.params.answerSheet).length;
     if (size > 5) afterBasicSurvey(route.params.answerSheet);
     else afterScreeningCheck(route.params.answerSheet);
-    AsyncStorage.setItem(
-      '@storage_answerSheet',
-      JSON.stringify(route.params.answerSheet)
-    );
   }, []);
   return (
     <BackgroundScreen2>

@@ -47,7 +47,7 @@ export default function AiAnalysisScreen ({ navigation }: any) {
 		url: `https://tldrthis.p.rapidapi.com/v1/model/abstractive/summarize-${isPaper ? "url" : "text"}/`,
 		headers: {
 			"content-type": "application/json",
-			"X-RapidAPI-Key": "13f6e22f9dmsh5f803277f702e1fp13cae8jsn62dafbdd137d",
+			"X-RapidAPI-Key": "8b490e1804msh4f0f29203fdc9dcp1191d4jsn3a21335f16d9",
 			"X-RapidAPI-Host": "tldrthis.p.rapidapi.com"
 		},
 		data: `{"${isPaper ? "url" : "text"}":"${isPaper ? url : content.replace(/\n|\r/g, " ")}","min_length":10,"max_length":65${isPaper ? ',"is_detailed":false' : ""}}`

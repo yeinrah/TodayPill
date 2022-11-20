@@ -36,7 +36,7 @@ const FirstAddSurvey = ({ navigation }: any) => {
         'solgar',
         'natural factors',
         'life extension',
-        "Doctor\'s Best",
+        "Doctor's Best",
         '21st Century',
         'Thorne Research',
         'NOW Foods',
@@ -51,7 +51,8 @@ const FirstAddSurvey = ({ navigation }: any) => {
   ];
   useEffect(() => {
     if (nowStage === surveyData.length - 1) {
-      navigation.navigate('SurveyLoadingScreen', { answerSheet: answerSheet });
+      // navigation.navigate('SurveyLoadingScreen', { answerSheet: answerSheet });
+      navigation.replace('SurveyLoadingScreen', { answerSheet: answerSheet });
     }
   }, [answerSheet]);
   return (
@@ -205,7 +206,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 22,
-    fontFamily: "웰컴체_Regular",
+    fontFamily: '웰컴체_Regular',
     textAlign: 'center',
     color: 'white',
   },
