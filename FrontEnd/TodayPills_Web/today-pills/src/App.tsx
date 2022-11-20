@@ -1,8 +1,8 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Header from './Header';
-import CustomBtn from './CustomBtn';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import Header from "./Header";
+import CustomBtn from "./CustomBtn";
 
 function App() {
   return (
@@ -10,9 +10,9 @@ function App() {
       <div className="header">
         <Header />
       </div>
-      <img src={'/Assets/images/web-background.png'} alt="" className="back" />
+      <img src={"/Assets/images/web-background.png"} alt="" className="back" />
       <img
-        src={'/Assets/images/prototype2.png'}
+        src={"/Assets/images/prototype2.png"}
         alt=""
         className="main-screen"
       />
@@ -23,24 +23,12 @@ function App() {
           <div className="intro">최적의 맞춤 영양제</div>
         </div>
         <div className="download-btn">
-          <img src={'/Assets/images/qrcode.png'} alt="" className="qrcode" />
+          <img src={"/Assets/images/qrcode.png"} alt="" className="qrcode" />
           <div className="btn-container">
             <CustomBtn />
           </div>
         </div>
       </div>
-
-      {/* <img
-      src={"/Assets/images/prototype3.png"}
-      alt=""
-      className="second-screen"
-    /> */}
-
-      {/* <header className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />
-     
-      
-    </header> */}
     </div>
   );
 }
