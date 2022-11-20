@@ -77,7 +77,6 @@ export default function SupplementScreen({ navigation, route }: any) {
 
 	const aiSetting = async () => {
 		const answerSheet = await findCommonQuestion(userId);
-		console.log(answerSheet);
 		const Ai = [];
 		if (answerSheet.pregnant) {
 			if (pill.category === "비타민 B") {
