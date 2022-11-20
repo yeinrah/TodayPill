@@ -36,6 +36,7 @@ import com.todaypill.request.InsertLikeReq;
 import com.todaypill.request.UpdateNameReq;
 import com.todaypill.request.UserFirstSurveyReq;
 import com.todaypill.request.UserSecondSurveyReq;
+import com.todaypill.response.CommonQuestionRes;
 import com.todaypill.response.SupplementAndScoreRes;
 import com.todaypill.service.CommonQuestionService;
 import com.todaypill.service.RecommendService;
@@ -279,7 +280,99 @@ public class UserController {
 	@ApiOperation(value = "userid를 통해서 commonquestion 데이터를 가져온다.", notes = "가져온다")
 	public ResponseEntity<?> findCommonQuestion(@PathVariable Integer userId) throws Exception {
 		CommonQuestion data = commonQuestionService.findOneByUserId(userId);
-		return new ResponseEntity<CommonQuestion>(data, HttpStatus.OK);
+		
+		String disease = "";
+		if(data.getAnemia()) disease+="빈혈, ";
+		if(data.getThyroidDisease()) disease+="갑상선 질환, ";
+		if(data.getKidney_disease()) disease+="신장 질환, ";
+		if(data.getDiabetes()) disease+="당뇨병, ";
+		if(data.getHighBloodPressure()) disease+="고혈압, ";
+		if(data.getHyperlipidemia()) disease+="고지혈증, ";
+		if(data.getPeriodontitis()) disease+="치주염, ";
+		if(data.getHeartFailure()) disease+="심부전, ";
+		
+		String lack = "";
+		if(data.getLack().contains("채소")) lack +="채소, ";
+		if(data.getLack().contains("생선")) lack +="생선, ";
+		if(data.getLack().contains("육류")) lack +="육류, ";
+		if(data.getLack().contains("과일")) lack +="과일, ";
+		
+		String medicine = "";
+		if(data.getContraceptive()) medicine+="피임약, ";
+		if(data.getAntacid()) medicine+="제산제, ";
+		if(data.getBloodPressureMedicine()) medicine+="혈압약, ";
+		if(data.getDiuretic()) medicine+="이뇨제, ";
+		if(data.getSotalol()) medicine+="부정맥(소타롤), ";
+		if(data.getGabapentin()) medicine+="항경련제(가바펜틴), ";
+		if(data.getLevothyroxine()) medicine+="갑상선(레보티록신), ";
+		if(data.getAntibiotics()) medicine+="항생제, ";
+		
+		Boolean menopause = false;
+		String brand = "";
+		if(data.getPreferred_brand().contains("뉴트리코어")) brand +="뉴트리코어, ";
+		if(data.getPreferred_brand().contains("종근당")) brand +="종근당, ";
+		if(data.getPreferred_brand().contains("GC녹십자")) brand +="GC녹십자, ";
+		if(data.getPreferred_brand().contains("제일헬스사이언스")) brand +="제일헬스사이언스, ";
+		if(data.getPreferred_brand().contains("하루틴")) brand +="하루틴, ";
+		if(data.getPreferred_brand().contains("solgar")) brand +="solgar, ";
+		if(data.getPreferred_brand().contains("natural factors")) brand +="natural factors, ";
+		if(data.getPreferred_brand().contains("Life Extension")) brand +="Life Extension, ";
+		if(data.getPreferred_brand().contains("21st Century")) brand +="21st Century, ";
+		if(data.getPreferred_brand().contains("Thorne Research")) brand +="Thorne Research, ";
+		if(data.getPreferred_brand().contains("NOW Foods")) brand +="NOW Foods, ";
+		if(data.getPreferred_brand().contains("MegaFood")) brand +="MegaFood, ";
+		if(data.getPreferred_brand().contains("Rainbow Light")) brand +="Rainbow Light, ";
+		if(data.getPreferred_brand().contains("Jarrow Formulas")) brand +="Jarrow Formulas, ";
+		if(data.getPreferred_brand().contains("Source Naturals")) brand +="Source Naturals, ";
+		
+		String problem = "";
+		if(data.getProblem().contains("면역력 개선")) problem+="면역력 개선, ";
+		if(data.getProblem().contains("암, 심혈관 질환 예방")) problem+="암, 심혈관 질환 예방, ";
+		if(data.getProblem().contains("치매 예방")) problem+="치매 예방, ";
+		if(data.getProblem().contains("식후 혈당 관리")) problem+="식후 혈당 관리, ";
+		if(data.getProblem().contains("콜레스테롤 수치 개선")) problem+="콜레스테롤 수치 개선, ";
+		if(data.getProblem().contains("관절 통증")) problem+="관절 통증, ";
+		if(data.getProblem().contains("뼈 건강")) problem+="뼈 건강, ";
+		if(data.getProblem().contains("간 건강")) problem+="간 건강, ";
+		if(data.getProblem().contains("우울감")) problem+="우울감, ";
+		if(data.getProblem().contains("PMS, 월경통")) problem+="PMS, 월경통, ";
+		if(data.getProblem().contains("빈혈")) problem+="빈혈, ";
+		if(data.getProblem().contains("수면")) problem+="수면, ";
+		if(data.getProblem().contains("눈 건강")) problem+="눈 건강, ";
+		if(data.getProblem().contains("청력 보호")) problem+="청력 보호, ";
+		if(data.getProblem().contains("주름 개선")) problem+="주름 개선, ";
+		if(data.getProblem().contains("모발 건강")) problem+="모발 건강, ";
+		
+		String symptom = "";
+		if(data.getHeartburn())symptom +="속쓰림, ";
+		if(data.getConstipation())symptom +="변비, ";
+		if(data.getDiarrhea())symptom +="설사, ";
+		if(data.getDigestiveDisorder())symptom +="소화장애, ";
+		if(data.getMigraine())symptom +="편두통, ";
+		if(data.getBackache())symptom +="요통, ";
+		if(data.getBowelSyndrome())symptom +="과민성 대장군 증후군, ";
+		if(data.getAtopy())symptom +="아토피 피부염, ";
+		if(data.getDandruff())symptom +="비듬, ";
+		if(data.getStomatitis())symptom +="구내염, ";
+		if(data.getLegCramp())symptom +="야간 다리 경련, ";
+
+
+		CommonQuestionRes cm = new CommonQuestionRes(
+				data.getAllergy(), 
+				data.getBalanced_meal(), 
+				disease, data.getDrinking(), 
+				data.getIs_ok_big_pill(), 
+				lack, 
+				medicine, 
+				menopause, 
+				data.getOutdoor_activity(), 
+				brand, data.getPregnant(), 
+				problem, 
+				data.getSmoking(), 
+				symptom, 
+				data.getPhysicalActivity(), 
+				data.getUserId());
+		return new ResponseEntity<CommonQuestionRes>(cm, HttpStatus.OK);
 	}
 
 } 

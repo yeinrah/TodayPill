@@ -201,7 +201,7 @@ public class UserService {
 			magnesium +=2;
 			omega3 +=2;
 		}
-		if(userFirstSurveyReq.getSymptom().contains("과민성 대장 증후군")) {
+		if(userFirstSurveyReq.getSymptom().contains("과민성")) {
 			lactobacillus +=2;
 		}
 		if(userFirstSurveyReq.getSymptom().contains("아토피")) {
@@ -452,7 +452,7 @@ public class UserService {
 				.digestiveDisorder(	userFirstSurveyReq.getSymptom().contains("소화장애"))
 				.migraine(	userFirstSurveyReq.getSymptom().contains("편두통"))
 				.backache(	userFirstSurveyReq.getSymptom().contains("요통"))
-				.bowelSyndrome(	userFirstSurveyReq.getSymptom().contains("과민성 대장"))
+				.bowelSyndrome(	userFirstSurveyReq.getSymptom().contains("과민성"))
 				.atopy(	userFirstSurveyReq.getSymptom().contains("아토피"))
 				.dandruff(	userFirstSurveyReq.getSymptom().contains("비듬"))
 				.stomatitis(	userFirstSurveyReq.getSymptom().contains("구내염"))
