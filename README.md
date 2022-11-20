@@ -2,7 +2,7 @@
  - 영양소별 성분을 자세하게 분석하여 사용자에게 가장 잘 맞는 영양제를 추천하는 모바일 어플리케이션
 
 # 팀원을 소개합니다!
-        고은민            권민지             김영진           김정서             나예인             최병성
+        고은민            권민지             김영진            김정서             나예인             최병성
 
 ![은민이](https://user-images.githubusercontent.com/63994962/202890139-78e1f0fd-5c1c-4fe6-b6e0-a46160d76039.png)
 ![민지](https://user-images.githubusercontent.com/63994962/202890134-d040968a-0987-4631-b5ab-8bc3a7b54d84.png)
