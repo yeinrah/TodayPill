@@ -28,10 +28,11 @@ public class ChatService {
 	
 	@Transactional
 	public void recordChat(String _id, String text, String senderName, String createdAt, String status, 
-			User user, String roomName) throws Exception {
+			User user, String roomName, Integer supplementId) throws Exception {
 
 		ChattingRoom chattingRoom = ChattingRoom.builder()._id(_id).text(text).senderName(senderName)
-				.createdAt(createdAt).status(status).userId(user.get_id()).name(user.getName()).roomName(roomName).build();
+				.createdAt(createdAt).status(status).userId(user.get_id()).
+				name(user.getName()).roomName(roomName).supplementId(supplementId).build();
 		chatRepository.save(chattingRoom);
 		
 	}
@@ -45,7 +46,7 @@ public class ChatService {
 		for(int i=0; i<list.size();i++) {
 			User user = new User(list.get(i).getUserId(), list.get(i).getName());
 			Message msg = new Message(list.get(i).get_id(), list.get(i).getText(),
-					list.get(i).getSenderName(), list.get(i).getCreatedAt(), Status.MESSAGE, user);
+					list.get(i).getSenderName(), list.get(i).getCreatedAt(), Status.MESSAGE, user, list.get(i).getSupplementId());
 			mList.add(msg);
 		}
 		

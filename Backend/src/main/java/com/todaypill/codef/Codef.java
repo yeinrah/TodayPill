@@ -138,7 +138,7 @@ public class Codef {
 			boolean checkHealthScreening = true;
 			if(prevList.size()==0) checkHealthScreening = false;
 			returnMap.put("check", checkHealthScreening);
-			System.out.println("건강검진 받았는지? =>"+checkHealthScreening);
+//			System.out.println("건강검진 받았는지? =>"+checkHealthScreening);
 			//진짜 테스트때 get 
 //			System.out.println(list);
 //			System.out.println(list.get(3).getClass().getName());

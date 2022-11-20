@@ -15,4 +15,5 @@ public class Message {
     private String createdAt;
     private Status status;
     private User user;
+    private Integer supplementId;
 }

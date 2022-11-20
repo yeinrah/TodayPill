@@ -45,4 +45,6 @@ public class ChattingRoom {
 	private String name;
 	@Column(name = "room_name")
 	private String roomName;
+	@Column(name = "supplement_id")
+	private Integer supplementId;
 }

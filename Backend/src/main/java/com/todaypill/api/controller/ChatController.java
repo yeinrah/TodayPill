@@ -55,7 +55,7 @@ public class ChatController {
 		else if(message.getStatus()==Status.LEAVE);
 		else
 			chatService.recordChat(message.get_id(),message.getText(), message.getSenderName(), message.getCreatedAt()
-					, "MESSAGE", message.getUser(), "vitaminB");
+					, "MESSAGE", message.getUser(), "vitaminB", message.getSupplementId());
         return message;
     }
 
@@ -66,7 +66,7 @@ public class ChatController {
 		else if(message.getStatus()==Status.LEAVE);
 		else
 			chatService.recordChat(message.get_id(),message.getText(), message.getSenderName(), message.getCreatedAt()
-					, "MESSAGE", message.getUser(), "vitaminC");
+					, "MESSAGE", message.getUser(), "vitaminC", message.getSupplementId());
         return message;
     }
     @MessageMapping("/vitaminD")
@@ -76,7 +76,7 @@ public class ChatController {
 		else if(message.getStatus()==Status.LEAVE);
 		else
 			chatService.recordChat(message.get_id(),message.getText(), message.getSenderName(), message.getCreatedAt()
-					, "MESSAGE", message.getUser(), "vitaminD");
+					, "MESSAGE", message.getUser(), "vitaminD", message.getSupplementId());
     	return message;
     }
     @MessageMapping("/multivitamin")
@@ -86,7 +86,7 @@ public class ChatController {
 		else if(message.getStatus()==Status.LEAVE);
 		else
 			chatService.recordChat(message.get_id(),message.getText(), message.getSenderName(), message.getCreatedAt()
-					, "MESSAGE", message.getUser(), "multivitamin");
+					, "MESSAGE", message.getUser(), "multivitamin", message.getSupplementId());
     	return message;
     }
     @MessageMapping("/magnesium")
@@ -96,7 +96,7 @@ public class ChatController {
 		else if(message.getStatus()==Status.LEAVE);
 		else
 			chatService.recordChat(message.get_id(),message.getText(), message.getSenderName(), message.getCreatedAt()
-					, "MESSAGE", message.getUser(), "magnesium");
+					, "MESSAGE", message.getUser(), "magnesium", message.getSupplementId());
     	return message;
     }
     @MessageMapping("/omega3")
@@ -106,7 +106,7 @@ public class ChatController {
 		else if(message.getStatus()==Status.LEAVE);
 		else
 			chatService.recordChat(message.get_id(),message.getText(), message.getSenderName(), message.getCreatedAt()
-					, "MESSAGE", message.getUser(), "omega3");
+					, "MESSAGE", message.getUser(), "omega3", message.getSupplementId());
     	return message;
     }
     @MessageMapping("/milkthistle")
@@ -116,7 +116,7 @@ public class ChatController {
 		else if(message.getStatus()==Status.LEAVE);
 		else
 			chatService.recordChat(message.get_id(),message.getText(), message.getSenderName(), message.getCreatedAt()
-					, "MESSAGE", message.getUser(), "milkthistle");
+					, "MESSAGE", message.getUser(), "milkthistle", message.getSupplementId());
     	return message;
     }
     @MessageMapping("/lutein")
@@ -126,7 +126,7 @@ public class ChatController {
 		else if(message.getStatus()==Status.LEAVE);
 		else
 			chatService.recordChat(message.get_id(),message.getText(), message.getSenderName(), message.getCreatedAt()
-					, "MESSAGE", message.getUser(), "lutein");
+					, "MESSAGE", message.getUser(), "lutein", message.getSupplementId());
     	return message;
     }
     @MessageMapping("/zinc")
@@ -136,7 +136,7 @@ public class ChatController {
 		else if(message.getStatus()==Status.LEAVE);
 		else
 			chatService.recordChat(message.get_id(),message.getText(), message.getSenderName(), message.getCreatedAt()
-					, "MESSAGE", message.getUser(), "zinc");
+					, "MESSAGE", message.getUser(), "zinc", message.getSupplementId());
     	return message;
     }
     @MessageMapping("/lactobacillus")
@@ -146,7 +146,7 @@ public class ChatController {
 		else if(message.getStatus()==Status.LEAVE);
 		else
 			chatService.recordChat(message.get_id(),message.getText(), message.getSenderName(), message.getCreatedAt()
-					, "MESSAGE", message.getUser(), "lactobacillus");
+					, "MESSAGE", message.getUser(), "lactobacillus", message.getSupplementId());
     	return message;
     }
     @MessageMapping("/collagen")
@@ -156,7 +156,7 @@ public class ChatController {
 		else if(message.getStatus()==Status.LEAVE);
 		else
 			chatService.recordChat(message.get_id(),message.getText(), message.getSenderName(), message.getCreatedAt()
-					, "MESSAGE", message.getUser(), "collagen");
+					, "MESSAGE", message.getUser(), "collagen", message.getSupplementId());
     	return message;
     }
     @MessageMapping("/fe")
@@ -166,7 +166,7 @@ public class ChatController {
 		else if(message.getStatus()==Status.LEAVE);
 		else
 			chatService.recordChat(message.get_id(),message.getText(), message.getSenderName(), message.getCreatedAt()
-					, "MESSAGE", message.getUser(), "fe");
+					, "MESSAGE", message.getUser(), "fe", message.getSupplementId());
     	return message;
     }
     @MessageMapping("/profolis")
@@ -176,7 +176,7 @@ public class ChatController {
 		else if(message.getStatus()==Status.LEAVE);
 		else
 			chatService.recordChat(message.get_id(),message.getText(), message.getSenderName(), message.getCreatedAt()
-					, "MESSAGE", message.getUser(), "profolis");
+					, "MESSAGE", message.getUser(), "profolis", message.getSupplementId());
     	return message;
     }
 //    @MessageMapping("/private-message")
