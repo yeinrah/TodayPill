@@ -65,6 +65,10 @@ const DetailedPillCard = (props: any) => {
         android_ripple={{ color: '#4E736F' }}
         style={styles.cardContainer}
         onPress={() => {
+          if (props.isChat) {
+            props.chatHandler();
+            return;
+          }
           if (props.isMain) {
             props.navigation.navigate('SupplementScreen', {
               supplementId: props.supplementId,
@@ -120,14 +124,9 @@ const DetailedPillCard = (props: any) => {
               </Text>
             ) : null}
           </View>
-          {
-            props.caution !== null &&
+          {props.caution !== null && (
             <View style={styles.alertcontainer}>
-              <Ionicons
-                name="warning"
-                size={11}
-                color="#FFCE31"
-              />
+              <Ionicons name="warning" size={11} color="#FFCE31" />
               <Text style={{ ...styles.blackalert, ...regularWelcome }}>
                 주의&nbsp;
               </Text>
@@ -135,7 +134,7 @@ const DetailedPillCard = (props: any) => {
                 {props.caution}
               </Text>
             </View>
-          }
+          )}
         </View>
         <Entypo
           name="magnifying-glass"

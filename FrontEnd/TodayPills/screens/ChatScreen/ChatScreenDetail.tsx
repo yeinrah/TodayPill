@@ -7,6 +7,7 @@ import {
   View,
   ToastAndroid,
   Image,
+  Pressable,
 } from 'react-native';
 import BackgroundScreen from '../BackgroundScreen';
 import { Bubble, GiftedChat } from 'react-native-gifted-chat';
@@ -18,6 +19,8 @@ import { getSpecificRoomChat } from '../../API/chatAPI';
 import { useFocusEffect } from '@react-navigation/native';
 import BackgroundScreen2 from '../BackgroundScreen2';
 import GoBackBtn from '../../components/UI/GoBackBtn';
+import { ScrollView } from 'react-native-gesture-handler';
+import DetailedPillCard from '../../components/Cards/DetailedPillCard';
 var stompClient = null;
 
 const ChatScreenDetail = ({ navigation, route }: any) => {
@@ -25,6 +28,8 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
   const [loadFlag, setLoadFlag] = useState(false);
   const [messages, setMessages] = useState([]);
   const [tab, setTab] = useState('CHATROOM');
+  const [chat, setChat] = useState('');
+  const [showSelectBox, SetShowSelectBox] = useState(false);
   const [userData, setUserData] = useState({
     userId: 0,
     username: 'wjdtj',
@@ -49,6 +54,16 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
     let chatData = await getSpecificRoomChat(route.params?.nutrient);
     // publicChats.push(chatData[0]);
     for (let chat of chatData) {
+      chat.text = (
+        <Text
+          style={{ color: 'red' }}
+          onPress={() => {
+            console.log(publicChats, 'message!');
+          }}
+        >
+          T
+        </Text>
+      );
       publicChats.push(chat);
     }
     // setPublicChats(...publicChats, chatData);
@@ -64,6 +79,12 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
   //   }, [])
   // );
   useEffect(() => {}, [publicChats]);
+  useEffect(() => {
+    if (chat.startsWith('@')) SetShowSelectBox(true);
+    else {
+      SetShowSelectBox(false);
+    }
+  }, [chat]);
   const connect = () => {
     try {
       let Sock = new SockJS('http://k7a706.p.ssafy.io:8080/wss');
@@ -190,6 +211,7 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
     // setMessages((previousMessages) =>
     //   GiftedChat.append(previousMessages, messages)
     // );
+    console.log(messages, 'this is message');
     setPublicChats((previousMessages) =>
       GiftedChat.append(previousMessages, messages)
     );
@@ -213,6 +235,10 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
         }}
       />
     );
+  };
+  const annotationHandler = () => {
+    SetShowSelectBox(false);
+    setChat('');
   };
   return (
     <BackgroundScreen2>
@@ -242,6 +268,31 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
             </Text>
           </View>
         </View>
+        {showSelectBox && (
+          <View style={styles.selectBox}>
+            <View style={styles.selectContent}>
+              <ScrollView>
+                <DetailedPillCard
+                  key={1}
+                  userId={201}
+                  supplementId={203}
+                  image={''}
+                  brand={''}
+                  supplementName={'haha'}
+                  // like={item.like}
+                  // note={item.note}
+                  // additionalEfficacy={item.additionalEfficacy}
+                  // ingredients={item.ingredients}
+                  // caution={item.caution}
+                  isMain={'chat'}
+                  isChat={true}
+                  chatHandler={annotationHandler}
+                  navigation={navigation}
+                />
+              </ScrollView>
+            </View>
+          </View>
+        )}
         {userData.userId !== 0 && (
           <GiftedChat
             placeholder={'메세지를 입력하세요...'}
@@ -250,9 +301,10 @@ const ChatScreenDetail = ({ navigation, route }: any) => {
             messages={publicChats}
             renderBubble={renderBubble}
             textInputProps={{ keyboardAppearance: 'dark', autoCorrect: false }}
-            // onInputTextChanged={(text) => {
-            //   if(text.startsWith("@"))
-            // }}
+            text={chat}
+            onInputTextChanged={(text) => {
+              setChat(text);
+            }}
             onSend={(messages) => {
               return sendValue(messages);
               // return onSend(messages);
@@ -304,6 +356,17 @@ const styles = StyleSheet.create({
     marginRight: 15,
     width: 40,
     height: 40,
+  },
+  selectBox: {
+    position: 'absolute',
+    top: 200,
+    width: '100%',
+    height: 370,
+    zIndex: 100,
+    backgroundColor: 'green',
+  },
+  selectContent: {
+    width: '100%',
   },
   // box: {
   //   flexDirection: "column-reverse",
