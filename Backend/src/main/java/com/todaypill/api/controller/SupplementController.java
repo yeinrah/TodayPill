@@ -50,6 +50,13 @@ public class SupplementController {
 		List<Supplement> list = supplementService.findAll();
 		return new ResponseEntity<List<Supplement>>(list, HttpStatus.OK);
 	}
+	
+	@GetMapping("/findAllByCategory/{category}")
+	@ApiOperation(value = "supplement를 카테고리 별로 가져온다", notes = "가져온다")
+	public ResponseEntity<?> firstSurvey(@PathVariable String category) throws Exception {
+		List<Supplement> list = supplementService.findAllByCategory(category);
+		return new ResponseEntity<List<Supplement>>(list, HttpStatus.OK);
+	}
 
 	@GetMapping("/{supplementId}")
 	@ApiOperation(value = "supplement id로 해당 영양제 정보를 가져온다", notes = "가져온다")

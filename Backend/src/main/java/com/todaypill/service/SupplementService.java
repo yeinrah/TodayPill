@@ -53,5 +53,10 @@ public class SupplementService {
 		return supplementRepository.findLikeTop10();
 	}
 	
+	@Transactional
+	public List<Supplement> findAllByCategory(String category) throws Exception {
+		return supplementRepository.findAllByCategory(category);
+	}
+	
 	
 }
